@@ -2,7 +2,7 @@
 import getopt
 import os
 import sys
-import re
+import regex
 current_path = os.path.abspath(os.path.dirname(__file__))
 project_path = os.path.abspath("{}/../..".format(current_path))
 sys.path.append(project_path)
@@ -16,33 +16,30 @@ class Transations():
         self.cfg_path = "{}/babel.cfg".format(current_path)
         self.extract_path = "{}/apps".format(project_path)
         s_ops = "hq"
-        l_ops = ["init", "update", "compile", "cfg=", "extract=", "output=", "lan=", "all-lan",
-                 "get-msgid=", "re-msgstr="]
+        l_ops = ["init", "update", "compile", "cfg=", "extract=", "output=", "lan=", "all-lan"]
         s_opexplain = ["help","quiet:A small amount of output"]
-        l_opexplain = ["init translation",
-                       "update: extract and update",
-                       "compile",
-                       "<cfg file path>, The default:{}.\n\t\tOptional: {}/babel_py.cfg".format(self.cfg_path, current_path),
-                       "<Translation extract directory>,The default: {}".format(self.extract_path),
-                       "<output directory>, Output directory.\n\t\tSuce as:{}/translations/template".format(self.extract_path),
-                       "<language>, Such as: en_US, zh_Hans_CN",
-                       "View all languages",
-                       "<path> Get 'msgid' in po file",
-                       "<file:Translation completed msgid text> Fill the 'msgstr' in the po file with the translated text"
-                       "\n                    (此参数指定的文件的格式和行号必须和--get-msgid导出的文件格式和行号一模一样)"]
+        l_opexplain = ["init translation(初始化翻译)",
+                       "update: extract and update(用于更新,提取最新的需翻译文本)",
+                       "compile(更新并翻译后,需要发布翻译)",
+                       "<cfg file path>, The default:{}(只提取html,js文件).\n\t\tOptional: {}/babel_py.cfg(只提取py文件)".format(self.cfg_path, current_path),
+                       "<Translation extract directory>, Such as: {}".format(self.extract_path),
 
-        action = ["init, [--init --extract <path> --output <path:Such as:xxx/transations/theme> --lan en_US]",
-                  "update, [--update --extract <path> --output <path:Such as:xxx/transations/theme>]",
-                  "compile, [--compile --output <path:Such as:xxx/transations/theme>]",
-                  "get-msgid [--get-msgid <path:Such as:xxx/transations/theme> --lan <value>]",
-                  "re-msgstr [--re-msgstr <path:xxx/xxx.txt> --output <path> --lan <value>]"]
+                       "<output directory>, Output directory.\n\t\tSuch as:{}/translations/python-pg"
+                       "\n\t\t\t{}/translations/template".format(self.extract_path,self.extract_path),
+
+                       "<language>, Such as: zh_CN,zh_Hans_CN,en_GB",
+                       "View all languages"]
+
+        action = ["init, [--init --extract <path> --output <path> --lan en_US]",
+                  "update, [--update --extract <path> --output <path> --cfg <cfg file path>]",
+                  "compile, [--compile --output <path>"]
 
         opts, args = getopt.getopt(sys.argv[1:], s_ops, l_ops)
         func = None
         self.save_path = None
         self.quiet = ""
         self.lan = "zh_Hans_CN"
-        self.msgid_tred_file_path = ""
+
         if not opts:
             usage_help(s_ops, s_opexplain, l_ops, l_opexplain, action=action)
         for op, value in opts:
@@ -71,14 +68,6 @@ class Transations():
 
             elif op == "--compile":
                 func = self.compile_tr
-
-            elif op == "--get-msgid":
-                self.save_path = value.rstrip("/")
-                func = self.get_msgid
-
-            elif op == "--re-msgstr":
-                self.msgid_tred_file_path = value.rstrip("/")
-                func = self.replace_msgstr
 
             elif op == "-h" or op == "--help":
                 usage_help(s_ops, s_opexplain, l_ops, l_opexplain, action = action)
@@ -125,19 +114,17 @@ class Transations():
 
         lc_msg_path = "{}/{}/LC_MESSAGES".format(self.save_path, self.lan)
         po_filepath = os.path.join(lc_msg_path, "messages.po")
-
         if not os.path.exists(po_filepath):
-            print(po_filepath)
-            raise Exception("Missing messages.po file, may also be wrong language(--lan). please reinitialize translation. -h")
+            raise Exception("Missing messages.po file, please reinitialize translation. -h")
         if not self.quiet:
             self.redirect = ""
 
         os.system('pybabel {} extract -F {} -k lazy_gettext -o {}/messages.pot {}'.format(self.quiet,
-                                                                                             self.cfg_path,
+                                                                                          self.cfg_path,
                                                                                           self.save_path,
                                                                                           self.extract_path))
-        os.system('pybabel {} update -i {}/messages.pot -d {}'.format(self.quiet, self.save_path,
-                                                                         self.save_path))
+
+        os.system('pybabel {} update -i {}/messages.pot -d {}'.format(self.quiet, self.save_path, self.save_path))
 
         self.update_process()
         self.print_cfg()
@@ -158,25 +145,26 @@ class Transations():
         lc_msg_path = "{}/{}/LC_MESSAGES".format(self.save_path, self.lan)
         po_filepath = os.path.join(lc_msg_path, "messages.po")
         if os.path.exists(po_filepath):
-            with open(po_filepath) as rf:
-                lines = rf.readlines()
-                wf = open("{}_last.back".format(po_filepath), "w")
-                wf.writelines(lines)
-                wf.close()
+            rf = open(po_filepath)
+            lines = rf.readlines()
+            rf.close()
+            wf = open("{}_last.back".format(po_filepath), "w")
+            wf.writelines(lines)
+            wf.close()
 
             abandoned_datas = {}
             datas = {}
             l = len(lines)
             for i in range(0, l):
-                if re.search(r"^#~ msgid.*", lines[i]) and lines[i + 1].strip("#~ msgid").strip().strip('""') and lines[
+                if regex.search(r"^#~ msgid.*", lines[i]) and lines[i + 1].strip("#~ msgid").strip().strip('""') and lines[
                     i + 1].strip("#~ msgstr").strip().strip('""'):
                     abandoned_datas[lines[i].strip("#~ ").strip()] = lines[i + 1].strip("#~ ").strip()
-                elif re.search(r"^msgid.*", lines[i]) and lines[i + 1].strip("msgid").strip().strip('""') and lines[
+                elif regex.search(r"^msgid.*", lines[i]) and lines[i + 1].strip("msgid").strip().strip('""') and lines[
                     i + 1].strip("msgstr").strip().strip('""'):
                     datas[lines[i].strip()] = lines[i + 1].strip()
 
             for i in range(0, l):
-                msgid = re.search(r"^msgid.*", lines[i])
+                msgid = regex.search(r"^msgid.*", lines[i])
                 if msgid and lines[i].strip("msgid").strip().strip('""') and not lines[i + 1].strip("msgstr").strip().strip(
                         '""'):
                     l = lines[i].strip("\n")
@@ -188,7 +176,7 @@ class Transations():
             temp_lines = lines[:]
             l = len(temp_lines)
             for i in range(0, l):
-                r = re.search(r"^#~.*", temp_lines[i])
+                r = regex.search(r"^#~.*", temp_lines[i])
                 if r:
                     lines.remove(temp_lines[i])
 
@@ -198,12 +186,8 @@ class Transations():
 
     def cfg_sack(self):
 
-        print("\n* [Dangerous operation] Please check if the update option is wrong\n")
-        print("Extraction path: {}".format(self.extract_path))
-        print("Output path: {}".format(self.save_path))
-        print("Cfg file: " + self.cfg_path)
+        print("cfg file: " + self.cfg_path)
         self.print_cfg()
-        print("\n")
         ch = input("Are you sure you want to use this cfg file?(Y/N): ")
         if ch.lower() not in ["yes", "y"]:
             sys.exit(0)
@@ -215,92 +199,6 @@ class Transations():
             for line in rf.readlines():
                 print("    "+line.strip("\n"))
 
-
-    def get_msgid(self):
-
-        lc_msg_path = "{}/{}/LC_MESSAGES".format(self.save_path, self.lan)
-        po_filepath = os.path.join(lc_msg_path, "messages.po")
-
-        result_path = "{}/result_msgid_text.txt".format(current_path)
-        wf = open(result_path, "w")
-        with open(po_filepath) as rf:
-            last_l = ""
-            lines = rf.readlines()
-            lines_num = len(lines)
-            for i in range(0, lines_num):
-                l = lines[i]
-                isc = False
-                tr_exists = False
-                wl = None
-
-                if i+1 < lines_num and re.search(r'^msgstr\s".+"', lines[i+1]):
-                    # 已翻译的不需要提取
-                    continue
-
-                if re.search(r"^#:\s.+:[0-9]+", last_l):
-
-                    s = re.search("^msgid\s(.+).+", l)
-                    if l and s:
-                        wl = s.groups()[0].strip('"')
-                    last_l = l
-
-                elif last_l.strip() == 'msgid ""' and not re.search("^msgstr\s.+", l) and l:
-                    wl = l
-                    isc = True
-                    for j in range(1,4):
-                        if i + j < lines_num  and re.search(r'^msgstr\s.+', lines[i + j]) and re.search(r'^msgstr\s".+"', lines[i + j]):
-
-                            # 已翻译的不需要提取
-                            tr_exists = True
-                            break
-                if tr_exists:
-                    continue
-
-                if wl:
-                    if wl.endswith("\\"):
-                        wl = wl + '"'
-                    wf.write("{}::: ".format(i+1) + wl + "\n")
-                    if isc:
-                        continue
-
-                last_l = l
-        wf.close()
-        print("Result path: {}".format(result_path))
-
-    def replace_msgstr(self):
-
-        lc_msg_path = "{}/{}/LC_MESSAGES".format(self.save_path, self.lan)
-        po_filepath = os.path.join(lc_msg_path, "messages.po")
-        rfp = open(po_filepath, "r")
-        polines = rfp.readlines()
-
-        translated_text = self.msgid_tred_file_path
-        with open(translated_text) as rf:
-            last_text = ""
-            for l in rf:
-                l = l.split(":::")
-                if l and len(l) > 1:
-                    if not  l[0]:
-                        continue
-                    num = int(l[0])-1
-                    text = "{}{}".format(last_text, l[1].strip())
-                    if re.search("^msgstr\s(.+).+", polines[num + 1]):
-                        text = text.replace('""', '')
-                        if re.search(r'.+[^\\]".+', text):
-                            print("The number of lines that need to be manually confirmed (.po file): \n{}: {}\n".format(num+1,text))
-
-                        text = 'msgstr "{}"'.format(text)
-
-                        polines[num + 1] = text.replace('""', '"') + "\n"
-
-                        last_text = ""
-                    else:
-                        last_text = text
-
-
-        rfp.close()
-        with open(po_filepath, "w") as wf:
-            wf.writelines(polines)
 
 if __name__ == '__main__':
 

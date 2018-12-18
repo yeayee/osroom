@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-05-13 22:53+0800\n"
+"POT-Creation-Date: 2018-12-18 17:23+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -159,7 +159,7 @@ msgid "短信发送"
 msgstr "SMS sending"
 
 #: apps/admin_pages/pages/_index_chd2.html:146
-#: apps/admin_pages/pages/based/sidebar.html:219
+#: apps/admin_pages/pages/based/sidebar.html:258
 msgid "插件"
 msgstr "Plugins"
 
@@ -355,7 +355,7 @@ msgstr "has an account"
 
 #: apps/admin_pages/pages/audit/rule/index.html:2
 #: apps/admin_pages/pages/audit/rule/index.html:14
-#: apps/admin_pages/pages/based/sidebar.html:278
+#: apps/admin_pages/pages/based/sidebar.html:286
 msgid "审核规则"
 msgstr "Audit Rules"
 
@@ -369,6 +369,7 @@ msgstr "Audit Rules"
 #: apps/admin_pages/pages/message/email.html:14
 #: apps/admin_pages/pages/message/on-site.html:15
 #: apps/admin_pages/pages/message/sms.html:14
+#: apps/admin_pages/pages/permission/index.html:13
 #: apps/admin_pages/pages/permission/url/index.html:14
 #: apps/admin_pages/pages/plugin/index.html:13
 #: apps/admin_pages/pages/post/index.html:15
@@ -402,7 +403,9 @@ msgstr "Add Rule"
 
 #: apps/admin_pages/pages/audit/rule/index.html:46
 #: apps/admin_pages/pages/based/msg_box.html:44
+#: apps/admin_pages/pages/permission/index.html:114
 #: apps/admin_pages/pages/permission/url/edit.html:26
+#: apps/admin_pages/pages/permission/url/index.html:56
 #: apps/admin_pages/pages/plugin/_edit.html:7
 #: apps/admin_pages/pages/plugin/_edit.html:16
 #: apps/admin_pages/pages/plugin/index.html:48
@@ -463,7 +466,8 @@ msgstr "Rules"
 #: apps/admin_pages/pages/own/user/message/_comment.html:44
 #: apps/admin_pages/pages/own/user/message/_notice.html:28
 #: apps/admin_pages/pages/own/user/post/_user_posts.html:67
-#: apps/admin_pages/pages/permission/url/index.html:112
+#: apps/admin_pages/pages/permission/index.html:53
+#: apps/admin_pages/pages/permission/url/index.html:123
 #: apps/admin_pages/pages/plugin/index.html:90
 #: apps/admin_pages/pages/role/index.html:58
 #: apps/admin_pages/pages/setting/host/index.html:49
@@ -487,7 +491,8 @@ msgstr "Delete Selection"
 #: apps/admin_pages/pages/own/user/message/index.html:84
 #: apps/admin_pages/pages/own/user/post/_comment.html:227
 #: apps/admin_pages/pages/own/user/post/_user_posts.html:82
-#: apps/admin_pages/pages/permission/url/index.html:156
+#: apps/admin_pages/pages/permission/index.html:101
+#: apps/admin_pages/pages/permission/url/index.html:167
 #: apps/admin_pages/pages/plugin/index.html:165
 #: apps/admin_pages/pages/post/index.html:199
 #: apps/admin_pages/pages/role/index.html:106
@@ -508,7 +513,8 @@ msgstr "​​Previous"
 #: apps/admin_pages/pages/own/user/message/index.html:88
 #: apps/admin_pages/pages/own/user/post/_comment.html:231
 #: apps/admin_pages/pages/own/user/post/_user_posts.html:88
-#: apps/admin_pages/pages/permission/url/index.html:160
+#: apps/admin_pages/pages/permission/index.html:105
+#: apps/admin_pages/pages/permission/url/index.html:171
 #: apps/admin_pages/pages/plugin/index.html:169
 #: apps/admin_pages/pages/post/index.html:203
 #: apps/admin_pages/pages/role/index.html:110
@@ -541,6 +547,9 @@ msgstr "Can't be empty"
 #: apps/admin_pages/pages/own/account/settings/_basis.html:74
 #: apps/admin_pages/pages/own/content/category/index.html:35
 #: apps/admin_pages/pages/own/content/writer.html:57
+#: apps/admin_pages/pages/permission/edit.html:11
+#: apps/admin_pages/pages/permission/edit.html:21
+#: apps/admin_pages/pages/permission/index.html:19
 #: apps/admin_pages/pages/permission/url/add.html:30
 #: apps/admin_pages/pages/role/edit-role.html:11
 #: apps/admin_pages/pages/role/edit-role.html:21
@@ -634,7 +643,7 @@ msgid "我的主页"
 msgstr "My Home"
 
 #: apps/admin_pages/pages/based/_user_dropdown.html:27
-#: apps/admin_pages/pages/based/sidebar.html:260
+#: apps/admin_pages/pages/based/sidebar.html:268
 #: apps/admin_pages/pages/plugin/index.html:87
 #: apps/admin_pages/pages/plugin/setting.html:9
 #: apps/admin_pages/pages/plugin/setting.html:15
@@ -925,23 +934,44 @@ msgid "角色管理"
 msgstr "Roles"
 
 #: apps/admin_pages/pages/based/sidebar.html:191
+msgid "权限与Token"
+msgstr ""
+
+#: apps/admin_pages/pages/based/sidebar.html:199
+#: apps/admin_pages/pages/permission/edit.html:9
+#: apps/admin_pages/pages/permission/index.html:13
+msgid "权重管理"
+msgstr ""
+
+#: apps/admin_pages/pages/based/sidebar.html:207
+msgid "API权限"
+msgstr ""
+
+#: apps/admin_pages/pages/based/sidebar.html:215
+msgid "Rest Token"
+msgstr "Rest Token"
+
+#: apps/admin_pages/pages/based/sidebar.html:230
 msgid "主题外观"
 msgstr "Theme Appearance"
 
-#: apps/admin_pages/pages/based/sidebar.html:199
+#: apps/admin_pages/pages/based/sidebar.html:238
 #: apps/admin_pages/pages/theme-setting/themes.html:2
 #: apps/admin_pages/pages/theme-setting/themes.html:11
 msgid "主题"
 msgstr "Theme"
 
-#: apps/admin_pages/pages/based/sidebar.html:207
+#: apps/admin_pages/pages/based/sidebar.html:246
 #: apps/admin_pages/pages/media/audio-edit.html:13
 #: apps/admin_pages/pages/media/image-edit.html:13
 #: apps/admin_pages/pages/media/other-edit.html:13
 #: apps/admin_pages/pages/media/text-edit.html:12
 #: apps/admin_pages/pages/media/video-edit.html:13
 #: apps/admin_pages/pages/own/user/post/_user_posts.html:58
-#: apps/admin_pages/pages/permission/url/index.html:109
+#: apps/admin_pages/pages/permission/edit.html:10
+#: apps/admin_pages/pages/permission/edit.html:20
+#: apps/admin_pages/pages/permission/index.html:47
+#: apps/admin_pages/pages/permission/url/index.html:120
 #: apps/admin_pages/pages/role/edit-role.html:10
 #: apps/admin_pages/pages/role/edit-role.html:20
 #: apps/admin_pages/pages/role/index.html:55
@@ -952,35 +982,20 @@ msgstr "Theme"
 msgid "编辑"
 msgstr "Editing"
 
-#: apps/admin_pages/pages/based/sidebar.html:230
-msgid "Token与权限"
-msgstr "Tokens and Pers"
-
-#: apps/admin_pages/pages/based/sidebar.html:238
-msgid "Rest Token"
-msgstr "Rest Token"
-
-#: apps/admin_pages/pages/based/sidebar.html:246
-#: apps/admin_pages/pages/permission/table.html:8
-#: apps/admin_pages/pages/permission/url/add.html:11
-#: apps/admin_pages/pages/permission/url/edit.html:9
-msgid "权限控制"
-msgstr "Authority Control"
-
-#: apps/admin_pages/pages/based/sidebar.html:268
+#: apps/admin_pages/pages/based/sidebar.html:276
 #: apps/admin_pages/pages/setting/config-edit.html:2
 #: apps/admin_pages/pages/setting/configs.html:2
 #: apps/admin_pages/pages/setting/configs.html:13
 msgid "参数配置"
 msgstr "Parameter Config"
 
-#: apps/admin_pages/pages/based/sidebar.html:287
+#: apps/admin_pages/pages/based/sidebar.html:295
 #: apps/admin_pages/pages/setting/config-versions.html:8
 #: apps/admin_pages/pages/setting/config-versions.html:14
 msgid "配置版本"
 msgstr "Config Version"
 
-#: apps/admin_pages/pages/based/sidebar.html:299
+#: apps/admin_pages/pages/based/sidebar.html:307
 #: apps/admin_pages/pages/setting/host/index.html:2
 #: apps/admin_pages/pages/setting/host/index.html:14
 msgid "服务器"
@@ -1020,6 +1035,7 @@ msgstr "Classification Name"
 #: apps/admin_pages/pages/own/account/settings/_profile.html:58
 #: apps/admin_pages/pages/own/content/category/index.html:26
 #: apps/admin_pages/pages/own/content/writer.html:125
+#: apps/admin_pages/pages/permission/edit.html:66
 #: apps/admin_pages/pages/role/edit-role.html:56
 #: apps/admin_pages/pages/setting/host/edit.html:51
 #: apps/admin_pages/pages/theme-setting/file/add-page.html:45
@@ -1059,7 +1075,7 @@ msgstr "Like"
 #: apps/admin_pages/pages/message/email.html:50
 #: apps/admin_pages/pages/message/on-site.html:53
 #: apps/admin_pages/pages/message/sms.html:48
-#: apps/admin_pages/pages/plugin/_edit.html:136
+#: apps/admin_pages/pages/plugin/_edit.html:137
 #: apps/admin_pages/pages/user/index.html:236
 #: apps/admin_pages/pages/user/index.html:248
 msgid "时间"
@@ -1080,6 +1096,8 @@ msgid "鉴定(分)"
 msgstr "Identification (points)"
 
 #: apps/admin_pages/pages/comment/index.html:66
+#: apps/admin_pages/pages/permission/edit.html:61
+#: apps/admin_pages/pages/permission/edit.html:62
 #: apps/admin_pages/pages/post/index.html:69
 #: apps/admin_pages/pages/role/edit-role.html:51
 #: apps/admin_pages/pages/role/edit-role.html:52
@@ -1339,6 +1357,7 @@ msgstr "Upload time"
 #: apps/admin_pages/pages/media/audio.html:37
 #: apps/admin_pages/pages/media/other.html:37
 #: apps/admin_pages/pages/media/text.html:86
+#: apps/admin_pages/pages/permission/index.html:29
 #: apps/admin_pages/pages/role/index.html:33
 #: apps/admin_pages/pages/user/index.html:53
 msgid "操作"
@@ -1587,12 +1606,12 @@ msgstr "E-mail verification code"
 #: apps/admin_pages/pages/module/_send_code.html:95
 #: apps/admin_pages/pages/own/account/settings/_send_code.html:19
 #: apps/admin_pages/pages/own/account/settings/_send_code.html:35
-#: apps/admin_pages/pages/own/account/settings/_send_code.html:108
+#: apps/admin_pages/pages/own/account/settings/_send_code.html:117
 msgid "发送验证码"
 msgstr "Send verification code"
 
 #: apps/admin_pages/pages/module/_send_code.html:98
-#: apps/admin_pages/pages/own/account/settings/_send_code.html:111
+#: apps/admin_pages/pages/own/account/settings/_send_code.html:120
 msgid "后重发"
 msgstr "post retransmission"
 
@@ -1618,7 +1637,7 @@ msgstr "You are currently using a rich text editor"
 
 #: apps/admin_pages/pages/module/email/send-temp.html:79
 msgid "系统邮件, 请勿回复"
-msgstr ""
+msgstr "System mail, please do not reply"
 
 #: apps/admin_pages/pages/module/exception/401.html:2
 msgid "401无权访问"
@@ -1673,6 +1692,7 @@ msgid "用户名不能使用特殊符号"
 msgstr "Username cannot use special symbols"
 
 #: apps/admin_pages/pages/own/account/settings/_basis.html:21
+#: apps/admin_pages/pages/permission/edit.html:31
 #: apps/admin_pages/pages/role/edit-role.html:30
 msgid "至少3个字"
 msgstr "At least 3 characters"
@@ -2066,47 +2086,84 @@ msgstr "Please contact the author for permission"
 msgid "著作权归作者所有"
 msgstr "The copyright belongs to the author"
 
-#: apps/admin_pages/pages/permission/table.html:2
-#: apps/admin_pages/pages/permission/table.html:9
-#: apps/admin_pages/pages/permission/table.html:19
-#: apps/admin_pages/pages/permission/url/index.html:46
-#: apps/admin_pages/pages/role/edit-role.html:34
-#: apps/admin_pages/pages/role/edit-role.html:65
-#: apps/admin_pages/pages/role/index.html:22
-msgid "权限表"
-msgstr "Permissions Table"
+#: apps/admin_pages/pages/permission/edit.html:2
+#: apps/admin_pages/pages/permission/index.html:2
+msgid "权重设置"
+msgstr ""
 
-#: apps/admin_pages/pages/permission/table.html:19
-msgid "数量"
-msgstr "Quantity"
+#: apps/admin_pages/pages/permission/edit.html:25
+msgid "当前权重位为"
+msgstr ""
 
-#: apps/admin_pages/pages/permission/table.html:26
-#: apps/admin_pages/pages/role/edit-role.html:72
-msgid "权限名(Key)"
-msgstr "Permission Name (Key)"
+#: apps/admin_pages/pages/permission/edit.html:27
+msgid "权限名"
+msgstr ""
 
-#: apps/admin_pages/pages/permission/table.html:27
-#: apps/admin_pages/pages/role/edit-role.html:34
-#: apps/admin_pages/pages/role/edit-role.html:73
-#: apps/admin_pages/pages/role/index.html:30
-msgid "权重"
-msgstr "Weights"
+#: apps/admin_pages/pages/permission/edit.html:29
+msgid "权限名称"
+msgstr ""
 
-#: apps/admin_pages/pages/permission/table.html:28
+#: apps/admin_pages/pages/permission/edit.html:30
+msgid "权限名不能为空"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/edit.html:35
+msgid "可选权重位(二进制位)"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/edit.html:39
+#: apps/admin_pages/pages/permission/edit.html:42
+msgid "位置"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/edit.html:52
+msgid "可作为缺省权限"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/edit.html:55
+msgid "注:当api未设置任何权限限制时, 则需要符合缺省权限中的任何一个即可有权调用"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/index.html:24
+msgid "权重名称"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/index.html:25
+msgid "权重位"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/index.html:26
+msgid "权重值"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/index.html:27
+msgid "缺省权限"
+msgstr ""
+
+#: apps/admin_pages/pages/permission/index.html:28
 #: apps/admin_pages/pages/role/edit-role.html:74
 #: apps/admin_pages/pages/role/index.html:32
 #: apps/admin_pages/pages/setting/configs.html:45
 msgid "说明"
 msgstr "Description"
 
+#: apps/admin_pages/pages/permission/index.html:116
+msgid "\"缺省权重\"作用,对于没有设置\"自定义权限\",并且代码中指定可以使用\"缺省权重\"的API生效(只需符合其中一个缺省权限即可)."
+msgstr ""
+
 #: apps/admin_pages/pages/permission/url/add.html:2
 #: apps/admin_pages/pages/permission/url/add.html:20
 msgid "添加页面路由"
 msgstr "Adding Page Routes"
 
+#: apps/admin_pages/pages/permission/url/add.html:11
+#: apps/admin_pages/pages/permission/url/edit.html:9
+msgid "权限控制"
+msgstr "Authority Control"
+
 #: apps/admin_pages/pages/permission/url/add.html:12
 #: apps/admin_pages/pages/permission/url/add.html:24
-#: apps/admin_pages/pages/permission/url/index.html:180
+#: apps/admin_pages/pages/permission/url/index.html:191
 msgid "页面路由"
 msgstr "Page Routing"
 
@@ -2154,12 +2211,12 @@ msgid "查看权限表"
 msgstr "View Permissions Table"
 
 #: apps/admin_pages/pages/permission/url/edit.html:46
-#: apps/admin_pages/pages/permission/url/index.html:66
+#: apps/admin_pages/pages/permission/url/index.html:77
 msgid "URL(api/路由)"
 msgstr "URL (api/route)"
 
 #: apps/admin_pages/pages/permission/url/edit.html:51
-#: apps/admin_pages/pages/permission/url/index.html:70
+#: apps/admin_pages/pages/permission/url/index.html:81
 msgid "请求方式"
 msgstr "Request method"
 
@@ -2168,11 +2225,13 @@ msgid "访问权限:"
 msgstr "Access rights:"
 
 #: apps/admin_pages/pages/permission/url/edit.html:62
+#: apps/admin_pages/pages/permission/url/index.html:103
+#: apps/admin_pages/pages/permission/url/index.html:112
 msgid "未自定义"
 msgstr "Not Customized"
 
 #: apps/admin_pages/pages/permission/url/edit.html:74
-#: apps/admin_pages/pages/permission/url/index.html:76
+#: apps/admin_pages/pages/permission/url/index.html:87
 msgid "登录验证"
 msgstr "Login Verification"
 
@@ -2181,8 +2240,8 @@ msgid "选择访问权限(可多选)"
 msgstr "Select Access Rights (Multiple Selectable)"
 
 #: apps/admin_pages/pages/permission/url/edit.html:92
-#: apps/admin_pages/pages/plugin/_edit.html:116
-#: apps/admin_pages/pages/setting/_config_edit.html:83
+#: apps/admin_pages/pages/plugin/_edit.html:117
+#: apps/admin_pages/pages/setting/_config_edit.html:84
 #: apps/admin_pages/pages/setting/config-versions.html:91
 #: apps/admin_pages/pages/theme-setting/file/edit.html:41
 msgid "保存修改"
@@ -2206,18 +2265,29 @@ msgstr "URL & API Rights Control"
 msgid "添加页面"
 msgstr "Add Page"
 
-#: apps/admin_pages/pages/permission/url/index.html:54
+#: apps/admin_pages/pages/permission/url/index.html:46
+#: apps/admin_pages/pages/role/edit-role.html:34
+#: apps/admin_pages/pages/role/edit-role.html:65
+#: apps/admin_pages/pages/role/index.html:22
+msgid "权限表"
+msgstr "Permissions Table"
+
+#: apps/admin_pages/pages/permission/url/index.html:58
+msgid "\"未自定义\"权限,　并且代码中指定可以使用\"缺省权重\"的API将自动使用缺省权限验证(只需符合其中一个缺省权限即可)."
+msgstr ""
+
+#: apps/admin_pages/pages/permission/url/index.html:65
 msgid "Endpoint"
 msgstr "Endpoint"
 
-#: apps/admin_pages/pages/permission/url/index.html:60
+#: apps/admin_pages/pages/permission/url/index.html:71
 #: apps/admin_pages/pages/plugin/_edit.html:33
 #: apps/admin_pages/pages/setting/_config_edit.html:6
 #: apps/admin_pages/pages/user/index.html:249
 msgid "类型"
 msgstr "Type"
 
-#: apps/admin_pages/pages/permission/url/index.html:78
+#: apps/admin_pages/pages/permission/url/index.html:89
 #: apps/admin_pages/pages/plugin/_edit.html:53
 #: apps/admin_pages/pages/plugin/_edit.html:54
 #: apps/admin_pages/pages/setting/_config_edit.html:28
@@ -2227,20 +2297,15 @@ msgstr "Type"
 msgid "否"
 msgstr "No"
 
-#: apps/admin_pages/pages/permission/url/index.html:90
+#: apps/admin_pages/pages/permission/url/index.html:101
 msgid "权限验证"
 msgstr "Permission verification"
 
-#: apps/admin_pages/pages/permission/url/index.html:92
-#: apps/admin_pages/pages/permission/url/index.html:101
-msgid "未自定义(使用代码中配置的默认权限验证)"
-msgstr "Undefined (using default permissions configured in code)"
-
-#: apps/admin_pages/pages/permission/url/index.html:178
+#: apps/admin_pages/pages/permission/url/index.html:189
 msgid "所有"
 msgstr "All"
 
-#: apps/admin_pages/pages/permission/url/index.html:179
+#: apps/admin_pages/pages/permission/url/index.html:190
 msgid "ApiUrl"
 msgstr "ApiUrl"
 
@@ -2315,20 +2380,20 @@ msgstr "Yes"
 msgid "添加元素"
 msgstr "Add Elements"
 
-#: apps/admin_pages/pages/plugin/_edit.html:115
-#: apps/admin_pages/pages/setting/_config_edit.html:82
+#: apps/admin_pages/pages/plugin/_edit.html:116
+#: apps/admin_pages/pages/setting/_config_edit.html:83
 msgid "确认配置无误?"
 msgstr "Confirm the configuration?"
 
-#: apps/admin_pages/pages/plugin/_edit.html:126
+#: apps/admin_pages/pages/plugin/_edit.html:127
 msgid "确定执行安装依赖包?"
 msgstr "Are you sure to execute the installation dependencies?"
 
-#: apps/admin_pages/pages/plugin/_edit.html:127
+#: apps/admin_pages/pages/plugin/_edit.html:128
 msgid "安装或更新插件依赖包"
 msgstr "Installing or Updating Plug-in Dependency Packages"
 
-#: apps/admin_pages/pages/plugin/_edit.html:134
+#: apps/admin_pages/pages/plugin/_edit.html:135
 #: apps/admin_pages/pages/setting/config-versions.html:35
 #: apps/admin_pages/pages/setting/host/edit.html:28
 #: apps/admin_pages/pages/setting/host/exec-cmd.html:26
@@ -2336,16 +2401,16 @@ msgstr "Installing or Updating Plug-in Dependency Packages"
 msgid "主机IP"
 msgstr "Host IP"
 
-#: apps/admin_pages/pages/plugin/_edit.html:135
+#: apps/admin_pages/pages/plugin/_edit.html:136
 #: apps/admin_pages/pages/plugin/index.html:67
 msgid "插件依赖包安装状态"
 msgstr "Plugin Dependent Package Installation Status"
 
-#: apps/admin_pages/pages/plugin/_edit.html:148
+#: apps/admin_pages/pages/plugin/_edit.html:149
 msgid "连接服务器错误"
 msgstr "Connection Server Error"
 
-#: apps/admin_pages/pages/plugin/_edit.html:159
+#: apps/admin_pages/pages/plugin/_edit.html:160
 msgid "没有成功安装需求依赖包"
 msgstr "Successfully Installed Requirements Dependency Package"
 
@@ -2387,10 +2452,15 @@ msgstr ""
 #: apps/admin_pages/pages/plugin/index.html:57
 msgid "插件安装成功后, 1.请检查是否需要安装依赖包. 如果需要， 请安装请进入设置检查依赖包安装情况."
 msgstr ""
+"After the plug-in is successfully installed, 1. Please check if you need "
+"to install the dependencies. If necessary, please install. Please check "
+"the installation conditions."
 
 #: apps/admin_pages/pages/plugin/index.html:58
 msgid "2.检测插件是否需要配置, 部分插件需要激活后才会出现配置项"
 msgstr ""
+"2. Check whether the plug-in needs to be configured. Some plug-ins need "
+"to be activated before the configuration item appears."
 
 #: apps/admin_pages/pages/plugin/index.html:65
 msgid "名称(别名)"
@@ -2501,9 +2571,19 @@ msgstr "Role Name"
 msgid "角色名不能为空"
 msgstr "The role name cannot be null"
 
+#: apps/admin_pages/pages/role/edit-role.html:34
+#: apps/admin_pages/pages/role/edit-role.html:73
+#: apps/admin_pages/pages/role/index.html:30
+msgid "权重"
+msgstr "Weights"
+
 #: apps/admin_pages/pages/role/edit-role.html:46
 msgid "默认角色"
 msgstr "Default Role"
+
+#: apps/admin_pages/pages/role/edit-role.html:72
+msgid "权限名(Key)"
+msgstr "Permission Name (Key)"
 
 #: apps/admin_pages/pages/role/index.html:13
 #: apps/admin_pages/pages/user/edit-user.html:33
@@ -2657,7 +2737,7 @@ msgstr "Servers"
 
 #: apps/admin_pages/pages/setting/host/edit.html:26
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: apps/admin_pages/pages/setting/host/edit.html:34
 msgid "主机用户名"
@@ -3025,15 +3105,21 @@ msgstr "Not activated"
 msgid "已移除"
 msgstr "Removed"
 
-#: apps/admin_pages/static/js/webuploader.js:1015
-msgid "运行时错误"
-msgstr "Runtime error"
+#~ msgid "Token与权限"
+#~ msgstr "Tokens and Pers"
 
-#: apps/admin_pages/static/js/webuploader.js:1085
-msgid "已经连接"
-msgstr "Already connected"
+#~ msgid "数量"
+#~ msgstr "Quantity"
 
-#: apps/admin_pages/static/js/webuploader.js:1705
-msgid "按钮指定错误"
-msgstr "Button assignment error"
+#~ msgid "未自定义(使用代码中配置的默认权限验证)"
+#~ msgstr "Undefined (using default permissions configured in code)"
+
+#~ msgid "运行时错误"
+#~ msgstr "Runtime error"
+
+#~ msgid "已经连接"
+#~ msgstr "Already connected"
+
+#~ msgid "按钮指定错误"
+#~ msgstr "Button assignment error"
 
