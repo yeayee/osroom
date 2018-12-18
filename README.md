@@ -5,14 +5,18 @@
 
 ## OSROOM 开源Web系统
 OSROOM基于Python3 Flask + Mongodb + Redis开发的一个Web系统.
+
 拥有灵活的权限控制,可以管理每一个api/url的访问权限
+
 默认主题osr-style支持MarkDown与富文本两种文章发布编辑.
 
 可以用于搭建（开发）个人网站, 企业官网, 也可以作为微信小程序服务端, 小程序客户端直接调用OSROOM Api.
 也可以自己开发更多的插件或者扩展模块，让功能更全面!
 
 ### 运行环境
-目前只在Ubuntu 14.04, 16.04, 18.04; Centos>=6测试过.其余Linux发行版还未测试.
+目前只在Ubuntu 14.04, 16.04, 18.04; Centos>=6测试过.
+
+其余Linux发行版还未测试.
 
 ### 文档与Demo
 > 官网与文档
