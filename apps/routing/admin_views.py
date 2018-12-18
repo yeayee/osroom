@@ -5,7 +5,7 @@ from apps.app import csrf
 from apps.core.blueprint import admin_view
 from flask import render_template, request, g
 from werkzeug.exceptions import abort
-from apps.core.flask.permission import page_permission_required, permission_required
+from apps.core.flask.permission import page_permission_required
 from apps.modules.global_data.process.global_data import get_global_site_data
 
 __author__ = "Allen Woo"
@@ -35,7 +35,7 @@ def recover_password():
 @admin_view.route('/<path:path>', methods=['GET'])
 # 除以上页面外, 管理端所有页面都必须登录访问
 @osr_login_required
-@permission_required()
+@page_permission_required()
 def pages(path):
     '''
     GET:
