@@ -179,7 +179,7 @@ class Transations():
                 r = regex.search(r"^#~.*", temp_lines[i])
                 if r:
                     lines.remove(temp_lines[i])
-
+            lines = list(set(lines))
             wf = open(po_filepath, "w")
             wf.writelines(lines)
             wf.close()
