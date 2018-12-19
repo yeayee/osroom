@@ -9,15 +9,9 @@ OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ R
 功能支持方便,可以自己开发更多的插件或者扩展模块，让功能更全面!
 目前只在Ubuntu 14.04, 16.04，18.04和Centos 6测试过，其余Linux发行版还未测试。
 
-### 支持与功能
+### 功能与支持
 
-* 支持开发
-
-- 插件开发，官方插件Github地址: https://github.com/osroom-plugins
-- 主题开发，官方主题Github地址:  https://github.com/osroom​​​​​​​/osroom
-- 扩展 
-
-* 功能
+> 功能
 
 - 可做Web 服务端Api, Restful api，简单修改即可做微信小程序的Api！
 
@@ -35,7 +29,11 @@ OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ R
 
 更多功能请访问demo网站
 
+> 支持开发
 
+- 插件开发，官方插件Github地址: https://github.com/osroom-plugins
+- 主题开发，官方主题Github地址:  https://github.com/osroom​​​​​​​
+- 扩展 
 
 ### Demo
 
@@ -53,6 +51,10 @@ https://demo.osroom.com 
 
 长期可访问文档地址: https://osroom.github.io/osroom-doc
 
+|   Version  |   Status  |  Other   |
+| --- | --- | --- |
+|   [dev](https://github.com/osroom/osroom)    |  开发...   |    开发版 |
+|   [v1.0beat](https://github.com/osroom/osroom/tree/v1.0(beta))  |  维护...   |   v1.0测试版  |
 
 ### 为何开发？
 
@@ -60,22 +62,48 @@ https://demo.osroom.com 
 
 * 用户端部分功能
 
+MarkDown
 ![MarkDown](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/markdown.png)
+
+富文本
 ![富文本](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/richtext.png)
+
+Home
 ![Home](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/home.png)
+
+用户主页
 ![用户主页](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/user-home.png)
 
 * Admin部分功能
 
+Admin主页
 ![Admin主页](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/admin.png)
+
+Post
 ![Post](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/post.png)
+
+Media
 ![Media](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/media.png)
+
+权重管理
 ![权重管理](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/per1.png)
+
+API权重管理
 ![API权重管理](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/api-per.png)
+
+用户角色
 ![用户角色](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/role.png)
+
+用户管理
 ![用户管理](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/userm.png)
+
+Email
 ![Email](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/emailm.png)
+
+消息通知
 ![消息通知](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/send_msg.png)
+
+可配置
 ![可配置](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/config.png)
 
 
