@@ -54,7 +54,7 @@ https://demo.osroom.com 
 |   Version  |   Status  |  Other   |
 | --- | --- | --- |
 |   [dev](https://github.com/osroom/osroom)    |  开发...   |    开发版 |
-|   [v1.0beat](https://github.com/osroom/osroom/tree/v1.0(beta))  |  维护...   |   v1.0测试版  |
+|   [v1.0beat](https://github.com/osroom/osroom/tree/v1.0beta)  |  维护...   |   v1.0测试版  |
 
 ### 为何开发？
 
