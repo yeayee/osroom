@@ -59,9 +59,6 @@ def get_render_template(path):
         if not os.path.isfile(absolute_path):
             abort(404)
 
-    data = dict(request.args)
-    #for k,v in data.items():
-    #    data[k] = v[0]
-
+    data = dict(request.args.items())
     g.site_global = dict(g.site_global, **get_global_site_data(req_type="view"))
     return render_template('{}.html'.format(path), data=data)
