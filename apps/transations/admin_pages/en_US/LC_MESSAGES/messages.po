@@ -2122,7 +2122,7 @@ msgstr "Available as default Perm"
 
 #: apps/admin_pages/pages/permission/edit.html:55
 msgid "注:当api未设置任何权限限制时, 则需要符合缺省权限中的任何一个即可有权调用"
-msgstr ""
+msgstr "Note: When the api does not set any permission restrictions, you need to comply with any of the default permissions to be able to call"
 
 #: apps/admin_pages/pages/permission/index.html:24
 msgid "权重名称"
@@ -2149,7 +2149,7 @@ msgstr "Description"
 
 #: apps/admin_pages/pages/permission/index.html:116
 msgid "\"缺省权重\"作用,对于没有设置\"自定义权限\",并且代码中指定可以使用\"缺省权重\"的API生效(只需符合其中一个缺省权限即可)."
-msgstr ""
+msgstr ""\"Default weight \" role, for the \"Custom permissions\" is not set, and the API specified in the code can use the "Default weight\" API (only one of the default permissions can be met)."
 
 #: apps/admin_pages/pages/permission/url/add.html:2
 #: apps/admin_pages/pages/permission/url/add.html:20
@@ -2274,7 +2274,7 @@ msgstr "Permissions Table"
 
 #: apps/admin_pages/pages/permission/url/index.html:58
 msgid "\"未自定义\"权限,　并且代码中指定可以使用\"缺省权重\"的API将自动使用缺省权限验证(只需符合其中一个缺省权限即可)."
-msgstr ""
+msgstr "The "\" Is not customized\" permission, and the API specified in the code that can use \"Default weight\" will automatically use the default permission validation (just one of the default permissions is required)."
 
 #: apps/admin_pages/pages/permission/url/index.html:65
 msgid "Endpoint"

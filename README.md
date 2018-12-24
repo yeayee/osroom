@@ -39,7 +39,7 @@ OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ R
 
 Demo网站使用默认简单主题，安装了文件存储插件(用于作为图床)，文本内容检查插件，IP识别地址插件
 
-https://demo.osroom.com 
+https://demo.osroom.com
 
 目前Demo安装的属于测试版本，如有BUG请提交
 
