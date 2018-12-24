@@ -105,6 +105,18 @@ def update_config_file(mdb_sys, *args, **kwargs):
     doc = "__readme__='''{}'''\n".format(__readme__)
 
     # write config.py
+
+    # 把password类型替换成*, 再写入文件，防止提交代码时把密码上传到git
+    for k, v in local_config.items():
+        for k1, v1 in v.items():
+            if k1.startswith("__") and k1.endswith("__"):
+                continue
+            if "type" in v1 and v1["type"] == "password":
+                # 由于上一个版的password已被替换，现在需要把把它写写入到CONFIG中
+                CONFIG[k][k1]["value"] = v1["value"]
+                # 替换密码
+                v1["value"] = "<Your password>"
+
     temp_conf = str(json.dumps(local_config, indent=4, ensure_ascii=False))
     wf = open("{}/apps/configs/config.py".format(PROJECT_PATH), "wb")
     wf.write(bytes(info, "utf-8"))
