@@ -15,7 +15,6 @@ __author__ = "Allen Woo"
 def copy_config_to_sample():
 
     '''
-    复制config.py到config_sample,　并把密码替换掉，以免暴露到网上
     复制db_account.py到db_account_sample,　并把密码替换掉，以免暴露到网上
     '''
 
