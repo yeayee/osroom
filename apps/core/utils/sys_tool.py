@@ -19,37 +19,7 @@ def copy_config_to_sample():
     复制db_account.py到db_account_sample,　并把密码替换掉，以免暴露到网上
     '''
 
-    from apps.configs.config import __readme__
     from apps.configs.db_config import DB_CONFIG
-
-    local_config = deepcopy(CONFIG)
-    for k,v in local_config.items():
-        for k1,v1 in v.items():
-            if k1.startswith("__") and k1.endswith("__"):
-                continue
-            if "type" in v1 and v1["type"] == "password":
-                v1["value"] = "<Your password>"
-            elif not "type" in v1:
-                print("[ERROR] Check that the configuration of {}>{} is correct".format(k,k1))
-                sys.exit(-1)
-
-    # 复制配置文件为sample配置文件
-    info = '''# -*-coding:utf-8-*-\n__author__ = "Allen Woo"\n'''
-    doc = "__readme__='''{}'''\n".format(__readme__)
-
-    temp_conf = str(json.dumps(local_config, indent=4, ensure_ascii=False))
-    wf = open("{}/apps/configs/config_sample.py".format(PROJECT_PATH), "wb")
-
-    wf.write(bytes(info, "utf-8"))
-    wf.write(bytes(doc, "utf-8"))
-    wf.write(bytes("# Danger: If True, the database configuration data will be overwritten\n", "utf-8"))
-    wf.write(bytes("# 危险:如果为True, 则会把该文件配置覆盖掉数据库中保存的配置\n", "utf-8"))
-    wf.write(bytes("OVERWRITE_DB = False\n", "utf-8"))
-    wf.write(bytes("CONFIG = ", "utf-8"))
-    wf.write(bytes(temp_conf.replace("false", "False").replace("true", "True").replace("null", "None"), "utf-8"))
-    wf.close()
-    print("It has been updated config_sample.py")
-
 
     # 复制db_config.py 到　db_config_sample.py
     local_config = deepcopy(DB_CONFIG)
