@@ -183,7 +183,7 @@ def create_img_code(interference=0):
     # pic.istortion_shift()
 
     # 保存路径
-    local_dirname = get_config("upload", "IMG_CODE_DIR")
+    local_dirname = get_config("verify_code", "IMG_CODE_DIR")
     save_dir = "{}/{}".format(STATIC_PATH, local_dirname).replace("//", "/")
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -197,7 +197,7 @@ def create_img_code(interference=0):
     data = plugin_manager.call_plug(hook_name="file_storage",
                                     action="upload",
                                     localfile_path=save_img,
-                                    filename=code_img)
+                                    filename="{}/{}".format(local_dirname, code_img))
 
     if data == "__no_plugin__":
 
