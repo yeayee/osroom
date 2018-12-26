@@ -197,7 +197,7 @@ def create_img_code(interference=0):
     data = plugin_manager.call_plug(hook_name="file_storage",
                                     action="upload",
                                     localfile_path=save_img,
-                                    filename=code_img)
+                                    filename="{}/{}".format(local_dirname, code_img))
 
     if data == "__no_plugin__":
 
