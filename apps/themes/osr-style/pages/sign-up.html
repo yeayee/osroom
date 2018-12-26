@@ -6,29 +6,29 @@
         <div id="app" v-cloak>
             <p class="text-center">
                 <a href="/">
-                    <img class="osr-logo" src="{{g.site_global.site_config.LOGO_IMG_URL_SECONDAEY}}" alt="Logo">
+                    <img class="osr-logo" src="{{g.site_global.site_config.LOGO_IMG_URL}}" alt="Logo">
                 </a>
             </p>
             <div class="form-group">
-              <input name="username" id="username" type="text" class="form-control osr-input"
+              <input name="username" id="username" type="text" class="form-control osr-input input-lg"
                      v-model="username" minlength="3" placeholder="{{_('用户名')}}"
                      data-bv-notempty-message="{{_('用户名不能为空')}}"
                      data-bv-stringLength-message="{{_('用户名至少3个字符')}}" required/>
             </div>
             <div class="form-group">
-              <input name="email" id="email" class="form-control osr-input" type="email" v-model="email"
+              <input name="email" id="email" class="form-control osr-input input-lg" type="email" v-model="email"
                      data-bv-emailAddress="true" data-bv-emailAddress-message="{{_('邮箱地址不合法')}}"
                     data-bv-notempty-message="{{_('邮箱地址不能为空')}}" required
                      placeholder="{{_('电子邮箱')}}"  required/>
             </div>
             <div class="form-group">
-              <input name="password" id="password" class="form-control osr-input" type="password" v-model="password"
+              <input name="password" id="password" class="form-control osr-input input-lg" type="password" v-model="password"
                      minlength="8" placeholder="{{_('输入密码')}}"
                      data-bv-notempty-message="{{_('至少8个字符')}}"
                      data-bv-stringLength-message="{{_('至少8个字符')}}" required/>
             </div>
             <div class="form-group">
-              <input name="password2" id="password2" class="form-control osr-input" type="password" v-model="password2"
+              <input name="password2" id="password2" class="form-control osr-input input-lg" type="password" v-model="password2"
                      placeholder="{{_('再次输入密码')}}"
                      data-bv-identical="true"
                      data-bv-notempty-message="{{_('至少8个字符')}}"
@@ -39,20 +39,20 @@
             {% include 'osr-style/pages/module/_send_code.html' %}
 
             <div class="form-group">
-                <button v-on:click="sign_up()" class="btn-block btn osr-btn btn-info osr-submit-btn">
+                <button v-on:click="sign_up()" class="btn-block btn osr-btn btn-success osr-submit-btn btn-lg">
                     {{_('注册')}}
                 </button>
             </div>
             <div class="form-group">
-                <a href="/sign-in" class="btn-block btn osr-btn btn-default">
+                <a href="/sign-in" class="btn-block btn osr-btn btn-default btn-lg">
                     {{_('已有账户')}}
                 </a>
             </div>
-            <div class="form-group osr-color-gray text-center">
+            <div style="color:#ffffff" class="form-group osr-color-gray text-center">
                 {{_('点击 "注册" 即表示您同意并愿意遵守')}}<br>
-                <a href="/statement?s=user_agreement">{{_("用户协议")}}</a>
+                <a style="color:#ffffff" href="/statement?s=user_agreement">《{{_("用户协议")}}》</a>
                 与
-                <a href="/statement?s=privacy_policy">{{_("隐私政策")}}</a>
+                <a style="color:#ffffff" href="/statement?s=privacy_policy">《{{_("隐私政策")}}》</a>
             </div>
 
             <div class="form-group">

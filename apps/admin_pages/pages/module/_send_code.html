@@ -1,7 +1,7 @@
  <!--验证码区域-->
 <div class="form-group">
     <label>{{_('验证码')}}</label>
-    <input name="code" type="text" v-model="email_code" id="email_code" class="form-control osr-input"
+    <input name="code" type="text" v-model="email_code" id="email_code" class="form-control osr-input input-lg"
            minlength="4" placeholder="{{_('邮箱验证码')}}"
            data-bv-notempty-message="{{_('验证码错误')}}"
            data-bv-stringLength-message="{{_('验证码错误')}}"required/>
@@ -10,12 +10,12 @@
 
 <!--发送验证码-->
 <div id="send_code_div" class="form-group" hidden>
-    <button id="send_code"  data-toggle="modal" data-target="#send_code_modal"  class="btn osr-btn btn-info">
+    <button id="send_code"  data-toggle="modal" data-target="#send_code_modal"  class="btn osr-btn btn-info btn-lg">
         {{_('发送验证码')}}
     </button>
 </div>
 <div id="send_code_2_div" class="form-group">
-    <button id="send_code_2" v-on:click="send_code()"  class="btn osr-btn btn-info">
+    <button id="send_code_2" v-on:click="send_code()"  class="btn osr-btn btn-success btn-lg">
         {{_('发送验证码')}}
     </button>
 </div>

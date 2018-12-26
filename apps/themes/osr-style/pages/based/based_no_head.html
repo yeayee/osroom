@@ -8,6 +8,8 @@
 
 {% block body %}
 <body class="skin-black">
+    <img class="visible-lg" src="{{g.site_global.site_config.BACKGROUND_IMG_URL}}"
+         style="position: absolute; margin: 0px; padding: 0px; border: none; max-height: 100%; min-width: 100%; left: 0px;">
     <!--移动端顶部bar会固定, 以下用于防止bar遮挡掉内容-->
     <div class="visible-xs" style="padding-top:56px;"></div>
     <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -20,7 +22,6 @@
                 <!--//消息显示位置-->
                 {% block content %}{% endblock %}
             </section>
-            {% include "osr-style/pages/based/footer.html" %}
 
         </div>
         <!-- //页面的导航栏和内容 -->

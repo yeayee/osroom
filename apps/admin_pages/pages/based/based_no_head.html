@@ -9,6 +9,8 @@
 {% block body %}
 <body class="skin-black">
 
+    <img src="{{g.site_global.site_config.BACKGROUND_IMG_URL}}"
+         style="position: absolute; margin: 0px; padding: 0px; border: none; max-height: 100%; min-width: 100%; left: 0px;">
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <!-- 页面的导航栏和内容 -->
         <div>
@@ -25,4 +27,4 @@
     </div>
     {% include "based/footer-js.html" %}
 </body>
-{%  endblock %}
+{% endblock %}

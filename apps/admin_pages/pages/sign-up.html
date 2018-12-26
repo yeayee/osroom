@@ -5,28 +5,28 @@
     <section class="osr-panel">
         <div v-cloak id="app">
             <p class="text-center">
-                <img class="osr-logo" src="{{g.site_global.site_config.LOGO_IMG_URL_SECONDAEY}}" alt="Logo">
+                <img class="osr-logo" src="{{g.site_global.site_config.LOGO_IMG_URL}}" alt="Logo">
             </p>
             <div class="form-group">
-              <input name="username" id="username" type="text" class="form-control osr-input"
+              <input name="username" id="username" type="text" class="form-control osr-input input-lg"
                      v-model="username" minlength="3" placeholder="{{_('用户名')}}"
                      data-bv-notempty-message="{{_('用户名不能为空')}}"
                      data-bv-stringLength-message="{{_('用户名至少3个字符')}}" required/>
             </div>
             <div class="form-group">
-              <input name="email" id="email" class="form-control osr-input" type="email" v-model="email"
+              <input name="email" id="email" class="form-control osr-input input-lg" type="email" v-model="email"
                      data-bv-emailAddress="true" data-bv-emailAddress-message="{{_('邮箱地址不合法')}}"
                     data-bv-notempty-message="{{_('邮箱地址不能为空')}}" required
                      placeholder="电子邮箱"  required/>
             </div>
             <div class="form-group">
-              <input name="password" id="password" class="form-control osr-input" type="password" v-model="password"
+              <input name="password" id="password" class="form-control osr-input input-lg" type="password" v-model="password"
                      minlength="8" placeholder="{{_('输入密码')}}"
                      data-bv-notempty-message="{{_('至少8个字符')}}"
                      data-bv-stringLength-message="{{_('至少8个字符')}}" required/>
             </div>
             <div class="form-group">
-              <input name="password2" id="password2" class="form-control osr-input" type="password" v-model="password2"
+              <input name="password2" id="password2" class="form-control osr-input input-lg" type="password" v-model="password2"
                      placeholder="{{_('再次输入密码')}}"
                      data-bv-identical="true"
                      data-bv-notempty-message="{{_('至少8个字符')}}"
@@ -37,12 +37,12 @@
             {% include 'module/_send_code.html' %}
 
             <div class="form-group">
-                <button v-on:click="sign_up()" class="btn-block btn osr-btn btn-info osr-submit-btn">
+                <button v-on:click="sign_up()" class="btn-block btn osr-btn btn-success osr-submit-btn btn-lg">
                     {{_('注册')}}
                 </button>
             </div>
             <div class="form-group">
-                <a href="/osr-admin/sign-in" class="btn-block btn osr-btn btn-default">
+                <a href="/osr-admin/sign-in" class="btn-block btn osr-btn btn-default btn-lg">
                     {{_('已有账户')}}
                 </a>
             </div>
