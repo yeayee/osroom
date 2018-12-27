@@ -39,9 +39,11 @@ def get_file_url(file_url_obj, save_dir=get_config("upload", "SAVE_DIR")):
             url = data
         return url
     elif isinstance(file_url_obj, str):
+        if not file_url_obj:
+            file_url_obj = get_config("site_config", "DOES_NOT_EXIST_URL")
         return file_url_obj
     else:
-        return None
+        return get_config("site_config","DOES_NOT_EXIST_URL")
 
 
 def get_avatar_url(file_url_obj):

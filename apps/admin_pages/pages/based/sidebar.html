@@ -62,14 +62,6 @@
         
                 </a>
                 <ul id="media" class="osr-sidebar-menu-lv2 panel-collapse collapse" >
-                    {% if current_user.page_permission_check(["/osr-admin/media/text"])%}
-                    <li>
-                        <a href="/osr-admin/media/text">
-                            <i class="fa fa-file-text-o"></i>
-                            <span>{{_("文本内容")}}</span>
-                        </a>
-                    </li>
-                    {% endif %}
                     {% if current_user.page_permission_check(["/osr-admin/media/image"])%}
                     <li>
                         <a href="/osr-admin/media/image">
@@ -78,6 +70,16 @@
                         </a>
                     </li>
                     {% endif %}
+
+                    {% if current_user.page_permission_check(["/osr-admin/media/text"])%}
+                    <li>
+                        <a href="/osr-admin/media/text">
+                            <i class="fa fa-file-text-o"></i>
+                            <span>{{_("文本内容")}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
                     {% if current_user.page_permission_check(["/osr-admin/media/audio"])%}
                     <li>
                         <a href="/osr-admin/media/audio">
@@ -227,7 +229,7 @@
             <li>
                 <a href="javascript:;" data-target="#theme" data-toggle="collapse">
                     <i class="fa fa-laptop"></i>
-                    <span>{{_("主题外观")}}</span>
+                    <span>{{_("主页与页面")}}</span>
                     <i class="fa fa-angle-right osr-sidebar-fa-right"></i>
                 </a>
                 <ul id="theme" class="osr-sidebar-menu-lv2 collapse" >
@@ -244,7 +246,7 @@
                     <li>
                         <a href="/osr-admin/theme-setting/file">
                             <i class="fa fa-paste"></i>
-                            <span>{{_("编辑")}}</span>
+                            <span>{{_("页面")}}</span>
                         </a>
                     </li>
                     {% endif %}
@@ -256,20 +258,12 @@
             "/osr-admin/theme-setting/display/audio", "/osr-admin/theme-setting/display/video", "/osr-admin/theme-setting/display/other" ])%}
               <li>
                 <a href="javascript:;" data-target="#theme-display" data-toggle="collapse">
-                    <i class="fa fa-play-circle-o"></i>
+                    <i class="fa fa-laptop"></i>
                     <span>{{_("主题展示设置")}}</span>
                     <i class="fa fa-angle-right osr-sidebar-fa-right"></i>
 
                 </a>
                 <ul id="theme-display" class="osr-sidebar-menu-lv2 panel-collapse collapse" >
-                    {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/text"])%}
-                    <li>
-                        <a href="/osr-admin/theme-setting/display/text">
-                            <i class="fa fa-file-text-o"></i>
-                            <span>{{_("文本")}}</span>
-                        </a>
-                    </li>
-                    {% endif %}
                     {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/image"])%}
                     <li>
                         <a href="/osr-admin/theme-setting/display/image">
@@ -278,6 +272,15 @@
                         </a>
                     </li>
                     {% endif %}
+                    {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/text"])%}
+                    <li>
+                        <a href="/osr-admin/theme-setting/display/text">
+                            <i class="fa fa-file-text-o"></i>
+                            <span>{{_("文本")}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
                     {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/audio"])%}
                     <li>
                         <a href="/osr-admin/theme-setting/display/audio">
@@ -328,7 +331,7 @@
                     <li>
                         <a href="/osr-admin/setting/configs">
                             <i class="fa fa-cog"></i>
-                            <span>{{_("参数配置")}}</span>
+                            <span>{{_("站点配置")}}</span>
         
                         </a>
                     </li>

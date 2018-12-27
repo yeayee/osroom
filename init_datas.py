@@ -7,7 +7,7 @@ web初始化数据
 '''
 INIT_DATAS = [
     {"db":"osr_web", "coll":"category","datas":
-    [{ "name" : "风光", "type" : "image", "user_id" : 0 },
+    [{ "name" : "风景", "type" : "image", "user_id" : 0 },
     { "name" : "城市", "type" : "image", "user_id" : 0 }]
 },
 

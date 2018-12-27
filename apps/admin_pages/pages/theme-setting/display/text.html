@@ -105,7 +105,7 @@
                                 <span v-else >{[media.title]}</span>
                             </td>
                             <td>
-                                <span v-if="media.link.length>15" class="text-secondary"
+                                <span v-if="media.link && media.link.length>15" class="text-secondary"
                                 v-on:mouseover="osr_popover('link'+media._id, media.link, 'open');"
                                v-on:mouseout="osr_popover('link'+media._id, media.link, 'close');" :id="'link'+media._id">
                                     {[media.link.slice(7,15)]}...

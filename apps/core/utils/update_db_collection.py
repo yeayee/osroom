@@ -1,5 +1,11 @@
 # -*-coding:utf-8-*-
 import json
+
+import os
+from copy import deepcopy
+
+import time
+
 from apps.configs.sys_config import APPS_PATH
 from apps.core.logger.web_logging import web_start_log
 from init_datas import INIT_DATAS
@@ -84,15 +90,69 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
             print("* [Initialization data] {}".format(data["coll"]))
             db.dbs[data["coll"]].insert_many(data["datas"])
 
+    '''
+    默认主题初始化数据
+    '''
+    init_data = []
+    init_file = "{}/themes/osr-style/init_setting.json".format(APPS_PATH)
+    if os.path.exists(init_file):
+        # 读取数据
+        with open(init_file) as rf:
+            jsondata = rf.read()
+            if jsondata:
+                init_data = json.loads(jsondata)
 
+    for data in init_data:
+        if mdb_sys.dbs["theme_display_setting"].find_one({"name":data["name"]}):
+            continue
+        tempdata = deepcopy(data)
 
-    dbs = list(mdb_web.db.media.find({},{"_id":0}))
-    for db in dbs:
-        r = mdb_web.db.category.find_one({"name":db["category"], "type":"{}_theme".format(db["type"]), "user_id":0})
-        if r:
-            db["category_id"] = str(r["_id"])
+        '''
+        版本更新兼容:找出原来的地方的数据复制, 并删除老数据
+        '''
+        exists_data = mdb_web.db.media.find_one({"name":data["name"]})
+        old_id = None
+        if exists_data:
+            tempdata = exists_data
+            tempdata["category"] = data["category"]
+            old_id = tempdata["_id"]
+            del tempdata["_id"]
         else:
-            r = mdb_web.db.category.insert_one({"name": db["category"], "type": "{}_theme".format(db["type"]), "user_id": 0})
-            db["category_id"] = r.inserted_id
+            if "text" in tempdata:
+                tempdata["text_html"] = tempdata["text"]
+            elif "text_html" in tempdata:
+                tempdata["text"] = tempdata["tetext_html"]
 
-    mdb_sys.dbs["theme_display_setting"].insert(dbs)
+            other_data = {"link":"",
+                    "link_open_new_tab":0,
+                    "link_name":"",
+                    "text_imgs":[],
+                    "time":time.time(),
+                    "user_id":0,
+                    "url":"",
+                    "category": "",
+                    "title": "title",
+                    "text": "",
+                    "text_html": ""}
+
+            for k,v in other_data.items():
+                if k not in tempdata:
+                    tempdata[k] = v
+
+        # 查找是否存在这个分类
+        r = mdb_web.db.category.find_one({"name": tempdata["category"],
+                                          "type": "{}_theme".format(tempdata["type"]),
+                                          "user_id": 0})
+        if r:
+            tempdata["category_id"] = str(r["_id"])
+        else:
+            # 不存在则创建
+            r = mdb_web.db.category.insert_one(
+                {"name": tempdata["category"],
+                 "type": "{}_theme".format(tempdata["type"]),
+                 "user_id": 0})
+            tempdata["category_id"] = str(r.inserted_id)
+        r = mdb_sys.dbs["theme_display_setting"].insert_one(tempdata)
+        if r.inserted_id and old_id:
+            # 删除旧的数据
+            mdb_web.db.media.delete_one({"_id": old_id})

@@ -172,7 +172,6 @@ def get_display_settings():
             sort[i] = (list(sort[i].keys())[0], list(sort[i].values())[0])
     else:
         sort = [("time", -1)]
-
     display_settings = mdb_sys.db.theme_display_setting.find(query)
     data_cnt = display_settings.count(True)
     display_settings = list(display_settings.sort(sort).skip(pre * (page - 1)).limit(pre))
@@ -216,7 +215,8 @@ def edit_display_setting():
             return data
         else:
             # 删除旧的图片
-            file_del(old_display_setting["url"])
+            if "url" in old_display_setting:
+                file_del(old_display_setting["url"])
             temp_url = None
             if "keys" in data:
                 for key in data["keys"]:

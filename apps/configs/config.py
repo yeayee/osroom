@@ -94,7 +94,7 @@ CONFIG = {
         },
         "OPEN_COMMENT": {
             "type": "bool",
-            "value": False,
+            "value": True,
             "sort": 99,
             "info": "评论开关,是否打开评论功能?"
         },
@@ -186,7 +186,7 @@ CONFIG = {
         "__sort__": 7,
         "CATEGORY_MAX_LEN": {
             "type": "int",
-            "value": 15,
+            "value": 30,
             "sort": 99,
             "info": "分类名称类型名最多几个字符"
         },
@@ -195,17 +195,12 @@ CONFIG = {
         "CATEGORY_TYPE": {
             "type": "dict",
             "value": {
-                "视频库": "video",
-                "其他": "other",
-                "图库": "image",
-                "主题音频": "audio_theme",
-                "主题视频": "video_theme",
-                "主题图片图文": "image_theme",
-                "文集": "post",
                 "文本内容": "text",
-                "主题其他": "other_theme",
-                "音频库": "audio",
-                "主题文本": "text_theme"
+                "文集": "post",
+                "图文|图库": "image",
+                "视频库": "video",
+                "其他类型库": "other",
+                "音频库": "audio"
             },
             "sort": 99,
             "info": "分类的品种只能有这几种"
@@ -246,6 +241,12 @@ CONFIG = {
             "value": "http://www.osroom.com",
             "sort": 11,
             "info": "Web站点URL(如果没有填写, 则使用默认的当前域名首页地址)"
+        },
+        "DOES_NOT_EXIST_URL": {
+            "type": "string",
+            "value": "/static/sys_imgs/does_not_exist.png",
+            "sort": 11,
+            "info": "当一个文件或图片不存在的时候, 返回此Image URL"
         },
         "TITLE_PREFIX_ADM": {
             "type": "string",
@@ -288,29 +289,9 @@ CONFIG = {
         "FRIEND_LINK": {
             "type": "dict",
             "value": {
-                "七牛云": {
-                    "level": 1,
-                    "url": "www.aliyun.com",
-                    "icon_url": "",
-                    "aliases": "七牛云"
-                },
                 "Github": {
-                    "level": 1,
-                    "url": "www.aliyun.com",
-                    "icon_url": "",
-                    "aliases": "Github"
-                },
-                "阿里云": {
-                    "level": 1,
-                    "url": "www.aliyun.com",
-                    "icon_url": "",
-                    "aliases": "阿里云"
-                },
-                "码云": {
-                    "level": 1,
-                    "url": "www.aliyun.com",
-                    "icon_url": "",
-                    "aliases": "码云"
+                    "logo_url": "http://osr.local.com:5000/static/admin/sys_imgs/osroom-logo-1.png?w=240&h=240",
+                    "url": "https://github.com/osroom/osroom"
                 }
             },
             "sort": 11,
@@ -325,7 +306,7 @@ CONFIG = {
         "__restart__": "not_must",
         "MB_LOGO_DISPLAY": {
             "type": "string",
-            "value": "name",
+            "value": "logo",
             "sort": 4,
             "info": "移动端用App name 还是Logo image 作为APP(Web)的Logo显示, 为空则App name优先<br>可填logo或name(需要主题支持)"
         },
@@ -337,7 +318,7 @@ CONFIG = {
         },
         "STATIC_FILE_VERSION": {
             "type": "int",
-            "value": 20181024065925,
+            "value": 20181208125734,
             "sort": 12,
             "info": "静态文件版本(当修改了CSS,JS等静态文件的时候，修改此版本号)"
         },
@@ -395,13 +376,13 @@ CONFIG = {
         "__sort__": 99,
         "SESSION_TYPE": {
             "type": "string",
-            "value": "mongodb",
+            "value": "redis",
             "sort": 99,
             "info": "保存Session会话的类型,可选mongodb, redis"
         },
         "SESSION_KEY_PREFIX": {
             "type": "string",
-            "value": "osroom",
+            "value": "osr-session:",
             "sort": 99,
             "info": "添加一个前缀,之前所有的会话密钥。这使得它可以为不同的应用程序使用相同的后端存储服务器"
         },
@@ -451,7 +432,7 @@ CONFIG = {
         "__info__": "验证码(建议技术管理员配置)",
         "IMG_CODE_DIR": {
             "type": "string",
-            "value": "verify_code",
+            "value": "admin/verify_code",
             "sort": 99,
             "info": "图片验证码保存目录"
         },
@@ -477,8 +458,8 @@ CONFIG = {
         "SEND_CODE_TYPE": {
             "type": "dict",
             "value": {
-                "string": 0,
-                "int": 6
+                "int": 6,
+                "string": 0
             },
             "sort": 99,
             "info": "发送的验证码字符类型，与字符个数"
@@ -501,10 +482,9 @@ CONFIG = {
         "UP_ALLOWED_EXTENSIONS": {
             "type": "list",
             "value": [
-                "xls",
+                "txt",
                 "xlxs",
                 "excel",
-                "txt",
                 "pdf",
                 "png",
                 "jpg",
@@ -533,7 +513,7 @@ CONFIG = {
     "key": {
         "SECURITY_PASSWORD_SALT": {
             "type": "string",
-            "value": "ceavewrvwtrhdyjydj",
+            "value": "12343erfegrg",
             "sort": 99,
             "info": "安全密码码盐值"
         },
@@ -541,7 +521,7 @@ CONFIG = {
         "__restart__": "must",
         "SECRET_KEY": {
             "type": "string",
-            "value": "ceavewrvwtrhdyjydj",
+            "value": "12333r32fddvve",
             "sort": 99,
             "info": "安全验证码"
         },
@@ -579,8 +559,8 @@ CONFIG = {
         "AUDIT_PROJECT_KEY": {
             "type": "dict",
             "value": {
-                "username": "审核用户名",
-                "class_name": "审核一些短的分类名称, 如category, tag"
+                "class_name": "审核一些短的分类名称, 如category, tag",
+                "username": "审核用户名"
             },
             "sort": 99,
             "info": "审核项目的Key(键),审核时会使用一个Key来获取审核规则,正则去匹配用户输入的内容"
@@ -617,7 +597,7 @@ CONFIG = {
         "__info__": "文章内容设置",
         "NUM_PAGE": {
             "type": "int",
-            "value": 10,
+            "value": 15,
             "sort": 99,
             "info": "每个页面获取几篇文章, 如果请求获取文章时指定了指定了per参数, 则此配置无效(此配置也对管理端无效)"
         },
@@ -649,10 +629,7 @@ CONFIG = {
         },
         "DEFAULT_AVATAR": {
             "type": "string",
-            "value": [
-                "/static/admin/sys_imgs/avatar_default_1.png",
-                "/static/admin/sys_imgs/avatar_default_2.png"
-            ],
+            "value": "/static/sys_imgs/avatar_default.png",
             "sort": 99,
             "info": "新注册用户默认头像的URL"
         },
@@ -697,7 +674,7 @@ CONFIG = {
         "__sort__": 10,
         "APP_NAME": {
             "type": "string",
-            "value": "OSR DEMO",
+            "value": "",
             "sort": 99,
             "info": "在邮件中显示的APP(WEB)名称(1.不填写则不显示.2.如果主题邮件发送html模板不支持，也不显示)"
         },
@@ -738,7 +715,7 @@ CONFIG = {
         "__info__": "邮件发送参数设置（建议技术管理人员使用）",
         "APP_LOG_URL": {
             "type": "string",
-            "value": "https://avatars1.githubusercontent.com/u/14039952?s=460&v=4",
+            "value": "/static/sys_imgs/osroom-logo.png",
             "sort": 99,
             "info": "在邮件中显示的LOGO图片URL(1.不填写则不显示.2.如果主题邮件发送html模板不支持，也不显示)"
         },

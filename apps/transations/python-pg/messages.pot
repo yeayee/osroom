@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-12-18 17:34+0800\n"
+"POT-Creation-Date: 2018-12-28 00:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,222 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.1\n"
-
-#: apps/configs/sys_config.py:98
-msgid "405, The method is not allowed for the requested URL"
-msgstr ""
-
-#: apps/core/auth/jwt_auth.py:65
-msgid "The provided OSR-BearerToken has expired"
-msgstr ""
-
-#: apps/core/auth/jwt_auth.py:68
-msgid "Invalid OSR-BearerToken"
-msgstr ""
-
-#: apps/core/auth/jwt_auth.py:117 apps/core/auth/jwt_auth.py:143
-msgid "User authentication failed, user does not exist"
-msgstr ""
-
-#: apps/core/auth/jwt_auth.py:123
-msgid ""
-"User authentication token expired or changed. Please log in again for "
-"access"
-msgstr ""
-
-#: apps/core/auth/jwt_auth.py:125
-msgid "Token is abnormal"
-msgstr ""
-
-#: apps/core/auth/jwt_auth.py:127 apps/core/auth/jwt_auth.py:159
-msgid "No user authentication token provided \"OSR-BearerToken\""
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:64
-msgid "Create up to 2 tokens"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:77
-msgid "Activate token successfully"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:79
-msgid "Activation token failed"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:94
-msgid "Disable token successfully"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:96
-msgid "Disable token failed"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:98
-msgid "Keep at least one active token"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:111
-#: apps/modules/message/process/sys_message.py:86
-#: apps/modules/message/process/user_message.py:184
-#: apps/modules/permission/process/permission.py:185
-#: apps/modules/permission/process/url_permission.py:190
-#: apps/modules/plug_in_manager/process/manager.py:118
-#: apps/modules/theme_setting/process/page.py:101
-#: apps/modules/theme_setting/process/themes.py:268
-msgid "Successfully deleted"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:113 apps/modules/audit/process/rules.py:70
-#: apps/modules/category/process/category.py:127
-#: apps/modules/comments/process/comment.py:233
-#: apps/modules/permission/process/url_permission.py:192
-msgid "Delete failed"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:115
-msgid "Delete failed, keep at least one token"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:149
-msgid "Invalid SecretToken for OSR-RestsToken"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:161
-msgid ""
-"Token malformed, should be 'SecretToken <token>' or 'AccessToken <token>'"
-" and 'ClientId <client_id>'"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:166 apps/core/flask/request.py:78
-msgid ""
-"Token is miss, unconventional web browsing requests please provide \"OSR-"
-"RestToken\", otherwise provide \"X-CSRFToken\""
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:190
-msgid "Failed to get, please try again"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:193
-msgid "The OSR-RestToken provided by the request header is not a SecretToken"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:209
-msgid "Invalid AccessToken or AccessToken has expired"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:214
-msgid "Can not find the ClientId matching 'AccessToken'"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:221
-msgid "SecretToken in OSr-RestToken is invalid"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:227
-msgid "AccessToken in OSr-RestToken is invalid"
-msgstr ""
-
-#: apps/core/auth/rest_token_auth.py:233
-msgid "OSR-RestToken validation failed."
-msgstr ""
-
-#: apps/core/flask/errorhandler.py:61
-msgid ""
-"Please add the 'OSR-RestToken' or 'X-CSRFToken' request header, the "
-"specific use please refer to the osroom system documentation: "
-"http://osroom.com"
-msgstr ""
-
-#: apps/core/flask/errorhandler.py:68
-msgid "Not logged in"
-msgstr ""
-
-#: apps/core/flask/errorhandler.py:94
-msgid "An error occurred. Please contact the administrator"
-msgstr ""
-
-#: apps/core/flask/errorhandler.py:96
-msgid "Permission denied"
-msgstr ""
-
-#: apps/core/flask/errorhandler.py:99
-msgid "The api does not exist or has been deprecated"
-msgstr ""
-
-#: apps/core/flask/errorhandler.py:102
-msgid "Server error"
-msgstr ""
-
-#: apps/core/flask/errorhandler.py:106
-msgid "Server error, please check whether the third-party plug-in is normal"
-msgstr ""
-
-#: apps/core/flask/login_manager.py:53
-msgid "Anonymous users can not access '{}', need to log in"
-msgstr ""
-
-#: apps/core/flask/login_manager.py:63
-msgid "Anonymous users can not access, you need to log in"
-msgstr ""
-
-#: apps/core/flask/permission.py:38 apps/core/flask/permission.py:61
-msgid "Permission denied,requires \"{}\" permission"
-msgstr ""
-
-#: apps/core/flask/reqparse.py:11
-msgid "The \"{}\" cannot be empty"
-msgstr ""
-
-#: apps/core/flask/reqparse.py:21
-msgid "The minimum length of \"{}\" is {} characters"
-msgstr ""
-
-#: apps/core/flask/reqparse.py:32
-msgid "The maximum length of \"{}\" is {} characters"
-msgstr ""
-
-#: apps/core/flask/reqparse.py:42
-msgid "\"{}\" needs to be of type {}"
-msgstr ""
-
-#: apps/core/flask/reqparse.py:51
-msgid "The value of parameter \"{}\" can only be one of \"{}\""
-msgstr ""
-
-#: apps/core/flask/reqparse.py:60
-msgid "The value of parameter \"{}\" can not be \"{}\""
-msgstr ""
-
-#: apps/core/flask/reqparse.py:69
-msgid "Parameter {} can only be of the following type: \"{}\""
-msgstr ""
-
-#: apps/core/flask/reqparse.py:80 apps/core/flask/reqparse.py:86
-msgid "The value of parameter \"{}\" is illegal"
-msgstr ""
-
-#: apps/core/plug_in/manager.py:107
-msgid "Plugin startup file does not exist"
-msgstr ""
-
-#: apps/core/plug_in/manager.py:227
-#: apps/modules/theme_setting/process/themes.py:173
-msgid "Configuration file \"conf.yaml\" but few parameters \"{}\""
-msgstr ""
-
-#: apps/core/plug_in/manager.py:230
-msgid "Missing startup file in plugin package"
-msgstr ""
-
-#: apps/core/plug_in/manager.py:241
-msgid "Plugin installed successfully"
-msgstr ""
-
-#: apps/core/plug_in/manager.py:244
-msgid "Missing plugin main function(execution function)"
-msgstr ""
 
 #: apps/modules/audit/process/rules.py:41
 msgid "rule"
@@ -253,6 +37,13 @@ msgstr ""
 msgid "Delete the success,{}"
 msgstr ""
 
+#: apps/modules/audit/process/rules.py:70
+#: apps/modules/category/process/category.py:127
+#: apps/modules/comments/process/comment.py:233
+#: apps/modules/permission/process/url_permission.py:192
+msgid "Delete failed"
+msgstr ""
+
 #: apps/modules/category/process/category.py:23
 msgid "category id"
 msgstr ""
@@ -271,15 +62,10 @@ msgstr ""
 #: apps/modules/plug_in_manager/process/manager.py:52
 #: apps/modules/plug_in_manager/process/manager.py:88
 #: apps/modules/plug_in_manager/process/manager.py:112
+#: apps/modules/theme_setting/process/display_setting.py:53
+#: apps/modules/theme_setting/process/display_setting.py:205
 #: apps/modules/user/process/role.py:51 apps/modules/user/process/role.py:54
 #: apps/modules/user/process/role.py:95
-#: apps/plugins/warehouse_plugin/process/business.py:39
-#: apps/plugins/warehouse_plugin/process/business.py:71
-#: apps/plugins/warehouse_plugin/process/goods_category.py:37
-#: apps/plugins/warehouse_plugin/process/goods_category.py:65
-#: apps/plugins/warehouse_plugin/process/goods_type.py:35
-#: apps/plugins/warehouse_plugin/process/goods_type.py:60
-#: apps/utils/validation/str_format.py:21
 msgid "name"
 msgstr ""
 
@@ -293,6 +79,7 @@ msgstr ""
 #: apps/modules/permission/process/url_permission.py:167
 #: apps/modules/plug_in_manager/process/setting.py:142
 #: apps/modules/setting/process/settings.py:248
+#: apps/modules/theme_setting/process/display_setting.py:286
 msgid "Modify the success"
 msgstr ""
 
@@ -433,37 +220,47 @@ msgstr ""
 
 #: apps/modules/media/process/media.py:51
 #: apps/modules/media/process/media.py:155
+#: apps/modules/theme_setting/process/display_setting.py:49
+#: apps/modules/theme_setting/process/display_setting.py:151
 msgid "type"
 msgstr ""
 
 #: apps/modules/media/process/media.py:71
 #: apps/modules/media/process/media.py:262
+#: apps/modules/theme_setting/process/display_setting.py:69
+#: apps/modules/theme_setting/process/display_setting.py:255
 msgid "The type \"{}\" exists in the name \"{}\""
 msgstr ""
 
 #: apps/modules/media/process/media.py:104
+#: apps/modules/theme_setting/process/display_setting.py:102
 msgid "{} uploaded successfully"
 msgstr ""
 
 #: apps/modules/media/process/media.py:109
 #: apps/modules/permission/process/url_permission.py:108
+#: apps/modules/theme_setting/process/display_setting.py:107
 #: apps/modules/theme_setting/process/page.py:68
 msgid "Added successfully"
 msgstr ""
 
 #: apps/modules/media/process/media.py:234
+#: apps/modules/theme_setting/process/display_setting.py:227
 msgid "Update picture successfully"
 msgstr ""
 
 #: apps/modules/media/process/media.py:236
+#: apps/modules/theme_setting/process/display_setting.py:229
 msgid "Failed to update"
 msgstr ""
 
 #: apps/modules/media/process/media.py:295
+#: apps/modules/theme_setting/process/display_setting.py:288
 msgid "The content is not modified"
 msgstr ""
 
 #: apps/modules/media/process/media.py:320
+#: apps/modules/theme_setting/process/display_setting.py:311
 msgid "{} files have been deleted"
 msgstr ""
 
@@ -472,10 +269,7 @@ msgstr ""
 #: apps/modules/message/process/user_message.py:186
 #: apps/modules/plug_in_manager/process/manager.py:124
 #: apps/modules/setting/process/host_setting.py:70
-#: apps/plugins/warehouse_plugin/process/business.py:115
-#: apps/plugins/warehouse_plugin/process/goods.py:408
-#: apps/plugins/warehouse_plugin/process/goods_category.py:103
-#: apps/plugins/warehouse_plugin/process/goods_type.py:101
+#: apps/modules/theme_setting/process/display_setting.py:313
 msgid "Failed to delete"
 msgstr ""
 
@@ -520,6 +314,16 @@ msgstr ""
 
 #: apps/modules/message/process/send_msg.py:99
 msgid "No user mobile phone number was obtained"
+msgstr ""
+
+#: apps/modules/message/process/sys_message.py:86
+#: apps/modules/message/process/user_message.py:184
+#: apps/modules/permission/process/permission.py:185
+#: apps/modules/permission/process/url_permission.py:190
+#: apps/modules/plug_in_manager/process/manager.py:118
+#: apps/modules/theme_setting/process/page.py:101
+#: apps/modules/theme_setting/process/themes.py:268
+msgid "Successfully deleted"
 msgstr ""
 
 #: apps/modules/message/process/user_message.py:160
@@ -855,6 +659,10 @@ msgstr ""
 
 #: apps/modules/theme_setting/process/themes.py:151
 msgid "Theme installed successfully"
+msgstr ""
+
+#: apps/modules/theme_setting/process/themes.py:173
+msgid "Configuration file \"conf.yaml\" but few parameters \"{}\""
 msgstr ""
 
 #: apps/modules/theme_setting/process/themes.py:177
@@ -1230,264 +1038,5 @@ msgstr ""
 msgid ""
 "The system detected that your operation is too frequent and you need to "
 "verify the picture verification code"
-msgstr ""
-
-#: apps/plugins/aliyun_oss_plugin/upfile_cloud.py:104
-msgid "Please configure the third-party file storage domain name"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:24
-#: apps/plugins/warehouse_plugin/process/goods_category.py:24
-#: apps/plugins/warehouse_plugin/process/goods_type.py:23
-msgid "Successful data acquisition"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:39
-#: apps/plugins/warehouse_plugin/process/goods_category.py:37
-msgid "goods_type_id"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:46
-msgid "business already exists"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:56
-msgid "Add business successfully"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:77
-msgid "Business already exists"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:87
-msgid "Update business successfully"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:98
-#: apps/plugins/warehouse_plugin/process/goods.py:396
-#: apps/plugins/warehouse_plugin/process/goods_category.py:86
-#: apps/plugins/warehouse_plugin/process/goods_type.py:81
-msgid "ids"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:112
-msgid "Successfully deleted {} business"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/business.py:118
-msgid ""
-"There are {} business below the goods, can not be deleted, can not be "
-"deleted"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:30
-#: apps/plugins/warehouse_plugin/process/goods.py:107
-#: apps/plugins/warehouse_plugin/process/goods.py:231
-#: apps/plugins/warehouse_plugin/process/goods_sales.py:23
-msgid "goods_id"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:49
-msgid "customize id"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:53
-msgid "goods type"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:56
-msgid "category"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:77
-#: apps/plugins/warehouse_plugin/process/goods.py:90
-msgid "Goods ID already exists"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:80
-msgid "Update information succeeded"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:93
-msgid "Add goods successfully"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:107
-msgid "property name"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:114
-#: apps/plugins/warehouse_plugin/process/goods.py:238
-#: apps/plugins/warehouse_plugin/process/goods_sales.py:31
-msgid "There is no goods"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:174
-#: apps/plugins/warehouse_plugin/process/goods.py:196
-msgid "Quantity and price must be Numbers"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:219
-msgid "Update {} succeeded"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:253
-msgid "The proportion of ingredients must be a number"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:257
-msgid "The proportion of ingredients is greater than 100%"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:265
-msgid "Update cloth succeeded"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:314
-#: apps/plugins/warehouse_plugin/process/goods.py:386
-msgid "No related data found"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods.py:405
-msgid "Successfully deleted {} goods"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_category.py:44
-#: apps/plugins/warehouse_plugin/process/goods_category.py:71
-msgid "Item category already exists"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_category.py:52
-msgid "Add item category successfully"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_category.py:75
-msgid "Update item category successfully"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_category.py:100
-msgid "Successfully deleted {} category"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_category.py:106
-msgid ""
-"There are {} category below the goods, can not be deleted, can not be "
-"deleted"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_sales.py:24
-msgid "modify_op"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_sales.py:38
-msgid "Without this attribute"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_sales.py:71
-msgid "Update succeeded"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_type.py:41
-#: apps/plugins/warehouse_plugin/process/goods_type.py:66
-msgid "Item type already exists"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_type.py:48
-msgid "Add item type successfully"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_type.py:70
-msgid "Update item type successfully"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_type.py:98
-msgid "Successfully deleted {} type"
-msgstr ""
-
-#: apps/plugins/warehouse_plugin/process/goods_type.py:104
-msgid ""
-"There is {} type with a small category or a business, so you can't delete"
-" it."
-msgstr ""
-
-#: apps/utils/pyssh/pyssh.py:42
-msgid "Please improve the host information"
-msgstr ""
-
-#: apps/utils/send_msg/send_message.py:24
-msgid ""
-"There is no plug-in for sending SMS messages to mobile phones, please "
-"install the relevant plug-in"
-msgstr ""
-
-#: apps/utils/send_msg/send_message.py:31
-msgid "Failed to send"
-msgstr ""
-
-#: apps/utils/send_msg/send_message.py:35
-msgid "SMS sent successfully"
-msgstr ""
-
-#: apps/utils/validation/str_format.py:27
-msgid "The name format is not correct,You can't use '.','*','#','?'"
-msgstr ""
-
-#: apps/utils/validation/str_format.py:28
-msgid ""
-"Some contents contain sensitive information or do not meet the "
-"requirements of this site. Please correct it and try again."
-msgstr ""
-
-#: apps/utils/validation/str_format.py:50
-msgid "custom domain"
-msgstr ""
-
-#: apps/utils/validation/str_format.py:54
-msgid ""
-"The domain format is not correct,Only use Numbers, letters, and at least "
-"4 characters"
-msgstr ""
-
-#: apps/utils/validation/str_format.py:70
-#: apps/utils/validation/str_format.py:84
-msgid "The email format is not correct"
-msgstr ""
-
-#: apps/utils/validation/str_format.py:91
-msgid "The url format is not correct"
-msgstr ""
-
-#: apps/utils/validation/str_format.py:103
-msgid ""
-"Password at least 8 characters! And at least contain Numbers, letters, "
-"special characters of two kinds"
-msgstr ""
-
-#: apps/utils/validation/str_format.py:115
-msgid "The password is too simple, can not use continuous characters!"
-msgstr ""
-
-#: apps/utils/verify/msg_verify_code.py:70
-msgid "Verification code"
-msgstr ""
-
-#: apps/utils/verify/msg_verify_code.py:80
-msgid "Has been sent. If not, please check spam"
-msgstr ""
-
-#: apps/utils/verify/msg_verify_code.py:87
-msgid ""
-"[{}] Your verification code is: {}. If you do not send it, please ignore "
-"it. Please do not tell the verification code to others"
-msgstr ""
-
-#: apps/utils/verify/msg_verify_code.py:113
-msgid "Your verification code is"
-msgstr ""
-
-#: apps/utils/verify/msg_verify_code.py:114
-msgid ""
-"If you do not send it, please ignore it.Please do not tell the "
-"verification code to others"
 msgstr ""
 
