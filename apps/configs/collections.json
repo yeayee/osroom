@@ -247,7 +247,22 @@
             "name": "<class 'str'>"
         },
         "msg_code": {},
-        "media": {},
+        "media": {
+            "category": "<class 'str'>",
+            "category_id": "<class 'str'>",
+            "link": "<class 'NoneType'>",
+            "link_open_new_tab": "<class 'int'>",
+            "link_name": "<class 'NoneType'>",
+            "title": "<class 'NoneType'>",
+            "text": "<class 'str'>",
+            "text_html": "<class 'str'>",
+            "text_imgs": "<class 'list'>",
+            "type": "<class 'str'>",
+            "time": "<class 'float'>",
+            "user_id": "<class 'int'>",
+            "name": "<class 'str'>",
+            "url": "<class 'dict'>"
+        },
         "access_record": {
             "post_id": "<class 'str'>",
             "sids": "<class 'list'>",
