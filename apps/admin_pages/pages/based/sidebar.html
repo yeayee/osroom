@@ -239,6 +239,7 @@
                         </a>
                     </li>
                     {% endif %}
+
                     {% if current_user.page_permission_check(["/osr-admin/theme-setting/file"])%}
                     <li>
                         <a href="/osr-admin/theme-setting/file">
@@ -250,7 +251,61 @@
                 </ul>
             </li>
             {% endif %}
-        
+
+            {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/text", "/osr-admin/theme-setting/display/image",
+            "/osr-admin/theme-setting/display/audio", "/osr-admin/theme-setting/display/video", "/osr-admin/theme-setting/display/other" ])%}
+              <li>
+                <a href="javascript:;" data-target="#theme-display" data-toggle="collapse">
+                    <i class="fa fa-play-circle-o"></i>
+                    <span>{{_("主题展示设置")}}</span>
+                    <i class="fa fa-angle-right osr-sidebar-fa-right"></i>
+
+                </a>
+                <ul id="theme-display" class="osr-sidebar-menu-lv2 panel-collapse collapse" >
+                    {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/text"])%}
+                    <li>
+                        <a href="/osr-admin/theme-setting/display/text">
+                            <i class="fa fa-file-text-o"></i>
+                            <span>{{_("文本")}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/image"])%}
+                    <li>
+                        <a href="/osr-admin/theme-setting/display/image">
+                            <i class="fa fa-image"></i>
+                            <span>{{_("图片｜图文")}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/audio"])%}
+                    <li>
+                        <a href="/osr-admin/theme-setting/display/audio">
+                            <i class="fa fa-volume-up"></i>
+                            <span>{{_("音频")}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/video"])%}
+                    <li>
+                        <a href="/osr-admin/theme-setting/display/video">
+                            <i class="fa fa-youtube-play"></i>
+                            <span>{{_("视频")}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.page_permission_check(["/osr-admin/theme-setting/display/other"])%}
+                    <li>
+                        <a href="/osr-admin/theme-setting/display/other">
+                            <i class="fa fa-file-zip-o"></i>
+                            <span>{{_("其他")}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </li>
+            {% endif %}
+
             {% if current_user.page_permission_check(["/osr-admin/plugin"])%}
             <li >
                 <a href="/osr-admin/plugin">

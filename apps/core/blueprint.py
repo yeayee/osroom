@@ -39,7 +39,7 @@ routing_moudel =[
     {"from":"apps.modules.upload.apis","import":["upload_file"]},
 
     {"from":"apps.modules.audit.apis", "import":["rules"]},
-    {"from": "apps.modules.theme_setting.apis", "import": ["static_file", "page", "themes"]},
+    {"from": "apps.modules.theme_setting.apis", "import": ["static_file", "page", "themes", "display_setting"]},
     {"from": "apps.modules.media.apis", "import": ["adm_media"]},
     {"from": "apps.modules.global_data.apis", "import": ["global_data"]},
     {"from": "apps.modules.message.apis", "import": ["user_message", "adm_message", "send_msg"]},

@@ -62,7 +62,7 @@
 
         }
 
-        var result = osrHttp("GET","/api/global/media", d, args={not_prompt:true});
+        var result = osrHttp("GET","/api/global/theme-data/display", d, args={not_prompt:true});
         result.then(function (r) {
             vue.about_us = r.data.medias.about_us[0];
         });

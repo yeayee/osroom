@@ -113,7 +113,7 @@
             conditions:JSON.stringify(conditions)
 
         }
-         var result = osrHttp("GET","/api/global/media", d, args={not_prompt:true});
+         var result = osrHttp("GET","/api/global/theme-data/display", d, args={not_prompt:true});
         result.then(function (r) {
             vue.personal_support = r.data.medias.personal_support;
             vue.contact = r.data.medias.contact?r.data.medias.contact[0]:[];

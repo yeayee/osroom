@@ -45,7 +45,7 @@
                     </div>
                     <br><br>
                     <div class="btn-group-sm">
-                       <a v-bind:href="'/osr-admin/category?type='+media_type+'&fp='+page+'&fs=media/text'" class="btn osr-btn btn-info">
+                       <a v-bind:href="'/osr-admin/category?type='+media_type+'_theme&fp='+page+'&fs=theme-setting/display/text'" class="btn osr-btn btn-info">
                            <i class="fa fa-cog"></i>  {{_("分类设置")}}
                        </a>
 
@@ -58,7 +58,7 @@
                               class="btn-sm btn osr-btn btn-success">
                            {{_("时间排序")}}<i class="fa fa-sort"></i>
                       </button>
-                      <a v-bind:href="'/osr-admin/media/text-edit?cid='+curren_category" type="button" class="btn-sm btn osr-btn btn-info">
+                      <a v-bind:href="'/osr-admin/theme-setting/display/text-edit?cid='+curren_category" type="button" class="btn-sm btn osr-btn btn-info">
                           <i class="fa fa-plus"></i> {{_("添加")}}
                       </a>
 
@@ -115,14 +115,14 @@
                             <td width="150px">
                                 <span>
                                     {[media.text.slice(0,10)]}...
-                                    <a v-bind:href="'/osr-admin/media/text-edit?cid='+curren_category+'&id='+media._id+'&fp='+page">
+                                    <a v-bind:href="'/osr-admin/theme-setting/display/text-edit?cid='+curren_category+'&id='+media._id+'&fp='+page">
                                         {{_("查看")}}
                                     </a>
                                 </span>
                             </td>
                             <td width="150px">{[media.time | formatDate]}</td>
                             <td width="150px">
-                                <a v-bind:href="'/osr-admin/media/text-edit?cid='+curren_category+'&id='+media._id+'&fp='+page" class="btn-sm btn osr-btn btn-info">
+                                <a v-bind:href="'/osr-admin/theme-setting/display/text-edit?cid='+curren_category+'&id='+media._id+'&fp='+page" class="btn-sm btn osr-btn btn-info">
                                     <span class="fa fa-pencil-square-o"></span> {{_("详情|编辑")}}
                                 </a>
                             </td>
@@ -131,7 +131,7 @@
                     </table>
                 </div>
             </div>
-            {% include 'media/_paging.html' %}
+            {% include 'theme-setting/display/_paging.html' %}
         </div>
     </div>
 </div>
@@ -192,7 +192,7 @@
             sort:JSON.stringify(sort)
         }
 
-        var result = osrHttp("GET","/api/admin/upload/media-file",d,args={not_prompt:true});
+        var result = osrHttp("GET","/api/admin/theme/display-setting",d,args={not_prompt:true});
         result.then(function (r) {
 
             vue.medias = r.data.medias;
@@ -212,7 +212,7 @@
     //获取分类
     function get_category(){
 
-        var result = osrHttp("GET","/api/admin/content/category",{type:vue.media_type},args={not_prompt:true});
+        var result = osrHttp("GET","/api/admin/content/category",{type:vue.media_type+"_theme"},args={not_prompt:true});
         result.then(function (r) {
             vue.media_categorys = r.data.categorys;
         });
@@ -244,7 +244,7 @@
             var d = {
                 ids:ids
             }
-            var result = osrHttp("DELETE","/api/admin/upload/media-file", d);
+            var result = osrHttp("DELETE","/api/admin/theme/display-setting", d);
             result.then(function (r) {
                 if(r.data.msg_type="s"){
                     get_media();

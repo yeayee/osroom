@@ -6,7 +6,7 @@
     <div v-if="single_type"  class="row">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li><a :href="'/osr-admin/media/'+curren_type[1]+'?page={{data.fp}}'">
+                <li><a href="/osr-admin/{{data.fs}}?page={{data.fp}}">
                     <i class="fa fa-archive"></i> {[curren_type[0]]}</a>
                 </li>
                 <li class="active">{[curren_type[0]]}分类</li>
@@ -20,7 +20,9 @@
               <header class="panel-heading">
                   <span v-if="single_type"> {[curren_type[0]]}分类</span>
                   <span v-else>{{_("内容分类")}}</span>
-                  <a class="pull-right" v-if="single_type" v-bind:href="'/osr-admin/media/'+curren_type[1]+'?page={{data.fp}}'">
+
+
+                  <a class="pull-right" v-if="single_type" href="/osr-admin/{{data.fs}}?page={{data.fp}}">
                         <i class="fa fa-arrow-circle-left"></i>
                         {{_("返回")}}
                     </a>

@@ -7,7 +7,7 @@ from apps.utils.paging.paging import datas_paging
 from apps.core.utils.get_config import get_configs
 from apps.utils.upload.get_filepath import get_file_url
 from flask import request
-from apps.app import mdb_web, mdb_user
+from apps.app import mdb_web, mdb_user, mdb_sys
 from apps.utils.format.obj_format import json_to_pyseq, objid_to_str, str_to_num
 
 __author__ = "Allen Woo"
@@ -45,12 +45,18 @@ def get_global_site_data(req_type="api"):
     data['d_msg_type'] = "s"
     return data
 
-def get_global_media():
+def get_global_media(dbname, collname):
 
     '''
     根据conditions获取category_name获取media
+    :param dbname:
+    :param collname:
     :return:
     '''
+    if dbname=="mdb_web":
+        mdb = mdb_web
+    else:
+        mdb = mdb_sys
 
     conditions = json_to_pyseq(request.argget.all("conditions", []))
     category_name =  json_to_pyseq(request.argget.all("category_name", []))
@@ -58,7 +64,7 @@ def get_global_media():
 
     medias = {}
     if media_id:
-        media = mdb_web.db.media.find_one({"_id": ObjectId(media_id)})
+        media = mdb.dbs[collname].find_one({"_id": ObjectId(media_id)})
         media["_id"] = str(media["_id"])
         media["url"] = get_file_url(media["url"])
         data = {"media": media}
@@ -79,7 +85,7 @@ def get_global_media():
             category_ids.append(str(category["_id"]))
 
         sort = [("time", -1)]
-        medias = mdb_web.db.media.find({"category_id":{"$in":category_ids}})
+        medias = mdb.dbs[collname].find({"category_id":{"$in":category_ids}})
         data_cnt = medias.count(True)
         medias = list(medias.sort(sort).skip(pre * (page - 1)).limit(pre))
         for d in medias:
@@ -91,10 +97,10 @@ def get_global_media():
     else:
         for condition in conditions:
             if "name_regex" in condition and condition["name_regex"]:
-                temp_media = list(mdb_web.db.media.find({"type": condition["type"],
+                temp_media = list(mdb.dbs[collname].find({"type": condition["type"],
                                                          "name": {"$regex": condition["name_regex"],"$options":"$i"}}).sort([("name", 1)]))
             else:
-                temp_media = list(mdb_web.db.media.find({"type": condition["type"],
+                temp_media = list(mdb.dbs[collname].find({"type": condition["type"],
                                                          "name": {"$in": condition["names"]}}).sort([("name", 1)]))
             for d in temp_media:
                 d["_id"] = str(d["_id"])

@@ -300,7 +300,7 @@
         var d ={
             conditions:JSON.stringify(conditions)
         }
-        var result = osrHttp("GET","/api/global/media", d, args={not_prompt:true});
+        var result = osrHttp("GET","/api/global/theme-data/display", d, args={not_prompt:true});
         result.then(function (r) {
             vue.rec_1 = r.data.medias.rec_1!=[]?r.data.medias.rec_1[0]:[];
 

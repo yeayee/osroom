@@ -83,3 +83,16 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
         else:
             print("* [Initialization data] {}".format(data["coll"]))
             db.dbs[data["coll"]].insert_many(data["datas"])
+
+
+
+    dbs = list(mdb_web.db.media.find({},{"_id":0}))
+    for db in dbs:
+        r = mdb_web.db.category.find_one({"name":db["category"], "type":"{}_theme".format(db["type"]), "user_id":0})
+        if r:
+            db["category_id"] = str(r["_id"])
+        else:
+            r = mdb_web.db.category.insert_one({"name": db["category"], "type": "{}_theme".format(db["type"]), "user_id": 0})
+            db["category_id"] = r.inserted_id
+
+    mdb_sys.dbs["theme_display_setting"].insert(dbs)

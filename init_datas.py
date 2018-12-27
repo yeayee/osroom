@@ -7,17 +7,8 @@ web初始化数据
 '''
 INIT_DATAS = [
     {"db":"osr_web", "coll":"category","datas":
-    [{ "name" : "首页展示", "user_id" : 0, "type" : "image" },
-    { "type" : "other", "user_id" : 0, "name" : "样例" },
-    { "type" : "image", "name" : "广告", "user_id" : 0 },
-    { "user_id" : 0, "type" : "text", "name" : "推荐" },
-    { "name" : "风光", "type" : "image", "user_id" : 0 },
-    { "name" : "光影", "type" : "image", "user_id" : 0 },
-    { "name" : "城市", "type" : "image", "user_id" : 0 },
-    { "type" : "text", "user_id" : 0, "name" : "站点协议" },
-    { "name" : "推荐", "user_id" : 0, "type" : "image" },
-    { "name" : "关于", "type" : "text", "user_id" : 0 },
-    { "name" : "赞助", "type" : "image", "user_id" : 0 }]
+    [{ "name" : "风光", "type" : "image", "user_id" : 0 },
+    { "name" : "城市", "type" : "image", "user_id" : 0 }]
 },
 
 {"db":"osr_sys", "coll":"audit_rules","datas":

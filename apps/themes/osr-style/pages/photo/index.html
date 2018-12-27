@@ -163,7 +163,7 @@
             conditions:JSON.stringify(conditions)
         }
 
-        var result = osrHttp("GET","/api/global/media", d, args={not_prompt:true});
+        var result = osrHttp("GET","/api/global/theme-data/display", d, args={not_prompt:true});
         result.then(function (r) {
             vue.category_names = r.data.medias.category_names[0];
             vue.category_names = vue.category_names.text.split(";")
