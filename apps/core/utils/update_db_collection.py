@@ -1,5 +1,6 @@
 # -*-coding:utf-8-*-
-from apps.configs.mdb_collection import collections
+import json
+from apps.configs.sys_config import APPS_PATH
 from apps.core.logger.web_logging import web_start_log
 from init_datas import INIT_DATAS
 
@@ -16,13 +17,22 @@ def update_mdb_collections(mdb_sys, mdb_web, mdb_user):
     :return:
     '''
 
+    # 读取配置中的数据库json 数据
+    with open("{}/configs/collections.json".format(APPS_PATH)) as rf:
+        jsondata = rf.read()
+        if jsondata:
+            collections = json.loads(jsondata)
+        else:
+            collections = {}
+
     dbs = {"mdb_sys":mdb_sys,
            "mdb_user":mdb_user,
            "mdb_web":mdb_web
            }
 
-    for k,colls in collections.items():
-        mdb = dbs[k]
+    # 检查数据库collections
+    for dbname,colls in collections.items():
+        mdb = dbs[dbname]
         for coll in colls:
             try:
                 mdb.dbs.create_collection(coll)
@@ -32,6 +42,24 @@ def update_mdb_collections(mdb_sys, mdb_web, mdb_user):
                     web_start_log.info(e)
                 else:
                     web_start_log.warning(e)
+
+    # 将最新的数据库结构写入配置文件, 方便开发者了解结构
+    new_collections = {}
+    for dbname, mdb in dbs.items():
+        new_collections[dbname] = {}
+        collnames = mdb.dbs.collection_names()
+        for collname in collnames:
+            if collname == "system.indexes" or collname.startswith("plug_"):
+                continue
+            new_collections[dbname][collname] = {}
+            data = mdb.dbs[collname].find_one({},{"_id":0})
+            if data:
+                for k,v in data.items():
+                    new_collections[dbname][collname][k] = str(type(v))
+
+    with open("{}/configs/collections.json".format(APPS_PATH), "w") as wf:
+        collections = json.dumps(new_collections, indent=4, ensure_ascii=False)
+        wf.write(collections)
 
 def init_datas(mdb_sys, mdb_web, mdb_user):
 
