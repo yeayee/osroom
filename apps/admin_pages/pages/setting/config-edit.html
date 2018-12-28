@@ -183,13 +183,14 @@
             for (var i = 0; i < key_txt.length; i++) {
                 temp_key = key_txt.eq(i).val();
                 if(!temp_key){
-                    alert_msg({"msg":"Key不能为空", "msg_type":"e"});
+                    alert_msg({"msg":"{{_('Key不能为空')}}", "msg_type":"e"});
                     return;
                 }
                 try{
                     var temp_val = JSON.parse(value_txt.eq(i).val());
                 }catch(e){
-                    var temp_val = value_txt.eq(i).val();
+                     alert_msg({"msg":'['+temp_key+"]{{_('的value格式错误,请检查')}}", "msg_type":"e"});
+                     return;
                 }
                 value[temp_key]= temp_val
             }
