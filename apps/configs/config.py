@@ -228,11 +228,19 @@ CONFIG = {
                     "nav": "图库",
                     "next_lev": None
                 },
-                "3": "{\"link\":\"\",\"nav\":\"关于\",\"next_lev\":[{\"link\":\"post?id=5c25ebac38ab5579004b3f21\",\"nav\":\"时间轴\"}，{\"link\":\"/about-us\",\"nav\":\"关于我们\"},{\"link\":\"/contact\",\"nav\":\"联系我们\"}]}",
-                "4": {
-                    "link": "/post?id=5aede042c8980538592c3b7b",
-                    "nav": "留言板",
-                    "next_lev": None
+                "关于": {
+                    "link": "",
+                    "nav": "关于",
+                    "next_lev": [
+                        {
+                            "link": "/about-us",
+                            "nav": "关于我们"
+                        },
+                        {
+                            "link": "/contact",
+                            "nav": "联系我们"
+                        }
+                    ]
                 }
             },
             "sort": 99,

@@ -64,9 +64,10 @@ def users():
         user["user_login_log"] = []
         if user_login_log:
             user_login_log["_id"] = str(user_login_log["_id"])
-            user_login_log["login_info"] = sorted(user_login_log["login_info"],
-                                                  key=lambda x:x["time"],
-                                                  reverse=True)
+            if user_login_log["login_info"]:
+                user_login_log["login_info"] = sorted(user_login_log["login_info"],
+                                                      key=lambda x:x["time"],
+                                                      reverse=True)
             user["user_login_log"] = user_login_log
 
         user_op_log = mdb_user.db.user_op_log.find_one({'user_id': user["_id"]}, {"user_id": 0})
