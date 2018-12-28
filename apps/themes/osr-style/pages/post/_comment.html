@@ -1,3 +1,18 @@
+<!--未登录用户使用-->
+{% if not current_user.is_authenticated %}
+<h4>{{_("你好,游客")}}!</h4>
+<div class="form-group">
+  <input name="username" id="username" type="text" class="form-control osr-input"
+         v-model="vst_username" minlength="1" placeholder="{{_('昵称')}}" required/>
+</div>
+<div class="form-group">
+  <input name="email" id="email" type="text" class="form-control osr-input"
+         v-model="vst_email" minlength="3" placeholder="{{_('电子邮箱')}}"
+         data-bv-notempty-message="{{_('电子邮箱错误')}}"
+         data-bv-stringLength-message="{{_('电子邮箱错误')}}" required/>
+</div>
+{% endif %}
+<!--未登录用户使用-->
 
 <div id="ct" class="form-group">
     <textarea id="comment"  name="comment" class="form-control" placeholder="{{_('写点你的评论')}}" style="height:70px"
@@ -43,7 +58,12 @@
           <header>
               <!--<figure class="comment&#45;&#45;userpic"><img src="" alt=""></figure>-->
                 <strong>
-                    <a :href="'/user?id='+ct.user_id">{[ct.username]}</a>
+                    <a v-if="ct.user_id && ct.user_id!='None'" :href="'/user?id='+ct.user_id">
+                        {[ct.username]}
+                    </a>
+                    <a v-else >
+                        [{{_('游客')}}]{[ct.username]}
+                    </a>
                 </strong>
                 <time  class="osr-date">{[ct.issue_time | formatDate]}</time>
           </header>
@@ -90,6 +110,22 @@
               <!--１评论框-->
               <div :id="'reply-'+ct._id"  hidden>
                    <br>
+
+                  <!--未登录用户使用-->
+                  {% if not current_user.is_authenticated %}
+                    <div class="form-group">
+                      <input name="username" id="username" type="text" class="form-control osr-input"
+                             v-model="vst_username" minlength="1" placeholder="{{_('昵称')}}" required/>
+                    </div>
+                    <div class="form-group">
+                      <input name="email" id="email" type="text" class="form-control osr-input"
+                             v-model="vst_email" minlength="3" placeholder="{{_('电子邮箱')}}"
+                             data-bv-notempty-message="{{_('电子邮箱错误')}}"
+                             data-bv-stringLength-message="{{_('电子邮箱错误')}}" required/>
+                    </div>
+                  {% endif %}
+                <!--未登录用户使用-->
+
                   <div class="form-group">
                         <textarea :id="'comment'+ct._id"  :name="'comment'+ct._id" class="form-control" placeholder="{{_('写点你的评论')}}" style="height:70px"
                         maxlength="300" minlength="2" data-bv-stringLength-message="{{_('最多300个字符')}}" >
@@ -115,15 +151,26 @@
                     <hr  v-if="tindex!=0" class="osr-hr" >
                     <header>
                         <strong>
-                            <a :href="'/user?id='+treply.user_id">{[treply.username]}</a>
+                            <a v-if="treply.user_id && treply.user_id != 'None'" :href="'/user?id='+treply.user_id">
+                                {[treply.username]}
+                            </a>
+                            <a v-else>
+                                [{{_('游客')}}]{[treply.username]}
+                            </a>
+
                         </strong>
                         <time class="osr-date">{[treply.issue_time | formatDate]}</time>
                     </header>
 
                     <div class="osr-text">
-                        {{_('回复')}}<a :href="'/user?id='+treply.reply_user_id">
+                        {{_('回复')}}
+                        <a v-if="treply.reply_user_id && treply.reply_user_id != 'None'" :href="'/user?id='+treply.reply_user_id">
                             @{[treply.reply_username]}:
                         </a>
+                        <a v-else>
+                            @[{{_('游客')}}]{[treply.reply_username]}:
+                        </a>
+
                         <div :id="'#comment'+treply._id" v-html="treply.content"></div>
                     </div>
                     <br>
@@ -157,6 +204,21 @@
                       <!--2评论框-->
                       <div :id="'reply-'+treply._id"  hidden>
                            <br>
+                          <!--未登录用户使用-->
+                          {% if not current_user.is_authenticated %}
+                            <div class="form-group">
+                              <input name="username" id="username" type="text" class="form-control osr-input"
+                                     v-model="vst_username" minlength="1" placeholder="{{_('昵称')}}" required/>
+                            </div>
+                            <div class="form-group">
+                              <input name="email" id="email" type="text" class="form-control osr-input"
+                                     v-model="vst_email" minlength="3" placeholder="{{_('电子邮箱')}}"
+                                     data-bv-notempty-message="{{_('电子邮箱错误')}}"
+                                     data-bv-stringLength-message="{{_('电子邮箱错误')}}" required/>
+                            </div>
+                          {% endif %}
+                        <!--未登录用户使用-->
+
                           <div class="form-group">
                                 <textarea :id="'comment'+treply._id"  :name="'comment'+treply._id" class="form-control" placeholder="{{_('写点你的评论')}}" style="height:70px"
                                 maxlength="300" minlength="2" data-bv-stringLength-message="{{_('最多300个字符')}}" >
@@ -302,7 +364,9 @@
             target_id:vue.post._id,
             reply_id:reply_id,
             reply_user_id:reply_user_id,
-            reply_username:reply_username
+            reply_username:reply_username,
+            username:vue.vst_username,
+            email:vue.vst_email
         }
         var result = osrHttp("POST","/api/comment", d);
         result.then(function (r) {

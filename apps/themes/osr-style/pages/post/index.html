@@ -128,17 +128,17 @@
             </div>
 
             <!--分享-->
-            <div class="share text-center">
-                <span>
-                    <i class="fa fa-wechat osr-icon-btn osr-success"></i>
-                    &nbsp;
-                    <i class="fa fa-qq osr-icon-btn osr-secondary"></i>
-                    &nbsp;
-                    <i class="fa fa-weibo osr-icon-btn osr-warning"></i>
-                    &nbsp;
-                    <i class="fa fa-github osr-icon-btn osr-default"></i>
-                </span>
-            </div>
+            <!--<div class="share text-center">-->
+                <!--<span>-->
+                    <!--<i class="fa fa-wechat osr-icon-btn osr-success"></i>-->
+                    <!--&nbsp;-->
+                    <!--<i class="fa fa-qq osr-icon-btn osr-secondary"></i>-->
+                    <!--&nbsp;-->
+                    <!--<i class="fa fa-weibo osr-icon-btn osr-warning"></i>-->
+                    <!--&nbsp;-->
+                    <!--<i class="fa fa-github osr-icon-btn osr-default"></i>-->
+                <!--</span>-->
+            <!--</div>-->
             <br>
             {% include "osr-style/pages/post/_comment.html" %}
         </div>
@@ -195,7 +195,9 @@
             page:1,
             pages:[],
             ready_comment:{}, //准备举报的评论,
-            loged_user:null
+            loged_user:null,
+            vst_username:"",
+            vst_email:""
       },
       filters: {
             formatDate: function (time) {

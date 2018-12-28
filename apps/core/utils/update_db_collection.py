@@ -119,9 +119,11 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
             del tempdata["_id"]
         else:
             if "text" in tempdata:
+                tempdata["text"] = json.dumps(tempdata["text"],ensure_ascii=False)
                 tempdata["text_html"] = tempdata["text"]
             elif "text_html" in tempdata:
-                tempdata["text"] = tempdata["tetext_html"]
+                tempdata["text_html"] = json.dumps(tempdata["text_html"], ensure_ascii=False)
+                tempdata["text"] = tempdata["text_html"]
 
             other_data = {"link":"",
                     "link_open_new_tab":0,
@@ -139,7 +141,8 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
                 if k not in tempdata:
                     tempdata[k] = v
 
-        # 查找是否存在这个分类
+
+        # 查找是否存在分类
         r = mdb_web.db.category.find_one({"name": tempdata["category"],
                                           "type": "{}_theme".format(tempdata["type"]),
                                           "user_id": 0})

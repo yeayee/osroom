@@ -12,9 +12,9 @@
                                  {{_("全部")}}
                             </a>
                         </li>
-                        <li :id="'head_li_'+index" v-for="(name, index ) in category_names">
-                            <a data-toggle="tab" class="osr-pointer" v-on:click='get_global(1,[name])'>
-                                 {[name]}
+                        <li :id="'head_li_'+index" v-for="(ct,index) in category_names">
+                            <a data-toggle="tab" class="osr-pointer" v-on:click='get_global(1,[ct])'>
+                                 {[ct]}
                             </a>
                         </li>
                     </ul>
@@ -154,7 +154,7 @@
         var conditions = [
              {
                 type:"text",
-                names:["photo-page-setting"],
+                name_regex:"photo-nav-[0-9]+",
                 result_key:"category_names"
              }
 
@@ -165,8 +165,11 @@
 
         var result = osrHttp("GET","/api/global/theme-data/display", d, args={not_prompt:true});
         result.then(function (r) {
-            vue.category_names = r.data.medias.category_names[0];
-            vue.category_names = vue.category_names.text.split(";")
+
+            var category_names = r.data.medias.category_names;
+            for(i in category_names){
+                vue.category_names.push(category_names[i].title);
+            }
         });
 
         return result;

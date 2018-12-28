@@ -7,17 +7,25 @@
               <b class="osr-color-success">[{{_("评论")}}]</b>
                 <span   v-if="msg.content.reply_id">
 
-                    <a class="osr-color-secondary" :href="'/user?id='+msg.content.user_id">
+                    <a v-if="msg.content.user_id && msg.content.user_id!='None'" class="osr-color-secondary" :href="'/user?id='+msg.content.user_id">
                         @{[msg.content.username]}
                     </a>
+                    <a v-else class="osr-color-secondary">
+                        @{[msg.content.username]}
+                    </a>
+
                     {{_("回复了评论")}}:
                 </span>
 
                 <!--谁评论了-->
                 <span  v-else>
-                    <a class="osr-color-secondary" :href="'/user?id='+msg.content.user_id">
+                    <a v-if="msg.content.user_id && msg.content.user_id!='None'" class="osr-color-secondary" :href="'/user?id='+msg.content.user_id">
                         @{[msg.content.username]}
                     </a>
+                     <a v-else class="osr-color-secondary">
+                        @{[msg.content.username]}
+                    </a>
+
                     {{_("评论了")}}:
                 </span>
                 <a   v-if="msg.target_type=='post'" :href="'/post?id='+msg.target_id">

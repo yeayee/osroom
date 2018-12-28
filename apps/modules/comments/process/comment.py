@@ -59,9 +59,43 @@ def comment_issue():
         if not s:
             return r
 
-    if mdb_web.db.comment.find({"user_id": current_user.str_id,
-                                  "issue_time": {"$gt": time.time() - int(get_config("comment", "INTERVAL"))}}).count(
+    '''
+    查看最后一次评论时间
+    '''
+    tquery = {"issue_time": {"$gt": time.time() - int(get_config("comment", "INTERVAL"))}}
+    if current_user.is_authenticated:
+        user_id = current_user.str_id
+        username = current_user.username
+        email = None
+        tquery["user_id"] = user_id
+
+    elif get_config("comment", "TRAVELER_COMMENT"):
+        user_id = None
+        username = request.argget.all('username')
+        email = request.argget.all('email')
+        # 用户名格式验证
+        r, s = short_str_verifi(username)
+        if not r:
+            data = {'msg': s, 'msg_type': "e", "http_status": 422}
+            return data
+
+        # 邮箱格式验证
+        r, s = email_format_ver(email)
+        if not r:
+            data = {'msg': s, 'msg_type': "e", "http_status": 422}
+            return data
+
+        tquery["email"] = email
+
+    else:
+        data = {"msg": gettext("Guest reviews feature is not open, please login account comments"),
+                "msg_type": "w", "http_status": 401}
+        return data
+
+
+    if mdb_web.db.comment.find(tquery).count(
         True) >= int(get_config("comment", "NUM_OF_INTERVAL")):
+        # 频繁评论
         data = {"msg": gettext("You comment too often and come back later"),
                 "msg_type": "e", "http_status":400}
         return data
@@ -81,31 +115,6 @@ def comment_issue():
     if not target:
         data = {"msg": gettext("Your comment goal does not exist"),
                 "msg_type": "w", "http_status":400}
-        return data
-
-    if current_user.is_authenticated:
-        user_id = current_user.str_id
-        username = current_user.username
-        email = None
-
-    elif get_config("comment","TRAVELER_COMMENT"):
-        user_id = None
-        username = request.argget.all('username')
-        email = request.argget.all('email')
-        # 用户名格式验证
-        r, s = short_str_verifi(username)
-        if not r:
-            data= {'msg': s, 'msg_type': "e", "http_status":422}
-            return data
-
-        # 邮箱格式验证
-        r, s = email_format_ver(email)
-        if not r:
-            data= {'msg': s, 'msg_type': "e", "http_status":422}
-            return data
-    else:
-        data = {"msg":gettext("Guest reviews feature is not open, please login account comments"),
-                "msg_type":"w", "http_status":401}
         return data
 
     issue_time = time.time()
@@ -170,27 +179,32 @@ def comment_issue():
         if target_type == "post":
             mdb_web.db.post.update_one({"_id": ObjectId(target_id)}, {"$inc": {"comment_num": 1}})
 
-        # 评论正常才通知被评论用户
-        user_ids = [target_user_id]
-        if reply_id:
-            user_ids.append(reply_user_id)
-        user_ids = list(set(user_ids))
-        if user_id in user_ids:
-            user_ids.remove(user_id)
 
-        msg_content = {
-                       "id":str(r.inserted_id),
-                       "reply_id":reply_id,
-                       "reply_user_id":reply_user_id,
-                       "reply_username":reply_username,
-                       "user_id": user_id,
-                       "username": username,
-                       "text": content}
-        insert_user_msg(user_id=user_ids, ctype="notice", label="comment",
-                        title=target_brief_info,
-                        content=msg_content, target_id=target_id, target_type=target_type)
+        if current_user.is_authenticated:
+            # 评论正常才通知被评论用户
+            user_ids = [target_user_id]
+            if reply_id:
+                user_ids.append(reply_user_id)
+            user_ids = list(set(user_ids))
+            if user_id in user_ids:
+                user_ids.remove(user_id)
 
-    data = {"msg": gettext("Successful reviews"), "msg_type": "s", "http_status":201}
+            msg_content = {
+                           "id":str(r.inserted_id),
+                           "reply_id":reply_id,
+                           "reply_user_id":reply_user_id,
+                           "reply_username":reply_username,
+                           "user_id": user_id,
+                           "username": username,
+                           "text": content}
+            insert_user_msg(user_id=user_ids, ctype="notice", label="comment",
+                            title=target_brief_info,
+                            content=msg_content, target_id=target_id, target_type=target_type)
+
+    if current_user.is_authenticated:
+        data = {"msg": gettext("Successful reviews"), "msg_type": "s", "http_status":201}
+    else:
+        data = {"msg": gettext("Success back, waiting for the system audit."), "msg_type": "s", "http_status": 201}
 
     return data
 

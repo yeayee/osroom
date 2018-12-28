@@ -1,4 +1,6 @@
 # -*-coding:utf-8-*-
+import json
+
 from bson import ObjectId
 from flask_babel import gettext
 from flask_login import current_user
@@ -21,6 +23,9 @@ def get_global_site_data(req_type="api"):
     data = {}
 
     # 全局数据
+    # theme
+    data["theme_config"] = get_configs("theme_global_conf")
+    # site
     data["site_config"] = get_configs("site_config")
     data["site_config"] = dict(data["site_config"], **get_configs("seo"))
     data["site_config"]["sys_version"] = VERSION

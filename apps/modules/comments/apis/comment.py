@@ -36,7 +36,6 @@ def api_get_comment():
 
 
 @api.route('/comment', methods=['POST', 'PUT', 'PATCH', 'DELETE'])
-@osr_login_required
 @permission_required(use_default=False)
 def api_comment_op():
 

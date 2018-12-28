@@ -4,48 +4,40 @@
     <section class="sidebar osr-sidebar">
 
         <!-- 侧边栏菜单：：样式可以在sidebar.less中找到 -->
-
         <ul id="sidebar_menu" class="sidebar-menu">
             <li>
                 <a class="lv1-a" href="/search">
                     {{_("搜索")}}
                 </a>
             </li>
-            <li>
-                <a class="lv1-a" href="/">
-                    {{_("发现")}}
-                </a>
-            </li>
 
-            <li>
-                <a class="lv1-a" href="/photo">
-                    {{_("摄影")}}
-                </a>
-            </li>
+            {% for k,v in g.site_global.theme_config.TOP_NAV.items()|sort%}
 
-            <li>
-                <a class="lv1-a" href="javascript:;" data-target="#about-us" data-toggle="collapse">
-                    <span>{{_("关于")}}</span>
-                    <i class="fa fa-angle-right osr-sidebar-fa-right osr-sidebar-fa-right"></i>
-                </a>
-                <ul id="about-us" class="osr-sidebar-menu-lv2 collapse">
-                    <li>
-                        <a href="/about-us">
-                            <span>{{_("关于我们")}}</span>
+                {% if v.next_lev %}
+                    <li >
+                    <a class="lv1-a" href="javascript:;" data-target="#{{v.nav}}" data-toggle="collapse">
+                        <span>{{v.nav}}</span>
+                        <i class="fa fa-angle-right osr-sidebar-fa-right osr-sidebar-fa-right"></i>
+                    </a>
+
+                    <ul id="{{v.nav}}" class="osr-sidebar-menu-lv2 collapse">
+                        {% for nav2 in v.next_lev %}
+                        <li>
+                            <a href="{{nav2.link}}">
+                                {{nav2.nav}}
+                            </a>
+                        </li>
+                        {% endfor %}
+                   </ul>
+                    </li>
+                {% else %}
+                    <li >
+                        <a class="lv1-a" href="{{v.link}}">
+                            {{v.nav}}
                         </a>
                     </li>
-                    <li>
-                        <a href="/contact">
-                            <span>{{_("联系我们")}}</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="lv1-a" href="/support" target="_blank">
-                    {{_("支持我们")}}
-                </a>
-            </li>
+                {% endif %}
+            {% endfor %}
             <li>
                 <a class="lv1-a" href="javascript:;" data-target="#switch-lan" data-toggle="collapse">
                     <span>{{g.site_global.language.all_language[g.site_global.language.current]["alias"]}}</span>
@@ -62,8 +54,6 @@
                     {% endfor %}
                 </ul>
             </li>
-
-
         </ul>
     </section>
     <!-- /.侧边栏 -->

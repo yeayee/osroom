@@ -1,4 +1,5 @@
 # -*-coding:utf-8-*-
+from bson import ObjectId
 from flask import request
 from flask_babel import gettext
 from flask_login import current_user
@@ -23,9 +24,16 @@ def public_profile():
     data = {}
     user_id = request.argget.all('user_id')
     is_basic = str_to_num(request.argget.all('is_basic', 1))
-    if not user_id:
+    if not user_id or user_id=="None":
         data = {'d_msg':gettext('Lack of parameters "user_id"'), 'd_msg_type':"e", "http_status":400}
         return data
+
+    try:
+        ObjectId(user_id)
+    except:
+        data = {'d_msg': gettext('This may be a visitor"'), 'd_msg_type': "e", "http_status": 400}
+        return data
+
     s, r = get_user_public_info(user_id=user_id, is_basic=is_basic)
     if not s:
         data = {'msg': r, 'msg_type': "w", "http_status": 400}

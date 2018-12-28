@@ -30,14 +30,14 @@
 
                 <div class="form-group">
                       <select id="status" name="status"  class="form-control osr-form-control input-sm" @change="switch_category($event.target.value)">
-                       <option v-for="ct in media_categorys" v-if="ct._id==media.category_id"  :value="ct._id" selected>
+                       <option v-for="ct in media_categorys" v-if="ct._id==category_id"  :value="ct._id" selected>
                                 {[ct.name]}
                         </option>
 
                         <option v-if="media.category_id !='default'" value="default" >{{_("默认")}}</option>
                         <option v-else  value="default___默认" selected>{{_("默认")}}</option>
 
-                        <option v-for="ct in media_categorys" v-if="ct._id!=media.category_id"  :value="ct._id" >
+                        <option v-for="ct in media_categorys" v-if="ct._id!=category_id"  :value="ct._id" >
                             {[ct.name]}
                         </option>
                     </select>

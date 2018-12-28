@@ -100,7 +100,7 @@ CONFIG = {
         },
         "TRAVELER_COMMENT": {
             "type": "bool",
-            "value": False,
+            "value": True,
             "sort": 99,
             "info": "游客评论开关,是否打开?"
         },
@@ -195,15 +195,61 @@ CONFIG = {
         "CATEGORY_TYPE": {
             "type": "dict",
             "value": {
+                "主题-文本": "text_theme",
+                "主题-图文": "image_theme",
+                "主题-视频": "video_theme",
+                "主题-其他": "other_theme",
+                "主题-音频": "audio_theme",
+                "其他类型库": "other",
+                "图文|图库": "image",
                 "文本内容": "text",
                 "文集": "post",
-                "图文|图库": "image",
                 "视频库": "video",
-                "其他类型库": "other",
                 "音频库": "audio"
             },
             "sort": 99,
             "info": "分类的品种只能有这几种"
+        }
+    },
+    "theme_global_conf": {
+        "__restart__": "not_must",
+        "__info__": "主题的一些全局配置(只对主题有效, 并需要主题支持)",
+        "__sort__": 99,
+        "TOP_NAV": {
+            "type": "dict",
+            "value": {
+                "1": {
+                    "link": "/",
+                    "nav": "首页",
+                    "next_lev": None
+                },
+                "2": {
+                    "link": "/photo",
+                    "nav": "图库",
+                    "next_lev": None
+                },
+                "3": {
+                    "link": "",
+                    "nav": "关于",
+                    "next_lev": [
+                        {
+                            "link": "/about-us",
+                            "nav": "关于我们"
+                        },
+                        {
+                            "link": "/contact",
+                            "nav": "联系我们"
+                        }
+                    ]
+                },
+                "4": {
+                    "link": "/post?id=5aede042c8980538592c3b7b",
+                    "nav": "留言板",
+                    "next_lev": None
+                }
+            },
+            "sort": 99,
+            "info": "最多能同时登录几个使用JWT验证的客户端,超过此数目则会把旧的登录注销"
         }
     },
     "rest_auth_token": {
