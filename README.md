@@ -32,7 +32,7 @@ OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ R
 > 支持开发
 
 - 插件开发，官方插件Github地址: https://github.com/osroom-plugins
-- 主题开发，官方主题Github地址:  https://github.com/osroom​​​​​​​
+- 主题开发，官方主题Github地址: https://github.com/osroom
 - 扩展 
 
 ### Demo
