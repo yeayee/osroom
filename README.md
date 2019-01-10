@@ -50,6 +50,7 @@ https://demo.osroom.com
 官网地址: http://osroom.com (由于个人问题，该站可能已下线)
 
 长期可访问文档地址: https://osroom.github.io/osroom-doc
+
 OSROOM其他相关问题解决方案: [OSROOM大学](https://demo.osroom.com/corpus?id=5c21cead38ab556ac944cd70)
 
 |   Version  |   Status  |  Other   |
