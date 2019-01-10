@@ -1,6 +1,9 @@
 #-*-coding:utf-8-*-
 import sys
 from signal import signal, SIGCHLD, SIG_IGN
+
+from pymongo.errors import OperationFailure
+
 from apps.configs.config import CONFIG
 from apps.core.db.config_mdb import DatabaseConfig
 from apps.core.utils.sys_tool import update_pylib, add_user as add_user_process
@@ -25,9 +28,17 @@ mdb_sys = PyMongo()
 mdb_user = PyMongo()
 db_init = 2
 while db_init:
-    mdb_web.init_app(config_prefix='MONGO_WEB', db_config=database.MONGO_WEB_URI)
-    mdb_sys.init_app(config_prefix='MONGO_SYS', db_config=database.MONGO_SYS_URI)
-    mdb_user.init_app(config_prefix='MONGO_USER', db_config=database.MONGO_USER_URI)
+    try:
+        mdb_web.init_app(config_prefix='MONGO_WEB', db_config=database.MONGO_WEB_URI)
+        mdb_sys.init_app(config_prefix='MONGO_SYS', db_config=database.MONGO_SYS_URI)
+        mdb_user.init_app(config_prefix='MONGO_USER', db_config=database.MONGO_USER_URI)
+    except OperationFailure as e:
+        print("\n[Mongodb] *{}".format(e))
+        print("Mongodb validation failure, the user name,"
+              " password mistake or database configuration errors.\n"
+              "Tip: to open database authentication configuration")
+        sys.exit(-1)
+
     if db_init == 2:
         update_mdb_collections(mdb_user=mdb_user, mdb_web=mdb_web, mdb_sys=mdb_sys)
         init_datas(mdb_user=mdb_user, mdb_web=mdb_web, mdb_sys=mdb_sys)
