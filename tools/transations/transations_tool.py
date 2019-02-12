@@ -126,7 +126,6 @@ class Transations():
 
         os.system('pybabel {} update -i {}/messages.pot -d {}'.format(self.quiet, self.save_path, self.save_path))
 
-        self.update_process()
         self.print_cfg()
         print("Success")
 
@@ -139,50 +138,6 @@ class Transations():
         if not self.quiet:
             self.redirect = ""
         os.system('pybabel compile -d {} {}'.format(self.save_path, self.redirect))
-
-    def update_process(self):
-
-        lc_msg_path = "{}/{}/LC_MESSAGES".format(self.save_path, self.lan)
-        po_filepath = os.path.join(lc_msg_path, "messages.po")
-        if os.path.exists(po_filepath):
-            rf = open(po_filepath)
-            lines = rf.readlines()
-            rf.close()
-            wf = open("{}_last.back".format(po_filepath), "w")
-            wf.writelines(lines)
-            wf.close()
-
-            abandoned_datas = {}
-            datas = {}
-            l = len(lines)
-            for i in range(0, l):
-                if regex.search(r"^#~ msgid.*", lines[i]) and lines[i + 1].strip("#~ msgid").strip().strip('""') and lines[
-                    i + 1].strip("#~ msgstr").strip().strip('""'):
-                    abandoned_datas[lines[i].strip("#~ ").strip()] = lines[i + 1].strip("#~ ").strip()
-                elif regex.search(r"^msgid.*", lines[i]) and lines[i + 1].strip("msgid").strip().strip('""') and lines[
-                    i + 1].strip("msgstr").strip().strip('""'):
-                    datas[lines[i].strip()] = lines[i + 1].strip()
-
-            for i in range(0, l):
-                msgid = regex.search(r"^msgid.*", lines[i])
-                if msgid and lines[i].strip("msgid").strip().strip('""') and not lines[i + 1].strip("msgstr").strip().strip(
-                        '""'):
-                    l = lines[i].strip("\n")
-                    if l in abandoned_datas.keys():
-                        lines[i + 1] = abandoned_datas[l] + "\n"
-                    if l in datas.keys():
-                        lines[i + 1] = datas[l] + "\n"
-
-            temp_lines = lines[:]
-            l = len(temp_lines)
-            for i in range(0, l):
-                r = regex.search(r"^#~.*", temp_lines[i])
-                if r:
-                    lines.remove(temp_lines[i])
-            lines = list(set(lines))
-            wf = open(po_filepath, "w")
-            wf.writelines(lines)
-            wf.close()
 
     def cfg_sack(self):
 
