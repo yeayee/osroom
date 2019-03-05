@@ -68,28 +68,8 @@ CONFIG = {
             "sort": 11,
             "value": {
                 "Github": {
-                    "url": "www.aliyun.com",
-                    "level": 1,
-                    "icon_url": "",
-                    "aliases": "Github"
-                },
-                "阿里云": {
-                    "url": "www.aliyun.com",
-                    "level": 1,
-                    "icon_url": "",
-                    "aliases": "阿里云"
-                },
-                "七牛云": {
-                    "url": "www.aliyun.com",
-                    "level": 1,
-                    "icon_url": "",
-                    "aliases": "七牛云"
-                },
-                "码云": {
-                    "url": "www.aliyun.com",
-                    "level": 1,
-                    "icon_url": "",
-                    "aliases": "码云"
+                    "logo_url": "http://osr.local.com:5000/static/admin/sys_imgs/osroom-logo-1.png?w=240&h=240",
+                    "url": "https://github.com/osroom/osroom"
                 }
             }
         },
@@ -135,13 +115,13 @@ CONFIG = {
             "type": "string",
             "info": "移动端用App name 还是Logo image 作为APP(Web)的Logo显示, 为空则App name优先<br>可填logo或name(需要主题支持)",
             "sort": 4,
-            "value": "name"
+            "value": "logo"
         },
         "STATIC_FILE_VERSION": {
             "type": "int",
             "info": "静态文件版本(当修改了CSS,JS等静态文件的时候，修改此版本号)",
             "sort": 12,
-            "value": 20181024065925
+            "value": 20181208125734
         },
         "TITLE_SUFFIX": {
             "type": "string",
@@ -173,10 +153,9 @@ CONFIG = {
             "info": "上传:允许上传的文件后缀(全部小写),每个用英文的','隔开",
             "sort": 99,
             "value": [
-                "xls",
+                "txt",
                 "xlxs",
                 "excel",
-                "txt",
                 "pdf",
                 "png",
                 "jpg",
@@ -249,13 +228,13 @@ CONFIG = {
             "type": "string",
             "info": "安全密码码盐值",
             "sort": 99,
-            "value": "ceavewrvwtrhdyjydj"
+            "value": "12343erfegrg"
         },
         "SECRET_KEY": {
             "type": "string",
             "info": "安全验证码",
             "sort": 99,
-            "value": "ceavewrvwtrhdyjydj"
+            "value": "12333r32fddvve"
         },
         "__info__": "安全Key（建议技术管理人员使用）"
     },
@@ -304,10 +283,7 @@ CONFIG = {
             "type": "string",
             "info": "新注册用户默认头像的URL",
             "sort": 99,
-            "value": [
-                "/static/admin/sys_imgs/avatar_default_1.png",
-                "/static/admin/sys_imgs/avatar_default_2.png"
-            ]
+            "value": "/static/sys_imgs/avatar_default.png"
         },
         "__info__": "账户设置",
         "USERNAME_MAX_LEN": {
@@ -329,7 +305,7 @@ CONFIG = {
             "type": "string",
             "info": "保存Session会话的类型,可选mongodb, redis",
             "sort": 99,
-            "value": "mongodb"
+            "value": "redis"
         },
         "__sort__": 99,
         "SESSION_MONGODB_COLLECT": {
@@ -342,7 +318,7 @@ CONFIG = {
             "type": "string",
             "info": "添加一个前缀,之前所有的会话密钥。这使得它可以为不同的应用程序使用相同的后端存储服务器",
             "sort": 99,
-            "value": "osroom"
+            "value": "osr-session:"
         },
         "PERMANENT_SESSION_LIFETIME": {
             "type": "int",
@@ -377,7 +353,7 @@ CONFIG = {
             "type": "bool",
             "info": "评论开关,是否打开评论功能?",
             "sort": 99,
-            "value": False
+            "value": True
         },
         "NUM_PAGE_MAX": {
             "type": "int",
@@ -390,7 +366,7 @@ CONFIG = {
             "type": "bool",
             "info": "游客评论开关,是否打开?",
             "sort": 99,
-            "value": False
+            "value": True
         },
         "INTERVAL": {
             "type": "int",
@@ -425,24 +401,24 @@ CONFIG = {
             "info": "分类的品种只能有这几种",
             "sort": 99,
             "value": {
-                "音频库": "audio",
+                "主题-文本": "text_theme",
+                "主题-图文": "image_theme",
+                "主题-视频": "video_theme",
+                "主题-其他": "other_theme",
+                "主题-音频": "audio_theme",
+                "其他类型库": "other",
+                "图文|图库": "image",
+                "文本内容": "text",
                 "文集": "post",
-                "主题音频": "audio_theme",
-                "主题文本": "text_theme",
-                "图库": "image",
-                "主题视频": "video_theme",
-                "主题图片图文": "image_theme",
-                "主题其他": "other_theme",
                 "视频库": "video",
-                "其他": "other",
-                "文本内容": "text"
+                "音频库": "audio"
             }
         },
         "CATEGORY_MAX_LEN": {
             "type": "int",
             "info": "分类名称类型名最多几个字符",
             "sort": 99,
-            "value": 15
+            "value": 30
         }
     },
     "login_manager": {
@@ -497,13 +473,13 @@ CONFIG = {
             "info": "管理端支持的语言",
             "sort": 99,
             "value": {
-                "zh_CN": {
-                    "alias": "中文",
-                    "name": "中文"
-                },
                 "en_US": {
                     "alias": "En",
                     "name": "English"
+                },
+                "zh_CN": {
+                    "alias": "中文",
+                    "name": "中文"
                 }
             }
         },
@@ -533,29 +509,29 @@ CONFIG = {
             "info": "最多能同时登录几个使用JWT验证的客户端,超过此数目则会把旧的登录注销",
             "sort": 99,
             "value": {
-                "关于": {
-                    "nav": "关于",
-                    "link": "",
-                    "next_lev": [
-                        {
-                            "nav": "关于我们",
-                            "link": "/about-us"
-                        },
-                        {
-                            "nav": "联系我们",
-                            "link": "/contact"
-                        }
-                    ]
-                },
                 "1": {
-                    "nav": "首页",
                     "link": "/",
+                    "nav": "首页",
                     "next_lev": None
                 },
                 "2": {
-                    "nav": "图库",
                     "link": "/photo",
+                    "nav": "图库",
                     "next_lev": None
+                },
+                "关于": {
+                    "link": "",
+                    "nav": "关于",
+                    "next_lev": [
+                        {
+                            "link": "/about-us",
+                            "nav": "关于我们"
+                        },
+                        {
+                            "link": "/contact",
+                            "nav": "联系我们"
+                        }
+                    ]
                 }
             }
         }
@@ -618,7 +594,7 @@ CONFIG = {
             "type": "string",
             "info": "在邮件中显示的APP(WEB)名称(1.不填写则不显示.2.如果主题邮件发送html模板不支持，也不显示)",
             "sort": 99,
-            "value": "OSR DEMO"
+            "value": ""
         },
         "MAIL_FOOTER": {
             "type": "string",
@@ -630,7 +606,7 @@ CONFIG = {
             "type": "string",
             "info": "在邮件中显示的LOGO图片URL(1.不填写则不显示.2.如果主题邮件发送html模板不支持，也不显示)",
             "sort": 99,
-            "value": "https://avatars1.githubusercontent.com/u/14039952?s=460&v=4"
+            "value": "/static/sys_imgs/osroom-logo.png"
         },
         "__info__": "邮件发送参数设置（建议技术管理人员使用）",
         "MAIL_SUBJECT_SUFFIX": {
@@ -731,7 +707,7 @@ CONFIG = {
             "type": "int",
             "info": "每个页面获取几篇文章, 如果请求获取文章时指定了指定了per参数, 则此配置无效(此配置也对管理端无效)",
             "sort": 99,
-            "value": 10
+            "value": 15
         },
         "TAG_MAX_NUM": {
             "type": "int",
@@ -801,7 +777,7 @@ CONFIG = {
             "type": "string",
             "info": "图片验证码保存目录",
             "sort": 99,
-            "value": "verify_code"
+            "value": "admin/verify_code"
         },
         "MAX_NUM_SEND_SAMEIP_PERMIN_NO_IMGCODE": {
             "type": "int",
@@ -827,8 +803,8 @@ CONFIG = {
             "info": "发送的验证码字符类型，与字符个数",
             "sort": 99,
             "value": {
-                "string": 0,
-                "int": 6
+                "int": 6,
+                "string": 0
             }
         }
     }
