@@ -5,6 +5,7 @@ from functools import wraps
 from flask import request
 from werkzeug.utils import redirect
 from apps.app import mdb_sys, cache, mdb_user
+from apps.configs.sys_config import GET_DEFAULT_SYS_PER_CACHE_KEY, GET_ALL_PERS_CACHE_KEY
 from apps.core.flask.response import response_format
 from apps.core.utils.get_config import get_config
 
@@ -64,7 +65,7 @@ def page_permission_required():
         return decorated_function
     return decorator
 
-@cache.cached(timeout=3600, key_base64=False, key="sys_permissions_default", db_type="redis")
+@cache.cached(timeout=3600, key_base64=False, key=GET_DEFAULT_SYS_PER_CACHE_KEY, db_type="redis")
 def get_permissions_default():
     '''
     获取所有权限值,并相"|"
@@ -77,7 +78,7 @@ def get_permissions_default():
         value = value | per["value"]
     return value
 
-@cache.cached(timeout=3600, key_base64=False, key="sys_permissions", db_type="redis")
+@cache.cached(timeout=3600, key_base64=False, key=GET_ALL_PERS_CACHE_KEY, db_type="redis")
 def get_permissions():
     '''
     获取所有权限

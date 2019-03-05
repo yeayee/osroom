@@ -5,12 +5,14 @@ from flask import request
 from flask_babel import gettext
 from flask_login import current_user
 
-from apps.configs.sys_config import SUPER_PER
+from apps.configs.sys_config import SUPER_PER, PRESERVE_PERS, GET_ALL_PERS_CACHE_KEY, \
+    GET_DEFAULT_SYS_PER_CACHE_KEY
+from apps.core.flask.permission import get_permission
 from apps.core.flask.reqparse import arg_verify
 from apps.utils.format.number import get_num_digits
 from apps.utils.format.obj_format import objid_to_str, json_to_pyseq, str_to_num
 from apps.utils.paging.paging import datas_paging
-from apps.app import mdb_user, cache
+from apps.app import mdb_user, cache, mdb_sys
 
 __author__ = "Allen Woo"
 
@@ -84,7 +86,7 @@ def add_per():
 
     hightest_pos = get_num_digits(SUPER_PER)
     permissions = int(math.pow(2, position - 1))
-    if hightest_pos > 32 and position<1:
+    if hightest_pos > hightest_pos and position<1:
         data = {'msg': gettext("Must be an integer greater than 0,"
                                " less than or equal to {}".format(hightest_pos)),
                 'msg_type': "w", "http_status": 403}
@@ -108,8 +110,8 @@ def add_per():
                                 "explain":explain,
                                 'value':permissions,
                                 "is_default":default})
-        cache.delete(key="sys_permissions_default", db_type="redis")
-        cache.delete(key="sys_permissions", db_type="redis")
+        cache.delete(key=GET_DEFAULT_SYS_PER_CACHE_KEY, db_type="redis")
+        cache.delete(key=GET_ALL_PERS_CACHE_KEY, db_type="redis")
     return data
 
 def edit_per():
@@ -130,17 +132,15 @@ def edit_per():
         data = {'msg': gettext("Must be an integer greater than 0,"
                                " less than or equal to {}".format(hightest_pos)),
                 'msg_type': "w", "http_status": 403}
-
         return data
+
     data = {"msg": gettext("The current user permissions are lower than the permissions you want to modify,"
                            " without permission to modify"),
             "msg_type": "w", "http_status": 401}
     user_role = mdb_user.db.role.find_one({"_id":ObjectId(current_user.role_id)})
-
     # 如果当前用户的权限最高位 小于 要修改成的这个角色权重的最高位,是不可以的
     permissions = int(math.pow(2, position - 1))
     if get_num_digits(user_role["permissions"]) <= get_num_digits(permissions):
-
         return data
 
     per = {"name":name,
@@ -148,7 +148,6 @@ def edit_per():
             'value':permissions,
             "is_default":default}
 
-    data = {'msg': gettext("Save success"), 'msg_type': "s", "http_status": 201}
     if mdb_user.db.permission.find_one({"name":name, "_id":{"$ne":ObjectId(id)}}):
         data = {'msg': gettext("Permission name already exists"), 'msg_type': "w",
                 "http_status": 403}
@@ -156,37 +155,118 @@ def edit_per():
     elif mdb_user.db.permission.find_one({"value":permissions, "_id":{"$ne":ObjectId(id)}}):
         data = {'msg': gettext('Location has been used'),
                 'msg_type': "w", "http_status": 403}
-        cache.delete(key="sys_permissions_default", db_type="redis")
-        cache.delete(key="sys_permissions", db_type="redis")
     else:
+        old_per = mdb_user.db.permission.find_one({"_id": ObjectId(id)})
+        old_per_value = old_per["permissions"]
+
         r = mdb_user.db.permission.update_one({"_id":ObjectId(id)}, {"$set":per})
         if not r.modified_count:
             data = {'msg':gettext("No changes"), 'msg_type':"w", "http_status":201}
+        else:
+            update_role_and_api_per(old_per_value, new_per_value=0)
+            updated_rolename = r["updated_rolename"]
+            msg_updated_rolename = gettext("The role of the chain reaction is: \n")
+            if updated_rolename:
+                for ur in updated_rolename:
+                    msg_updated_rolename = '{}, "{}"'.format(msg_updated_rolename, ur)
+
+            # 刷新缓存
+            cache.delete(key=GET_DEFAULT_SYS_PER_CACHE_KEY, db_type="redis")
+            cache.delete(key=GET_ALL_PERS_CACHE_KEY, db_type="redis")
+            data = {'msg': gettext("The update is successful. {}".format(msg_updated_rolename)),
+                    'msg_type': "s",
+                    "http_status": 201}
+
     return data
 
 def delete_per():
 
     ids = json_to_pyseq(request.argget.all('ids'))
-
     user_role = mdb_user.db.role.find_one({"_id":ObjectId(current_user.role_id)})
-    noper = 0
+
+    unauth_del_pers = []  # 无权删除的
+    preserve = []  # 必须保留的
+    need_remove = []
+    need_remove_per_value = []
+
     for id in ids:
         id = ObjectId(id)
         # 权限检查
         old_per = mdb_user.db.permission.find_one({"_id":id})
         # 如果当前用户的权限最高位 小于 要删除角色的权限,也是不可以
         if old_per and get_num_digits(old_per["value"]) >= get_num_digits(user_role["permissions"]):
-            noper += 1
+            unauth_del_pers.append(old_per["name"])
             continue
+        if old_per["name"] in PRESERVE_PERS or old_per["default"]:
+            preserve.append(old_per["name"])
+            continue
+        need_remove.append(id)
+        need_remove_per_value.append(old_per["permissions"])
 
-        mdb_user.db.permission.delete_many({"_id":id, "name":{"$nin":["GENERAL_USER","ROOT", "ADMIN", "STAFF"]}})
+    # Delete
+    msg_updated_rolename = ""
+    if need_remove:
 
-    if not noper:
-        data = {'msg':gettext('Successfully deleted'),
-                'msg_type':'s', "http_status":204}
+        mdb_user.db.permission.delete_many({"_id": {"$in": need_remove}, "name": {"$nin": PRESERVE_PERS}})
+        # 删除后必须更新使用了该权限的role和api&page
+        updated_rolename = []
+        for v in need_remove_per_value:
+            r = update_role_and_api_per(old_per_value=v, new_per_value=0)
+            updated_rolename.extend(r["updated_rolename"])
+
+        msg_updated_rolename = gettext("The role of the chain reaction is: \n")
+        if updated_rolename:
+            updated_rolename = list(set(updated_rolename))
+            for ur in updated_rolename:
+                msg_updated_rolename = '{}, "{}"'.format(msg_updated_rolename, ur)
+
+        cache.delete(key=GET_DEFAULT_SYS_PER_CACHE_KEY, db_type="redis")
+        cache.delete(key=GET_ALL_PERS_CACHE_KEY, db_type="redis")
+
+    if not unauth_del_pers and not preserve:
+        data = {'msg': gettext('Successfully deleted. {}'.format(msg_updated_rolename)),
+                'msg_type': 'success', "http_status": 204}
     else:
-        data = {'msg':gettext('Successfully deleted, and {} have no permission to delete').format(noper),
-                'msg_type':'w', "http_status":400}
-    cache.delete(key="sys_permissions_default", db_type="redis")
-    cache.delete(key="sys_permissions", db_type="redis")
+        warning_msg = ""
+        if unauth_del_pers:
+            warning_msg = gettext('No permission to delete {}. ').format(",".join(unauth_del_pers))
+        elif preserve:
+            warning_msg = gettext("{}{} are permissions that must be retained.").format(warning_msg, ",".join(preserve))
+        data = {'msg': warning_msg, 'msg_type': 'warning', "http_status": 400}
+
     return data
+
+
+def update_role_and_api_per(old_per_value, new_per_value=0):
+    '''
+    更新所有使用了old_per的role和api
+    :param old_per:
+    :param new_per:
+    :return:
+    '''
+    # 更新使用了该权限的role
+    # 当前所有的用户角色
+    updated_rolename = []
+    roles = mdb_user.role.find()
+    for role in roles:
+        if role["permissions"] & old_per_value and not (role["permissions"] & get_permission(["ROOT"])):
+            role_new_per = (role["permissions"] - old_per_value) | new_per_value
+            mdb_user.role.update_many({"_id":role["_id"]},{"$set":{"permissions":role_new_per}})
+            updated_rolename.append(role["name"])
+
+    # 更新使用了该权限的url or page
+    # 当前所有自定义权限url
+    urls = list(mdb_sys.db.sys_urls.find({"custom_permission": {"$ne": {}, "$exists": True}}))
+    for url in urls:
+        for method, v in url["custom_permission"].items():
+            if v & old_per_value:
+                # 修改
+                url["custom_permission"][method] = (v - old_per_value) | new_per_value
+
+        # 更新
+        mdb_sys.db.sys_urls.update_one({"_id": url["_id"]},
+                                    {"$set": {"custom_permission": url["custom_permission"]}})
+
+        #cache.delete_autokey(fun="get_url_data", db_type="redis", url_of_permission=url['url'].rstrip("/"))
+
+    return {"updated_rolename":updated_rolename}

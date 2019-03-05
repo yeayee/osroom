@@ -3,7 +3,6 @@ from bson import ObjectId
 from flask import request
 from flask_babel import gettext
 from flask_login import current_user
-
 from apps.app import mdb_sys, cache, mdb_user
 from apps.core.flask.reqparse import arg_verify
 from apps.utils.format.number import get_num_digits

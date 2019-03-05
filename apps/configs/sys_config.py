@@ -138,3 +138,9 @@ FONT_PATH = "{}/Arial.ttf".format(STATIC_PATH)
 VIOLATION_IMG_PATH = "{}/sys_imgs/violation.png".format(STATIC_PATH)
 # 最高权限位置
 SUPER_PER = 0b1111111111111111111111111111111
+# 必须保留权限
+PRESERVE_PERS = ["GENERAL_USER","ROOT", "ADMIN", "STAFF"]
+
+# cache 固定key
+GET_DEFAULT_SYS_PER_CACHE_KEY = "sys_permissions_default"
+GET_ALL_PERS_CACHE_KEY = "sys_permissions"
