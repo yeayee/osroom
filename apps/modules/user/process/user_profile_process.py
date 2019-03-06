@@ -2,7 +2,7 @@
 from bson import ObjectId
 from flask_babel import gettext
 from flask_login import current_user
-from apps.utils.upload.get_filepath import get_file_url, get_avatar_url
+from apps.utils.upload.get_filepath import get_avatar_url
 from apps.app import mdb_user, cache
 
 __author__ = "Allen Woo"
@@ -99,7 +99,6 @@ def delete_user_info_cache(user_id):
     :return:
     '''
     # 清理user信息数据缓存
-    cache.delete("get_user_public_info.+user_id_{}.*".format(user_id), db_type="mongodb",
-                 key_regex=True)
-    cache.delete("get_user_all_info.+user_id_{}.*".format(user_id), db_type="mongodb",
-                 key_regex=True)
+    cache.delete_autokey(fun="get_user_public_info", user_id=user_id, db_type="mongodb", key_regex=True)
+    cache.delete_autokey(fun="get_user_all_info", user_id=user_id, db_type="mongodb", key_regex=True)
+

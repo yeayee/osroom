@@ -37,7 +37,6 @@ def json_to_pyseq(tjson):
     if tjson in [None, "None"]:
         return None
     elif not isinstance(tjson, (list, dict, tuple)) and tjson != "":
-
         if isinstance(tjson, (str, bytes)) and tjson[0] not in ["{", "[", "("]:
             return tjson
         try:

@@ -52,7 +52,7 @@ class Cache():
         app = self.app or current_app
         return app.extensions['cache'][self]
 
-    def cached(self, timeout=None, key=None, key_base64=True, db_type=None):
+    def cached(self, timeout=None, key=None, key_base64=True, db_type=None, key_prefix="", is_class_func=False):
         '''
         设置缓存
         :param timeout:缓存保存时间
@@ -69,23 +69,14 @@ class Cache():
                 if not self.config['USE_CACHE']:
                     # 不使用缓存
                     return f(*args, **kwargs)
-                if key is None:
-                    tkey = f.__name__
-                    if args or kwargs:
-                        for arg in args:
-                            tkey = "{}_{}".format(tkey, str(arg))
 
-                        for k, arg in kwargs.items():
-                            tkey = "{}_{}_{}".format(tkey, k, str(arg))
-
-                        cache_key = tkey.lstrip("_")
-                    else:
-                        cache_key = "{}_{}".format(tkey, request.path)
-                    if key_base64:
-                        cache_key = base64.b64encode(cache_key.encode()).decode()
-                else:
-                    cache_key = key
-
+                cache_key = self._create_cache_key(key=key,
+                                                   key_prefix=key_prefix,
+                                                   key_base64=key_base64,
+                                                   fun_name=f.__name__,
+                                                   args=args,
+                                                   kwargs=kwargs,
+                                                   is_class_func=is_class_func)
                 func_result = self.get(key=cache_key, db_type=db_type)
                 if func_result != self.cache_none:
                     return func_result
@@ -96,6 +87,49 @@ class Cache():
             return decorated_function
 
         return decorator
+
+    def _create_cache_key(self, key, key_prefix, key_base64, fun_name, args, kwargs, is_class_func, key_regex=False):
+
+        '''
+
+        :param key:
+        :param key_prefix:
+        :param key_base64:
+        :param fun_name:
+        :param args:
+        :param kwargs:
+        :param is_class_func:
+        :param key_regex: 当delete函数调用时可以使用该参数,用于生成正则匹配的cache_key
+        :return:
+        '''
+        if key_regex:
+            key_rule = ".*"
+        else:
+            key_rule = ""
+        if key is None:
+            tkey = "F-{}".format(fun_name)
+            if is_class_func:
+                targs = args[1:]
+            else:
+                targs = args[:]
+
+            if targs or kwargs:
+                for arg in targs:
+                    tkey = "{}_{}".format(tkey, str(arg))
+                tkwargs = sorted(kwargs.items(), key=lambda x: x[0])
+                for arg in tkwargs:
+                    tkey = "{}{}_{}_{}".format(tkey,key_rule, arg[0], str(arg[1]))
+
+                cache_key = tkey.lstrip("_")
+            else:
+                cache_key = "{}_{}".format(tkey, request.path)
+            cache_key = "{}_{}".format(key_prefix, cache_key)
+            if key_base64:
+                cache_key = base64.b64encode(cache_key.encode()).decode()
+        else:
+            cache_key = key
+
+        return cache_key
 
     def get(self, key, db_type=None):
         '''
@@ -203,13 +237,19 @@ class Cache():
         '''
         删除cache
         :param db_type: 不使用系统设置的db_type时, 请指定类型mongodb或redis
-        :param key_regex:默认关闭正则匹配key, key_regex=True是只能在db_type是mongodb的时候才生效
+        :param key_regex:默认关闭正则匹配key,
         :return:
         '''
         key = "{}{}".format(self.config['CACHE_KEY_PREFIX'], key)
         if not db_type:
             if self.config["CACHE_TYPE"] == "redis":
-                self.redis.delete(key)
+                if key_regex:
+                    key = key.replace(".*", "*")
+                    keys = self.redis.keys(pattern=key)
+                    for key in keys:
+                        self.redis.delete(key.decode())
+                else:
+                    self.redis.delete(key)
             else:
                 if key_regex:
                     q = {"key": {"$regex":key}}
@@ -219,13 +259,45 @@ class Cache():
                 self.mdb_coll.delete_many(q)
         else:
             if db_type == "redis":
-                self.redis.delete(key)
+                if key_regex:
+                    key = key.replace(".*", "*")
+                    keys = self.redis.keys(pattern=key)
+                    for key in keys:
+                        self.redis.delete(key.decode())
+                else:
+                    self.redis.delete(key)
             elif db_type == "mongodb":
                 if key_regex:
                     q = {"key": {"$regex":key}}
                 else:
                     q = {"key": key}
                 self.mdb_coll.delete_many(q)
+
+
+    def delete_autokey(self, fun, key_base64=None, key_prefix="", db_type=None,  key_regex=False,*args, **kwargs):
+        '''
+        删除自动生成key的cache
+        :param fun: 使用缓存的函数
+        :param key_base64:
+        :param key_prefix:
+        :param db_type:
+        :param args:　使用缓存的函数的参数
+        :param kwargs:　使用缓存的函数的参数
+        :param kwargs:　使用缓存的函数的参数
+        :return:
+        '''
+        if not isinstance(fun,str):
+            fun = fun.__name__
+
+        cache_key = self._create_cache_key(key=None,
+                                           key_prefix=key_prefix,
+                                           key_base64=key_base64,
+                                           fun_name = fun,
+                                           args=args,
+                                           kwargs=kwargs,
+                                           is_class_func=False,
+                                           key_regex=key_regex)
+        self.delete(key=cache_key, db_type=db_type, key_regex=key_regex)
 
 
     def clear(self, db_type=None):

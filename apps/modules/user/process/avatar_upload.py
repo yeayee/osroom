@@ -8,6 +8,7 @@ from flask_babel import gettext
 from flask_login import current_user
 
 from apps.configs.sys_config import APPS_PATH
+from apps.modules.user.process.get_or_update_user import get_one_user, update_one_user
 from apps.modules.user.process.user_profile_process import delete_user_info_cache
 from apps.utils.image.image import ImageCompression
 from apps.utils.upload.file_up import file_up, file_del, fileup_base_64
@@ -52,7 +53,7 @@ def avatar_upload():
     data = {}
     if result:
         result = result[0]
-        user = mdb_user.db.user.find_one({"_id":current_user.id})
+        user = get_one_user(user_id=current_user.str_id)
         if user:
             if user['avatar_url'] and "key" in user['avatar_url'] \
                     and  result["key"] != user['avatar_url']["key"]:
@@ -62,7 +63,7 @@ def avatar_upload():
             update_data = {
                 "avatar_url" : result
             }
-            r = mdb_user.db.user.update_one({"_id":current_user.id}, {"$set":update_data})
+            r = update_one_user(user_id=current_user.str_id, updata={"$set":update_data})
             if not r.matched_count:
                 data = {'msg':gettext("Save failed"), 'msg_type':"w", "http_status":400}
             else:

@@ -7,6 +7,7 @@ from flask_login import current_user
 from apps.app import mdb_sys, mdb_user
 from apps.core.flask.reqparse import arg_verify
 from apps.core.utils.get_config import get_config
+from apps.modules.user.process.get_or_update_user import get_one_user
 from apps.utils.format.obj_format import json_to_pyseq, str_to_num
 from apps.utils.validation.str_format import email_format_ver, mobile_phone_format_ver
 from apps.utils.verify.img_verify_code import create_img_code, verify_image_code
@@ -42,8 +43,7 @@ def send_code():
             return data
 
         if exist_account:
-            user_query = {"email": account}
-            if user_query and not mdb_user.db.user.find_one(user_query):
+            if not get_one_user(email=account):
                 data = {'msg': gettext("This account is not registered on this platform"),
                         'msg_type': "w", "http_status": 400}
                 return data
@@ -67,7 +67,7 @@ def send_code():
 
         if exist_account:
             user_query = {"mphone_num": account}
-            if user_query and not mdb_user.db.user.find_one(user_query):
+            if not get_one_user(mphone_num=account):
                 data = {'msg': gettext("This account is not registered on this platform"),
                         'msg_type': "w", "http_status": 400}
                 return data

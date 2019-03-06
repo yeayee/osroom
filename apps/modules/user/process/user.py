@@ -4,6 +4,7 @@ from flask_babel import gettext
 from flask_login import UserMixin, current_user, AnonymousUserMixin
 from werkzeug.security import check_password_hash
 from apps.core.flask.permission import custom_url_permissions, get_permission
+from apps.modules.user.process.get_or_update_user import get_one_user
 from apps.utils.upload.get_filepath import get_avatar_url
 from apps.app import mdb_user
 from apps.core.utils.get_config import get_config
@@ -14,8 +15,7 @@ class User(UserMixin):
 
     def __init__(self, id, **kwargs):
         super(User, self).__init__(**kwargs)
-        id = ObjectId(id)
-        user = mdb_user.db.user.find_one({"_id":id})
+        user = get_one_user(user_id=str(id))
         if user:
             if "password" in user and user["password"]:
                 self.no_password = False
@@ -23,7 +23,7 @@ class User(UserMixin):
             else:
                 self.no_password = True
 
-            self.id = id
+            self.id = ObjectId(id)
             self.str_id = str(id)
             self.username = user["username"]
             self.email = user["email"]
@@ -67,8 +67,8 @@ class User(UserMixin):
         :param password:
         :return:
         '''
-        password_hash = mdb_user.db.user.find_one({'_id':ObjectId(self.id)})["password"]
-        return check_password_hash(password_hash, password)
+        user = get_one_user(user_id=str(self.id))
+        return check_password_hash(user["password"], password)
 
     def can(self, permissions):
         '''

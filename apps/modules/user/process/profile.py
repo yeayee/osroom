@@ -4,14 +4,15 @@ from flask import request
 from flask_babel import gettext
 from flask_login import current_user
 import time
+
+from apps.modules.user.process.get_or_update_user import update_one_user
 from apps.modules.user.process.user_profile_process import get_user_all_info, get_user_public_info, \
     delete_user_info_cache
-from apps.utils.content_evaluation.content import content_inspection_text
-from apps.utils.validation.str_format import ver_user_domainhacks, short_str_verifi, short_str_verifi
+from apps.utils.validation.str_format import ver_user_domainhacks, short_str_verifi
 from apps.core.flask.reqparse import arg_verify
 from apps.utils.format.obj_format import json_to_pyseq, str_to_num
 from apps.utils.format.time_format import time_to_utcdate
-from apps.app import mdb_user, cache
+from apps.app import mdb_user
 from apps.utils.validation.str_format import url_format_ver
 
 __author__ = "Allen Woo"
@@ -72,27 +73,20 @@ def profile_update():
                 'msg_type':"e", "http_status":400}
         return data
     birthday = int(birthday)
-
-    s, r = arg_verify(reqargs=[(gettext(gettext("gender")), gender)], only=["secret", "m", "f"])
+    s, r = arg_verify(reqargs=[(gettext("gender"), gender)], only=["secret", "m", "f"])
     if not s:
         return r
-
     addr_keys = ['countries', 'provinces', 'city', 'district', 'detailed']
     for k,v in address.items():
         if not (k in addr_keys) or not isinstance(v, str):
             data = {'msg':gettext("Address format is not in conformity with the requirements"),
                     'msg_type':"e", "http_status":400}
             return data
-
     if homepage:
         s, r = url_format_ver(homepage)
         if not s:
             return {"msg":r, "msg_type":"w", "http_status":403}
 
-    s,r = short_str_verifi( short_str=info, allow_special_chart=True)
-    if not s:
-        data = {'msg': r,'msg_type': "w", "http_status": 400}
-        return data
 
     update_data = {
         'gender':gender,
@@ -101,7 +95,8 @@ def profile_update():
         'birthday':birthday,
         'address':address
     }
-    r = mdb_user.db.user.update_one({"_id":current_user.id},{"$set":update_data})
+    r = update_one_user(user_id=current_user.str_id, updata={"$set":update_data})
+
     if r.modified_count:
         # 清理user信息数据缓存
         delete_user_info_cache(user_id=current_user.str_id)
@@ -156,8 +151,7 @@ def user_basic_edit():
     elif "custom_domain" in update_data.keys() and  mdb_user.db.user.find_one({"_id":current_user.id, "custom_domain":{"$ne":-1}}):
         data = {'msg':gettext("Personality custom domain cannot be modified"),'msg_type':"w", "http_status":400}
     else:
-
-        r = mdb_user.db.user.update_one({"_id":current_user.id}, {"$set":update_data})
+        r = update_one_user(user_id=current_user.str_id, updata={"$set":update_data})
         if not r.modified_count:
             data = {'msg':gettext("No changes"), 'msg_type':"w", "http_status":201}
         else:

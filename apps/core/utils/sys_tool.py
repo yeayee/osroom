@@ -9,6 +9,7 @@ from copy import deepcopy
 from apps.configs.config import CONFIG
 from apps.configs.sys_config import PROJECT_PATH, SUPER_PER
 from apps.core.logger.web_logging import web_start_log
+from apps.modules.user.process.get_or_update_user import get_one_user_mfilter, update_one_user, insert_one_user
 
 __author__ = "Allen Woo"
 
@@ -110,18 +111,17 @@ def add_user(mdb_user):
         root_id = role_root['_id']
 
     password_hash = generate_password_hash(password)
-    user = mdb_user.db.user.find_one({"$or": [{"username": username}, {"email": email}]})
+    user = get_one_user_mfilter(username=username, email=email, op="or")
     if user:
-        mdb_user.db.user.update_one({"_id": user["_id"]},
-                                    {
-                                        "$set": {"password": password_hash, "role_id": str(root_id)}
-                                    })
+        update_one_user(user_id=str(user["_id"]),
+                        updata={"$set":{"password": password_hash,
+                                        "role_id": str(root_id)}})
         print(" * This user already exists, updated password.")
     else:
         print(' * Create root user...')
         user = user_model(username=username, email=email, password=password, custom_domain=-1,
                           role_id=str(root_id), active=True)
-        r = mdb_user.db.user.insert_one(user)
+        r = insert_one_user(updata=user)
         if r.inserted_id:
             print(" * Create a root user role successfully")
         else:

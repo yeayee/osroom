@@ -9,6 +9,7 @@ from apps.core.flask.reqparse import arg_verify
 from apps.core.plug_in.manager import plugin_manager
 from apps.core.template.get_template import get_email_html
 from apps.modules.user.models.user import user_model
+from apps.modules.user.process.get_or_update_user import get_one_user, insert_one_user
 from apps.modules.user.process.user import User
 from apps.utils.format.time_format import time_to_utcdate
 from apps.utils.geo.ip_to_geo import reader_city
@@ -42,11 +43,11 @@ def p_sign_in(username, password, code_url_obj, code, remember_me, use_jwt_auth=
     s, r = email_format_ver(username)
     s2, r2 = mobile_phone_format_ver(username)
     if s:
-        user = mdb_user.db.user.find_one({"email":username})
+        user = get_one_user(email=username)
     elif s2:
-        user = mdb_user.db.user.find_one({"mphone_num": username})
+        user = get_one_user(mphone_num=username)
     else:
-        user = mdb_user.db.user.find_one({"username":username})
+        user = get_one_user(username=username)
     if not user:
         data = {"msg":gettext("Account or password error"), "msg_type":"e", "http_status":401}
         return data
@@ -242,7 +243,7 @@ def third_party_sign_in(platform_name):
                           role_id=role_id,
                           active=True
                           )
-        r = mdb_user.db.user.insert_one(user)
+        r = insert_one_user(updata=user)
 
         if r.inserted_id:
 

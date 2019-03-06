@@ -3,6 +3,8 @@ from flask import request
 from flask_babel import gettext
 from flask_login import current_user
 import time
+
+from apps.modules.user.process.get_or_update_user import update_one_user
 from apps.utils.verify.msg_verify_code import verify_code
 from apps.modules.user.process.user import insert_op_log
 from apps.core.flask.reqparse import arg_verify
@@ -88,8 +90,7 @@ def p_email_change(new_email_code, current_email_code, email, password):
         return data
 
     if current_user.verify_password(password) or not current_user.email:
-        mdb_user.db.user.update_one({"_id":current_user.id},
-                                    {"$set":{"email":email}})
+        update_one_user(user_id=current_user.str_id, updata={"$set":{"email":email}})
         oplog = {
                'op_type':'set_email',
                'time':time.time(),

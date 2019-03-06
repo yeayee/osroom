@@ -8,6 +8,7 @@ from flask import current_app, request
 from flask_babel import gettext
 from apps.app import mdb_user
 from apps.core.utils.get_config import get_config
+from apps.modules.user.process.get_or_update_user import update_one_user, get_one_user
 from apps.modules.user.process.user import User
 
 __author__ = "Allen Woo"
@@ -96,8 +97,8 @@ class JwtAuth():
             jwt_login_time = {}
 
         jwt_login_time[result["cid"]] = now_time
-        mdb_user.db.user.update_one({"_id":user.id},
-                                    {"$set":{"jwt_login_time":jwt_login_time}})
+        update_one_user(user_id=user.id,
+                        updata={"$set":{"jwt_login_time":jwt_login_time}})
         return result["token"].decode()
 
     def user_identify(self):
@@ -138,7 +139,7 @@ class JwtAuth():
         if auth_token:
             payload = self.decode_auth_token(auth_token)
             if not isinstance(payload, str):
-                user = mdb_user.db.user.find_one({"_id": ObjectId(payload['data']['id'])})
+                user = get_one_user(user_id=str(payload['data']['id']))
                 if not user:
                     result = (None, gettext("User authentication failed, user does not exist"))
                 else:
@@ -146,10 +147,12 @@ class JwtAuth():
                             user["jwt_login_time"][payload['data']["cid"]] == payload['data']['login_time']:
 
                         # 清除退出当前客户端的登录时间信息
-                        user = mdb_user.db.user.find_one({"_id": ObjectId(payload["data"]["id"])},{"jwt_login_time":1})
+                        user = get_one_user(user_id=str(payload['data']['id']))
+
                         del user["jwt_login_time"][payload["data"]["cid"]]
-                        mdb_user.db.user.update_one({"_id": ObjectId(payload["data"]["id"])},
-                                                    {"$set": {"jwt_login_time": user["jwt_login_time"]}})
+                        update_one_user(user_id=payload["data"]["id"],
+                                        updata={"$set":{"jwt_login_time": user["jwt_login_time"]}})
+
                         result = (True, "")
                     else:
                         result = (True, "")

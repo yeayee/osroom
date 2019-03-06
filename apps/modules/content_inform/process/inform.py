@@ -6,6 +6,7 @@ from flask_babel import gettext
 
 from apps.app import mdb_web, mdb_user
 from apps.core.flask.reqparse import arg_verify
+from apps.modules.user.process.get_or_update_user import update_one_user
 
 __author__ = 'Allen Woo'
 
@@ -52,7 +53,7 @@ def content_inform():
         r = mdb_web.db.comment.update_one({"_id":ObjectId(cid)}, up_data)
 
     elif ctype == "user":
-        r = mdb_user.db.user.update_one({"_id":ObjectId(cid)}, up_data)
+        r = update_one_user(user_id=cid, updata=up_data)
 
     elif ctype == "media":
         r = mdb_web.db.media.update_one({"_id":ObjectId(cid)}, up_data)

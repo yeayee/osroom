@@ -6,6 +6,7 @@ import time
 from werkzeug.security import generate_password_hash
 from apps.core.template.get_template import get_email_html
 from apps.core.utils.get_config import get_config
+from apps.modules.user.process.get_or_update_user import update_one_user, get_one_user
 from apps.utils.send_msg.send_email import send_email
 from apps.utils.validation.str_format import password_format_ver, email_format_ver
 from apps.utils.verify.msg_verify_code import verify_code
@@ -62,9 +63,8 @@ def p_password_reset(old_pass, new_pass):
     if current_user.verify_password(old_pass) or current_user.no_password:
         password_hash = generate_password_hash(new_pass)
         # 将jwt_login_time设为{}退出所有jwt登录的用户
-        r = mdb_user.db.user.update_one({"_id":current_user.id},
-                                        {"$set":{"password":password_hash,
-                                                 "jwt_login_time":{}}})
+        r = update_one_user(user_id=current_user.str_id,
+                        updata={"$set":{"password":password_hash, "jwt_login_time":{}}})
         if r.modified_count:
             oplog = {
                    'op_type':'set_password',
@@ -107,7 +107,7 @@ def p_retrieve_password(email, code, password, password2):
 
     s,r = email_format_ver(email=email)
     if s:
-        user = mdb_user.db.user.find_one({"email":email})
+        user = get_one_user(email=email)
     else:
         data = {"msg":r, "msg_type":"e", "http_status":"403"}
         return data
@@ -133,9 +133,10 @@ def p_retrieve_password(email, code, password, password2):
             else:
                 password_hash = generate_password_hash(password)
                 # 将jwt_login_time设为{}退出所有jwt登录的用户
-                r = mdb_user.db.user.update_one({"_id": user["_id"]},
-                                                {"$set": {"password": password_hash,
+                r = update_one_user(user_id=str(user["_id"]),
+                                    updata={"$set": {"password": password_hash,
                                                           "jwt_login_time": {}}})
+
                 if r.modified_count:
                     oplog = {
                                'op_type':'retrieve_pass',

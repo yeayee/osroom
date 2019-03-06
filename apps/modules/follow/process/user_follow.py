@@ -5,6 +5,7 @@ from flask_babel import gettext
 from flask_login import current_user
 from apps.app import mdb_user
 from apps.core.flask.reqparse import arg_verify
+from apps.modules.user.process.get_or_update_user import get_one_user, update_one_user
 from apps.modules.user.process.user_profile_process import get_user_public_info, delete_user_info_cache
 from apps.utils.format.obj_format import json_to_pyseq, str_to_num
 from apps.utils.paging.paging import datas_paging
@@ -25,19 +26,19 @@ def follow_user():
 
     cnt = 0
     for id in ids[:]:
-        if id != current_user.str_id and mdb_user.db.user.find_one({"_id": ObjectId(id)}):
+
+        if id != current_user.str_id and get_one_user(user_id=str(id)):
             r = mdb_user.db.user_follow.update_one({"user_id":current_user.str_id, "type":"account"},
                                                     {"$addToSet":{"follow":id}}, upsert=True)
             if r.modified_count or r.upserted_id:
                 cnt+=1
                 # 更新粉丝统计
-                mdb_user.db.user.update_one({"_id": ObjectId(id)}, {"$inc": {"fans_num": 1}})
+                update_one_user(user_id=str(id), updata={"$inc": {"fans_num": 1}})
             delete_user_info_cache(user_id=id)
 
     if cnt:
         # 更新关注统计
-        mdb_user.db.user.update_one({"_id": current_user.id},
-                                  {"$inc":{"follow_user_num":cnt}})
+        update_one_user(user_id=current_user.str_id, updata={"$inc":{"follow_user_num":cnt}})
         delete_user_info_cache(user_id=current_user.str_id)
         data = {"msg":gettext("Followed"), "msg_type":"s", "http_status":201}
 
@@ -65,7 +66,7 @@ def unfollow():
     for id in ids[:]:
         if mdb_user.db.user_follow.find_one({"user_id":current_user.str_id, "type": "account", "follow":id}):
             # 更新粉丝统计
-            mdb_user.db.user.update_one({"_id": ObjectId(id)}, {"$inc": {"fans_num": -1}})
+            update_one_user(user_id=str(id), updata={"$inc": {"fans_num": -1}})
         else:
             ids.remove(id)
         delete_user_info_cache(user_id=id)
@@ -75,11 +76,9 @@ def unfollow():
 
     if r.modified_count:
         # 更新关注统计
-        mdb_user.db.user.update_one({"_id": current_user.id},
-                                  {"$inc": {"follow_user_num": -len(ids)}})
-
+        update_one_user(user_id=current_user.str_id,
+                        updata={"$inc": {"follow_user_num": -len(ids)}})
         delete_user_info_cache(user_id=current_user.str_id)
-
         data = {"msg": gettext("Unfollow success"), "msg_type": "s", "http_status": 201}
     else:
         delete_user_info_cache(user_id=current_user.str_id)
@@ -105,7 +104,7 @@ def get_followed_users():
     if follow_user:
         data_cnt = len(follow_user["follow"])
         for id in follow_user["follow"][(page-1)*pre: page*pre]:
-            s, r = get_user_public_info(user_id=id, is_basic=False, determine_following=False)
+            s, r = get_user_public_info(user_id=str(id), is_basic=False, determine_following=False)
             if s:
                 data["users"].append(r)
     else:

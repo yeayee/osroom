@@ -267,6 +267,6 @@ def update_role_and_api_per(old_per_value, new_per_value=0):
         mdb_sys.db.sys_urls.update_one({"_id": url["_id"]},
                                     {"$set": {"custom_permission": url["custom_permission"]}})
 
-        #cache.delete_autokey(fun="get_url_data", db_type="redis", url_of_permission=url['url'].rstrip("/"))
+        cache.delete_autokey(fun="get_sys_url", db_type="redis", url=url['url'].rstrip("/"))
 
     return {"updated_rolename":updated_rolename}
