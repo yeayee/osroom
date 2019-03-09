@@ -88,29 +88,29 @@ CONFIG = {
         "__sort__": 99,
         "TOP_NAV": {
             "value": {
+                "1": {
+                    "link": "/",
+                    "nav": "首页",
+                    "next_lev": None
+                },
                 "2": {
-                    "next_lev": None,
+                    "link": "/photo",
                     "nav": "图库",
-                    "link": "/photo"
+                    "next_lev": None
                 },
                 "关于": {
+                    "link": "",
+                    "nav": "关于",
                     "next_lev": [
                         {
-                            "nav": "关于我们",
-                            "link": "/about-us"
+                            "link": "/about-us",
+                            "nav": "关于我们"
                         },
                         {
-                            "nav": "联系我们",
-                            "link": "/contact"
+                            "link": "/contact",
+                            "nav": "联系我们"
                         }
-                    ],
-                    "nav": "关于",
-                    "link": ""
-                },
-                "1": {
-                    "next_lev": None,
-                    "nav": "首页",
-                    "link": "/"
+                    ]
                 }
             },
             "type": "dict",
@@ -120,10 +120,7 @@ CONFIG = {
     },
     "account": {
         "DEFAULT_AVATAR": {
-            "value": [
-                "/static/admin/sys_imgs/avatar_default_1.png",
-                "/static/admin/sys_imgs/avatar_default_2.png"
-            ],
+            "value": "/static/sys_imgs/avatar_default.png",
             "type": "string",
             "sort": 99,
             "info": "新注册用户默认头像的URL"
@@ -161,6 +158,12 @@ CONFIG = {
             "sort": 99,
             "info": "当前主题名称,需与主题主目录名称相同"
         },
+        "VERSION": {
+            "value": "v0.1",
+            "type": "string",
+            "sort": 99,
+            "info": "当前主题版本"
+        },
         "__restart__": "not_must"
     },
     "babel": {
@@ -191,7 +194,7 @@ CONFIG = {
     },
     "email": {
         "APP_NAME": {
-            "value": "OSR DEMO",
+            "value": "",
             "type": "string",
             "sort": 99,
             "info": "在邮件中显示的APP(WEB)名称(1.不填写则不显示.2.如果主题邮件发送html模板不支持，也不显示)"
@@ -263,7 +266,7 @@ CONFIG = {
         },
         "__restart__": "must",
         "APP_LOG_URL": {
-            "value": "https://avatars1.githubusercontent.com/u/14039952?s=460&v=4",
+            "value": "/static/sys_imgs/osroom-logo.png",
             "type": "string",
             "sort": 99,
             "info": "在邮件中显示的LOGO图片URL(1.不填写则不显示.2.如果主题邮件发送html模板不支持，也不显示)"
@@ -290,7 +293,7 @@ CONFIG = {
         "__info__": "Session参数设置（建议技术管理人员使用）",
         "__restart__": "must",
         "SESSION_KEY_PREFIX": {
-            "value": "osroom",
+            "value": "osr-session:",
             "type": "string",
             "sort": 99,
             "info": "添加一个前缀,之前所有的会话密钥。这使得它可以为不同的应用程序使用相同的后端存储服务器"
@@ -315,7 +318,7 @@ CONFIG = {
             "info": "Mongodb保存session的collection,当SESSION_TYPE为mongodb时有效"
         },
         "SESSION_TYPE": {
-            "value": "mongodb",
+            "value": "redis",
             "type": "string",
             "sort": 99,
             "info": "保存Session会话的类型,可选mongodb, redis"
@@ -395,7 +398,7 @@ CONFIG = {
             "info": "用于放入html中<br><span style='color:red;'>head标签</span>内的js/css/html代码(如Google分析代码/百度统计代码)"
         },
         "STATIC_FILE_VERSION": {
-            "value": 20181024065925,
+            "value": 20190309061740,
             "type": "int",
             "sort": 12,
             "info": "静态文件版本(当修改了CSS,JS等静态文件的时候，修改此版本号)"
@@ -433,36 +436,16 @@ CONFIG = {
             "info": "APP(Web)Title前缀"
         },
         "MB_LOGO_DISPLAY": {
-            "value": "name",
+            "value": "logo",
             "type": "string",
             "sort": 4,
             "info": "移动端用App name 还是Logo image 作为APP(Web)的Logo显示, 为空则App name优先<br>可填logo或name(需要主题支持)"
         },
         "FRIEND_LINK": {
             "value": {
-                "七牛云": {
-                    "icon_url": "",
-                    "aliases": "七牛云",
-                    "url": "www.aliyun.com",
-                    "level": 1
-                },
-                "阿里云": {
-                    "icon_url": "",
-                    "aliases": "阿里云",
-                    "url": "www.aliyun.com",
-                    "level": 1
-                },
-                "码云": {
-                    "icon_url": "",
-                    "aliases": "码云",
-                    "url": "www.aliyun.com",
-                    "level": 1
-                },
                 "Github": {
-                    "icon_url": "",
-                    "aliases": "Github",
-                    "url": "www.aliyun.com",
-                    "level": 1
+                    "logo_url": "http://osr.local.com:5000/static/admin/sys_imgs/osroom-logo-1.png?w=240&h=240",
+                    "url": "https://github.com/osroom/osroom"
                 }
             },
             "type": "dict",
@@ -522,15 +505,15 @@ CONFIG = {
             "info": "同一IP地址,同一用户(未登录的同属同一匿名用户),允许每分钟在不验证[图片验证码]的时候,调用API发送验证码最大次数.<br>超过次数后API会生成[图片验证码]并返回图片url对象(也可以自己调用获取图片验证码API获取).<br>如果你的客户端(包括主题)不支持显示图片验证码,请设置此配置为99999999"
         },
         "IMG_CODE_DIR": {
-            "value": "verify_code",
+            "value": "admin/verify_code",
             "type": "string",
             "sort": 99,
             "info": "图片验证码保存目录"
         },
         "SEND_CODE_TYPE": {
             "value": {
-                "string": 0,
-                "int": 6
+                "int": 6,
+                "string": 0
             },
             "type": "dict",
             "sort": 99,
@@ -571,8 +554,8 @@ CONFIG = {
         "__restart__": "not_must",
         "AUDIT_PROJECT_KEY": {
             "value": {
-                "username": "审核用户名",
-                "class_name": "审核一些短的分类名称, 如category, tag"
+                "class_name": "审核一些短的分类名称, 如category, tag",
+                "username": "审核用户名"
             },
             "type": "dict",
             "sort": 99,
@@ -644,13 +627,13 @@ CONFIG = {
             "info": "发布评论最多几个字符"
         },
         "TRAVELER_COMMENT": {
-            "value": False,
+            "value": True,
             "type": "bool",
             "sort": 99,
             "info": "游客评论开关,是否打开?"
         },
         "OPEN_COMMENT": {
-            "value": False,
+            "value": True,
             "type": "bool",
             "sort": 99,
             "info": "评论开关,是否打开评论功能?"
@@ -664,7 +647,7 @@ CONFIG = {
     },
     "key": {
         "SECURITY_PASSWORD_SALT": {
-            "value": "ceavewrvwtrhdyjydj",
+            "value": "12343erfegrg",
             "type": "string",
             "sort": 99,
             "info": "安全密码码盐值"
@@ -673,7 +656,7 @@ CONFIG = {
         "__sort__": 99,
         "__info__": "安全Key（建议技术管理人员使用）",
         "SECRET_KEY": {
-            "value": "ceavewrvwtrhdyjydj",
+            "value": "12333r32fddvve",
             "type": "string",
             "sort": 99,
             "info": "安全验证码"
@@ -731,7 +714,7 @@ CONFIG = {
             "info": "POST标签最大个数"
         },
         "NUM_PAGE": {
-            "value": 10,
+            "value": 15,
             "type": "int",
             "sort": 99,
             "info": "每个页面获取几篇文章, 如果请求获取文章时指定了指定了per参数, 则此配置无效(此配置也对管理端无效)"
@@ -767,7 +750,7 @@ CONFIG = {
         "__info__": "Web参数设置",
         "__restart__": "not_must",
         "CATEGORY_MAX_LEN": {
-            "value": 15,
+            "value": 30,
             "type": "int",
             "sort": 99,
             "info": "分类名称类型名最多几个字符"
@@ -775,17 +758,17 @@ CONFIG = {
         "__sort__": 7,
         "CATEGORY_TYPE": {
             "value": {
-                "主题图片图文": "image_theme",
+                "主题-文本": "text_theme",
+                "主题-图文": "image_theme",
+                "主题-视频": "video_theme",
+                "主题-其他": "other_theme",
+                "主题-音频": "audio_theme",
+                "其他类型库": "other",
+                "图文|图库": "image",
                 "文本内容": "text",
-                "其他": "other",
-                "主题文本": "text_theme",
-                "视频库": "video",
-                "音频库": "audio",
-                "图库": "image",
-                "主题视频": "video_theme",
                 "文集": "post",
-                "主题其他": "other_theme",
-                "主题音频": "audio_theme"
+                "视频库": "video",
+                "音频库": "audio"
             },
             "type": "dict",
             "sort": 99,
@@ -802,10 +785,9 @@ CONFIG = {
         },
         "UP_ALLOWED_EXTENSIONS": {
             "value": [
-                "xls",
+                "txt",
                 "xlxs",
                 "excel",
-                "txt",
                 "pdf",
                 "png",
                 "jpg",

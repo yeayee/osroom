@@ -1,11 +1,8 @@
 # -*-coding:utf-8-*-
 import json
-
 import os
 from copy import deepcopy
-
 import time
-
 from apps.configs.sys_config import APPS_PATH
 from apps.core.logger.web_logging import web_start_log
 from init_datas import INIT_DATAS
@@ -90,9 +87,16 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
             print("* [Initialization data] {}".format(data["coll"]))
             db.dbs[data["coll"]].insert_many(data["datas"])
 
+    theme = mdb_sys.db.sys_config.find({"project": "theme", "key": "CURRENT_THEME_NAME"})
+    if not theme.count(True):
+        # 如果未初始化过
+        init_default_datas()
+
+def init_default_datas():
     '''
     默认主题初始化数据
     '''
+
     init_data = []
     init_file = "{}/themes/osr-style/init_setting.json".format(APPS_PATH)
     if os.path.exists(init_file):
@@ -103,6 +107,7 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
                 init_data = json.loads(jsondata)
 
     for data in init_data:
+
         if mdb_sys.dbs["theme_display_setting"].find_one({"name":data["name"]}):
             continue
         tempdata = deepcopy(data)
@@ -113,6 +118,7 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
         exists_data = mdb_web.db.media.find_one({"name":data["name"]})
         old_id = None
         if exists_data:
+            #  如果存在此数据
             tempdata = exists_data
             tempdata["category"] = data["category"]
             old_id = tempdata["_id"]

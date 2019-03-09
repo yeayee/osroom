@@ -34,6 +34,48 @@ def get_theme_readme():
         data = {"msg": gettext("Readme file does not exist"), "msg_type": "e", "http_status": 400}
     return data
 
+def get_one_theme_info(theme_name):
+
+    '''
+    获取一个主题信息
+    :return:
+    '''
+    path = os.path.join(THEME_TEMPLATE_FOLDER, theme_name)
+    if not os.path.isdir(path):
+        return False
+    s, r = verify_theme(path, theme_name, theme_name)
+    new_cover_dir = os.path.join(STATIC_PATH, "media/theme_cover")
+    if s:
+        fpath = os.path.join(path, "conf.yaml")
+        with open(fpath) as rf:
+            theme_conf = yaml.load(rf)
+
+            # 每次都拷贝一次, 防止有上传新的主题:主题封面拷贝到apps/static
+            if not os.path.exists(new_cover_dir):
+                os.makedirs(new_cover_dir)
+
+            cover_path = "{}/{}/{}".format(THEME_TEMPLATE_FOLDER, theme_conf["theme_name"],
+                                           theme_conf["cover_path"])
+            new_cover_path = "{}/{}_{}".format(new_cover_dir, theme_conf["theme_name"],
+                                               os.path.split(theme_conf["cover_path"])[-1])
+
+            if os.path.exists(cover_path):
+                cover_path = cover_path.replace("//", "/")
+                shutil.copyfile(cover_path, new_cover_path)
+
+            # 检查
+            theme_conf["cover_url"] = "/static/media/theme_cover/{}_{}".format(
+                theme_conf["theme_name"],
+                os.path.split(theme_conf["cover_path"])[-1])
+            if theme_conf["theme_name"] == get_config("theme", "CURRENT_THEME_NAME"):
+                theme_conf["current"] = True
+            else:
+                theme_conf["current"] = False
+            return theme_conf
+    else:
+        return False
+
+
 def get_themes():
     '''
     获取当前已有主题信息
@@ -200,6 +242,13 @@ def switch_theme():
             {"project": "theme", "key": "CURRENT_THEME_NAME"},
             {"$set": {"value":theme_name.strip(), "update_time":time.time()}},
             upsert=True)
+
+        theme_info = get_one_theme_info(theme_name)
+        if theme_info and "version" in theme_info:
+            mdb_sys.db.sys_config.update_many(
+                {"project": "theme", "key": "VERSION"},
+                {"$set": {"value": theme_info["version"], "update_time": time.time()}},
+                upsert=True)
 
         mdb_sys.db.sys_config.update_many(
             {"project": "site_config", "key": "STATIC_FILE_VERSION"},
