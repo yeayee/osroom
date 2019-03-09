@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  v1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-12-28 00:31+0800\n"
+"POT-Creation-Date: 2019-03-09 14:34+0800\n"
 "PO-Revision-Date: 2018-05-01 13:31+0800\n"
 "Last-Translator: AllenWoo\n"
 "Language: en_GB\n"
@@ -17,6 +17,221 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.1\n"
+
+#: apps/configs/sys_config.py:98
+msgid "405, The method is not allowed for the requested URL"
+msgstr "405，当前请求的URL不存在该请求方法"
+
+#: apps/core/auth/jwt_auth.py:66
+msgid "The provided OSR-BearerToken has expired"
+msgstr "提供的OSR-BearerToken已过期"
+
+#: apps/core/auth/jwt_auth.py:69
+msgid "Invalid OSR-BearerToken"
+msgstr "错误的OSR-BearerToken"
+
+#: apps/core/auth/jwt_auth.py:118 apps/core/auth/jwt_auth.py:144
+msgid "User authentication failed, user does not exist"
+msgstr "用户身份验证失败或用户不存在"
+
+#: apps/core/auth/jwt_auth.py:124
+msgid ""
+"User authentication token expired or changed. Please log in again for "
+"access"
+msgstr "用户身份验证令牌已过期或已更改. 请再次登录访问"
+
+#: apps/core/auth/jwt_auth.py:126
+msgid "Token is abnormal"
+msgstr "Token令牌异常"
+
+#: apps/core/auth/jwt_auth.py:128 apps/core/auth/jwt_auth.py:162
+msgid "No user authentication token provided \"OSR-BearerToken\""
+msgstr "未提供用户身份验证令牌 \"OSR-BearerToken\""
+
+#: apps/core/auth/rest_token_auth.py:64
+msgid "Create up to 2 tokens"
+msgstr "最多可创建2个令牌"
+
+#: apps/core/auth/rest_token_auth.py:77
+msgid "Activate token successfully"
+msgstr "成功激活令牌"
+
+#: apps/core/auth/rest_token_auth.py:79
+msgid "Activation token failed"
+msgstr "激活令牌失败"
+
+#: apps/core/auth/rest_token_auth.py:94
+msgid "Disable token successfully"
+msgstr "成功禁用令牌"
+
+#: apps/core/auth/rest_token_auth.py:96
+msgid "Disable token failed"
+msgstr "禁用令牌失败"
+
+#: apps/core/auth/rest_token_auth.py:98
+msgid "Keep at least one active token"
+msgstr "保留至少一个激活令牌"
+
+#: apps/core/auth/rest_token_auth.py:111
+#: apps/modules/message/process/sys_message.py:86
+#: apps/modules/message/process/user_message.py:184
+#: apps/modules/permission/process/url_permission.py:189
+#: apps/modules/plug_in_manager/process/manager.py:118
+#: apps/modules/theme_setting/process/page.py:101
+#: apps/modules/theme_setting/process/themes.py:317
+msgid "Successfully deleted"
+msgstr "删除成功"
+
+#: apps/core/auth/rest_token_auth.py:113 apps/modules/audit/process/rules.py:70
+#: apps/modules/category/process/category.py:127
+#: apps/modules/comments/process/comment.py:247
+#: apps/modules/permission/process/url_permission.py:191
+msgid "Delete failed"
+msgstr "删除失败"
+
+#: apps/core/auth/rest_token_auth.py:115
+msgid "Delete failed, keep at least one token"
+msgstr "删除失败，至少保留一个令牌"
+
+#: apps/core/auth/rest_token_auth.py:149
+msgid "Invalid SecretToken for OSR-RestsToken"
+msgstr "OSR-RestsToken的SecretToken无效"
+
+#: apps/core/auth/rest_token_auth.py:161
+msgid ""
+"Token malformed, should be 'SecretToken <token>' or 'AccessToken <token>'"
+" and 'ClientId <client_id>'"
+msgstr "令牌格式错误，应该是'SecretToken <token>' 或 'AccessToken <token>'和'ClientId <client_id>'"
+
+#: apps/core/auth/rest_token_auth.py:166 apps/core/flask/request.py:78
+msgid ""
+"Token is miss, unconventional web browsing requests please provide \"OSR-"
+"RestToken\", otherwise provide \"X-CSRFToken\""
+msgstr "Token缺失，浏览器亲提供\"X-CSRFToken \", 其他请求请提供\"OSR-RestToken\""
+
+#: apps/core/auth/rest_token_auth.py:190
+msgid "Failed to get, please try again"
+msgstr "未能获得，请再试一次"
+
+#: apps/core/auth/rest_token_auth.py:193
+msgid "The OSR-RestToken provided by the request header is not a SecretToken"
+msgstr "请求header提供的OSR-RestToken不是SecretToken"
+
+#: apps/core/auth/rest_token_auth.py:209
+msgid "Invalid AccessToken or AccessToken has expired"
+msgstr "无效的AccessToken或AccessToken已过期"
+
+#: apps/core/auth/rest_token_auth.py:214
+msgid "Can not find the ClientId matching 'AccessToken'"
+msgstr "找不到匹配'AccessToken'的ClientId"
+
+#: apps/core/auth/rest_token_auth.py:221
+msgid "SecretToken in OSr-RestToken is invalid"
+msgstr "OSr-RestToken中的SecretToken无效"
+
+#: apps/core/auth/rest_token_auth.py:227
+msgid "AccessToken in OSr-RestToken is invalid"
+msgstr "OSr-RestToken中的AccessToken无效"
+
+#: apps/core/auth/rest_token_auth.py:233
+msgid "OSR-RestToken validation failed."
+msgstr "OSR-RestToken验证失败"
+
+#: apps/core/flask/errorhandler.py:61
+msgid ""
+"Please add the 'OSR-RestToken' or 'X-CSRFToken' request header, the "
+"specific use please refer to the osroom system documentation: "
+"http://osroom.com"
+msgstr "请添加'OSR-RestToken'或'X-CSRFToken'到请求header, 具体使用请参考osroom系统文档：http://osroom.com"
+
+#: apps/core/flask/errorhandler.py:68
+msgid "Not logged in"
+msgstr "未登录"
+
+#: apps/core/flask/errorhandler.py:94
+msgid "An error occurred. Please contact the administrator"
+msgstr "发生错误, 请联系管理员"
+
+#: apps/core/flask/errorhandler.py:96
+msgid "Permission denied"
+msgstr "没有权限"
+
+#: apps/core/flask/errorhandler.py:99
+msgid "The api does not exist or has been deprecated"
+msgstr "api不存在或已被弃用"
+
+#: apps/core/flask/errorhandler.py:102
+msgid "Server error"
+msgstr "服务器内部错误"
+
+#: apps/core/flask/errorhandler.py:106
+msgid "Server error, please check whether the third-party plug-in is normal"
+msgstr "服务器错误，请检查第三方插件是否正常"
+
+#: apps/core/flask/login_manager.py:53
+msgid "Anonymous users can not access '{}', need to log in"
+msgstr "匿名用户无法访问\"{}\"，需要登录"
+
+#: apps/core/flask/login_manager.py:63
+msgid "Anonymous users can not access, you need to log in"
+msgstr ""匿名用户无法访问访问，需要登录""
+
+#: apps/core/flask/permission.py:39 apps/core/flask/permission.py:62
+msgid "Permission denied,requires \"{}\" permission"
+msgstr "无权限，需要\"{} \"权限"
+
+#: apps/core/flask/reqparse.py:11
+msgid "The \"{}\" cannot be empty"
+msgstr "\"{}\"不能为空"
+
+#: apps/core/flask/reqparse.py:21
+msgid "The minimum length of \"{}\" is {} characters"
+msgstr "\"{} \"的最小长度为{}个字符"
+
+#: apps/core/flask/reqparse.py:32
+msgid "The maximum length of \"{}\" is {} characters"
+msgstr "\"{} \"的最大长度为{}个字符"
+
+#: apps/core/flask/reqparse.py:42
+msgid "\"{}\" needs to be of type {}"
+msgstr "\"{} \"需要是{}类型”"
+
+#: apps/core/flask/reqparse.py:51
+msgid "The value of parameter \"{}\" can only be one of \"{}\""
+msgstr "参数\"{} \"的值只能是\"{} \"之一"
+
+#: apps/core/flask/reqparse.py:60
+msgid "The value of parameter \"{}\" can not be \"{}\""
+msgstr "参数\"{} \"的值不能是\"{} \""
+
+#: apps/core/flask/reqparse.py:69
+msgid "Parameter {} can only be of the following type: \"{}\""
+msgstr "参数{}只能是以下类型：\"{} \""
+
+#: apps/core/flask/reqparse.py:80 apps/core/flask/reqparse.py:86
+msgid "The value of parameter \"{}\" is illegal"
+msgstr "参数\"{} \"的值是非法的"
+
+#: apps/core/plug_in/manager.py:107
+msgid "Plugin startup file does not exist"
+msgstr "插件启动文件不存在"
+
+#: apps/core/plug_in/manager.py:227
+#: apps/modules/theme_setting/process/themes.py:215
+msgid "Configuration file \"conf.yaml\" but few parameters \"{}\""
+msgstr "插件配置文件\"conf.yaml\"缺少参数\"{}\""
+
+#: apps/core/plug_in/manager.py:230
+msgid "Missing startup file in plugin package"
+msgstr "插件缺少启动文件"
+
+#: apps/core/plug_in/manager.py:241
+msgid "Plugin installed successfully"
+msgstr "插件安装成功"
+
+#: apps/core/plug_in/manager.py:244
+msgid "Missing plugin main function(execution function)"
+msgstr "插件缺少主函数main"
 
 #: apps/modules/audit/process/rules.py:41
 msgid "rule"
@@ -28,7 +243,7 @@ msgstr "规则已存在"
 
 #: apps/modules/audit/process/rules.py:53
 #: apps/modules/category/process/category.py:74
-#: apps/modules/permission/process/permission.py:78
+#: apps/modules/permission/process/permission.py:80
 #: apps/modules/user/process/role.py:45
 msgid "Add a success"
 msgstr "添加成功"
@@ -37,13 +252,6 @@ msgstr "添加成功"
 #: apps/modules/category/process/category.py:124
 msgid "Delete the success,{}"
 msgstr "删除成功:{}"
-
-#: apps/modules/audit/process/rules.py:70
-#: apps/modules/category/process/category.py:127
-#: apps/modules/comments/process/comment.py:233
-#: apps/modules/permission/process/url_permission.py:192
-msgid "Delete failed"
-msgstr "删除失败"
 
 #: apps/modules/category/process/category.py:23
 msgid "category id"
@@ -58,8 +266,8 @@ msgstr "category type"
 #: apps/modules/category/process/category.py:86
 #: apps/modules/media/process/media.py:55
 #: apps/modules/media/process/media.py:213
-#: apps/modules/permission/process/permission.py:80
-#: apps/modules/permission/process/permission.py:123
+#: apps/modules/permission/process/permission.py:82
+#: apps/modules/permission/process/permission.py:125
 #: apps/modules/plug_in_manager/process/manager.py:52
 #: apps/modules/plug_in_manager/process/manager.py:88
 #: apps/modules/plug_in_manager/process/manager.py:112
@@ -67,6 +275,13 @@ msgstr "category type"
 #: apps/modules/theme_setting/process/display_setting.py:205
 #: apps/modules/user/process/role.py:51 apps/modules/user/process/role.py:54
 #: apps/modules/user/process/role.py:95
+#: apps/plugins/warehouse_plugin/process/business.py:39
+#: apps/plugins/warehouse_plugin/process/business.py:71
+#: apps/plugins/warehouse_plugin/process/goods_category.py:37
+#: apps/plugins/warehouse_plugin/process/goods_category.py:65
+#: apps/plugins/warehouse_plugin/process/goods_type.py:35
+#: apps/plugins/warehouse_plugin/process/goods_type.py:60
+#: apps/utils/validation/str_format.py:21
 msgid "name"
 msgstr "名称"
 
@@ -77,7 +292,7 @@ msgstr "名称已存在"
 
 #: apps/modules/category/process/category.py:99
 #: apps/modules/media/process/media.py:293
-#: apps/modules/permission/process/url_permission.py:167
+#: apps/modules/permission/process/url_permission.py:166
 #: apps/modules/plug_in_manager/process/setting.py:142
 #: apps/modules/setting/process/settings.py:248
 #: apps/modules/theme_setting/process/display_setting.py:286
@@ -85,7 +300,7 @@ msgid "Modify the success"
 msgstr "修改成功"
 
 #: apps/modules/category/process/category.py:101
-#: apps/modules/permission/process/url_permission.py:169
+#: apps/modules/permission/process/url_permission.py:168
 msgid "No modification"
 msgstr "未修改"
 
@@ -139,41 +354,45 @@ msgstr "评论功能已关闭"
 msgid "comment"
 msgstr "评论"
 
-#: apps/modules/comments/process/comment.py:65
-msgid "You comment too often and come back later"
-msgstr "发表评论太频繁, 请稍后再发"
-
-#: apps/modules/comments/process/comment.py:74
-msgid "Articles do not exist or have not been published"
-msgstr "文章不存在或尚未发布"
-
-#: apps/modules/comments/process/comment.py:82
-msgid "Your comment goal does not exist"
-msgstr "你的评论目标不存在"
-
-#: apps/modules/comments/process/comment.py:107
+#: apps/modules/comments/process/comment.py:91
 msgid "Guest reviews feature is not open, please login account comments"
 msgstr "访客评论功能未开启，请登录后评论"
 
-#: apps/modules/comments/process/comment.py:165
+#: apps/modules/comments/process/comment.py:99
+msgid "You comment too often and come back later"
+msgstr "发表评论太频繁, 请稍后再发"
+
+#: apps/modules/comments/process/comment.py:108
+msgid "Articles do not exist or have not been published"
+msgstr "文章不存在或尚未发布"
+
+#: apps/modules/comments/process/comment.py:116
+msgid "Your comment goal does not exist"
+msgstr "你的评论目标不存在"
+
+#: apps/modules/comments/process/comment.py:174
 msgid "[Label:{}]Comment on alleged violations"
 msgstr "[标记：{}]评论内容不合法"
 
-#: apps/modules/comments/process/comment.py:193
+#: apps/modules/comments/process/comment.py:205
 msgid "Successful reviews"
 msgstr "成功提交评论"
 
-#: apps/modules/comments/process/comment.py:231
+#: apps/modules/comments/process/comment.py:207
+msgid "Success back, waiting for the system audit."
+msgstr "成功提交，等待系统审核"
+
+#: apps/modules/comments/process/comment.py:245
 #: apps/modules/post/process/user_post.py:191
 msgid "Delete the success"
 msgstr "删除成功"
 
-#: apps/modules/comments/process/comment.py:265
+#: apps/modules/comments/process/comment.py:279
 #: apps/modules/post/process/post.py:86
 msgid "Success"
 msgstr "成功"
 
-#: apps/modules/comments/process/comment.py:267
+#: apps/modules/comments/process/comment.py:281
 #: apps/modules/post/process/post.py:88
 msgid "Failed"
 msgstr "失败"
@@ -183,39 +402,39 @@ msgstr "失败"
 msgid "The \"pre\" must not exceed the maximum amount"
 msgstr "每页显示的数据条目不能超过设置的最高条数"
 
-#: apps/modules/content_inform/process/inform.py:38
+#: apps/modules/content_inform/process/inform.py:39
 msgid "details"
 msgstr "详情"
 
-#: apps/modules/content_inform/process/inform.py:61
+#: apps/modules/content_inform/process/inform.py:62
 msgid "Submitted successfully, thanks for your participation"
 msgstr "提交成功，感谢你的参与"
 
-#: apps/modules/content_inform/process/inform.py:64
+#: apps/modules/content_inform/process/inform.py:65
 msgid "Submit failed, please try again"
 msgstr "提交失败，请重试"
 
-#: apps/modules/follow/process/user_follow.py:42
+#: apps/modules/follow/process/user_follow.py:43
 msgid "Followed"
 msgstr "已关注"
 
-#: apps/modules/follow/process/user_follow.py:45
+#: apps/modules/follow/process/user_follow.py:46
 msgid "You can't follow yourself"
 msgstr "不能关注自己"
 
-#: apps/modules/follow/process/user_follow.py:48
+#: apps/modules/follow/process/user_follow.py:49
 msgid "You are already following this user"
 msgstr "已关注过该用户"
 
-#: apps/modules/follow/process/user_follow.py:83
+#: apps/modules/follow/process/user_follow.py:82
 msgid "Unfollow success"
 msgstr "取消关注成功"
 
-#: apps/modules/follow/process/user_follow.py:86
+#: apps/modules/follow/process/user_follow.py:85
 msgid "Unfollow failed"
 msgstr "取消关注失败"
 
-#: apps/modules/global_data/process/global_data.py:44
+#: apps/modules/global_data/process/global_data.py:49
 msgid "Get the current user information successfully"
 msgstr "获取当前用户信息成功"
 
@@ -239,7 +458,7 @@ msgid "{} uploaded successfully"
 msgstr "已成功上传{}"
 
 #: apps/modules/media/process/media.py:109
-#: apps/modules/permission/process/url_permission.py:108
+#: apps/modules/permission/process/url_permission.py:107
 #: apps/modules/theme_setting/process/display_setting.py:107
 #: apps/modules/theme_setting/process/page.py:68
 msgid "Added successfully"
@@ -271,6 +490,10 @@ msgstr "{} 文件已被删除"
 #: apps/modules/plug_in_manager/process/manager.py:124
 #: apps/modules/setting/process/host_setting.py:70
 #: apps/modules/theme_setting/process/display_setting.py:313
+#: apps/plugins/warehouse_plugin/process/business.py:115
+#: apps/plugins/warehouse_plugin/process/goods.py:390
+#: apps/plugins/warehouse_plugin/process/goods_category.py:103
+#: apps/plugins/warehouse_plugin/process/goods_type.py:101
 msgid "Failed to delete"
 msgstr "删除失败"
 
@@ -317,101 +540,102 @@ msgstr "短信发送"
 msgid "No user mobile phone number was obtained"
 msgstr "没有获得用户手机号码"
 
-#: apps/modules/message/process/sys_message.py:86
-#: apps/modules/message/process/user_message.py:184
-#: apps/modules/permission/process/permission.py:185
-#: apps/modules/permission/process/url_permission.py:190
-#: apps/modules/plug_in_manager/process/manager.py:118
-#: apps/modules/theme_setting/process/page.py:101
-#: apps/modules/theme_setting/process/themes.py:268
-msgid "Successfully deleted"
-msgstr "删除成功"
-
 #: apps/modules/message/process/user_message.py:160
-#: apps/modules/user/process/profile.py:100
+#: apps/modules/user/process/profile.py:103
 msgid "Update succeed"
 msgstr "更新成功"
 
 #: apps/modules/message/process/user_message.py:162
 #: apps/modules/permission/process/permission.py:164
 #: apps/modules/setting/process/host_setting.py:57
-#: apps/modules/user/process/adm_user.py:122
-#: apps/modules/user/process/profile.py:102
-#: apps/modules/user/process/profile.py:154
+#: apps/modules/user/process/adm_user.py:124
+#: apps/modules/user/process/profile.py:105
+#: apps/modules/user/process/profile.py:156
 #: apps/modules/user/process/role.py:124 apps/modules/user/process/role.py:130
 msgid "No changes"
 msgstr "未修改"
 
-#: apps/modules/permission/process/permission.py:27
+#: apps/modules/permission/process/permission.py:29
 msgid "The specified permission is not found"
 msgstr "找不到指定的权限"
 
-#: apps/modules/permission/process/permission.py:80
-#: apps/modules/permission/process/permission.py:123
+#: apps/modules/permission/process/permission.py:82
+#: apps/modules/permission/process/permission.py:125
 msgid "position"
 msgstr "位置"
 
-#: apps/modules/permission/process/permission.py:89
-#: apps/modules/permission/process/permission.py:131
+#: apps/modules/permission/process/permission.py:91
+#: apps/modules/permission/process/permission.py:133
 msgid "Must be an integer greater than 0, less than or equal to {}"
 msgstr "必须是大于0,并且小于或等于{}"
 
-#: apps/modules/permission/process/permission.py:93
+#: apps/modules/permission/process/permission.py:95
 msgid "Permission name or valready exists"
 msgstr "名称已经存在"
 
-#: apps/modules/permission/process/permission.py:97
-#: apps/modules/permission/process/permission.py:157
+#: apps/modules/permission/process/permission.py:99
+#: apps/modules/permission/process/permission.py:156
 msgid "Location has been used"
 msgstr "位置已被使用"
 
-#: apps/modules/permission/process/permission.py:102
+#: apps/modules/permission/process/permission.py:104
 #: apps/modules/user/process/role.py:59
 msgid ""
 "The current user permissions are lower than the permissions that you want"
 " to add, without permission to add"
 msgstr "当前用户权限低于您要添加的权限，无法添加权限"
 
-#: apps/modules/permission/process/permission.py:135
-#: apps/modules/permission/process/url_permission.py:142
+#: apps/modules/permission/process/permission.py:137
+#: apps/modules/permission/process/url_permission.py:141
 #: apps/modules/user/process/role.py:99
 msgid ""
 "The current user permissions are lower than the permissions you want to "
 "modify, without permission to modify"
 msgstr "当前用户权限低于你要修改的权限，无权修改"
 
-#: apps/modules/permission/process/permission.py:151
-#: apps/modules/post/process/user_post.py:177
-#: apps/modules/user/process/role.py:118
-msgid "Save success"
-msgstr "保存草稿成功"
-
-#: apps/modules/permission/process/permission.py:153
+#: apps/modules/permission/process/permission.py:152
 msgid "Permission name already exists"
 msgstr "名称已经存在"
 
-#: apps/modules/permission/process/permission.py:188
-msgid "Successfully deleted, and {} have no permission to delete"
-msgstr "成功删除部分权限,{}个权限未删除"
+#: apps/modules/permission/process/permission.py:168
+#: apps/modules/permission/process/permission.py:217
+msgid "The role of the chain reaction is: \n"
+msgstr "连锁反应影响: \n"
 
-#: apps/modules/permission/process/url_permission.py:36
+#: apps/modules/permission/process/permission.py:176
+msgid "The update is successful. {}"
+msgstr "更新成功. {}"
+
+#: apps/modules/permission/process/permission.py:227
+msgid "Successfully deleted. {}"
+msgstr "删除成功. {}"
+
+#: apps/modules/permission/process/permission.py:232
+msgid "No permission to delete {}. "
+msgstr "无权删除 {}"
+
+#: apps/modules/permission/process/permission.py:234
+msgid "{}{} are permissions that must be retained."
+msgstr "{}{}是必须保留的权限"
+
+#: apps/modules/permission/process/url_permission.py:35
 msgid "No relevant data found"
 msgstr "没有相关数据"
 
-#: apps/modules/permission/process/url_permission.py:93
+#: apps/modules/permission/process/url_permission.py:92
 #: apps/modules/theme_setting/process/page.py:32
 msgid "routing"
 msgstr "路由"
 
-#: apps/modules/permission/process/url_permission.py:98
+#: apps/modules/permission/process/url_permission.py:97
 msgid "Routing already exists"
 msgstr "路由已存在"
 
-#: apps/modules/permission/process/url_permission.py:111
+#: apps/modules/permission/process/url_permission.py:110
 msgid "Add failed"
 msgstr "添加失败"
 
-#: apps/modules/permission/process/url_permission.py:128
+#: apps/modules/permission/process/url_permission.py:127
 msgid "method"
 msgstr "请求方式"
 
@@ -440,7 +664,7 @@ msgid "Plug-in failed to stop"
 msgstr "成绩停用失败"
 
 #: apps/modules/plug_in_manager/process/manager.py:139
-#: apps/modules/theme_setting/process/themes.py:99
+#: apps/modules/theme_setting/process/themes.py:141
 msgid "File format error, please upload zip archive"
 msgstr "文件格式错误，请上传zip压缩包"
 
@@ -449,8 +673,8 @@ msgid "The same name plugin already exists"
 msgstr "相同名称的插件已存在"
 
 #: apps/modules/plug_in_manager/process/manager.py:168
-#: apps/modules/theme_setting/process/themes.py:108
-#: apps/modules/theme_setting/process/themes.py:123
+#: apps/modules/theme_setting/process/themes.py:150
+#: apps/modules/theme_setting/process/themes.py:165
 msgid "The same name theme already exists"
 msgstr "相同名称的主题已存在"
 
@@ -526,13 +750,18 @@ msgstr "[标记：{}]发布的内容不合法"
 msgid "Issue success"
 msgstr "发布成功"
 
+#: apps/modules/post/process/user_post.py:177
+#: apps/modules/user/process/role.py:118
+msgid "Save success"
+msgstr "保存草稿成功"
+
 #: apps/modules/post/process/user_post.py:188
 msgid "Removed to recycle bin"
 msgstr "已移到回收站"
 
 #: apps/modules/post/process/user_post.py:197
 msgid "{},{}"
-msgstr ""
+msgstr "{},{}"
 
 #: apps/modules/post/process/user_post.py:215
 msgid "Restore success,{}"
@@ -557,7 +786,7 @@ msgid "There is no host {}"
 msgstr "没有服务器{}"
 
 #: apps/modules/setting/process/host_setting.py:40
-#: apps/modules/user/process/profile.py:114
+#: apps/modules/user/process/profile.py:117
 msgid "username"
 msgstr "用户名"
 
@@ -576,7 +805,7 @@ msgstr "成功删除{}服务器信息"
 #: apps/modules/setting/process/host_setting.py:89
 #: apps/modules/setting/process/host_setting.py:139
 msgid "[{}] {}"
-msgstr ""
+msgstr "[{}] {}"
 
 #: apps/modules/setting/process/host_setting.py:107
 msgid "[Warning]: \"sudo\" command go to the server"
@@ -616,7 +845,7 @@ msgstr "缺少参数"
 
 #: apps/modules/setting/process/settings.py:54
 #: apps/modules/setting/process/settings.py:60
-#: apps/modules/theme_setting/process/themes.py:210
+#: apps/modules/theme_setting/process/themes.py:259
 msgid "Switch success"
 msgstr "切换成功"
 
@@ -658,36 +887,32 @@ msgstr "获取成功"
 msgid "Readme file does not exist"
 msgstr "Readme文件不存在"
 
-#: apps/modules/theme_setting/process/themes.py:151
+#: apps/modules/theme_setting/process/themes.py:193
 msgid "Theme installed successfully"
 msgstr "主题安装成功"
 
-#: apps/modules/theme_setting/process/themes.py:173
-msgid "Configuration file \"conf.yaml\" but few parameters \"{}\""
-msgstr "插件配置文件\"conf.yaml\"缺少参数\"{}\""
-
-#: apps/modules/theme_setting/process/themes.py:177
+#: apps/modules/theme_setting/process/themes.py:219
 msgid ""
 "The theme name and theme directory name in the configuration are "
 "inconsistent.(\"{}\" compared with \"{}\")"
 msgstr "主题名称与主题文件夹名称不一致(“{}” 对比 “{}”)"
 
-#: apps/modules/theme_setting/process/themes.py:180
+#: apps/modules/theme_setting/process/themes.py:222
 msgid ""
 "The theme of the upload is incorrect, the configuration file(conf.yaml) "
 "does not exist"
 msgstr "上传的主题不正确，配置文件（conf.yaml）不存在"
 
-#: apps/modules/theme_setting/process/themes.py:193
-#: apps/modules/theme_setting/process/themes.py:226
+#: apps/modules/theme_setting/process/themes.py:235
+#: apps/modules/theme_setting/process/themes.py:275
 msgid "Theme does not exist"
 msgstr "主题不存在"
 
-#: apps/modules/theme_setting/process/themes.py:228
+#: apps/modules/theme_setting/process/themes.py:277
 msgid "The current use of the theme can not be deleted"
 msgstr "当前使用主题不能删除"
 
-#: apps/modules/theme_setting/process/themes.py:239
+#: apps/modules/theme_setting/process/themes.py:288
 msgid "Delete failed, at least keep a theme"
 msgstr "删除失败，至少保留一个主题"
 
@@ -700,7 +925,7 @@ msgid "Uploaded successfully"
 msgstr "上传成功"
 
 #: apps/modules/upload/process/upload_file.py:56
-#: apps/modules/user/process/avatar_upload.py:77
+#: apps/modules/user/process/avatar_upload.py:78
 msgid "Upload failed"
 msgstr "上传失败"
 
@@ -718,7 +943,7 @@ msgid "This {} address has been registered"
 msgstr "{}地址已被注册"
 
 #: apps/modules/user/apis/inspection_query.py:35
-#: apps/modules/user/process/email.py:31
+#: apps/modules/user/process/email.py:33
 msgid "This is the email address you currently use"
 msgstr "这是您目前使用的电子邮件地址"
 
@@ -735,95 +960,95 @@ msgstr "该ID属于当前登录的用户"
 msgid "Successfully logged out"
 msgstr "成功注销登录"
 
-#: apps/modules/user/process/adm_user.py:22
+#: apps/modules/user/process/adm_user.py:23
 #: apps/modules/user/process/user_profile_process.py:31
 #: apps/modules/user/process/user_profile_process.py:58
 msgid "The specified user is not found"
 msgstr "未找到指定用户"
 
-#: apps/modules/user/process/adm_user.py:102
-#: apps/modules/user/process/profile.py:157
+#: apps/modules/user/process/adm_user.py:104
+#: apps/modules/user/process/profile.py:159
 msgid "Update success"
 msgstr "更新成功"
 
-#: apps/modules/user/process/adm_user.py:116
+#: apps/modules/user/process/adm_user.py:118
 msgid "No permission modification"
 msgstr "没有权限修改"
 
-#: apps/modules/user/process/adm_user.py:152
+#: apps/modules/user/process/adm_user.py:157
 msgid "Has recovered {} users, {} users can not operate"
 msgstr "已恢复{}个用户，还有{}个用户不能操作"
 
-#: apps/modules/user/process/adm_user.py:155
+#: apps/modules/user/process/adm_user.py:160
 msgid "Recycle user failed.May not have permission"
 msgstr "回收用户失败，没有权限"
 
-#: apps/modules/user/process/adm_user.py:161
+#: apps/modules/user/process/adm_user.py:166
 msgid "{} users have been deleted and {} users can not be deleted"
 msgstr "{}个用户已被删除，还有{}个用户删除失败"
 
-#: apps/modules/user/process/adm_user.py:164
+#: apps/modules/user/process/adm_user.py:169
 msgid "Failed to delete.May not have permission"
 msgstr "删除失败许没有权限删除"
 
-#: apps/modules/user/process/adm_user.py:191
+#: apps/modules/user/process/adm_user.py:199
 msgid "Restore the {} users,The other {} users have no power control"
 msgstr "已恢复{}个用户，其他无权操作"
 
-#: apps/modules/user/process/adm_user.py:194
+#: apps/modules/user/process/adm_user.py:202
 msgid "Restore the failure.May not have permission"
 msgstr "恢复失败，没有权限"
 
-#: apps/modules/user/process/adm_user.py:221
+#: apps/modules/user/process/adm_user.py:232
 msgid "{} user activation is successful, {} no permission to operate"
 msgstr "{}个用户激活成功，还有{}个用户无权操作"
 
-#: apps/modules/user/process/adm_user.py:224
+#: apps/modules/user/process/adm_user.py:235
 msgid "Activation failed.May not have permission"
 msgstr "激活失败，没有权限"
 
-#: apps/modules/user/process/avatar_upload.py:31
-#: apps/modules/user/process/avatar_upload.py:39
+#: apps/modules/user/process/avatar_upload.py:32
+#: apps/modules/user/process/avatar_upload.py:40
 msgid "Upload avatar image can not exceed {}M"
 msgstr "上传的头像图片不能超过{}M"
 
-#: apps/modules/user/process/avatar_upload.py:67
+#: apps/modules/user/process/avatar_upload.py:68
 msgid "Save failed"
 msgstr "保存失败"
 
-#: apps/modules/user/process/avatar_upload.py:75
+#: apps/modules/user/process/avatar_upload.py:76
 msgid "Save successfully"
 msgstr "保存成功"
 
-#: apps/modules/user/process/email.py:22
+#: apps/modules/user/process/email.py:24
 msgid "email"
 msgstr "电子邮箱"
 
-#: apps/modules/user/process/email.py:27
+#: apps/modules/user/process/email.py:29
 msgid "This E-mail address has been registered"
 msgstr "此电子邮箱已被注册"
 
-#: apps/modules/user/process/email.py:40
+#: apps/modules/user/process/email.py:42
 msgid "Invalid verification code [currently bound]"
 msgstr "验证码错误（当前账号）"
 
-#: apps/modules/user/process/email.py:43
+#: apps/modules/user/process/email.py:45
 msgid "Invalid verification code [ready to bind]"
 msgstr "验证码错误（准备绑定账号）"
 
-#: apps/modules/user/process/email.py:72
+#: apps/modules/user/process/email.py:74
 msgid "Verification code error [currently bound]"
 msgstr "验证码错误（当前账号）"
 
-#: apps/modules/user/process/email.py:87
+#: apps/modules/user/process/email.py:89
 msgid "Verification code error [ready to bind]"
 msgstr "验证码错误（准备绑定）"
 
-#: apps/modules/user/process/email.py:102
+#: apps/modules/user/process/email.py:103
 msgid "Email is changed"
 msgstr "电子邮箱已修改"
 
-#: apps/modules/user/process/email.py:112
+#: apps/modules/user/process/email.py:113
 msgid "Password mistake"
 msgstr "密码错误"
 
@@ -835,12 +1060,12 @@ msgstr "抱歉！注册功能暂时关闭"
 msgid "remember_me requires an integer"
 msgstr "remember_me  需要时一个整数0 或 1"
 
-#: apps/modules/user/process/password.py:22
+#: apps/modules/user/process/password.py:23
 #: apps/modules/user/process/password.py:89
 msgid "Now use the password mistake"
 msgstr "当前使用密码错误"
 
-#: apps/modules/user/process/password.py:25
+#: apps/modules/user/process/password.py:26
 #: apps/modules/user/process/password.py:131
 msgid "Two password is not the same"
 msgstr "前后密码不一致"
@@ -862,55 +1087,59 @@ msgstr "账户不存在"
 msgid "Email or SMS verification code error"
 msgstr "邮件或短信验证码错误"
 
-#: apps/modules/user/process/password.py:150
+#: apps/modules/user/process/password.py:151
 msgid "Password reset notification"
 msgstr "密码重设通知"
 
-#: apps/modules/user/process/password.py:154
-#: apps/modules/user/process/sign_in.py:166
+#: apps/modules/user/process/password.py:155
+#: apps/modules/user/process/sign_in.py:167
 #: apps/modules/user/process/sign_up.py:107
 msgid "End"
 msgstr "结束"
 
-#: apps/modules/user/process/password.py:161
+#: apps/modules/user/process/password.py:162
 msgid "Password reset successfully.Please return to login page to login"
 msgstr "密码重设成功，请回到登录页面登录"
 
-#: apps/modules/user/process/password.py:164
+#: apps/modules/user/process/password.py:165
 msgid "Reset password failed(unknown error)"
 msgstr "密码重设失败（未知错误）"
 
-#: apps/modules/user/process/profile.py:27
+#: apps/modules/user/process/profile.py:29
 msgid "Lack of parameters \"user_id\""
 msgstr "缺少参数“user_id”"
 
-#: apps/modules/user/process/profile.py:63
-msgid "The date of birth requires an 8-digit date,Such as '{}'"
-msgstr "出生日期需要8个数字，例如：“{}”"
+#: apps/modules/user/process/profile.py:35
+msgid "This may be a visitor\""
+msgstr "这可能是访客"
 
-#: apps/modules/user/process/profile.py:68
-#: apps/modules/user/process/sign_in.py:227
+#: apps/modules/user/process/profile.py:72
+msgid "The date of birth requires an 8-digit date,Such as '{}'"
+msgstr "出生日期需要8个数字，例如：\"{}\""
+
+#: apps/modules/user/process/profile.py:76
+#: apps/modules/user/process/sign_in.py:228
 msgid "gender"
 msgstr "gender"
 
-#: apps/modules/user/process/profile.py:75
+#: apps/modules/user/process/profile.py:82
 msgid "Address format is not in conformity with the requirements"
 msgstr "地址格式不符合要求"
 
-#: apps/modules/user/process/profile.py:137
+#: apps/modules/user/process/profile.py:140
 msgid "The editor saves failure"
 msgstr "保存失败"
 
-#: apps/modules/user/process/profile.py:144
-#: apps/modules/user/process/sign_up.py:37
+#: apps/modules/user/process/profile.py:147
+#: apps/modules/user/process/sign_up.py:38
 msgid "Name has been used"
 msgstr "名称已被使用"
 
-#: apps/modules/user/process/profile.py:147
+#: apps/modules/user/process/profile.py:150
 msgid "Domain has been used"
 msgstr "域名已被使用"
 
-#: apps/modules/user/process/profile.py:149
+#: apps/modules/user/process/profile.py:152
 msgid "Personality custom domain cannot be modified"
 msgstr "自定义个性域名不能修改"
 
@@ -936,37 +1165,37 @@ msgid ""
 "cannot be deleted"
 msgstr "{}角色没有权限删除，{}角色拥有用户且无法删除"
 
-#: apps/modules/user/process/sign_in.py:35
-#: apps/modules/user/process/sign_up.py:23
+#: apps/modules/user/process/sign_in.py:36
+#: apps/modules/user/process/sign_up.py:24
 msgid "Is logged in"
 msgstr "已登录"
 
-#: apps/modules/user/process/sign_in.py:51
-#: apps/modules/user/process/sign_in.py:106
+#: apps/modules/user/process/sign_in.py:52
+#: apps/modules/user/process/sign_in.py:107
 msgid "Account or password error"
 msgstr "账号或密码错误"
 
-#: apps/modules/user/process/sign_in.py:65
-#: apps/modules/user/process/sign_up.py:63
-#: apps/modules/user/process/sign_up.py:82
+#: apps/modules/user/process/sign_in.py:66
+#: apps/modules/user/process/sign_up.py:64
+#: apps/modules/user/process/sign_up.py:83
 msgid "Verification code error"
 msgstr "验证码错误"
 
-#: apps/modules/user/process/sign_in.py:85
-#: apps/modules/user/process/sign_in.py:205
+#: apps/modules/user/process/sign_in.py:86
+#: apps/modules/user/process/sign_in.py:206
 msgid "Sign in success"
 msgstr "登录成功"
 
-#: apps/modules/user/process/sign_in.py:92
-#: apps/modules/user/process/sign_in.py:209
+#: apps/modules/user/process/sign_in.py:93
+#: apps/modules/user/process/sign_in.py:210
 msgid "Account is inactive or frozen"
 msgstr "账号未激活或已冻结"
 
-#: apps/modules/user/process/sign_in.py:147
+#: apps/modules/user/process/sign_in.py:148
 msgid "Abnormal login"
 msgstr "异常登录"
 
-#: apps/modules/user/process/sign_in.py:157
+#: apps/modules/user/process/sign_in.py:158
 msgid ""
 "<b>Abnormal login</b><br> Your account <a>{}</a>, is logined in <span "
 "style='color:#483D8B'>{}</span> on {} [UTC Time].<br>"
@@ -974,31 +1203,31 @@ msgstr ""
 "<b>异常登录</ b> <br>您的帐户<a> {} </a>在UTC时间，在<span style ='color：＃483D8B'> {} "
 "</ span>]地区登录"
 
-#: apps/modules/user/process/sign_in.py:186
+#: apps/modules/user/process/sign_in.py:187
 msgid ""
 "No login processing plugin for this platform, please install the relevant"
 " plugin first"
 msgstr "当前平台没有登录处理插件，请先安装相关插件"
 
-#: apps/modules/user/process/sign_in.py:249
+#: apps/modules/user/process/sign_in.py:250
 #: apps/modules/user/process/sign_up.py:119
 msgid "Registered successfully"
 msgstr "注册成功"
 
-#: apps/modules/user/process/sign_in.py:253
+#: apps/modules/user/process/sign_in.py:254
 #: apps/modules/user/process/sign_up.py:123
 msgid "Data saved incorrectly, please try again"
 msgstr "数据保存不正确，请重试"
 
-#: apps/modules/user/process/sign_up.py:43
+#: apps/modules/user/process/sign_up.py:44
 msgid "The two passwords don't match"
 msgstr "前后密码不一致"
 
-#: apps/modules/user/process/sign_up.py:55
+#: apps/modules/user/process/sign_up.py:56
 msgid "This email has been registered in the site oh, please login directly."
 msgstr "此电子邮件已在本站注册，请直接登录"
 
-#: apps/modules/user/process/sign_up.py:73
+#: apps/modules/user/process/sign_up.py:74
 msgid "This number has been registered in the site oh, please login directly."
 msgstr "此手机号码已在本站注册，请直接登录。"
 
@@ -1014,7 +1243,7 @@ msgstr "密码不是可读属性"
 msgid "Unknown"
 msgstr "未知"
 
-#: apps/modules/verification_code/process/send_code.py:35
+#: apps/modules/verification_code/process/send_code.py:36
 msgid "Email"
 msgstr "电子邮箱"
 
@@ -1042,6 +1271,270 @@ msgid ""
 "The system detected that your operation is too frequent and you need to "
 "verify the picture verification code"
 msgstr "系统检测到您的操作过于频繁，您需要验证图片验证码"
+
+#: apps/plugins/aliyun_oss_plugin/upfile_cloud.py:104
+#: apps/plugins/qiniu_cloud_plugin/upfile_cloud.py:113
+msgid "Please configure the third-party file storage domain name"
+msgstr ""
+
+#: apps/plugins/geoip_plugin/main.py:27
+msgid "Local"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:24
+#: apps/plugins/warehouse_plugin/process/goods_category.py:24
+#: apps/plugins/warehouse_plugin/process/goods_type.py:23
+msgid "Successful data acquisition"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:39
+#: apps/plugins/warehouse_plugin/process/goods_category.py:37
+msgid "goods_type_id"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:46
+msgid "business already exists"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:56
+msgid "Add business successfully"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:77
+msgid "Business already exists"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:87
+msgid "Update business successfully"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:98
+#: apps/plugins/warehouse_plugin/process/goods.py:378
+#: apps/plugins/warehouse_plugin/process/goods_category.py:86
+#: apps/plugins/warehouse_plugin/process/goods_type.py:81
+msgid "ids"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:112
+msgid "Successfully deleted {} business"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/business.py:118
+msgid ""
+"There are {} business below the goods, can not be deleted, can not be "
+"deleted"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:30
+#: apps/plugins/warehouse_plugin/process/goods.py:107
+#: apps/plugins/warehouse_plugin/process/goods.py:231
+#: apps/plugins/warehouse_plugin/process/goods_sales.py:23
+msgid "goods_id"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:49
+msgid "customize id"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:53
+msgid "goods type"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:56
+msgid "category"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:77
+#: apps/plugins/warehouse_plugin/process/goods.py:90
+msgid "Goods ID already exists"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:80
+msgid "Update information succeeded"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:93
+msgid "Add goods successfully"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:107
+msgid "property name"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:114
+#: apps/plugins/warehouse_plugin/process/goods.py:238
+#: apps/plugins/warehouse_plugin/process/goods_sales.py:31
+msgid "There is no goods"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:174
+#: apps/plugins/warehouse_plugin/process/goods.py:196
+msgid "Quantity and price must be Numbers"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:219
+msgid "Update {} succeeded"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:253
+msgid "The proportion of ingredients must be a number"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:257
+msgid "The proportion of ingredients is greater than 100%"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:266
+msgid "Update cloth succeeded"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:307
+#: apps/plugins/warehouse_plugin/process/goods.py:368
+msgid "No related data found"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods.py:387
+msgid "Successfully deleted {} goods"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_category.py:44
+#: apps/plugins/warehouse_plugin/process/goods_category.py:71
+msgid "Item category already exists"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_category.py:52
+msgid "Add item category successfully"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_category.py:75
+msgid "Update item category successfully"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_category.py:100
+msgid "Successfully deleted {} category"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_category.py:106
+msgid ""
+"There are {} category below the goods, can not be deleted, can not be "
+"deleted"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_sales.py:24
+msgid "modify_op"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_sales.py:38
+msgid "Without this attribute"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_sales.py:72
+msgid "Update succeeded"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_type.py:41
+#: apps/plugins/warehouse_plugin/process/goods_type.py:66
+msgid "Item type already exists"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_type.py:48
+msgid "Add item type successfully"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_type.py:70
+msgid "Update item type successfully"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_type.py:98
+msgid "Successfully deleted {} type"
+msgstr ""
+
+#: apps/plugins/warehouse_plugin/process/goods_type.py:104
+msgid ""
+"There is {} type with a small category or a business, so you can't delete"
+" it."
+msgstr ""
+
+#: apps/utils/pyssh/pyssh.py:42
+msgid "Please improve the host information"
+msgstr ""
+
+#: apps/utils/send_msg/send_message.py:24
+msgid ""
+"There is no plug-in for sending SMS messages to mobile phones, please "
+"install the relevant plug-in"
+msgstr ""
+
+#: apps/utils/send_msg/send_message.py:31
+msgid "Failed to send"
+msgstr ""
+
+#: apps/utils/send_msg/send_message.py:35
+msgid "SMS sent successfully"
+msgstr ""
+
+#: apps/utils/validation/str_format.py:27
+msgid "The name format is not correct,You can't use '.','*','#','?'"
+msgstr ""
+
+#: apps/utils/validation/str_format.py:28
+msgid ""
+"Some contents contain sensitive information or do not meet the "
+"requirements of this site. Please correct it and try again."
+msgstr ""
+
+#: apps/utils/validation/str_format.py:50
+msgid "custom domain"
+msgstr ""
+
+#: apps/utils/validation/str_format.py:54
+msgid ""
+"The domain format is not correct,Only use Numbers, letters, and at least "
+"4 characters"
+msgstr ""
+
+#: apps/utils/validation/str_format.py:70
+#: apps/utils/validation/str_format.py:84
+msgid "The email format is not correct"
+msgstr ""
+
+#: apps/utils/validation/str_format.py:91
+msgid "The url format is not correct"
+msgstr ""
+
+#: apps/utils/validation/str_format.py:103
+msgid ""
+"Password at least 8 characters! And at least contain Numbers, letters, "
+"special characters of two kinds"
+msgstr ""
+
+#: apps/utils/validation/str_format.py:115
+msgid "The password is too simple, can not use continuous characters!"
+msgstr ""
+
+#: apps/utils/verify/msg_verify_code.py:70
+msgid "Verification code"
+msgstr ""
+
+#: apps/utils/verify/msg_verify_code.py:80
+msgid "Has been sent. If not, please check spam"
+msgstr ""
+
+#: apps/utils/verify/msg_verify_code.py:87
+msgid ""
+"[{}] Your verification code is: {}. If you do not send it, please ignore "
+"it. Please do not tell the verification code to others"
+msgstr ""
+
+#: apps/utils/verify/msg_verify_code.py:113
+msgid "Your verification code is"
+msgstr ""
+
+#: apps/utils/verify/msg_verify_code.py:114
+msgid ""
+"If you do not send it, please ignore it.Please do not tell the "
+"verification code to others"
+msgstr ""
 
 #~ msgid "405, The method is not allowed for the requested URL"
 #~ msgstr "405, 请求方式不存在"
@@ -1269,4 +1762,7 @@ msgstr "系统检测到您的操作过于频繁，您需要验证图片验证码
 #~ "ignore it.Please do not tell the "
 #~ "verification code to others"
 #~ msgstr "如果您没有发送，请忽略它。不要将验证码告诉其他人！"
+
+#~ msgid "Successfully deleted, and {} have no permission to delete"
+#~ msgstr "成功删除部分权限,{}个权限未删除"
 
