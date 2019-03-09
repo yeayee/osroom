@@ -23,7 +23,8 @@
             pages:[],
             page:1,
             img_w_h:"?w=0&h=120",
-            is_myself:null
+            is_myself:null,
+            post_categorys:[]
       },
       filters: {
             formatDate: function (time) {
@@ -89,6 +90,20 @@
         var result = osrHttp("GET","/api/account/profile/public", d, args={not_prompt:true});
         result.then(function (r) {
             vue.user = r.data.user;
+            get_post_categorys();
+        });
+    }
+
+    function get_post_categorys(){
+        d = {
+            action:"get_category",
+            type:"post",
+            user_id:vue.user._id
+        }
+
+        var result = osrHttp("GET","/api/content/user/post/category", d, args={not_prompt:true});
+        result.then(function (r) {
+            vue.post_categorys = r.data.categorys;
         });
     }
 

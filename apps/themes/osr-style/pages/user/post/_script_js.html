@@ -25,6 +25,7 @@
             pages:[],
             page:1,
             img_w_h:"?w=0&h=120",
+            post_categorys:[]
       },
       filters: {
             formatDate: function (time) {
@@ -63,6 +64,7 @@
         get_posts(vue.status, vue.page, vue.sort, vue.keyword);
         get_user();
 
+
     });
 
 
@@ -75,10 +77,23 @@
         var result = osrHttp("GET","/api/account/profile/public", d, args={not_prompt:true});
         result.then(function (r) {
             vue.user = r.data.user;
+            get_post_categorys();
             document.title = vue.user.username + "-" + "{{g.site_global.site_config.TITLE_SUFFIX}}";
         });
     }
 
+    function get_post_categorys(){
+        d = {
+            action:"get_category",
+            type:"post",
+            user_id:vue.user._id
+        }
+
+        var result = osrHttp("GET","/api/content/user/post/category", d, args={not_prompt:true});
+        result.then(function (r) {
+            vue.post_categorys = r.data.categorys;
+        });
+    }
     //获取
     function get_posts(status, page, sort, keyword){
 

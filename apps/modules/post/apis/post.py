@@ -36,6 +36,7 @@ def api_post():
         unwanted_fields:<array>, 不能和fields参数同时使用,不需要返回的文章字段,如["user_id"]
         user_id:<str>, 如需获取指定用户的post时需要此参数
         category_id:<str>, 获取指定文集的post时需要此参数
+        tag:<str>, 获取存在此tag的posts时需要此参数
 
     '''
 

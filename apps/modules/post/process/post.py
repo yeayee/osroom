@@ -31,6 +31,7 @@ def get_posts():
     unwanted_fields = json_to_pyseq(request.argget.all('unwanted_fields'))
     user_id = request.argget.all('user_id')
     category_id = request.argget.all('category_id')
+    tag = request.argget.all('tag')
 
     # 不能同时使用fields 和 unwanted_fields
     temp_field = {}
@@ -53,6 +54,8 @@ def get_posts():
         except:
             other_filter["category"] = None
 
+    if tag:
+        other_filter["tags"] = tag
     data = get_posts_pr(page=page, field=temp_field, pre=pre, sort=sort, status=status,
                         time_range=time_range,matching_rec=matching_rec, keyword=keyword,
                         other_filter=other_filter)

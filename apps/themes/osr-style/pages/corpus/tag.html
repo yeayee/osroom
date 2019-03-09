@@ -1,0 +1,133 @@
+{% extends "osr-style/pages/based/based.html" %}
+{% block title %}{{_("标签文集")}}-{% endblock %}
+{% block content %}
+<div id="app" class="row osr-page" v-cloak>
+    <section class="osr-panel">
+        <div class="col-sm-9">
+            <div class="osr-category">
+                <span class="fa fa-clipboard icon"></span>
+                <div class="info">
+                    <span class="name">
+
+                    </span>
+                </div>
+            </div>
+            <p>
+                <strong class="osr-color-success">
+                    <i class="fa fa-bar-chart-o"></i> {[posts.data_total]}{{_("篇")}}
+                </strong>
+            </p>
+
+            <header class="panel-heading tab-bg-dark-navy-blue osr-panel-heading">
+                <ul class="nav nav-tabs">
+                    <li id="head_li_sort_t-desc">
+                        <a data-toggle="tab" class="osr-pointer" v-on:click="get_posts('is_issued',1,'t-desc','')">
+                            <i class="fa fa-file-text-o"></i> {{_("文章")}}
+                        </a>
+                    </li>
+                    <li id="head_li_sort_hot">
+                        <a data-toggle="tab" class="osr-pointer" v-on:click="get_posts('is_issued',1,'hot','')">
+                            <i class="fa fa-thermometer-full"></i> {{_("热门")}}
+                        </a>
+                    </li>
+                </ul>
+            </header>
+
+
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+<script>
+
+    Vue.directive('highlight',function (el) {
+      let blocks = el.querySelectorAll('pre code');
+      blocks.forEach((block)=>{
+        hljs.highlightBlock(block)
+      })
+    })
+
+    var vue = new Vue({
+      el: '#app',
+      delimiters:['{[', ']}'],
+      data:{
+            posts:{datas:[]},
+            sort:"t-desc",
+            tag:"",
+            pages:[],
+            page:1,
+            img_w_h:"?w=0&h=120",
+            is_myself:null
+      },
+      filters: {
+            formatDate: function (time) {
+              return irrformatDate(time, "yyyy-MM-dd hh:mm");
+            }
+      }
+
+    })
+
+    // 加载完页面执行
+    $(document).ready(function(){
+
+        var url_s = get_url_parameter()
+        vue.category_id = get_obj_value(url_s, "id")
+        vue.sort = get_obj_value(url_s, "sort", vue.sort)
+        vue.page = get_obj_value(url_s, "page", vue.page)
+        vue.tag = get_obj_value(url_s, "tag", "")
+
+        nav_active("head_li_sort_"+vue.sort);
+
+        result = get_category_info()
+        // get post
+        get_posts(vue.page, vue.sort);
+
+
+    });
+
+
+    //获取
+    function get_posts(page, sort){
+
+        vue.sort = sort;
+        vue.page = page;
+        if(sort=="t-desc"){
+            sort = [{"issue_time":-1},{"update_time":-1}];
+        }else if(sort=="t-asc"){
+           sort = [{"issue_time":1},{"update_time":1}];
+        }else{
+            sort = [{"like": -1}, {"comment_num": -1}, {"pv": -1},{"issue_time": -1}];
+        }
+
+        d = {
+            page:page,
+            tag:vue.tag,
+            pre:10,
+            status:"is_issued",
+            sort:JSON.stringify(sort),
+            unwanted_fields:JSON.stringify(["content", "imgs"])
+        }
+
+        var result = osrHttp("GET","/api/post", d, args={not_prompt:true});
+        result.then(function (r) {
+            $.each(r.data.posts.datas, function(index, value) {
+                if(value.editor=="markdown"){
+                    r.data.posts.datas[index]["brief_content"] = marked(value.brief_content);
+                }
+            });
+            vue.pages = paging(page_total=r.data.posts.page_total, current_page=r.data.posts.current_page);
+            if(vue.page!=1){
+                var old_datas = vue.posts.datas;
+                vue.posts = r.data.posts;
+                $.merge(old_datas, r.data.posts.datas);
+                vue.posts.datas = old_datas;
+            }else{
+                vue.posts = r.data.posts;
+            }
+        });
+
+    }
+
+
+</script>

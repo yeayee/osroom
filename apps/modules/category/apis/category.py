@@ -1,10 +1,13 @@
 # -*-coding:utf-8-*-
 from flask import request
+from flask_babel import gettext
+
 from apps.core.flask.login_manager import osr_login_required
 
 from apps.configs.sys_config import METHOD_WARNING
 from apps.core.blueprint import api
 from apps.core.flask.permission import permission_required
+from apps.core.flask.reqparse import arg_verify
 from apps.core.flask.response import response_format
 from apps.modules.category.process.category import categorys, category_add, category_edit, \
     category_delete, get_category_type, get_category_info
@@ -20,6 +23,27 @@ def api_category_info():
     '''
 
     data = get_category_info()
+    return response_format(data)
+
+@api.route('/content/user/post/category', methods=['GET'])
+@permission_required(use_default=False)
+def api_get_user_category():
+    '''
+    GET:
+
+    action: < str >, 'get_category'
+    type: < str >, 'post'
+    user_id:<str>
+    '''
+    if request.c_method == "GET":
+        user_id = request.argget.all('user_id')
+        s, r = arg_verify([(gettext("user_id"), user_id)], required=True)
+        if not s:
+            data = r
+        else:
+            data = categorys(user_id=user_id)
+    else:
+        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
     return response_format(data)
 
 @api.route('/content/category', methods=['GET','POST', 'PUT','DELETE'])
