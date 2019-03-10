@@ -22,8 +22,9 @@
             sort:"t-desc",
             pages:[],
             page:1,
+            status:"is_issued",
             img_w_h:"?w=0&h=120",
-            is_myself:null,
+            is_myself:false,
             post_categorys:[]
       },
       filters: {
@@ -40,31 +41,19 @@
         var url_s = get_url_parameter()
         vue.category_id = get_obj_value(url_s, "id")
         vue.sort = get_obj_value(url_s, "sort", vue.sort)
+        //vue.status = get_obj_value(url_s, "state", vue.status)
         vue.page = get_obj_value(url_s, "page", vue.page)
-
         nav_active("head_li_sort_"+vue.sort);
 
         result = get_category_info()
         result.then(function (r) {
-
             //获取用户资料
-            get_user();
-            //获取当前登录用户id
-            {% if current_user.is_authenticated %}
-                var current_user_id = "{{current_user.id}}";
-            {% else %}
-                var current_user_id = null;
-            {% endif %}
-            if(vue.user._id == current_user_id){
-                vue.is_myself = true;
-            }
-
+             get_user();
             document.title = vue.category.name + "-" + "{{g.site_global.site_config.TITLE_SUFFIX}}";
-
         });
 
         // get post
-        get_posts("is_issued", vue.page, vue.sort, vue.keyword);
+        get_posts(vue.status, vue.page, vue.sort, vue.keyword);
 
 
     });
@@ -90,6 +79,17 @@
         var result = osrHttp("GET","/api/account/profile/public", d, args={not_prompt:true});
         result.then(function (r) {
             vue.user = r.data.user;
+
+            //获取当前登录用户id
+            {% if current_user.is_authenticated %}
+                var current_user_id = "{{current_user.id}}";
+            {% else %}
+                var current_user_id = false;
+            {% endif %}
+            if(vue.user._id == current_user_id){
+                vue.is_myself = true;
+            }
+
             get_post_categorys();
         });
     }
@@ -110,6 +110,7 @@
     //获取
     function get_posts(status, page, sort, keyword){
 
+        vue.status = status;
         vue.keyword = keyword;
         vue.sort = sort;
         vue.page = page;
@@ -130,7 +131,7 @@
         d = {
             page:vue.page,
             pre:15,
-            status:"is_issued",
+            status:vue.status,
             category_id:vue.category_id,
             sort:JSON.stringify(sort),
             unwanted_fields:JSON.stringify(["content", "imgs"])
