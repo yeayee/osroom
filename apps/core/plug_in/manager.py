@@ -135,7 +135,7 @@ class PluginManager():
                 mdb_sys.dbs["plugin"].insert_one(plug_conf)
 
             # 清理遗留缓存
-            cache.delete(key="get_plugin_info_hook_name_{}".format(hook_name), db_type="redis")
+            cache.delete_autokey(fun="get_plugin_info", db_type="redis", hook_name=hook_name)
             return True, {"module": module, "hook_name": hook_name, "plugin_name": plugin_name}
 
 
@@ -252,8 +252,8 @@ def verify_plugin(plugin_path):
 def get_plugin_info(hook_name):
 
     '''
-    获取url权限等信息
-    :param url:
+    获取插件信息
+    :hook_name url:
     :return:
     '''
     value = mdb_sys.dbs["plugin"].find_one({"hook_name": hook_name,"active":{"$in":[1, True]}},

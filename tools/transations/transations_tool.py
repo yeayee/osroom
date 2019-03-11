@@ -2,7 +2,6 @@
 import getopt
 import os
 import sys
-import regex
 current_path = os.path.abspath(os.path.dirname(__file__))
 project_path = os.path.abspath("{}/../..".format(current_path))
 sys.path.append(project_path)
@@ -27,7 +26,7 @@ class Transations():
                        "<output directory>, Output directory.\n\t\tSuch as:{}/translations/python-pg"
                        "\n\t\t\t{}/translations/template".format(self.extract_path,self.extract_path),
 
-                       "<language>, Such as: zh_CN,zh_Hans_CN,en_GB",
+                       "<language>, Default 'zh_Hans_CN', Other: zh_CN,zh_Hans_CN,en_GB",
                        "View all languages"]
 
         action = ["init, [--init --extract <path> --output <path> --lan en_US]",

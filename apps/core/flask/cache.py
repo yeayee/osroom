@@ -266,6 +266,7 @@ class Cache():
                         self.redis.delete(key.decode())
                 else:
                     self.redis.delete(key)
+
             elif db_type == "mongodb":
                 if key_regex:
                     q = {"key": {"$regex":key}}

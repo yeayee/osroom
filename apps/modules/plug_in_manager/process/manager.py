@@ -68,7 +68,7 @@ def start_plugin():
         # 清除缓存
         r =  mdb_sys.db.plugin.find_one({"plugin_name":name})
         if r:
-            cache.delete(key="get_plugin_info_hook_name_{}".format(r['hook_name']), db_type="redis")
+            cache.delete_autokey(fun="get_plugin_info", db_type="redis", hook_name=r['hook_name'])
 
         data = {"msg":gettext("Plug-in activated successfully"), "msg_type":"s", "http_status":201}
     elif r.matched_count and register_r:
@@ -93,7 +93,7 @@ def stop_plugin():
         # 清除缓存
         r = mdb_sys.db.plugin.find_one({"plugin_name": name})
         if r:
-            cache.delete(key="get_plugin_info_hook_name_{}".format(r['hook_name']), db_type="redis")
+            cache.delete_autokey(fun="get_plugin_info", db_type="redis", hook_name=r['hook_name'])
 
         data = {"msg": gettext("Plug-in stopped successfully"), "msg_type": "s", "http_status": 201}
     else:
@@ -112,14 +112,20 @@ def delete_plugin():
     s, r = arg_verify(reqargs=[(gettext("name"), name)], required=True)
     if not s:
         return r
+
+    # 清除缓存
+    plug = mdb_sys.db.plugin.find_one({"plugin_name": name})
+
     r = mdb_sys.db.plugin.update_one({"plugin_name": name, "active":{"$ne":1}},
                                      {"$set": {"is_deleted": 1}})
     if r.modified_count or r.matched_count:
         data = {"msg":gettext("Successfully deleted"), "msg_type":"s", "http_status":204}
         # 删除配置
         mdb_sys.db.plugin_config.delete_many({"plugin_name": name})
+
         # 删除缓存，达到更新缓存
         cache.delete(PLUG_IN_CONFIG_CACHE_KEY)
+        cache.delete_autokey(fun="get_plugin_info", db_type="redis", hook_name=plug['hook_name'])
     else:
         data = {"msg": gettext("Failed to delete"), "msg_type": "w", "http_status": 400}
     return data
