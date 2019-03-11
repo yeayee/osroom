@@ -16,7 +16,7 @@
       delimiters:['{[', ']}'],
       data:{
             category_id:null,
-            category:{},
+            category:{name:'{{_("默认文集")}}'},
             user:{profile:{}, avatar_url:{}, follow:{}},
             posts:{datas:[]},
             sort:"t-desc",
@@ -40,6 +40,7 @@
 
         var url_s = get_url_parameter()
         vue.category_id = get_obj_value(url_s, "id")
+        vue.user_id = get_obj_value(url_s, "user_id")
         vue.sort = get_obj_value(url_s, "sort", vue.sort)
         //vue.status = get_obj_value(url_s, "state", vue.status)
         vue.page = get_obj_value(url_s, "page", vue.page)

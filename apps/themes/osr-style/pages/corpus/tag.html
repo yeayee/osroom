@@ -5,10 +5,9 @@
     <section class="osr-panel">
         <div class="col-sm-9">
             <div class="osr-category">
-                <span class="fa fa-clipboard icon"></span>
                 <div class="info">
                     <span class="name">
-
+                        <span class="text-success fa fa-tag "> {{_("标签")}}:</span> {[tag]}
                     </span>
                 </div>
             </div>
@@ -18,27 +17,12 @@
                 </strong>
             </p>
 
-            <header class="panel-heading tab-bg-dark-navy-blue osr-panel-heading">
-                <ul class="nav nav-tabs">
-                    <li id="head_li_sort_t-desc">
-                        <a data-toggle="tab" class="osr-pointer" v-on:click="get_posts('is_issued',1,'t-desc','')">
-                            <i class="fa fa-file-text-o"></i> {{_("文章")}}
-                        </a>
-                    </li>
-                    <li id="head_li_sort_hot">
-                        <a data-toggle="tab" class="osr-pointer" v-on:click="get_posts('is_issued',1,'hot','')">
-                            <i class="fa fa-thermometer-full"></i> {{_("热门")}}
-                        </a>
-                    </li>
-                </ul>
-            </header>
-
+            {% include 'osr-style/pages/post/_posts.html' %}
 
         </div>
     </section>
 
 </div>
-{% endblock %}
 <script>
 
     Vue.directive('highlight',function (el) {
@@ -70,19 +54,16 @@
 
     // 加载完页面执行
     $(document).ready(function(){
-
         var url_s = get_url_parameter()
         vue.category_id = get_obj_value(url_s, "id")
         vue.sort = get_obj_value(url_s, "sort", vue.sort)
         vue.page = get_obj_value(url_s, "page", vue.page)
         vue.tag = get_obj_value(url_s, "tag", "")
-
+        document.title = vue.tag + "-" + "{{g.site_global.site_config.TITLE_SUFFIX}}";
         nav_active("head_li_sort_"+vue.sort);
 
-        result = get_category_info()
         // get post
         get_posts(vue.page, vue.sort);
-
 
     });
 
@@ -131,3 +112,5 @@
 
 
 </script>
+
+{% endblock %}
