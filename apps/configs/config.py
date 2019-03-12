@@ -43,7 +43,7 @@ CONFIG = {
             "type": "string",
             "info": "添加一个前缀,之前所有的会话密钥。这使得它可以为不同的应用程序使用相同的后端存储服务器",
             "sort": 99,
-            "value": "osroom"
+            "value": "osr-session:"
         },
         "PERMANENT_SESSION_LIFETIME": {
             "type": "int",
@@ -55,7 +55,7 @@ CONFIG = {
             "type": "string",
             "info": "保存Session会话的类型,可选mongodb, redis",
             "sort": 99,
-            "value": "mongodb"
+            "value": "redis"
         },
         "SESSION_MONGODB_COLLECT": {
             "type": "string",
@@ -122,14 +122,14 @@ CONFIG = {
             "type": "string",
             "info": "安全密码码盐值",
             "sort": 99,
-            "value": "ceavewrvwtrhdyjydj"
+            "value": "12343erfegrg"
         },
         "__sort__": 99,
         "SECRET_KEY": {
             "type": "string",
             "info": "安全验证码",
             "sort": 99,
-            "value": "ceavewrvwtrhdyjydj"
+            "value": "12333r32fddvve"
         },
         "__info__": "安全Key（建议技术管理人员使用）",
         "__restart__": "must"
@@ -157,7 +157,7 @@ CONFIG = {
             "type": "string",
             "info": "在邮件中显示的APP(WEB)名称(1.不填写则不显示.2.如果主题邮件发送html模板不支持，也不显示)",
             "sort": 99,
-            "value": "OSR DEMO"
+            "value": ""
         },
         "MAIL_FOOTER": {
             "type": "string",
@@ -205,7 +205,7 @@ CONFIG = {
             "type": "string",
             "info": "在邮件中显示的LOGO图片URL(1.不填写则不显示.2.如果主题邮件发送html模板不支持，也不显示)",
             "sort": 99,
-            "value": "https://avatars1.githubusercontent.com/u/14039952?s=460&v=4"
+            "value": "/static/sys_imgs/osroom-logo.png"
         },
         "MAIL_SERVER": {
             "type": "string",
@@ -251,7 +251,7 @@ CONFIG = {
             "type": "string",
             "info": "图片验证码保存目录",
             "sort": 99,
-            "value": "verify_code"
+            "value": "admin/verify_code"
         },
         "__sort__": 11,
         "SEND_CODE_TYPE": {
@@ -272,13 +272,13 @@ CONFIG = {
             "info": "管理端支持的语言",
             "sort": 99,
             "value": {
-                "zh_CN": {
-                    "name": "中文",
-                    "alias": "中文"
-                },
                 "en_US": {
-                    "name": "English",
-                    "alias": "En"
+                    "alias": "En",
+                    "name": "English"
+                },
+                "zh_CN": {
+                    "alias": "中文",
+                    "name": "中文"
                 }
             }
         },
@@ -312,17 +312,17 @@ CONFIG = {
             "info": "分类的品种只能有这几种",
             "sort": 99,
             "value": {
-                "主题文本": "text_theme",
-                "主题音频": "audio_theme",
-                "其他": "other",
-                "主题视频": "video_theme",
-                "音频库": "audio",
+                "主题-文本": "text_theme",
+                "主题-图文": "image_theme",
+                "主题-视频": "video_theme",
+                "主题-其他": "other_theme",
+                "主题-音频": "audio_theme",
+                "其他类型库": "other",
+                "图文|图库": "image",
                 "文本内容": "text",
-                "主题其他": "other_theme",
                 "文集": "post",
-                "主题图片图文": "image_theme",
                 "视频库": "video",
-                "图库": "image"
+                "音频库": "audio"
             }
         },
         "__restart__": "not_must",
@@ -331,7 +331,7 @@ CONFIG = {
             "type": "int",
             "info": "分类名称类型名最多几个字符",
             "sort": 99,
-            "value": 15
+            "value": 30
         },
         "__info__": "Web参数设置"
     },
@@ -394,8 +394,8 @@ CONFIG = {
             "info": "审核项目的Key(键),审核时会使用一个Key来获取审核规则,正则去匹配用户输入的内容",
             "sort": 99,
             "value": {
-                "username": "审核用户名",
-                "class_name": "审核一些短的分类名称, 如category, tag"
+                "class_name": "审核一些短的分类名称, 如category, tag",
+                "username": "审核用户名"
             }
         },
         "__sort__": 8,
@@ -415,10 +415,9 @@ CONFIG = {
             "info": "上传:允许上传的文件后缀(全部小写),每个用英文的','隔开",
             "sort": 99,
             "value": [
-                "xls",
+                "txt",
                 "xlxs",
                 "excel",
-                "txt",
                 "pdf",
                 "png",
                 "jpg",
@@ -472,7 +471,7 @@ CONFIG = {
             "type": "bool",
             "info": "评论开关,是否打开评论功能?",
             "sort": 99,
-            "value": False
+            "value": True
         },
         "NUM_PAGE_MAX": {
             "type": "int",
@@ -490,7 +489,7 @@ CONFIG = {
             "type": "bool",
             "info": "游客评论开关,是否打开?",
             "sort": 99,
-            "value": False
+            "value": True
         },
         "NUM_OF_INTERVAL": {
             "type": "int",
@@ -528,10 +527,7 @@ CONFIG = {
             "type": "string",
             "info": "新注册用户默认头像的URL",
             "sort": 99,
-            "value": [
-                "/static/admin/sys_imgs/avatar_default_1.png",
-                "/static/admin/sys_imgs/avatar_default_2.png"
-            ]
+            "value": "/static/sys_imgs/avatar_default.png"
         }
     },
     "post": {
@@ -546,7 +542,7 @@ CONFIG = {
             "type": "int",
             "info": "每个页面获取几篇文章, 如果请求获取文章时指定了指定了per参数, 则此配置无效(此配置也对管理端无效)",
             "sort": 99,
-            "value": 10
+            "value": 15
         },
         "MAX_LEN": {
             "type": "int",
@@ -635,29 +631,9 @@ CONFIG = {
             "info": "友情链接:值(Value)格式为{'url':'友情链接', 'logo_url':'logo链接'}",
             "sort": 11,
             "value": {
-                "码云": {
-                    "aliases": "码云",
-                    "icon_url": "",
-                    "level": 1,
-                    "url": "www.aliyun.com"
-                },
                 "Github": {
-                    "aliases": "Github",
-                    "icon_url": "",
-                    "level": 1,
-                    "url": "www.aliyun.com"
-                },
-                "七牛云": {
-                    "aliases": "七牛云",
-                    "icon_url": "",
-                    "level": 1,
-                    "url": "www.aliyun.com"
-                },
-                "阿里云": {
-                    "aliases": "阿里云",
-                    "icon_url": "",
-                    "level": 1,
-                    "url": "www.aliyun.com"
+                    "logo_url": "http://osr.local.com:5000/static/admin/sys_imgs/osroom-logo-1.png?w=240&h=240",
+                    "url": "https://github.com/osroom/osroom"
                 }
             }
         },
@@ -704,13 +680,13 @@ CONFIG = {
             "type": "int",
             "info": "静态文件版本(当修改了CSS,JS等静态文件的时候，修改此版本号)",
             "sort": 12,
-            "value": 20181024065925
+            "value": 20190309061740
         },
         "MB_LOGO_DISPLAY": {
             "type": "string",
             "info": "移动端用App name 还是Logo image 作为APP(Web)的Logo显示, 为空则App name优先<br>可填logo或name(需要主题支持)",
             "sort": 4,
-            "value": "name"
+            "value": "logo"
         }
     },
     "content_inspection": {
@@ -810,29 +786,29 @@ CONFIG = {
             "info": "最多能同时登录几个使用JWT验证的客户端,超过此数目则会把旧的登录注销",
             "sort": 99,
             "value": {
+                "1": {
+                    "link": "/",
+                    "nav": "首页",
+                    "next_lev": None
+                },
+                "2": {
+                    "link": "/photo",
+                    "nav": "图库",
+                    "next_lev": None
+                },
                 "关于": {
+                    "link": "",
                     "nav": "关于",
                     "next_lev": [
                         {
-                            "nav": "关于我们",
-                            "link": "/about-us"
+                            "link": "/about-us",
+                            "nav": "关于我们"
                         },
                         {
-                            "nav": "联系我们",
-                            "link": "/contact"
+                            "link": "/contact",
+                            "nav": "联系我们"
                         }
-                    ],
-                    "link": ""
-                },
-                "1": {
-                    "nav": "首页",
-                    "next_lev": None,
-                    "link": "/"
-                },
-                "2": {
-                    "nav": "图库",
-                    "next_lev": None,
-                    "link": "/photo"
+                    ]
                 }
             }
         },

@@ -13,19 +13,28 @@ OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ R
 
 > 功能
 
-- 可做Web 服务端Api, Restful api，简单修改即可做微信小程序的Api！
+- 可做Web 服务端Api, Restful api，简单修改即可做微信小程序的Api.
 
-- 管里端和默认主题osr-style都支持富文本和MarkDown编辑器发布文章等!
+- 管理端和默认主题osr-style都支持富文本和MarkDown编辑器.
 
-- 文章与评论功能，可以通过插件自动审核或人工审核用户发布的内容
+- 内容发布:
+  发布-每个用户可独立发布文章与评论.
+  管理-管理人员可在管理端管理全部内容，可通过插件实现自动审核或人工审核用户发布的内容.
 
-- 多媒体功能, 图片，文本管理功能
+- 多媒体功能:管理者可再管理端上传图片/音频/视频等供网站使用.
 
-- 权限控制功能，能 设置每一个URL的请求权限，和指定用户拥有的权限
+- 权限控制功能:
+  Api/page-可以设置每一个Api和Page需要的请求权限.
+  Role-用户角色, 可赋于每个Role拥有的权限.
+  User-为用户指定角色,即可获取相关权限.
 
-- 网站设置, 大量设置可以在管理端直接修改，无需改动代码
+- 网站设置: 大量设置可以在管理端直接修改，无需改动代码.
+
+- 部分功能支持插件开发
 
 - 支持多语言翻译
+
+- 还有用户管理, 验证码发送, 图片验证码, 邮件管理, 消息, 主题内容管理, 等...
 
 更多功能请访问demo网站
 
@@ -37,7 +46,7 @@ OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ R
 
 ### Demo
 
-Demo网站使用默认简单主题，安装了文件存储插件(用于作为图床)，文本内容检查插件，IP识别地址插件
+Demo网站使用默认主题(osr-style)，安装了文件存储插件(用于作为图床)，文本内容检查插件，IP识别地址插件
 
 https://demo.osroom.com
 
@@ -56,58 +65,28 @@ OSROOM其他相关问题解决方案: [OSROOM大学](https://demo.osroom.com/cor
 |   Version  |   Status  |  Other   |
 | --- | --- | --- |
 |   [dev](https://github.com/osroom/osroom)    |  开发...   |    开发版 |
-|   [v1.0beat](https://github.com/osroom/osroom/tree/v1.0beta)  |  维护...   |   v1.0测试版  |
 
 ### 为何开发？
 
 那就是基于自己对Web编程的兴趣与学习更多的编程知识.
 
-* 用户端部分功能
+### Admin部分截图
 
-MarkDown
-![MarkDown](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/markdown.png)
-
-富文本
-![富文本](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/richtext.png)
-
-Home
-![Home](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/home.png)
-
-用户主页
-![用户主页](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/user-home.png)
-
-* Admin部分功能
-
-Admin主页
 ![Admin主页](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/admin.png)
 
-Post
+
 ![Post](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/post.png)
 
 Media
 ![Media](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/media.png)
 
-权重管理
-![权重管理](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/per1.png)
+### 默认主题部分截图
 
-API权重管理
-![API权重管理](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/api-per.png)
+![Home](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/home.png)
 
-用户角色
-![用户角色](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/role.png)
+![用户主页](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/user-home.png)
 
-用户管理
-![用户管理](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/userm.png)
-
-Email
-![Email](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/emailm.png)
-
-消息通知
-![消息通知](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/send_msg.png)
-
-可配置
-![可配置](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/config.png)
-
+详情请访问demo网站
 
 ### License
 [BSD2](http://opensource.org/licenses/BSD-2-Clause)
