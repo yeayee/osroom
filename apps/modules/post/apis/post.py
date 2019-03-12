@@ -8,6 +8,11 @@ from apps.core.flask.response import response_format
 from apps.modules.post.process.post import get_post, get_posts, post_like
 
 __author__ = 'Allen Woo'
+@api.route('/post/tags', methods=['GET'])
+@permission_required(use_default=False)
+def api_post_tags():
+    pass
+
 @api.route('/post', methods=['GET'])
 @permission_required(use_default=False)
 def api_post():
