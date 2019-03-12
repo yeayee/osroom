@@ -1,7 +1,7 @@
 
 <br>
 <hr>
-<label class="text-success">{{_("标签")}}</label>
+<label v-if="tags" class="text-success">{{_("标签")}}</label>
 <br>
 <div>
     <a v-for="(tag, index) in tags" :href="'/corpus/tag?tag='+tag.tag" style="color:#cad2d4">
