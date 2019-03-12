@@ -18,14 +18,19 @@ OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ R
 - 管理端和默认主题osr-style都支持富文本和MarkDown编辑器.
 
 - 内容发布:
+
   发布-每个用户可独立发布文章与评论.
+
   管理-管理人员可在管理端管理全部内容，可通过插件实现自动审核或人工审核用户发布的内容.
 
 - 多媒体功能:管理者可再管理端上传图片/音频/视频等供网站使用.
 
 - 权限控制功能:
+
   Api/page-可以设置每一个Api和Page需要的请求权限.
+
   Role-用户角色, 可赋于每个Role拥有的权限.
+
   User-为用户指定角色,即可获取相关权限.
 
 - 网站设置: 大量设置可以在管理端直接修改，无需改动代码.
@@ -60,7 +65,7 @@ https://demo.osroom.com
 
 长期可访问文档地址: https://osroom.github.io/osroom-doc
 
-OSROOM其他相关问题解决方案: [OSROOM大学](https://demo.osroom.com/corpus?id=5c21cead38ab556ac944cd70)
+其他相关问题解决方案: [OSROOM问题](https://demo.osroom.com/corpus?id=5c8271171d41c812d7169e00)
 
 |   Version  |   Status  |  Other   |
 | --- | --- | --- |
