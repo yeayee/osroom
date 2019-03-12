@@ -14,24 +14,25 @@ class Transations():
 
         self.cfg_path = "{}/babel.cfg".format(current_path)
         self.extract_path = "{}/apps".format(project_path)
-        s_ops = "hq"
-        l_ops = ["init", "update", "compile", "cfg=", "extract=", "output=", "lan=", "all-lan"]
-        s_opexplain = ["help","quiet:A small amount of output"]
+        s_ops = "hqo:"
+        l_ops = ["init", "update", "compile", "cfg=", "ext=","lan=", "all-lan"]
+        s_opexplain = ["help",
+                       "quiet:A small amount of output",
+                       "<output directory>, Output directory.\n\t\tSuch as:{extract_path}/translations/python-pg"
+                       "\n\t\t\t{extract_path}/translations/admin_page"
+                       "\n\t\t\t{extract_path}/translations/theme".format(extract_path=self.extract_path),
+                       ]
         l_opexplain = ["init translation(初始化翻译)",
                        "update: extract and update(用于更新,提取最新的需翻译文本)",
                        "compile(更新并翻译后,需要发布翻译)",
                        "<cfg file path>, The default:{}(只提取html,js文件).\n\t\tOptional: {}/babel_py.cfg(只提取py文件)".format(self.cfg_path, current_path),
                        "<Translation extract directory>, Such as: {}".format(self.extract_path),
-
-                       "<output directory>, Output directory.\n\t\tSuch as:{}/translations/python-pg"
-                       "\n\t\t\t{}/translations/template".format(self.extract_path,self.extract_path),
-
-                       "<language>, Default 'zh_Hans_CN', Other: zh_CN,zh_Hans_CN,en_GB",
+                       "<language>, Such as: zh_CN,zh_Hans_CN,en_GB",
                        "View all languages"]
 
-        action = ["init, [--init --extract <path> --output <path> --lan en_US]",
-                  "update, [--update --extract <path> --output <path> --cfg <cfg file path>]",
-                  "compile, [--compile --output <path>"]
+        action = ["init, [--init --ext <path> -o <path> --lan en_US]",
+                  "update, [--update --ext <path> -o <path> --cfg <cfg file path>]",
+                  "compile, [--compile -o <path>]"]
 
         opts, args = getopt.getopt(sys.argv[1:], s_ops, l_ops)
         func = None
@@ -53,10 +54,10 @@ class Transations():
             elif op == "--cfg":
                 self.cfg_path = value.strip()
 
-            elif op == "--extract":
+            elif op == "--ext":
                 self.extract_path = value.rstrip("/")
 
-            elif op == "--output":
+            elif op == "-o":
                 self.save_path = value.rstrip("/")
 
             elif op == "--init":
