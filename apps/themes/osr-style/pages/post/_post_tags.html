@@ -4,7 +4,7 @@
 <label class="text-success">{{_("标签")}}</label>
 <br>
 <div>
-    <a v-for="(tag, index) in tags" :href="'/corpus/tag?tag='+tag.tag" style="color:#ffffff">
+    <a v-for="(tag, index) in tags" :href="'/corpus/tag?tag='+tag.tag" style="color:#cad2d4">
         <button  :style="'background-color:'+tag.color"
         class="btn osr-btn btn-xs">
             {[tag["tag"]]}
