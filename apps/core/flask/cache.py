@@ -301,6 +301,31 @@ class Cache():
         self.delete(key=cache_key, db_type=db_type, key_regex=key_regex)
 
 
+    def get_autokey(self, fun, key_base64=None, key_prefix="", db_type=None,  key_regex=False,*args, **kwargs):
+        '''
+        生成一个调用方式的key
+        :param fun: 使用缓存的函数
+        :param key_base64:
+        :param key_prefix:
+        :param db_type:
+        :param args:　使用缓存的函数的参数
+        :param kwargs:　使用缓存的函数的参数
+        :param kwargs:　使用缓存的函数的参数
+        :return:
+        '''
+        if not isinstance(fun,str):
+            fun = fun.__name__
+
+        cache_key = self._create_cache_key(key=None,
+                                           key_prefix=key_prefix,
+                                           key_base64=key_base64,
+                                           fun_name = fun,
+                                           args=args,
+                                           kwargs=kwargs,
+                                           is_class_func=False,
+                                           key_regex=key_regex)
+        return cache_key
+
     def clear(self, db_type=None):
         '''
         清除所有的cache
