@@ -75,15 +75,9 @@ https://demo.osroom.com
 
 那就是基于自己对Web编程的兴趣与学习更多的编程知识.
 
-### Admin部分截图
+### Admin首页
 
 ![Admin主页](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/admin.png)
-
-
-![Post](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/post.png)
-
-Media
-![Media](http://osshare.oss-cn-shenzhen.aliyuncs.com/Introduction/media.png)
 
 ### 默认主题部分截图
 
