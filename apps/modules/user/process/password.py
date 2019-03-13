@@ -109,7 +109,7 @@ def p_retrieve_password(email, code, password, password2):
     if s:
         user = get_one_user(email=email)
     else:
-        data = {"msg":r, "msg_type":"e", "http_status":"403"}
+        data = {"msg":r, "msg_type":"e", "http_status":403}
         return data
 
     if user:
