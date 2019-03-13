@@ -22,6 +22,7 @@ def sign_up():
         password2 = request.argget.all('password2','').strip()
         code = request.argget.all('code','').strip()
 
+
         data = p_sign_up(email=email, mobile_phone_number=mobile_phone_number,
                          username=username,password=password,
                           password2=password2, code=code)
