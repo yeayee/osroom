@@ -35,7 +35,7 @@ class User(UserMixin):
             self.active = user["active"]
             self.is_delete = user["is_delete"]
             self.create_at = user["create_at"]
-            self.update = user["update_at"]
+            self.update_at = user["update_at"]
             self.editor = user["editor"]
             self.jwt_login_time = user.get("jwt_login_time", None)
             if not self.mphone_num:
