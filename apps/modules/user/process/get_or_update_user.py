@@ -66,6 +66,10 @@ def insert_one_user(updata):
     '''
 
     r  = mdb_user.db.user.insert_one(updata)
+
+    fun_name = "get_one_user"
+    cache.delete_autokey(fun=fun_name, db_type="redis", username=updata["username"])
+    cache.delete_autokey(fun=fun_name, db_type="redis", email=updata["email"])
     return r
 
 

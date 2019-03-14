@@ -5,7 +5,7 @@ from flask_login import current_user
 
 from apps.core.template.get_template import get_email_html
 from apps.core.utils.get_config import get_config
-from apps.modules.user.process.get_or_update_user import get_one_user, insert_one_user
+from apps.modules.user.process.get_or_update_user import insert_one_user
 from apps.utils.send_msg.send_email import send_email
 from apps.utils.send_msg.send_message import send_mobile_msg
 from apps.utils.validation.str_format import email_format_ver, password_format_ver, short_str_verifi, mobile_phone_format_ver
@@ -33,7 +33,7 @@ def p_sign_up(username, password, password2, code, email=None, mobile_phone_numb
     s2, r2 = password_format_ver(password)
     if not s1:
         data = {'msg':r1, 'msg_type':"e", "http_status":422}
-    elif get_one_user(username=username):
+    elif mdb_user.db.user.find_one({"username":username}):
         # 是否存在用户名
         data = {'msg': gettext("Name has been used"), 'msg_type': "w", "http_status": 403}
     elif not s2:
@@ -51,7 +51,7 @@ def p_sign_up(username, password, password2, code, email=None, mobile_phone_numb
         s, r = email_format_ver(email)
         if not s:
             data = {'msg':r, 'msg_type':"e", "http_status":422}
-        elif get_one_user(email=email):
+        elif mdb_user.db.user.find_one({"email":email}):
             # 邮箱是否注册过
             data = {'msg': gettext("This email has been registered in the site oh, please login directly."),
                     'msg_type': "w", "http_status": 403}
@@ -69,7 +69,7 @@ def p_sign_up(username, password, password2, code, email=None, mobile_phone_numb
         s, r = mobile_phone_format_ver(mobile_phone_number)
         if not s:
             data = {'msg': r, 'msg_type': "e", "http_status": 422}
-        elif get_one_user(mphone_num=mobile_phone_number):
+        elif mdb_user.db.user.find_one({"mphone_num":mobile_phone_number}):
             # 手机是否注册过
             data = {'msg': gettext("This number has been registered in the site oh, please login directly."),
                     'msg_type': "w", "http_status": 403}
@@ -125,3 +125,5 @@ def p_sign_up(username, password, password2, code, email=None, mobile_phone_numb
         return data
 
     return data
+
+

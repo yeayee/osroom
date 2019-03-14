@@ -1,5 +1,7 @@
 # -*-coding:utf-8-*-
 from flask_babel import gettext
+
+from apps.app import cache
 from apps.utils.format.obj_format import json_to_pyseq, str_to_num
 from apps.core.utils.get_config import get_config
 from apps.modules.user.process.sign_in import p_sign_in
@@ -19,6 +21,7 @@ def sign_up():
         password = request.argget.all('password','').strip()
         password2 = request.argget.all('password2','').strip()
         code = request.argget.all('code','').strip()
+
 
         data = p_sign_up(email=email, mobile_phone_number=mobile_phone_number,
                          username=username,password=password,
