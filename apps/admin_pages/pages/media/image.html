@@ -34,7 +34,7 @@
                                 <img class="osr-media-img" :src="media.url+img_w_h" :alt="media.title"
                                      :data-original="media.url" v-on:click="init_viewer()">
 
-                                 <div v-if="media.title" class="img-title osr-text-overleft"  data-toggle="tooltip" :title="media.title">
+                                 <div v-if="media.title && media.title!=null" class="img-title osr-text-overleft"  data-toggle="tooltip" :title="media.title">
                                      {[media.title]}
                                  </div>
                                 <div v-else class="img-title">&nbsp;</div>

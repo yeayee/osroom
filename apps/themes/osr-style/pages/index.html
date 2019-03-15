@@ -43,7 +43,8 @@
                 <div v-for="rec in rec_1">
                     <a :href="rec.link" target="_blank">
                         <img class="osr-carousel-img" :src="rec.url"  alt="rec.title">
-                        <div class="img-title">{[rec.title]}</div>
+                        <div v-if="rec.title && rec.title!=null" class="img-title">{[rec.title]}</div>
+                        <div v-else style="padding: 7px"></div>
                     </a>
                 </div>
             </div>
