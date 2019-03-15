@@ -10,7 +10,7 @@ def import_plugin_config(plugin_name, config):
     '''
     导入插件配置到数据库,已存在的则更新时间
     :param plugin_name 插件名
-    :param CONFIG:
+    :param CONFIG:dict
     :return:
     '''
     current_time = time.time()
