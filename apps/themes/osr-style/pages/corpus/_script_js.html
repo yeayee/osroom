@@ -25,7 +25,8 @@
             status:"is_issued",
             img_w_h:"?w=0&h=120",
             is_myself:false,
-            post_categorys:[]
+            post_categorys:[],
+            user_id:null
       },
       filters: {
             formatDate: function (time) {
@@ -46,12 +47,19 @@
         vue.page = get_obj_value(url_s, "page", vue.page)
         nav_active("head_li_sort_"+vue.sort);
 
-        result = get_category_info()
-        result.then(function (r) {
+        if(!vue.user_id){
+            result = get_category_info()
+             result.then(function (r) {
+                //获取用户资料
+                get_user();
+                document.title = vue.category.name + "-" + "{{g.site_global.site_config.TITLE_SUFFIX}}";
+            });
+        }else{
             //获取用户资料
-             get_user();
-            document.title = vue.category.name + "-" + "{{g.site_global.site_config.TITLE_SUFFIX}}";
-        });
+                get_user();
+                document.title = vue.category.name + "-" + "{{g.site_global.site_config.TITLE_SUFFIX}}";
+        }
+
 
         // get post
         get_posts(vue.status, vue.page, vue.sort, vue.keyword);
@@ -153,6 +161,7 @@
 
         var url = window.location.pathname
                     +"?id="+vue.category_id
+                    +"&user_id="+vue.user_id
                     +"&sort="+vue.sort
                     +"&page="+page
         history_state(null, url);

@@ -77,16 +77,6 @@ def api_get_theme_display_data():
                 {"type":"image", "name_regex":"test-[0-9]+"}
             ]
 
-        2.获取指定category的多媒体
-        category_name:<array> category name, 可同时指定多个category name, 使用数组
-        category_user_id:<str>, 为空则表示获取站点官方的多媒体
-        category_type:<str>, 可选"text", "image", "video", "audio"
-        page:<int>, 第几页, 默认1
-        pre:<int>, 每页几条数据, 默认8
-
-        3.根据id 获取
-        media_id:<str>
-
         :return:
     '''
 
