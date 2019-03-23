@@ -7,7 +7,7 @@ __author__ = "Allen Woo"
 
 def main():
     '''
-    脚本主函数
+    工具脚本主函数
     :return:
     '''
     from tools.usage import usage_help

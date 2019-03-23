@@ -109,8 +109,8 @@ def get_posts_pr(field=None, page=1, pre=10, status="is_issued", sort=None, time
                                     ]
     # sort
     if sort:
-        for i in range(0, len(sort)):
-            sort[i] = (list(sort[i].keys())[0], list(sort[i].values())[0])
+        for i, srt in enumerate(sort):
+            sort[i] = (list(srt.keys())[0], list(srt.values())[0])
     else:
         sort = [("issue_time", -1), ("update_time", -1)]
 
@@ -174,8 +174,9 @@ def get_posts_query(query_conditions, field, sort, pre, page, get_userinfo):
         if "cover_url" in post and post["cover_url"]:
             post["cover_url"] = get_file_url(post["cover_url"])
         if "imgs" in post and  len(post["imgs"]):
-            for i in range(0, len(post["imgs"])):
-                post["imgs"][i] = get_file_url(post["imgs"][i])
+
+            for i, img in enumerate(post["imgs"]):
+                post["imgs"][i] = get_file_url(img)
 
         if not "user_id" in query_conditions.keys() and get_userinfo:
             s, r = get_user_public_info(user_id=post["user_id"], is_basic=False)
@@ -222,8 +223,8 @@ def get_post_pr(post_id="", other_filter=None, is_admin=False, *args, **kwargs):
         post["cover_url"] = get_file_url(post["cover_url"])
         imgs_l = len(post["imgs"])
         if imgs_l:
-            for i in range(0, imgs_l):
-                post["imgs"][i] = get_file_url(post["imgs"][i])
+            for i, img in enumerate(imgs_l):
+                post["imgs"][i] = get_file_url(img)
 
         s,r = get_user_public_info(user_id=post["user_id"], is_basic=False)
         if s:

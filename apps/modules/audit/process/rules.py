@@ -60,8 +60,9 @@ def audit_rule_delete():
     if not isinstance(ids, list):
         ids = json.loads(ids)
 
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
+
     r = mdb_sys.db.audit_rules.delete_many({"_id":{"$in":ids}})
     if r.deleted_count > 0:
         data = {"msg":gettext("Delete the success,{}").format(r.deleted_count),

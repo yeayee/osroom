@@ -60,8 +60,8 @@ def sys_host_edit():
 def sys_host_delete():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
     r = mdb_sys.db.sys_host.delete_many({"_id":{"$in":ids}})
     if r.deleted_count:
         data ={"msg":gettext("Successfully deleted {} host information").format(r.deleted_count),

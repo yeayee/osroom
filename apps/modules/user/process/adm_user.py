@@ -135,15 +135,15 @@ def user_del():
     noper = 0
     temp_ids = ids[:]
     ids = []
-    for i in range(0, len(temp_ids)):
+    for tid in temp_ids:
         # 检查是否有权限
         current_user_role = mdb_user.db.role.find_one({"_id": ObjectId(current_user.role_id)})
-        rm_user = get_one_user(user_id=str(temp_ids[i]))
+        rm_user = get_one_user(user_id=str(tid))
         rm_user_role = mdb_user.db.role.find_one({"_id": ObjectId(rm_user["role_id"])})
         if get_num_digits(current_user_role["permissions"]) <= get_num_digits(rm_user_role["permissions"]):
             # 没有权限删除
             continue
-        ids.append(ObjectId(temp_ids[i]))
+        ids.append(ObjectId(tid))
 
     if not permanent:
         update_data = {
@@ -175,16 +175,16 @@ def user_restore():
     ids = json_to_pyseq(request.argget.all('ids', []))
     noper = 0
     re_ids = []
-    for i in range(0, len(ids)):
+    for id in ids:
         # 检查是否有权限
         current_user_role = mdb_user.db.role.find_one({"_id": ObjectId(current_user.role_id)})
-        re_user = get_one_user(user_id=str(ids[i]))
+        re_user = get_one_user(user_id=str(id))
         re_user_role = mdb_user.db.role.find_one({"_id": ObjectId(re_user["role_id"])})
         if get_num_digits(current_user_role["permissions"]) <= get_num_digits(re_user_role["permissions"]):
             # 没有权限恢复
             noper += 1
             continue
-        re_ids.append(ObjectId(ids[i]))
+        re_ids.append(ObjectId(id))
 
     update_data = {
         'is_delete': 0
@@ -208,16 +208,16 @@ def user_activation():
     ids = json_to_pyseq(request.argget.all('ids', []))
     noper = 0
     ac_ids = []
-    for i in range(0, len(ids)):
+    for id in ids:
         # 检查是否有权限
         current_user_role = mdb_user.db.role.find_one({"_id": ObjectId(current_user.role_id)})
-        re_user = get_one_user(user_id=str(ids[i]))
+        re_user = get_one_user(user_id=str(id))
         re_user_role = mdb_user.db.role.find_one({"_id": ObjectId(re_user["role_id"])})
         if get_num_digits(current_user_role["permissions"]) <= get_num_digits(re_user_role["permissions"]):
             # 没有权限恢复
             noper += 1
             continue
-        ac_ids.append(ObjectId(ids[i]))
+        ac_ids.append(ObjectId(id))
 
     update_data = {
         'active': active

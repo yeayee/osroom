@@ -50,8 +50,10 @@ def find_comments(query_conditions={}, page=1, pre=10, sort=None, keyword="",sta
     
     # sort
     if sort:
-        for i in range(0, len(sort)):
-            sort[i] = (list(sort[i].keys())[0], list(sort[i].values())[0])
+
+        for i, srt in enumerate(sort):
+            sort[i] = (list(srt.keys())[0], list(srt.values())[0])
+
     else:
         sort = [("issue_time", -1)]
 

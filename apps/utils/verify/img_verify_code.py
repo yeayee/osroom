@@ -83,8 +83,7 @@ class CreateImgCode(object):
         h_margin = 10
         # 高度起点最低坐标
         h_scope = (self.size[1]-h_margin*2)-font_size
-        for t in range(0, len(str_list)):
-            c = str_list[t]
+        for t, c in enumerate(str_list):
             h = random.randint(10, h_scope)
             self.draw.text((w_interval * t + 10, h), c,
                            font=font,

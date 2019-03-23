@@ -680,7 +680,7 @@ CONFIG = {
             "type": "int",
             "info": "静态文件版本(当修改了CSS,JS等静态文件的时候，修改此版本号)",
             "sort": 12,
-            "value": 20190309061740
+            "value": 20190312151443
         },
         "MB_LOGO_DISPLAY": {
             "type": "string",

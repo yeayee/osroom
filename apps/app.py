@@ -1,24 +1,26 @@
 # -*-coding:utf-8-*-
-__author__ = 'Allen Woo'
+from flask_babel import Babel
+from flask_oauthlib.client import OAuth
+
 from apps.core.flask.myflask import OsrApp
 from apps.core.flask.cache import Cache
 from apps.core.flask.rest_session import RestSession
 from apps.core.db.mongodb import PyMongo
 from apps.core.logger.web_logging import WebLogger, web_start_log
-from flask_babel import Babel
 from flask_mail import Mail
-from flask_oauthlib.client import OAuth
+
 from flask_session import Session
 from flask_wtf import CSRFProtect
 from flask_login import LoginManager
 from redis import StrictRedis
 from apps.configs.db_config import DB_CONFIG
-
+__author__ = 'Allen Woo'
 
 '''
  Flask app 与其他核心模块实例化
  注意: 不要将模块初始话设置放在本文件
 '''
+
 # 主程序
 web_start_log.info("Initialize the OsrApp")
 app = OsrApp(__name__)

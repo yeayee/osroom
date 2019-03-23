@@ -168,8 +168,8 @@ def get_display_settings():
 
     # sort
     if sort:
-        for i in range(0, len(sort)):
-            sort[i] = (list(sort[i].keys())[0], list(sort[i].values())[0])
+        for i, srt in enumerate(sort):
+            sort[i] = (list(srt.keys())[0], list(srt.values())[0])
     else:
         sort = [("time", -1)]
     display_settings = mdb_sys.db.theme_display_setting.find(query)
