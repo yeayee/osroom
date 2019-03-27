@@ -14,9 +14,9 @@ __author__ = "Allen Woo"
 
 def role():
 
-    id = request.argget.all('id').strip()
+    rid = request.argget.all('id').strip()
     data = {}
-    data["role"] = mdb_user.db.role.find_one({"_id": ObjectId(id)})
+    data["role"] = mdb_user.db.role.find_one({"_id": ObjectId(rid)})
     if not data["role"]:
         data = {
             'msg': gettext("The specified role is not found"),
@@ -105,7 +105,7 @@ def add_role():
 
 def edit_role():
 
-    id = request.argget.all('id').strip()
+    rid = request.argget.all('id').strip()
     name = request.argget.all('name').strip()
     instructions = request.argget.all('instructions').strip()
     default = int(request.argget.all('default', 0))
@@ -132,7 +132,7 @@ def edit_role():
 
         return data
 
-    old_role = mdb_user.db.role.find_one({"_id": ObjectId(id)})
+    old_role = mdb_user.db.role.find_one({"_id": ObjectId(rid)})
     # 如果当前用户的权限最高位 小于 要修改角色的权限,也是不可以
     if old_role and get_num_digits(
             old_role["permissions"]) >= get_num_digits(
@@ -149,12 +149,12 @@ def edit_role():
         'msg_type': "s",
         "http_status": 201}
     if not mdb_user.db.role.find_one(
-            {"name": name, "_id": {"$ne": ObjectId(id)}}):
+            {"name": name, "_id": {"$ne": ObjectId(rid)}}):
         if default:
             if not mdb_user.db.role.find_one(
-                    {"default": {"$in": [1, True]}, "_id": {"$ne": ObjectId(id)}}):
+                    {"default": {"$in": [1, True]}, "_id": {"$ne": ObjectId(rid)}}):
                 r = mdb_user.db.role.update_one(
-                    {"_id": ObjectId(id)}, {"$set": role})
+                    {"_id": ObjectId(rid)}, {"$set": role})
                 if not r.modified_count:
                     data = {
                         'msg': gettext("No changes"),
@@ -167,7 +167,7 @@ def edit_role():
                     "http_status": 403}
         else:
             r = mdb_user.db.role.update_one(
-                {"_id": ObjectId(id)}, {"$set": role})
+                {"_id": ObjectId(rid)}, {"$set": role})
             if not r.modified_count:
                 data = {
                     'msg': gettext("No changes"),
@@ -191,10 +191,10 @@ def delete_role():
         {"_id": ObjectId(current_user.role_id)})
     noper = 0
     exist_user_role = 0
-    for id in ids:
-        id = ObjectId(id)
+    for rid in ids:
+        rid = ObjectId(rid)
         # 权限检查
-        old_role = mdb_user.db.role.find_one({"_id": id})
+        old_role = mdb_user.db.role.find_one({"_id": rid})
         # 如果当前用户的权限最高位 小于 要删除角色的权限,也是不可以
         if old_role and get_num_digits(
                 old_role["permissions"]) >= get_num_digits(
@@ -203,10 +203,10 @@ def delete_role():
             continue
 
         if mdb_user.db.user.find(
-                {"role_id": id, "is_delete": {"$in": [0, False, None]}}).count(True):
+                {"role_id": rid, "is_delete": {"$in": [0, False, None]}}).count(True):
             exist_user_role += 1
         else:
-            mdb_user.db.role.delete_many({"_id": id})
+            mdb_user.db.role.delete_many({"_id": rid})
     if not noper:
         data = {'msg': gettext('Delete the success, {} of the roles have users and cannot be deleted').format(
             exist_user_role), 'msg_type': 's', "http_status": 204}

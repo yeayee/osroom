@@ -247,8 +247,8 @@ def comment_issue():
 def comment_delete():
     ids = json_to_pyseq(request.argget.all('ids', []))
     reply_ids = ids[:]
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
     r1 = mdb_web.db.comment.update_many({"_id": {"$in": ids},
                                          "user_id": current_user.str_id},
                                          {"$set": {"is_delete": 1}})
@@ -289,7 +289,7 @@ def comment_delete():
 
 
 def comment_like():
-    id = request.argget.all('id')
+    tid = request.argget.all('id')
     like_comment = mdb_user.db.user_like.find_one(
         {"user_id": current_user.str_id, "type": "comment"})
     if not like_comment:
@@ -300,18 +300,20 @@ def comment_like():
         }
         mdb_user.db.user_like.insert_one(user_like)
         r1 = mdb_user.db.user_like.update_one(
-            {"user_id": current_user.str_id, "type": "comment"}, {"$addToSet": {"values": id}})
-        r2 = mdb_web.db.comment.update_one({"_id": ObjectId(id)}, {
-                                           "$inc": {"like": 1}, "$addToSet": {"like_user_id": current_user.str_id}})
+            {"user_id": current_user.str_id, "type": "comment"}, {"$addToSet": {"values": tid}})
+        r2 = mdb_web.db.comment.update_one({
+            "_id": ObjectId(tid)},
+            {"$inc": {"like": 1},
+            "$addToSet": {"like_user_id": current_user.str_id}})
 
     else:
-        if id in like_comment["values"]:
-            like_comment["values"].remove(id)
-            r2 = mdb_web.db.comment.update_one({"_id": ObjectId(id)}, {
+        if tid in like_comment["values"]:
+            like_comment["values"].remove(tid)
+            r2 = mdb_web.db.comment.update_one({"_id": ObjectId(tid)}, {
                                                "$inc": {"like": -1}, "$pull": {"like_user_id": current_user.str_id}})
         else:
-            like_comment["values"].append(id)
-            r2 = mdb_web.db.comment.update_one({"_id": ObjectId(id)}, {"$inc": {"like": 1}, "$addToSet": {
+            like_comment["values"].append(tid)
+            r2 = mdb_web.db.comment.update_one({"_id": ObjectId(tid)}, {"$inc": {"like": 1}, "$addToSet": {
                 "like_user_id": current_user.str_id}})
         r1 = mdb_user.db.user_like.update_one({"user_id": current_user.str_id, "type": "comment"},
                                               {"$set": {"values": like_comment["values"]}})

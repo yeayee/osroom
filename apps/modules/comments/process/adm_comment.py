@@ -33,16 +33,18 @@ def adm_comments():
 def adm_comment_audit():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
-    score= int(request.argget.all("score", 0))
+    score = int(request.argget.all("score", 0))
 
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
 
-    r = mdb_web.db.comment.update_many({"_id":{"$in":ids}},
-                               {"$set":{"audited":1,
-                                        "audit_score":score,
-                                        "audit_way":"artificial",
-                                        "audit_user_id":current_user.str_id}})
+    r = mdb_web.db.comment.update_many({
+                                "_id": {"$in": ids}},
+                               {"$set": {
+                                        "audited": 1,
+                                        "audit_score": score,
+                                        "audit_way": "artificial",
+                                        "audit_user_id": current_user.str_id}})
     if r.modified_count:
 
         if score >= get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE"):
@@ -102,8 +104,8 @@ def adm_comment_delete():
     ids = json_to_pyseq(request.argget.all('ids', []))
     pending_delete = int(request.argget.all("pending_delete", 1))
 
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
     if pending_delete:
         r = mdb_web.db.comment.update_many(
             {"_id": {"$in": ids}}, {"$set": {"is_delete": 2}})
@@ -116,9 +118,9 @@ def adm_comment_delete():
                 "msg_type": "w",
                 "http_status": 400}
     else:
-        for id in ids:
-            mdb_user.db.user_like.update_many({"type": "comment", "values": str(id)},
-                                              {"$pull": {"values": str(id)}})
+        for tid in ids:
+            mdb_user.db.user_like.update_many({"type": "comment", "values": str(tid)},
+                                              {"$pull": {"values": str(tid)}})
         r = mdb_web.db.comment.delete_many(
             {"_id": {"$in": ids}, "is_delete": {"$in": [1, 2]}})
         if r.deleted_count:
@@ -133,8 +135,8 @@ def adm_comment_delete():
 def adm_comment_restore():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
     r = mdb_web.db.comment.update_many({"_id": {"$in": ids},
                                         "is_delete": {"$in": [1, 2]}},
                                        {"$set": {"is_delete": 0}})

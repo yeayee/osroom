@@ -34,11 +34,11 @@ class RestTokenAuth:
         if pyver_info[0] == 3 and pyver_info[1] == 6:
             # 3.6版本以上才使用secrets
             import secrets
-            id = "{}{}".format(str(uuid1()), secrets.token_urlsafe(32))
+            tid = "{}{}".format(str(uuid1()), secrets.token_urlsafe(32))
         else:
-            id = "{}{}".format(str(uuid1()), randint(0, 999999))
+            tid = "{}{}".format(str(uuid1()), randint(0, 999999))
 
-        return {"token": base64.b64encode(id.encode()).decode()}
+        return {"token": base64.b64encode(tid.encode()).decode()}
 
     """
     SecretToken

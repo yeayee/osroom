@@ -17,13 +17,13 @@ def get_url():
     获取一个url信息
     :return:
     """
-    id = request.argget.all("id")
+    tid = request.argget.all("id")
 
-    s, r = arg_verify([("id", id)], required=True)
+    s, r = arg_verify([("id", tid)], required=True)
     if not s:
         return r
 
-    url = mdb_sys.db.sys_urls.find_one({"_id": ObjectId(id)})
+    url = mdb_sys.db.sys_urls.find_one({"_id": ObjectId(tid)})
     if url:
         url["_id"] = str(url["_id"])
         if "OPTIONS" in url["methods"]:
@@ -132,13 +132,13 @@ def update_url():
     更新修改 url权限
     :return:
     """
-    id = request.argget.all("id")
+    tid = request.argget.all("id")
     method = request.argget.all("method")
     login_auth = str_to_num(request.argget.all("login_auth", 0))
     custom_permission = json_to_pyseq(
         request.argget.all(
             "custom_permission", []))
-    s, r = arg_verify([("id", id)], required=True)
+    s, r = arg_verify([("id", tid)], required=True)
     if not s:
         return r
 
@@ -169,7 +169,7 @@ def update_url():
         return data
 
     old_permission = 0
-    old_url_per = mdb_sys.db.sys_urls.find_one({"_id": ObjectId(id)})
+    old_url_per = mdb_sys.db.sys_urls.find_one({"_id": ObjectId(tid)})
     if old_url_per and method in old_url_per["custom_permission"]:
         old_permission = old_url_per["custom_permission"][method]
 
@@ -178,12 +178,12 @@ def update_url():
                       ) <= get_num_digits(old_permission):
         return data
 
-    r = mdb_sys.db.sys_urls.update_one({"_id": ObjectId(id)},
+    r = mdb_sys.db.sys_urls.update_one({"_id": ObjectId(tid)},
                                        {"$set": {"custom_permission.{}".format(method): permission,
                                                  "login_auth.{}".format(method): login_auth}})
     if r.modified_count:
         # 清除缓存
-        r = mdb_sys.db.sys_urls.find_one({"_id": ObjectId(id)})
+        r = mdb_sys.db.sys_urls.find_one({"_id": ObjectId(tid)})
         if r:
             cache.delete(
                 key="get_sys_url_url_{}".format(
@@ -207,8 +207,8 @@ def delete_url():
     """
     ids = json_to_pyseq(request.argget.all("ids", []))
 
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
 
     url_pers = list(mdb_sys.db.sys_urls.find(
         {"_id": {"$in": ids}}, {"url": 1}))

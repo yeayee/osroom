@@ -124,16 +124,16 @@ def get_display_setting():
     """
 
     user_id = 0
-    id = request.argget.all("id")
+    tid = request.argget.all("id")
 
-    s, r = arg_verify([("id", id)], required=True)
+    s, r = arg_verify([("id", tid)], required=True)
     if not s:
         return r
 
     data = {}
 
     display_setting = mdb_sys.db.theme_display_setting.find_one(
-        {"_id": ObjectId(id), "user_id": user_id})
+        {"_id": ObjectId(tid), "user_id": user_id})
     if display_setting:
         display_setting["_id"] = str(display_setting["_id"])
         if "url" in display_setting and display_setting["url"]:
@@ -329,11 +329,11 @@ def del_display_setting():
     user_id = 0
     display_setting_ids = json_to_pyseq(request.argget.all("ids", []))
     deleted_count = 0
-    for id in display_setting_ids:
+    for tid in display_setting_ids:
         display_setting = mdb_sys.db.theme_display_setting.find_one(
-            {"_id": ObjectId(id), "user_id": user_id})
+            {"_id": ObjectId(tid), "user_id": user_id})
         r = mdb_sys.db.theme_display_setting.delete_one(
-            {"_id": ObjectId(id), "user_id": user_id})
+            {"_id": ObjectId(tid), "user_id": user_id})
         # 是否存在上传的文件
         if r.deleted_count and "url" in display_setting and display_setting["url"]:
             file_del(display_setting["url"])

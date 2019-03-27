@@ -73,7 +73,7 @@ def get_posts():
 
 def post_like():
 
-    id = request.argget.all('id')
+    tid = request.argget.all('id')
     like = mdb_user.db.user_like.find_one(
         {"user_id": current_user.str_id, "type": "post"})
     if not like:
@@ -84,18 +84,18 @@ def post_like():
         }
         mdb_user.db.user_like.insert_one(user_like)
         r1 = mdb_user.db.user_like.update_one(
-            {"user_id": current_user.str_id, "type": "post"}, {"$addToSet": {"values": id}})
-        r2 = mdb_web.db.post.update_one({"_id": ObjectId(id)}, {
+            {"user_id": current_user.str_id, "type": "post"}, {"$addToSet": {"values": tid}})
+        r2 = mdb_web.db.post.update_one({"_id": ObjectId(tid)}, {
                                         "$inc": {"like": 1}, "$addToSet": {"like_user_id": current_user.str_id}})
 
     else:
-        if id in like["values"]:
-            like["values"].remove(id)
-            r2 = mdb_web.db.post.update_one({"_id": ObjectId(id)}, {
+        if tid in like["values"]:
+            like["values"].remove(tid)
+            r2 = mdb_web.db.post.update_one({"_id": ObjectId(tid)}, {
                                             "$inc": {"like": -1}, "$pull": {"like_user_id": current_user.str_id}})
         else:
-            like["values"].append(id)
-            r2 = mdb_web.db.post.update_one({"_id": ObjectId(id)}, {
+            like["values"].append(tid)
+            r2 = mdb_web.db.post.update_one({"_id": ObjectId(tid)}, {
                                             "$inc": {"like": 1}, "$addToSet": {"like_user_id": current_user.str_id}})
         r1 = mdb_user.db.user_like.update_one({"user_id": current_user.str_id, "type": "post"},
                                               {"$set": {"values": like["values"]}})

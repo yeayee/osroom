@@ -71,8 +71,8 @@ def audit_rule_delete():
     ids = json_to_pyseq(request.argget.all('ids', []))
     if not isinstance(ids, list):
         ids = json.loads(ids)
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
 
     r = mdb_sys.db.audit_rules.delete_many({"_id": {"$in": ids}})
     if r.deleted_count > 0:

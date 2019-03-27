@@ -26,19 +26,19 @@ def follow_user():
         return r
 
     cnt = 0
-    for id in ids[:]:
+    for tid in ids[:]:
 
-        if id != current_user.str_id and get_one_user(user_id=str(id)):
+        if tid != current_user.str_id and get_one_user(user_id=str(tid)):
             r = mdb_user.db.user_follow.update_one({"user_id": current_user.str_id, "type": "account"},
-                                                   {"$addToSet": {"follow": id}}, upsert=True)
+                                                   {"$addToSet": {"follow": tid}}, upsert=True)
             if r.modified_count or r.upserted_id:
                 cnt += 1
                 # 更新粉丝统计
                 update_one_user(
-                    user_id=str(id), updata={
+                    user_id=str(tid), updata={
                         "$inc": {
                             "fans_num": 1}})
-            delete_user_info_cache(user_id=id)
+            delete_user_info_cache(user_id=tid)
 
     if cnt:
         # 更新关注统计
@@ -74,14 +74,14 @@ def unfollow():
     if not s:
         return r
 
-    for id in ids[:]:
+    for tid in ids[:]:
         if mdb_user.db.user_follow.find_one(
-                {"user_id": current_user.str_id, "type": "account", "follow": id}):
+                {"user_id": current_user.str_id, "type": "account", "follow": tid}):
             # 更新粉丝统计
-            update_one_user(user_id=str(id), updata={"$inc": {"fans_num": -1}})
+            update_one_user(user_id=str(tid), updata={"$inc": {"fans_num": -1}})
         else:
-            ids.remove(id)
-        delete_user_info_cache(user_id=id)
+            ids.remove(tid)
+        delete_user_info_cache(user_id=tid)
 
     r = mdb_user.db.user_follow.update_one(
         {"user_id": current_user.str_id, "type": "account"}, {"$pullAll": {"follow": ids}})
@@ -122,9 +122,9 @@ def get_followed_users():
         {"user_id": user_id, "type": "account"})
     if follow_user:
         data_cnt = len(follow_user["follow"])
-        for id in follow_user["follow"][(page - 1) * pre: page * pre]:
+        for tid in follow_user["follow"][(page - 1) * pre: page * pre]:
             s, r = get_user_public_info(
-                user_id=str(id), is_basic=False, determine_following=False)
+                user_id=str(tid), is_basic=False, determine_following=False)
             if s:
                 data["users"].append(r)
     else:

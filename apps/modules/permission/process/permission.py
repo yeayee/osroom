@@ -22,9 +22,9 @@ def permission():
     获取一个权限
     :return:
     """
-    id = request.argget.all('id').strip()
+    tid = request.argget.all('id').strip()
     data = {}
-    data["per"] = mdb_user.db.permission.find_one({"_id": ObjectId(id)})
+    data["per"] = mdb_user.db.permission.find_one({"_id": ObjectId(tid)})
     if not data["per"]:
         data = {
             'msg': gettext("The specified permission is not found"),
@@ -141,7 +141,7 @@ def add_per():
 
 def edit_per():
 
-    id = request.argget.all('id').strip()
+    tid = request.argget.all('id').strip()
     name = request.argget.all('name', '').strip()
     explain = request.argget.all('explain', '')
     default = int(request.argget.all('is_default', 0).strip())
@@ -182,21 +182,21 @@ def edit_per():
            "is_default": default}
 
     if mdb_user.db.permission.find_one(
-            {"name": name, "_id": {"$ne": ObjectId(id)}}):
+            {"name": name, "_id": {"$ne": ObjectId(tid)}}):
         data = {
             'msg': gettext("Permission name already exists"),
             'msg_type': "w",
             "http_status": 403}
 
-    elif mdb_user.db.permission.find_one({"value": permissions, "_id": {"$ne": ObjectId(id)}}):
+    elif mdb_user.db.permission.find_one({"value": permissions, "_id": {"$ne": ObjectId(tid)}}):
         data = {'msg': gettext('Location has been used'),
                 'msg_type': "w", "http_status": 403}
     else:
-        old_per = mdb_user.db.permission.find_one({"_id": ObjectId(id)})
+        old_per = mdb_user.db.permission.find_one({"_id": ObjectId(tid)})
         old_per_value = old_per["permissions"]
 
         r = mdb_user.db.permission.update_one(
-            {"_id": ObjectId(id)}, {"$set": per})
+            {"_id": ObjectId(tid)}, {"$set": per})
         if not r.modified_count:
             data = {
                 'msg': gettext("No changes"),
@@ -235,10 +235,10 @@ def delete_per():
     need_remove = []
     need_remove_per_value = []
 
-    for id in ids:
-        id = ObjectId(id)
+    for tid in ids:
+        tid = ObjectId(tid)
         # 权限检查
-        old_per = mdb_user.db.permission.find_one({"_id": id})
+        old_per = mdb_user.db.permission.find_one({"_id": tid})
         # 如果当前用户的权限最高位 小于 要删除角色的权限,也是不可以
         if old_per and get_num_digits(
                 old_per["value"]) >= get_num_digits(
@@ -248,7 +248,7 @@ def delete_per():
         if old_per["name"] in PRESERVE_PERS or old_per["default"]:
             preserve.append(old_per["name"])
             continue
-        need_remove.append(id)
+        need_remove.append(tid)
         need_remove_per_value.append(old_per["permissions"])
 
     # Delete

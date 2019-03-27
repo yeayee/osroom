@@ -19,12 +19,12 @@ def get_category_info():
     获取category信息
     :return:
     """
-    id = request.argget.all('id')
-    s, r = arg_verify([(gettext("category id"), id)], required=True)
+    tid = request.argget.all('id')
+    s, r = arg_verify([(gettext("category id"), tid)], required=True)
     if not s:
         return r
     data = {}
-    category = mdb_web.db.category.find_one({"_id": ObjectId(id)})
+    category = mdb_web.db.category.find_one({"_id": ObjectId(tid)})
     category["_id"] = str(category["_id"])
     data["category"] = category
     return data
@@ -91,7 +91,7 @@ def category_edit(user_id=None):
 
     if user_id is None:
         user_id = current_user.str_id
-    id = request.argget.all('id')
+    tid = request.argget.all('id')
     ntype = request.argget.all('type')
     name = request.argget.all('name')
 
@@ -105,14 +105,14 @@ def category_edit(user_id=None):
         data = {"msg": v, "msg_type": "w", "http_status": 422}
     elif not s2:
         data = r2
-    elif mdb_web.db.category.find_one({"_id": {"$ne": ObjectId(id)}, "type": ntype, "user_id": user_id, "name": name}):
+    elif mdb_web.db.category.find_one({"_id": {"$ne": ObjectId(tid)}, "type": ntype, "user_id": user_id, "name": name}):
         data = {
             "msg": gettext("Name already exists"),
             "msg_type": "w",
             "http_status": 403}
     else:
         r = mdb_web.db.category.update_one(
-            {"_id": ObjectId(id), "user_id": user_id}, {"$set": {"name": name}})
+            {"_id": ObjectId(tid), "user_id": user_id}, {"$set": {"name": name}})
         if r.modified_count:
             update_media_category_name(id, name)
             data = {
@@ -145,8 +145,8 @@ def category_delete(user_id=None):
     if not isinstance(ids, list):
         ids = json.loads(ids)
 
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
     r = mdb_web.db.category.delete_many({"_id": {"$in": ids},
                                          "user_id": user_id})
     if r.deleted_count > 0:

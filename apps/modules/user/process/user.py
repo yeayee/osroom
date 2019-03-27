@@ -15,8 +15,9 @@ __author__ = "Allen Woo"
 class User(UserMixin):
 
     def __init__(self, id, **kwargs):
+        user_id = id
         super(User, self).__init__(**kwargs)
-        user = get_one_user(user_id=str(id))
+        user = get_one_user(user_id=str(user_id))
         if user:
             if "password" in user and user["password"]:
                 self.no_password = False
@@ -24,8 +25,8 @@ class User(UserMixin):
             else:
                 self.no_password = True
 
-            self.id = ObjectId(id)
-            self.str_id = str(id)
+            self.id = ObjectId(user_id)
+            self.str_id = str(user_id)
             self.username = user["username"]
             self.email = user["email"]
             self.mphone_num = user["mphone_num"]

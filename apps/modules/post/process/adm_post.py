@@ -59,14 +59,22 @@ def adm_get_posts():
 def adm_post_audit():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
-
-    score= int(request.argget.all("score", 0))
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
-    r = mdb_web.db.post.update_many({"_id":{"$in":ids}},
-                               {"$set":{"audited":1, "audit_score":score,
-                                        "audit_way":"artificial",
-                                        "audit_user_id":current_user.str_id}})
+    score = int(request.argget.all("score", 0))
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
+    r = mdb_web.db.post.update_many(
+        {
+            "_id": {"$in": ids}
+        },
+        {
+            "$set": {
+                "audited": 1,
+                "audit_score": score,
+                "audit_way": "artificial",
+                "audit_user_id": current_user.str_id
+                }
+        }
+    )
     if r.modified_count:
         if score >= get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE"):
 
@@ -100,8 +108,8 @@ def adm_post_delete():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
     pending_delete= int(request.argget.all("pending_delete", 1))
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
     if pending_delete:
         r = mdb_web.db.post.update_many(
             {"_id": {"$in": ids}}, {"$set": {"is_delete": 3}})
@@ -121,8 +129,8 @@ def adm_post_delete():
 def adm_post_restore():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
     r = mdb_web.db.post.update_many({"_id": {"$in": ids},
                                      "is_delete": 3},
                                     {"$set": {"is_delete": 0}})

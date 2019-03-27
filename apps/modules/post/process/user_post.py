@@ -19,7 +19,7 @@ __author__ = "Allen Woo"
 
 def post_issue():
 
-    id = request.argget.all('id')
+    tid = request.argget.all('id')
     title = request.argget.all('title', "").strip()
     content = request.argget.all('content', "")
     content_text = request.argget.all('content_text', "")
@@ -85,10 +85,10 @@ def post_issue():
             issue_way = 0
         # 获取已上传的文章图片
         old_imgs = []
-        if id:
+        if tid:
             # 文章更新
             post = mdb_web.db.post.find_one(
-                {"_id": ObjectId(id), "user_id": current_user.str_id})
+                {"_id": ObjectId(tid), "user_id": current_user.str_id})
             if post["issue_time"]:
                 # 有发布时间，则发布时间不改变
                 issue_time = post["issue_time"]
@@ -168,8 +168,8 @@ def post_issue():
             "cover_url": cover_url
         }
 
-        if id:
-            mdb_web.db.post.update_one({"_id": ObjectId(id), "user_id": current_user.str_id}, {
+        if tid:
+            mdb_web.db.post.update_one({"_id": ObjectId(tid), "user_id": current_user.str_id}, {
                                        "$set": post}, upsert=True)
         else:
             post["comment_num"] = 0
@@ -178,7 +178,7 @@ def post_issue():
             post["user_id"] = current_user.str_id
             post["editor"] = editor
             r = mdb_web.db.post.insert_one(post)
-            id = r.inserted_id
+            tid = r.inserted_id
 
         # 如果已审核, 并且分数高于最高检查违规分, 给用户通知
         if audited and issue_way and audit_score >= get_config(
@@ -190,7 +190,7 @@ def post_issue():
                 title=gettext("[Label:{}]Post allegedly violated").format(audit_label),
                 content={
                     "text": post["brief_content"]},
-                target_id=str(id),
+                target_id=str(tid),
                 target_type="post")
         if issue_way:
             data = {
@@ -217,8 +217,8 @@ def post_delete():
         is_delete = 2
         msg = gettext("Delete the success")
 
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
     r = mdb_web.db.post.update_one({"_id": {"$in": ids},
                                     "user_id": current_user.str_id},
                                    {"$set": {"is_delete": is_delete}})
@@ -238,8 +238,8 @@ def post_restore():
     ids = json_to_pyseq(request.argget.all('ids', []))
     if not isinstance(ids, list):
         ids = json.loads(ids)
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
 
     r = mdb_web.db.post.update_one({"_id": {"$in": ids},
                                     "user_id": current_user.str_id,

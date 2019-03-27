@@ -15,9 +15,9 @@ __author__ = "Allen Woo"
 
 
 def user():
-    id = request.argget.all('id').strip()
+    tid = request.argget.all('id').strip()
     data = {}
-    data["user"] = get_one_user(user_id=str(id))
+    data["user"] = get_one_user(user_id=str(tid))
     if not data["user"]:
         data = {
             'msg': gettext("The specified user is not found"),
@@ -112,13 +112,13 @@ def user_edit():
     用户编辑
     :return:
     """
-    id = request.argget.all('id')
+    tid = request.argget.all('id')
     role_id = request.argget.all('role_id')
     active = str_to_num(request.argget.all('active', 0))
 
     s, r = arg_verify(
         reqargs=[
-            ("id", id), ("role_id", role_id)], required=True)
+            ("id", tid), ("role_id", role_id)], required=True)
     if not s:
         return r
 
@@ -130,7 +130,7 @@ def user_edit():
         'role_id': role_id,
         'active': active,
     }
-    user = get_one_user(user_id=str(id))
+    user = get_one_user(user_id=str(tid))
     if user:
         # 权限检查
         current_user_role = mdb_user.db.role.find_one(
@@ -147,7 +147,7 @@ def user_edit():
                 "http_status": 401}
             return data
 
-    r = update_one_user(user_id=str(id), updata={"$set": update_data})
+    r = update_one_user(user_id=str(tid), updata={"$set": update_data})
     if not r.modified_count:
         data = {
             'msg': gettext("No changes"),
@@ -183,8 +183,8 @@ def user_del():
         r = mdb_user.db.user.update_many(
             {"_id": {"$in": ids}}, {"$set": update_data})
         if r.modified_count:
-            for id in ids:
-                clean_get_one_user_cache(user_id=id)
+            for uid in ids:
+                clean_get_one_user_cache(user_id=uid)
 
             data = {
                 'msg': gettext("Has recovered {} users, {} users can not operate").format(
@@ -222,11 +222,11 @@ def user_restore():
     ids = json_to_pyseq(request.argget.all('ids', []))
     noper = 0
     re_ids = []
-    for id in ids:
+    for uid in ids:
         # 检查是否有权限
         current_user_role = mdb_user.db.role.find_one(
             {"_id": ObjectId(current_user.role_id)})
-        re_user = get_one_user(user_id=str(id))
+        re_user = get_one_user(user_id=str(uid))
         re_user_role = mdb_user.db.role.find_one(
             {"_id": ObjectId(re_user["role_id"])})
         if get_num_digits(
@@ -235,7 +235,7 @@ def user_restore():
             # 没有权限恢复
             noper += 1
             continue
-        re_ids.append(ObjectId(id))
+        re_ids.append(ObjectId(uid))
 
     update_data = {
         'is_delete': 0
@@ -244,8 +244,8 @@ def user_restore():
     r = mdb_user.db.user.update_many(
         {"_id": {"$in": re_ids}}, {"$set": update_data})
     if r.modified_count:
-        for id in re_ids:
-            clean_get_one_user_cache(user_id=id)
+        for uid in re_ids:
+            clean_get_one_user_cache(user_id=uid)
 
         data = {
             'msg': gettext(
@@ -267,11 +267,11 @@ def user_activation():
     ids = json_to_pyseq(request.argget.all('ids', []))
     noper = 0
     ac_ids = []
-    for id in ids:
+    for uid in ids:
         # 检查是否有权限
         current_user_role = mdb_user.db.role.find_one(
             {"_id": ObjectId(current_user.role_id)})
-        re_user = get_one_user(user_id=str(id))
+        re_user = get_one_user(user_id=str(uid))
         re_user_role = mdb_user.db.role.find_one(
             {"_id": ObjectId(re_user["role_id"])})
         if get_num_digits(
@@ -280,7 +280,7 @@ def user_activation():
             # 没有权限恢复
             noper += 1
             continue
-        ac_ids.append(ObjectId(id))
+        ac_ids.append(ObjectId(uid))
 
     update_data = {
         'active': active
@@ -289,8 +289,8 @@ def user_activation():
     r = mdb_user.db.user.update_many(
         {"_id": {"$in": ac_ids}}, {"$set": update_data})
     if r.modified_count:
-        for id in ac_ids:
-            clean_get_one_user_cache(user_id=id)
+        for uid in ac_ids:
+            clean_get_one_user_cache(user_id=uid)
 
         data = {
             'msg': gettext(

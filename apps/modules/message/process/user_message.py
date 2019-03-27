@@ -169,8 +169,8 @@ def update_user_msgs():
                 ("status_update", status_update)], only=["have_read"])
         if not s:
             return r
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
 
     # 标记
     r = mdb_user.db.message.update_many({"_id": {"$in": ids}},
@@ -196,8 +196,8 @@ def delete_user_msgs(is_admin=None):
     """
 
     ids = json_to_pyseq(request.argget.all("ids", []))
-    for i, id in enumerate(ids):
-        ids[i] = ObjectId(id)
+    for i, tid in enumerate(ids):
+        ids[i] = ObjectId(tid)
     q = {"_id": {"$in": ids}}
     if not is_admin:
         q["user_id"] = current_user.str_id

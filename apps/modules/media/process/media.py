@@ -125,16 +125,16 @@ def get_media(user_id=None):
 
     if user_id is None:
         user_id = current_user.str_id
-    id = request.argget.all("id")
+    tid = request.argget.all("id")
 
-    s, r = arg_verify([("id", id)], required=True)
+    s, r = arg_verify([("id", tid)], required=True)
     if not s:
         return r
 
     data = {}
 
     media = mdb_web.db.media.find_one(
-        {"_id": ObjectId(id), "user_id": user_id})
+        {"_id": ObjectId(tid), "user_id": user_id})
     if media:
         media["_id"] = str(media["_id"])
         if "url" in media and media["url"]:
@@ -335,11 +335,11 @@ def del_media(user_id=None):
         user_id = current_user.str_id
     media_ids = json_to_pyseq(request.argget.all("ids", []))
     deleted_count = 0
-    for id in media_ids:
+    for tid in media_ids:
         media = mdb_web.db.media.find_one(
-            {"_id": ObjectId(id), "user_id": user_id})
+            {"_id": ObjectId(tid), "user_id": user_id})
         r = mdb_web.db.media.delete_one(
-            {"_id": ObjectId(id), "user_id": user_id})
+            {"_id": ObjectId(tid), "user_id": user_id})
         # 是否存在上传的文件
         if r.deleted_count and "url" in media and media["url"]:
             file_del(media["url"])
