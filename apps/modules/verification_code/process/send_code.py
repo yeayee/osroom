@@ -15,13 +15,14 @@ from apps.utils.verify.msg_verify_code import create_code_send
 
 __author__ = "Allen Woo"
 
+
 def send_code():
-    '''
+    """
     发送验证码
     :return:
-    '''
+    """
     data = {}
-    account_type = request.argget.all('account_type',"email").strip()
+    account_type = request.argget.all('account_type', "email").strip()
     account = request.argget.all('account')
     exist_account = str_to_num(request.argget.all('exist_account', 0))
     code = request.argget.all('code', '').strip()
@@ -44,18 +45,22 @@ def send_code():
 
         if exist_account:
             if not get_one_user(email=account):
-                data = {'msg': gettext("This account is not registered on this platform"),
-                        'msg_type': "w", "http_status": 400}
+                data = {
+                    'msg': gettext("This account is not registered on this platform"),
+                    'msg_type': "w",
+                    "http_status": 400}
                 return data
 
-        r,s = call_verification(code_url_obj, code)
+        r, s = call_verification(code_url_obj, code)
         if not r:
             return s
 
         data = create_code_send(account=account, account_type=account_type)
 
     elif account_type == "mobile_phone":
-        s, r = arg_verify(reqargs=[(gettext("Telephone number"), account)], required=True)
+        s, r = arg_verify(
+            reqargs=[
+                (gettext("Telephone number"), account)], required=True)
         if not s:
             return r
 
@@ -68,10 +73,11 @@ def send_code():
         if exist_account:
             user_query = {"mphone_num": account}
             if not get_one_user(mphone_num=account):
-                data = {'msg': gettext("This account is not registered on this platform"),
-                        'msg_type': "w", "http_status": 400}
+                data = {
+                    'msg': gettext("This account is not registered on this platform"),
+                    'msg_type': "w",
+                    "http_status": 400}
                 return data
-
 
         r, s = call_verification(code_url_obj, code)
         if not r:
@@ -80,11 +86,12 @@ def send_code():
 
     return data
 
+
 def call_verification(code_url_obj, code):
-    '''
+    """
     记录调用次数,并查看是否有调用权限
     :return:
-    '''
+    """
 
     # 记录调用
     if current_user.is_authenticated:
@@ -97,18 +104,25 @@ def call_verification(code_url_obj, code):
                                            "user_id": user_id,
                                            "time": time.time()})
     # 查找1分钟内本IP的调用次数
-    freq = mdb_sys.db.sys_call_record.find({"type": "api",
-                                            "req_path": request.path,
-                                            "ip": request.remote_addr,
-                                            "user_id": user_id,
-                                            "time": {"$gte": time.time() - 60}}).count(True)
+    freq = mdb_sys.db.sys_call_record.find(
+        {
+            "type": "api",
+            "req_path": request.path,
+            "ip": request.remote_addr,
+            "user_id": user_id,
+            "time": {
+                "$gte": time.time() -
+                60}}).count(True)
 
     if freq:
         if freq > get_config("verify_code", "MAX_NUM_SEND_SAMEIP_PERMIN"):
             # 大于单位时间最大调用次数访问验证
-            data = {'msg': gettext("The system detects that your network is sending verification codes frequently."
-                                   " Please try again later!"),
-                    'msg_type': "w", "http_status": 401}
+            data = {
+                'msg': gettext(
+                    "The system detects that your network is sending verification codes frequently."
+                    " Please try again later!"),
+                'msg_type': "w",
+                "http_status": 401}
             return False, data
 
         elif freq > get_config("verify_code", "MAX_NUM_SEND_SAMEIP_PERMIN_NO_IMGCODE") + 1:
@@ -116,8 +130,10 @@ def call_verification(code_url_obj, code):
             # 检验图片验证码
             r = verify_image_code(code_url_obj, code)
             if not r:
-                data = {'msg': gettext("Image verification code error, email not sent"),
-                        'msg_type': "e", "http_status": 401}
+                data = {
+                    'msg': gettext("Image verification code error, email not sent"),
+                    'msg_type': "e",
+                    "http_status": 401}
                 # 验证错误,开启验证码验证
                 data["open_img_verif_code"] = True
                 data["code"] = create_img_code()
@@ -125,13 +141,15 @@ def call_verification(code_url_obj, code):
 
         elif freq > get_config("verify_code", "MAX_NUM_SEND_SAMEIP_PERMIN_NO_IMGCODE"):
             # 如果刚大于单位时间内，无图片验证码情况下的最大调用次数, 返回图片验证码验证码
-            data = {'msg': gettext("The system detected that your operation is too frequent and"
-                                   " you need to verify the picture verification code"),
-                    'msg_type': "w", "http_status": 401}
+            data = {
+                'msg': gettext(
+                    "The system detected that your operation is too frequent and"
+                    " you need to verify the picture verification code"),
+                'msg_type': "w",
+                "http_status": 401}
 
             data["open_img_verif_code"] = True
             data["code"] = create_img_code()
             return False, data
 
     return True, ""
-

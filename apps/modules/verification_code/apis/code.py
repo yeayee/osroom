@@ -10,8 +10,7 @@ __author__ = 'Allen Woo'
 @api.route('/vercode/send', methods=['POST'])
 @permission_required(use_default=False)
 def api_send_code():
-
-    '''
+    """
     POST:
         手机或邮箱验证码发送
         account_type:<str>, "email" or "mobile_phone"
@@ -29,7 +28,7 @@ def api_send_code():
         注意:如果你并不想使用图片验证码来防止频繁调用,请在管理的设置MAX_NUM_SEND_SAMEIP_PERMIN_NO_IMGCODE的值大于
         MAX_NUM_SEND_SAMEIP_PERMIN
         :return:
-    '''
+    """
 
     data = send_code()
     return response_format(data)
@@ -38,12 +37,11 @@ def api_send_code():
 @api.route('/vercode/image', methods=['GET'])
 @permission_required(use_default=False)
 def api_get_image_code():
-
-    '''
+    """
     GET:
         获取图片验证码
         :return: 验证码path object
-    '''
+    """
 
     data = get_code()
     return response_format(data)

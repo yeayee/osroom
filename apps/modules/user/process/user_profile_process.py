@@ -10,23 +10,23 @@ __author__ = "Allen Woo"
 # 查询比较多, 加上缓存
 @cache.cached(key_base64=False, db_type="mongodb")
 def get_user_public_info(**kwargs):
-    '''
+    """
     获取用户公开信息
     注意, 函数中不要写默认参数，使用kwargs, 方便更新用户数据时清理缓存
     :param user_id:
     :param is_basic: 默认False, 为Ture时只返回最基础的数据
     :param determine_following:判断当前登录用户是否有关注该用户, 前提是is_basic参数为False
     :return:
-    '''
+    """
     user_id = kwargs.get("user_id")
     is_basic = kwargs.get("is_basic", 0)
     determine_following = kwargs.get("determine_following", True)
-    user = mdb_user.db.user.find_one({"_id":ObjectId(user_id)},
-                                     {"username":1,
-                                      "custom_domain":1,
-                                      "avatar_url":1,
-                                      "introduction":1,
-                                      "gender":1})
+    user = mdb_user.db.user.find_one({"_id": ObjectId(user_id)},
+                                     {"username": 1,
+                                      "custom_domain": 1,
+                                      "avatar_url": 1,
+                                      "introduction": 1,
+                                      "gender": 1})
     if not user:
         return False, gettext("The specified user is not found")
     else:
@@ -34,50 +34,56 @@ def get_user_public_info(**kwargs):
         user["custom_domain"] = str(user["custom_domain"])
         user["avatar_url"]["url"] = get_avatar_url(user["avatar_url"])
         if not is_basic:
-            user["follow"] = get_user_follow_data(user["_id"], determine_following=determine_following)
+            user["follow"] = get_user_follow_data(
+                user["_id"], determine_following=determine_following)
         return True, user
 
 # 查询比较多, 加上缓存
-@cache.cached(key_base64=False,db_type="mongodb")
+@cache.cached(key_base64=False, db_type="mongodb")
 def get_user_all_info(**kwargs):
-    '''
+    """
     获取用户全部信息, 密码除外
     注意, 函数中不要写默认参数，使用kwargs, 方便更新用户数据时清理缓存
     :param user_id:
     :param is_basic: 默认False, 为Ture时只返回最基础的数据
     :param determine_following:判断当前登录用户是否有关注该用户, 前提是is_basic参数为False
     :return:
-    '''
+    """
 
     user_id = kwargs.get("user_id")
     is_basic = kwargs.get("is_basic", 0)
     determine_following = kwargs.get("determine_following", True)
 
-    user = mdb_user.db.user.find_one({"_id": ObjectId(user_id)}, {"password": 0})
+    user = mdb_user.db.user.find_one(
+        {"_id": ObjectId(user_id)}, {"password": 0})
     if not user:
         return False, gettext("The specified user is not found")
     else:
         user["_id"] = str(user["_id"])
         user["avatar_url"]["url"] = get_avatar_url(user["avatar_url"])
         if not is_basic:
-            user["follow"] = get_user_follow_data(user["_id"], determine_following=determine_following)
+            user["follow"] = get_user_follow_data(
+                user["_id"], determine_following=determine_following)
             # 登录日志
             user["user_login_log"] = []
-            user_login_log = mdb_user.db.user_login_log.find_one({"user_id": user["_id"]}, {"user_id": 0})
+            user_login_log = mdb_user.db.user_login_log.find_one(
+                {"user_id": user["_id"]}, {"user_id": 0})
             user["user_login_log"] = []
             if user_login_log:
                 user_login_log["_id"] = str(user_login_log["_id"])
                 user["user_login_log"] = user_login_log
         return True, user
 
+
 def get_user_follow_data(user_id, determine_following=True):
-    '''
+    """
     获取用户关注数据
     :param user_id:
     :param determine_following:判断当前登录用户是否有关注该用户
     :return:
-    '''
-    follow = {"fans_num": mdb_user.db.user_follow.find({"follow": user_id}).count(True)}
+    """
+    follow = {"fans_num": mdb_user.db.user_follow.find(
+        {"follow": user_id}).count(True)}
     user_follow = mdb_user.db.user_follow.find_one({"user_id": user_id})
     if user_follow:
         follow["follow_user_num"] = len(user_follow["follow"])
@@ -91,14 +97,21 @@ def get_user_follow_data(user_id, determine_following=True):
             follow["current_following"] = False
     return follow
 
-def delete_user_info_cache(user_id):
 
-    '''
+def delete_user_info_cache(user_id):
+    """
     清理user缓存
     :param user_id:
     :return:
-    '''
+    """
     # 清理user信息数据缓存
-    cache.delete_autokey(fun="get_user_public_info", user_id=user_id, db_type="mongodb", key_regex=True)
-    cache.delete_autokey(fun="get_user_all_info", user_id=user_id, db_type="mongodb", key_regex=True)
-
+    cache.delete_autokey(
+        fun="get_user_public_info",
+        user_id=user_id,
+        db_type="mongodb",
+        key_regex=True)
+    cache.delete_autokey(
+        fun="get_user_all_info",
+        user_id=user_id,
+        db_type="mongodb",
+        key_regex=True)

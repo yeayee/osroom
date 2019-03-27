@@ -9,8 +9,9 @@ from werkzeug.exceptions import Unauthorized
 
 __author__ = "Allen Woo"
 
+
 def osr_login_required(func):
-    '''
+    """
     If you decorate a view with this, it will ensure that the current user is
     logged in and authenticated before calling the actual view. (If they are
     not, it calls the :attr:`LoginManager.unauthorized` callback.) For
@@ -41,7 +42,7 @@ def osr_login_required(func):
 
     :param func: The view function to decorate.
     :type func: function
-    '''
+    """
     @wraps(func)
     def decorated_view(*args, **kwargs):
         if request.method in EXEMPT_METHODS:
@@ -50,11 +51,17 @@ def osr_login_required(func):
             return func(*args, **kwargs)
         elif not current_user.is_authenticated:
 
-            response = current_app.make_response(gettext("Anonymous users can not access '{}', need to log in").format(request.path))
-            raise LoginReqError(response.get_data(as_text=True), response=response)
+            response = current_app.make_response(
+                gettext("Anonymous users can not access '{}', need to log in").format(
+                    request.path))
+            raise LoginReqError(
+                response.get_data(
+                    as_text=True),
+                response=response)
 
         return func(*args, **kwargs)
     return decorated_view
+
 
 class LoginReqError(Unauthorized):
     """

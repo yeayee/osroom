@@ -3,6 +3,7 @@ from lxml import etree
 
 __author__ = "Allen Woo"
 
+
 def richtext_extract_img(richtext=""):
 
     # 获取富文本中使用的图片

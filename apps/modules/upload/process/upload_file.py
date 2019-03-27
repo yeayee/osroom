@@ -9,16 +9,24 @@ from apps.app import mdb_web
 
 __author__ = "Allen Woo"
 
-def file_upload(return_url_key="urls", return_state_key="state", return_success="success",
-                return_error="error", save_temporary_url=False, file_type="image", return_key=False, prefix=""):
+
+def file_upload(
+        return_url_key="urls",
+        return_state_key="state",
+        return_success="success",
+        return_error="error",
+        save_temporary_url=False,
+        file_type="image",
+        return_key=False,
+        prefix=""):
 
     try:
         return_success = int(return_success)
-    except:
+    except BaseException:
         pass
     try:
         return_error = int(return_error)
-    except:
+    except BaseException:
         pass
     if request.files:
         files = request.files.values()
@@ -30,14 +38,14 @@ def file_upload(return_url_key="urls", return_state_key="state", return_success=
                 if save_temporary_url:
                     for key in r:
                         if key:
-                            r1 = mdb_web.db.tempfile.update_one({"type":file_type,
-                                                             "user_id":current_user.str_id},
-                                                            {"$addToSet":{"paths":key}},
-                                                            upsert=True)
+                            r1 = mdb_web.db.tempfile.update_one({"type": file_type,
+                                                                 "user_id": current_user.str_id},
+                                                                {"$addToSet": {"paths": key}},
+                                                                upsert=True)
                             if not r1.modified_count:
-                                mdb_web.db.tempfile.insert_one({"type":file_type,
-                                                            "user_id":current_user.str_id,
-                                                            "paths":[key]})
+                                mdb_web.db.tempfile.insert_one({"type": file_type,
+                                                                "user_id": current_user.str_id,
+                                                                "paths": [key]})
                             urls.append(get_file_url(key))
                 else:
                     for key in r:
@@ -59,14 +67,20 @@ def file_upload(return_url_key="urls", return_state_key="state", return_success=
 
             else:
                 data = {
-                        return_state_key:return_error,
-                        "msg":gettext("Get file error"),
-                        "msg_type":"e", "http_status":400
+                    return_state_key: return_error,
+                    "msg": gettext("Get file error"),
+                    "msg_type": "e", "http_status": 400
                 }
         else:
-            data = {return_state_key:return_error,"msg":gettext("Get file error"),
-                    "msg_type":"e", "http_status":400}
+            data = {
+                return_state_key: return_error,
+                "msg": gettext("Get file error"),
+                "msg_type": "e",
+                "http_status": 400}
     else:
-        data = {return_state_key:return_error,"msg":gettext("No file submitted"),
-                "msg_type":"e", "http_status":400}
+        data = {
+            return_state_key: return_error,
+            "msg": gettext("No file submitted"),
+            "msg_type": "e",
+            "http_status": 400}
     return data

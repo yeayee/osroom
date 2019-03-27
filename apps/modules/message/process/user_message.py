@@ -11,9 +11,18 @@ from apps.utils.paging.paging import datas_paging
 
 __author__ = "Allen Woo"
 
-def insert_user_msg(user_id, ctype, content, label=None, title=None, link=None, target_id=None, target_type=None, is_sys_msg=False):
 
-    '''
+def insert_user_msg(
+        user_id,
+        ctype,
+        content,
+        label=None,
+        title=None,
+        link=None,
+        target_id=None,
+        target_type=None,
+        is_sys_msg=False):
+    """
     插入消息
     :param user_id: 可以为数组
     :param ctype:"private_letter", "notice"
@@ -21,20 +30,23 @@ def insert_user_msg(user_id, ctype, content, label=None, title=None, link=None, 
     :param content:
     :param link:
     :return:
-    '''
-    s,r = arg_verify(reqargs=[("ctype", ctype)], only=["private_letter", "notice"])
+    """
+    s, r = arg_verify(
+        reqargs=[
+            ("ctype", ctype)], only=[
+            "private_letter", "notice"])
     if not s:
         assert Exception("ctype can only be 'private_letter' or 'notice'")
     msg = {
         "type": ctype,
-        "label":label,
-        "target_id":target_id,
-        "target_type":target_type,
+        "label": label,
+        "target_id": target_id,
+        "target_type": target_type,
         "title": title,
         "content": content,
         "link": link,
         "time": time.time(),
-        "is_sys_msg":is_sys_msg
+        "is_sys_msg": is_sys_msg
     }
     if isinstance(user_id, list):
         user_id = set([str(uid) for uid in user_id])
@@ -50,14 +62,16 @@ def insert_user_msg(user_id, ctype, content, label=None, title=None, link=None, 
 
 
 def get_user_msgs(is_admin=None):
-
-    '''
+    """
     api获取消息
     :return:
-    '''
+    """
 
     data = {}
-    ctype = json_to_pyseq(request.argget.all("type", ["notice", "private_letter"]))
+    ctype = json_to_pyseq(
+        request.argget.all(
+            "type", [
+                "notice", "private_letter"]))
     label = json_to_pyseq(request.argget.all("label"))
     pre = str_to_num(request.argget.all("pre", 10))
     page = str_to_num(request.argget.all("page", 1))
@@ -76,48 +90,52 @@ def get_user_msgs(is_admin=None):
         else:
             q["is_sys_msg"] = False
         if keyword:
-            keyword = {"$regex":keyword}
+            keyword = {"$regex": keyword}
             q["$or"] = [
                 {"title": keyword},
                 {"link": keyword},
-                {"content":keyword}
+                {"content": keyword}
             ]
     if label:
-        q["label"] = {"$in":label}
+        q["label"] = {"$in": label}
 
     msgs = mdb_user.db.message.find(q)
     data_cnt = msgs.count(True)
     msgs = list(msgs.sort([("time", -1)]).skip(pre * (page - 1)).limit(pre))
     ids = [msg["_id"] for msg in msgs]
     data["msgs"] = objid_to_str(msgs)
-    data["msgs"] = datas_paging(pre=pre, page_num=page, data_cnt=data_cnt, datas=data["msgs"])
+    data["msgs"] = datas_paging(
+        pre=pre,
+        page_num=page,
+        data_cnt=data_cnt,
+        datas=data["msgs"])
 
     if not is_admin:
         # user_id为真,表示非管理端获取消息. 标记为已通知
-        q = {"user_id": current_user.str_id, "status": {"$ne":"have_read"}}
+        q = {"user_id": current_user.str_id, "status": {"$ne": "have_read"}}
         data["msgs"]["more"] = get_unread_num(q)
-        mdb_user.db.message.update_many(q, {"$set":{"status":"notified"}})
+        mdb_user.db.message.update_many(q, {"$set": {"status": "notified"}})
         if status_update:
-            mdb_user.db.message.update_many({"_id": {"$in": ids}},
-                                            {"$set": {"status": status_update}})
+            mdb_user.db.message.update_many(
+                {"_id": {"$in": ids}}, {"$set": {"status": status_update}})
     return data
 
-def get_unread_num(q):
 
-    '''
+def get_unread_num(q):
+    """
     获取各类型未读消息个数
     :return:
-    '''
+    """
     r = mdb_user.db.message.aggregate([
-        {"$match":q},
-        {"$group":{"_id":"$label", "total":{"$sum":1}}},
-        {"$project" : {"total":"$total"}}
+        {"$match": q},
+        {"$group": {"_id": "$label", "total": {"$sum": 1}}},
+        {"$project": {"total": "$total"}}
     ],
-    allowDiskUse=True,
+        allowDiskUse=True,
     )
     data = {}
     for result in r:
-        data[result['_id']] = {"unread":result['total']}
+        data[result['_id']] = {"unread": result['total']}
     return data
 
     # map = """
@@ -139,15 +157,16 @@ def get_unread_num(q):
 
 
 def update_user_msgs():
-
-    '''
+    """
     api更新消息
     :return:
-    '''
+    """
     ids = json_to_pyseq(request.argget.all("ids", []))
     status_update = request.argget.all("status_update")
     if status_update:
-        s, r = arg_verify(reqargs=[("status_update", status_update)], only=["have_read"])
+        s, r = arg_verify(
+            reqargs=[
+                ("status_update", status_update)], only=["have_read"])
         if not s:
             return r
     for i in range(0, len(ids)):
@@ -157,18 +176,24 @@ def update_user_msgs():
     r = mdb_user.db.message.update_many({"_id": {"$in": ids}},
                                         {"$set": {"status": status_update}})
     if r.modified_count:
-        data = {'msg':gettext("Update succeed"), 'msg_type':"s", "http_status":201}
+        data = {
+            'msg': gettext("Update succeed"),
+            'msg_type': "s",
+            "http_status": 201}
     else:
-        data = {'msg':gettext("No changes"), 'msg_type':"w", "http_status":201}
+        data = {
+            'msg': gettext("No changes"),
+            'msg_type': "w",
+            "http_status": 201}
     return data
 
-def delete_user_msgs(is_admin=None):
 
-    '''
+def delete_user_msgs(is_admin=None):
+    """
     删除消息
     is_admin:为True 的话, 只能删除系统发出的消息
     :return:
-    '''
+    """
 
     ids = json_to_pyseq(request.argget.all("ids", []))
     for i in range(0, len(ids)):
@@ -181,7 +206,13 @@ def delete_user_msgs(is_admin=None):
 
     r = mdb_user.db.message.delete_many(q)
     if r.deleted_count:
-        data = {"msg":gettext("Successfully deleted"), "msg_type":"s", "http_status":204}
+        data = {
+            "msg": gettext("Successfully deleted"),
+            "msg_type": "s",
+            "http_status": 204}
     else:
-        data = {"msg": gettext("Failed to delete"), "msg_type": "w", "http_status": 400}
+        data = {
+            "msg": gettext("Failed to delete"),
+            "msg_type": "w",
+            "http_status": 400}
     return data

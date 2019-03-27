@@ -2,6 +2,7 @@
 # -*-coding:utf-8-*-
 __author__ = "Allen Woo"
 
+
 def get_num_digits(num):
     n = 0
     while True:

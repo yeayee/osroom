@@ -7,10 +7,12 @@ current_path = os.path.abspath(os.path.dirname(__file__))
 project_path = os.path.abspath("{}/..".format(current_path))
 sys.path.append(project_path)
 from tools.usage import usage_help
+from tools.usage import usage_help
 
 __author__ = 'Allen Woo'
 
-class TempTool():
+
+class TempTool:
 
     def main(self):
 
@@ -31,7 +33,6 @@ class TempTool():
 
     def repair(self):
 
-
         with open(self.path) as rf:
             lines = rf.readlines()
 
@@ -42,7 +43,7 @@ class TempTool():
             if not line:
                 continue
             if line.startswith("#~ msgid"):
-                if msgstr != None:
+                if msgstr is not None:
                     old_datas[msgid] = msgstr
                 msgid = line.lstrip("#~ ")
                 msgstr = None
@@ -50,7 +51,7 @@ class TempTool():
                 msgstr = line.lstrip("#~ ")
             else:
                 line = line.lstrip("#~ ")
-                if msgid and msgstr==None:
+                if msgid and msgstr is None:
                     msgid = "{}{}".format(msgid, line)
                 elif msgstr:
                     msgstr = "{}{}".format(msgstr, line)
@@ -64,10 +65,10 @@ class TempTool():
                 continue
 
             if line.startswith("#: "):
-                if filepath and msgstr != None:
+                if filepath and msgstr is not None:
                     if msgid in old_datas:
                         msgstr = old_datas[msgid]
-                    datas[msgid] = {"msgstr":msgstr, "filepath":filepath}
+                    datas[msgid] = {"msgstr": msgstr, "filepath": filepath}
                     filepath = ""
                 filepath = "{}{}".format(filepath, line)
                 msgid = None
@@ -79,7 +80,7 @@ class TempTool():
             elif line.startswith("msgstr"):
                 msgstr = line
             else:
-                if msgid and msgstr == None:
+                if msgid and msgstr is None:
                     msgid = "{}{}".format(msgid, line)
                 elif msgstr:
                     msgstr = "{}{}".format(msgstr, line)
@@ -87,10 +88,11 @@ class TempTool():
         new_po = "{}.new".format(self.path)
         with open(new_po, "w") as wf:
 
-            for k,v in datas.items():
+            for k, v in datas.items():
                 wf.write(v["filepath"])
                 wf.write(k)
                 wf.write(v["msgstr"])
+
 
 if __name__ == '__main__':
 

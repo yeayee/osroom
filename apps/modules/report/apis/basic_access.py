@@ -8,20 +8,19 @@ from apps.core.flask.response import response_format
 from apps.modules.report.process.basic_access import get_post_access, get_comment_access, get_user_access, get_message, \
     get_plugin, get_media, get_inform_data
 from apps.utils.format.obj_format import json_to_pyseq
- 
+
 
 __author__ = "Allen Woo"
 @api.route('/admin/report/basic', methods=['GET'])
 @osr_login_required
 @permission_required()
 def api_basic_report():
-
-    '''
+    """
     GET:
         获取网站的最基本报表数据
         project:<array>,默认全部,可以是post, comment, user, message, plugin, media, inform
 
-    '''
+    """
     project = json_to_pyseq(request.argget.all('project', []))
 
     data = {}

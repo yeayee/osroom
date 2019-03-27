@@ -9,11 +9,12 @@ from apps.modules.message.process.user_message import get_user_msgs, update_user
 
 __author__ = "Allen Woo"
 
-@api.route('/user/message', methods=['GET','PUT', 'DELETE'])
+
+@api.route('/user/message', methods=['GET', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_user_message():
-    '''
+    """
     GET:
         获取用户的消息
         type:<array>,消息类型, 比如["notice", "private_letter"]
@@ -29,7 +30,7 @@ def api_user_message():
         删除消息
         ids:<array>,消息id
     :return:
-    '''
+    """
 
     if request.c_method == "GET":
         data = get_user_msgs()
@@ -38,5 +39,5 @@ def api_user_message():
     elif request.c_method == "DELETE":
         data = delete_user_msgs()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

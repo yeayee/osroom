@@ -9,11 +9,12 @@ from apps.modules.permission.process.url_permission import get_urls, get_url, up
 
 __author__ = "Allen Woo"
 
-@api.route('/admin/url/permission', methods=['GET','POST', 'PUT', 'DELETE'])
+
+@api.route('/admin/url/permission', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required()
 def api_url_permission():
-    '''
+    """
     GET:
         获取系统的web url
         type:<array>,类型, 可选api, static, page
@@ -34,7 +35,7 @@ def api_url_permission():
         删除手动添加的页面路由
         ids:<array>
     :return:
-    '''
+    """
 
     if request.c_method == "GET":
         if request.argget.all("id"):
@@ -48,5 +49,5 @@ def api_url_permission():
     elif request.c_method == "DELETE":
         data = delete_url()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

@@ -9,12 +9,18 @@ from apps.core.flask.response import response_format
 from apps.modules.theme_setting.process.display_setting import add_display_setting, get_display_setting, edit_display_setting, del_display_setting, get_display_settings
 __author__ = "Allen Woo"
 
-@api.route('/admin/theme/display-setting', methods=['GET','POST',"PUT","DELETE"])
+
+@api.route(
+    '/admin/theme/display-setting',
+    methods=[
+        'GET',
+        'POST',
+        "PUT",
+        "DELETE"])
 @osr_login_required
 @permission_required()
 def api_add_display_setting():
-
-    '''
+    """
     GET
         1.获取多个display信息
         file_type:<str>, 文件类型,可选"image", "video", "audio", "other"
@@ -91,7 +97,7 @@ def api_add_display_setting():
         删除display文件
         ids:<array>,要删除的文件的id
         :return:
-    '''
+    """
     if request.c_method == "GET":
         if request.argget.all("id"):
             data = get_display_setting()

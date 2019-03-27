@@ -15,15 +15,14 @@ __author__ = "Allen Woo"
 @osr_login_required
 @permission_required()
 def api_post_access():
-
-    '''
+    """
     GET:
         获取post数据统计
         days:<int>
 
-    '''
+    """
     if request.c_method == "GET":
         data = post_access()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

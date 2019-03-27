@@ -6,13 +6,15 @@ import regex as re
 from pymongo.cursor import Cursor
 
 __author__ = "Allen Woo"
+
+
 def objid_to_str(datas, fields=["_id"]):
-    '''
+    """
     mongodb ObjectId to str
     :param datas:
     :param field:
     :return:
-    '''
+    """
     if isinstance(datas, (list, Cursor)):
         _datas = []
         for data in datas:
@@ -28,12 +30,13 @@ def objid_to_str(datas, fields=["_id"]):
 
         return datas
 
+
 def json_to_pyseq(tjson):
-    '''
+    """
     json to python sequencer
     :param json:
     :return:
-    '''
+    """
     if tjson in [None, "None"]:
         return None
     elif not isinstance(tjson, (list, dict, tuple)) and tjson != "":
@@ -41,23 +44,24 @@ def json_to_pyseq(tjson):
             return tjson
         try:
             tjson = json.loads(tjson)
-        except:
+        except BaseException:
             tjson = eval(tjson)
         else:
             if isinstance(tjson, str):
                 tjson = eval(tjson)
     return tjson
 
+
 def str_to_num(string, type=int):
-    '''
+    """
     字符串转数字
     :param string: 字符串
     :param type: 转变方法(obj)
     :return:
-    '''
+    """
     try:
         return type(string)
-    except:
+    except BaseException:
         if string:
             return 1
         elif not string or string.lower() == "false":
@@ -65,16 +69,16 @@ def str_to_num(string, type=int):
 
 
 class ConfDictToClass(object):
-    def __init__(self,config, key=None):
+    def __init__(self, config, key=None):
         if not isinstance(config, dict):
             print("[ERROR]:Must be a dictionary")
             sys.exit(-1)
         if key == "value":
-            for k,v in config.items():
+            for k, v in config.items():
                 if not re.search(r"^__.*__$", k):
                     self.__dict__[k] = v["value"]
         else:
-            for k,v in config.items():
+            for k, v in config.items():
                 self.__dict__[k] = v
 
     # def __setattr__(self, name, value):

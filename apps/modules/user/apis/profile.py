@@ -11,22 +11,22 @@ __author__ = "Allen Woo"
 @api.route('/account/profile/public', methods=['GET'])
 @permission_required(use_default=False)
 def user_public():
-    '''
+    """
     GET:
         获取用户公开信息
         user_id:<str>
         is_basic:<int>, 0或1,默认1. 为１时只获取最基本的用户信息
         :return:
-    '''
+    """
     data = public_profile()
     return response_format(data)
+
 
 @api.route('/account/basic', methods=['PUT'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_account_basic():
-
-    '''
+    """
     用户基础设置
     PUT:
         编辑用户基础设置
@@ -34,18 +34,17 @@ def api_account_basic():
         custom_domain:<str>, 个性域名
         editor:<str>, 'rich_text' or 'markdown' 如果你有多个文本编辑器的话，可以加入这个选项
     :return:
-    '''
+    """
 
     data = user_basic_edit()
     return response_format(data)
 
 
-@api.route('/account/profile', methods=['GET','PUT'])
+@api.route('/account/profile', methods=['GET', 'PUT'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_account_profile():
-
-    '''
+    """
     用户资料
     GET:
         获取当前登录用户的信息
@@ -59,7 +58,7 @@ def api_account_profile():
         info:<str>
 
     :return:
-    '''
+    """
 
     if request.c_method == "GET":
 
@@ -67,5 +66,5 @@ def api_account_profile():
     elif request.c_method == "PUT":
         data = profile_update()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

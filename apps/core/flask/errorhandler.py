@@ -16,11 +16,12 @@ from apps.modules.global_data.process.global_data import get_global_site_data
 
 __author__ = "Allen Woo"
 
-class ErrorHandler():
 
-    '''
+class ErrorHandler:
+
+    """
     配置各种异常状态返回数据 http status
-    '''
+    """
 
     def __init__(self, app=None):
         if app:
@@ -42,32 +43,55 @@ class ErrorHandler():
 
         @app.errorhandler(SecretTokenError)
         def handle_rest_token_error(e):
-            data = {"http_status": e.code, "msg": e.description, "msg_type": "e", "error_id":40101}
+            data = {
+                "http_status": e.code,
+                "msg": e.description,
+                "msg_type": "e",
+                "error_id": 40101}
             return response_format(data)
 
         @app.errorhandler(AccessTokenError)
         def handle_rest_token_error(e):
-            data = {"http_status": e.code, "msg": e.description, "msg_type": "e", "error_id": 40102}
+            data = {
+                "http_status": e.code,
+                "msg": e.description,
+                "msg_type": "e",
+                "error_id": 40102}
             return response_format(data)
 
         @app.errorhandler(CSRFError)
         def handle_csrf_error(e):
-            data = {"http_status": e.code, "msg": e.description, "msg_type": "e", "error_id": 40103}
+            data = {
+                "http_status": e.code,
+                "msg": e.description,
+                "msg_type": "e",
+                "error_id": 40103}
             return response_format(data)
 
         @app.errorhandler(OsrTokenError)
         def handle_osr_token_error(e):
-            data = {"http_status": e.code, "msg": e.description, "msg_type": "e", "error_id":40104,
-                    "help":gettext("Please add the 'OSR-RestToken' or 'X-CSRFToken' request header,"
-                        " the specific use please refer to the osroom system documentation:"
-                        " http://osroom.com")}
+            data = {
+                "http_status": e.code,
+                "msg": e.description,
+                "msg_type": "e",
+                "error_id": 40104,
+                "help": gettext(
+                    "Please add the 'OSR-RestToken' or 'X-CSRFToken' request header,"
+                    " the specific use please refer to the osroom system documentation:"
+                    " http://osroom.com")}
             return response_format(data)
 
         @app.errorhandler(LoginReqError)
         def handle_login_error(e):
-            data = {"http_status": e.code, "msg":gettext("Not logged in"), "error_msg": e.description, "msg_type": "e",
-                    "to_url":get_config("login_manager", "LOGIN_VIEW"),
-                    "error_id": 40105}
+            data = {
+                "http_status": e.code,
+                "msg": gettext("Not logged in"),
+                "error_msg": e.description,
+                "msg_type": "e",
+                "to_url": get_config(
+                    "login_manager",
+                    "LOGIN_VIEW"),
+                "error_id": 40105}
             if request.headers.get('OSR-RestToken'):
                 data["to_url"] = get_config("login_manager", "LOGIN_VIEW")
 
@@ -80,15 +104,16 @@ class ErrorHandler():
             else:
                 return redirect(data["to_url"])
 
+
 def internal_server_error(e):
-    '''
+    """
     处理服务器错误
     :param e:
     :return:
-    '''
+    """
     try:
         code = e.code
-    except:
+    except BaseException:
         code = 500
     msg_type = "w"
     msg = gettext("An error occurred. Please contact the administrator")
@@ -102,8 +127,9 @@ def internal_server_error(e):
         msg = gettext("Server error")
         msg_type = "e"
 
-    elif isinstance(code, int) and code//500 == 1:
-        msg = gettext("Server error, please check whether the third-party plug-in is normal")
+    elif isinstance(code, int) and code // 500 == 1:
+        msg = gettext(
+            "Server error, please check whether the third-party plug-in is normal")
         msg_type = "e"
 
     data = {"http_status": code, "request_id": g.weblog_id,
@@ -112,12 +138,16 @@ def internal_server_error(e):
     if request.path.startswith(api.url_prefix):
         return response_format(data)
     else:
-        g.site_global = dict(g.site_global, **get_global_site_data(req_type="view"))
-        path = "{}/pages/{}.html".format(get_config("theme", "CURRENT_THEME_NAME"), code)
-        absolute_path = os.path.abspath("{}/{}".format(theme_view.template_folder, path))
+        g.site_global = dict(g.site_global,
+                             **get_global_site_data(req_type="view"))
+        path = "{}/pages/{}.html".format(get_config("theme",
+                                                    "CURRENT_THEME_NAME"), code)
+        absolute_path = os.path.abspath(
+            "{}/{}".format(theme_view.template_folder, path))
         if not os.path.isfile(absolute_path):
             # 主题不存在<e.code>错误页面(如404页面),使用系统自带的页面
-            path = "{}/module/exception/{}.html".format(admin_view.template_folder, code)
+            path = "{}/module/exception/{}.html".format(
+                admin_view.template_folder, code)
             return render_absolute_path_template(path, data=data), 404
 
         return render_template(path, data=data), code

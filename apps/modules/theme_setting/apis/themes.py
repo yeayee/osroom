@@ -11,11 +11,12 @@ from apps.modules.theme_setting.process.themes import get_themes, switch_theme, 
 
 __author__ = "Allen Woo"
 
-@api.route('/admin/theme', methods=['GET','POST', "PUT", "DELETE"])
+
+@api.route('/admin/theme', methods=['GET', 'POST', "PUT", "DELETE"])
 @osr_login_required
 @permission_required()
 def api_get_themes():
-    '''
+    """
     主题管理
     GET:
         获取当前所有主题
@@ -29,7 +30,7 @@ def api_get_themes():
         删除主题
         theme_name:<str>, 主题名称
     :return:
-    '''
+    """
 
     if request.c_method == "GET":
         if request.argget.all('name'):
@@ -45,5 +46,5 @@ def api_get_themes():
     elif request.c_method == "DELETE":
         data = delete_theme()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

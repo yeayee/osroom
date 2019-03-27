@@ -15,17 +15,17 @@ from apps.utils.text_parsing.text_parsing import richtext_extract_img
 
 __author__ = "Allen Woo"
 
-def send_msg():
 
-    '''
+def send_msg():
+    """
     发送消息
     :return:
-    '''
+    """
 
     title = request.argget.all("title")
     content = request.argget.all("content")
     content_html = request.argget.all("content_html")
-    send_type = json_to_pyseq(request.argget.all("send_type",[]))
+    send_type = json_to_pyseq(request.argget.all("send_type", []))
     username = json_to_pyseq(request.argget.all("username", []))
 
     s, r = arg_verify([(gettext(gettext("title")), title),
@@ -36,13 +36,21 @@ def send_msg():
     if not s:
         return r
 
-    data = {"msg":"", "msg_type":"s"}
-    query = {"is_delete": {"$in": [False, 0, ""]}, "active": {"$in": [True, 1]}}
+    data = {"msg": "", "msg_type": "s"}
+    query = {
+        "is_delete": {
+            "$in": [
+                False, 0, ""]}, "active": {
+            "$in": [
+                True, 1]}}
     if len(username) > 1 or username[0].lower() != "all":
         # 不是发给全部用户
         query["username"] = {"$in": username}
 
-    users = list(mdb_user.db.user.find(query, {"_id": 1, "email": 1, "mphone_num":1}))
+    users = list(
+        mdb_user.db.user.find(
+            query, {
+                "_id": 1, "email": 1, "mphone_num": 1}))
 
     # 清理消息中的临时img
     if "email" not in send_type:
@@ -56,19 +64,27 @@ def send_msg():
                           keey_file=srcs)
     if imgs:
         # 保存邮件中上传的图片记录, 以便之后删除
-        mdb_sys.db.sys_msg_img.insert({"time":time.time(), "imgs":imgs,
-                                         "send_user_id":current_user.str_id,
-                                         "title":title})
+        mdb_sys.db.sys_msg_img.insert({"time": time.time(), "imgs": imgs,
+                                       "send_user_id": current_user.str_id,
+                                       "title": title})
     for send_t in send_type:
         if send_t == "on_site":
             for user in users:
-                insert_user_msg(user_id=user["_id"], ctype="notice", label="sys_notice",
-                                title=title, content={"text":content}, is_sys_msg=True)
+                insert_user_msg(
+                    user_id=user["_id"],
+                    ctype="notice",
+                    label="sys_notice",
+                    title=title,
+                    content={
+                        "text": content},
+                    is_sys_msg=True)
 
             if users:
-                data["msg"] = "{}. {}".format(data["msg"], gettext("Station news success"))
+                data["msg"] = "{}. {}".format(
+                    data["msg"], gettext("Station news success"))
             else:
-                data["msg"] = "{}. {}".format(data["msg"], gettext("No relevant user"))
+                data["msg"] = "{}. {}".format(
+                    data["msg"], gettext("No relevant user"))
                 data["msg_type"] = "w"
 
         elif send_t == "email":
@@ -79,9 +95,11 @@ def send_msg():
                 send_email(subject=title,
                            recipients=to_emails,
                            html_msg=content_html)
-                data["msg"] = "{}. {}".format(data["msg"], gettext("Mail message is being sent"))
+                data["msg"] = "{}. {}".format(
+                    data["msg"], gettext("Mail message is being sent"))
             else:
-                data["msg"] = "{}. {}".format(data["msg"], gettext("There is no such email address user"))
+                data["msg"] = "{}. {}".format(
+                    data["msg"], gettext("There is no such email address user"))
                 data["msg_type"] = "w"
 
         elif send_t == "sms":
@@ -96,10 +114,10 @@ def send_msg():
 
                 data["msg"] = "{}. {}".format(data["msg"], gettext("SMS sent"))
             else:
-                data["msg"] = "{}. {}".format(data["msg"], gettext("No user mobile phone number was obtained"))
+                data["msg"] = "{}. {}".format(
+                    data["msg"], gettext("No user mobile phone number was obtained"))
                 data["msg_type"] = "w"
 
-    data["msg"]= data["msg"].strip(". ")
+    data["msg"] = data["msg"].strip(". ")
     data["http_status"] = 201
     return data
-

@@ -9,25 +9,28 @@ from apps.app import mdb_sys
 
 __author__ = "Allen Woo"
 
+
 def sys_log():
 
     name = request.argget.all('name')
     ip = request.argget.all('ip')
     page = int(request.argget.all('page', 1))
 
-    host = mdb_sys.db.sys_host.find_one({"host_info.local_ip":ip})
+    host = mdb_sys.db.sys_host.find_one({"host_info.local_ip": ip})
     if host:
         host_info = host["host_info"]
-        s,v = audit_host_info(host_info)
+        s, v = audit_host_info(host_info)
         if not s:
             return v
         else:
             ssh = MySSH(ip, port=host_info["port"],
-                              username=host_info["username"],
-                              password=host_info["password"])
+                        username=host_info["username"],
+                        password=host_info["password"])
             if not ssh:
-                data ={"msg":gettext("Connection host[{}] failed,Check the host Settings").format(ip),
-                       "msg_type":"e", "http_status":400}
+                data = {
+                    "msg": gettext("Connection host[{}] failed,Check the host Settings").format(ip),
+                    "msg_type": "e",
+                    "http_status": 400}
                 return data
         sftp = ssh.client.open_sftp()
         remote_file = "{}/logs/{}".format(PROJECT_PATH, name)
@@ -36,8 +39,8 @@ def sys_log():
             os.makedirs(local_temp_log_dir)
 
         local_file = '{}/{}_{}'.format(local_temp_log_dir,
-                                                    ip,
-                                                    name)
+                                       ip,
+                                       name)
         sftp.get(remote_file, local_file)
         ssh.close()
 
@@ -45,7 +48,7 @@ def sys_log():
         rf = open(local_file)
         count = 0
         while True:
-            buffer = rf.read(8192*1024)
+            buffer = rf.read(8192 * 1024)
             if not buffer:
                 break
             count += buffer.count('\n')
@@ -54,18 +57,18 @@ def sys_log():
         n = 1
         with open(local_file) as f:
             for line in f:
-                if n > (page-1)*pre:
+                if n > (page - 1) * pre:
                     logs.append(line)
-                if n >= page*pre:
+                if n >= page * pre:
                     break
                 n += 1
         f.close()
-        logs = datas_paging(pre=pre, page_num=page, data_cnt = count, datas = logs)
+        logs = datas_paging(pre=pre, page_num=page, data_cnt=count, datas=logs)
         logs["datas"] = "".join(logs["datas"])
-        logs["datas"] = logs["datas"].replace("\n","<br>")
-        data = {"logs":logs}
+        logs["datas"] = logs["datas"].replace("\n", "<br>")
+        data = {"logs": logs}
         os.remove(local_file)
     else:
-        data ={"msg":gettext("There is no host {}").format(ip),
-               "msg_type":"e", "http_status":400}
+        data = {"msg": gettext("There is no host {}").format(ip),
+                "msg_type": "e", "http_status": 400}
     return data

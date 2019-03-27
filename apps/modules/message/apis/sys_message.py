@@ -9,12 +9,13 @@ from apps.modules.message.process.sys_message import get_sys_message, delete_sys
 
 __author__ = "Allen Woo"
 
-@api.route('/admin/message/email', methods=['GET','DELETE'])
-@api.route('/admin/message/sms', methods=['GET','DELETE'])
+
+@api.route('/admin/message/email', methods=['GET', 'DELETE'])
+@api.route('/admin/message/sms', methods=['GET', 'DELETE'])
 @osr_login_required
 @permission_required()
 def api_adm_sys_message():
-    '''
+    """
     GET:
         获取系统发送出去的邮件或短信记录
         status:<str>, 状态, normal, abnormal, error
@@ -24,7 +25,7 @@ def api_adm_sys_message():
         删除消息(此接口只能删除由系统发出的消息user_id==0的)
         ids:<array>,消息id
     :return:
-    '''
+    """
 
     if request.c_method == "GET":
         data = get_sys_message()
@@ -32,5 +33,5 @@ def api_adm_sys_message():
     elif request.c_method == "DELETE":
         data = delete_sys_message()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

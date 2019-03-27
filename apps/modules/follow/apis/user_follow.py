@@ -11,7 +11,7 @@ __author__ = 'Allen Woo'
 @api.route('/user/follow', methods=['GET'])
 @permission_required(use_default=False)
 def api_get_user_follow():
-    '''
+    """
     GET:
         获取用户关注的用户
         user_id:<str>, 用户ID
@@ -21,7 +21,7 @@ def api_get_user_follow():
         action:<str>,　为fans
 
     :return:
-    '''
+    """
 
     if request.c_method == "GET":
         if request.argget.all("action") == "followed_user":
@@ -32,11 +32,12 @@ def api_get_user_follow():
         data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
 
+
 @api.route('/user/follow', methods=["POST", 'DELETE'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_user_follow():
-    '''
+    """
 
     POST:
         当前登录用户关注另一个用户用户
@@ -46,7 +47,7 @@ def api_user_follow():
         当前登录用户取消关注一个用户
         ids:<array>,不再关注的用户的user id
     :return:
-    '''
+    """
 
     if request.c_method == "POST":
         data = follow_user()
@@ -54,5 +55,5 @@ def api_user_follow():
     elif request.c_method == "DELETE":
         data = unfollow()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

@@ -10,9 +10,10 @@ from apps.app import mail, app, mdb_sys
 
 __author__ = 'woo'
 
+
 def send_email(subject, recipients, text_msg=None, html_msg=None, attach=None,
                send_independently=True):
-    '''
+    """
     发送email
     :param subject:
     :param recipients:数组
@@ -23,7 +24,7 @@ def send_email(subject, recipients, text_msg=None, html_msg=None, attach=None,
             否则,一次发送, 收件人能看到其他收件人的邮箱
 
     :return:
-    '''
+    """
 
     # 检测插件
     data = plugin_manager.call_plug(hook_name="send_email",
@@ -32,7 +33,7 @@ def send_email(subject, recipients, text_msg=None, html_msg=None, attach=None,
                                     subject=subject,
                                     html=html_msg,
                                     text=text_msg,
-                                    attach = attach)
+                                    attach=attach)
     if data == "__no_plugin__":
 
         msg = Message(subject=subject,
@@ -50,15 +51,16 @@ def send_email(subject, recipients, text_msg=None, html_msg=None, attach=None,
                          recipients=recipients,
                          send_independently=send_independently)
 
+
 @async_process
 def send_async_email(app, msg, recipients, send_independently=True):
-    '''
+    """
     异步发送email
     :param app:
     :param msg:
     :param send_independently: 每个单独发送
     :return:
-    '''
+    """
     mdb_sys.init_app(reinit=True)
     with app.app_context():
         if send_independently:
@@ -71,13 +73,14 @@ def send_async_email(app, msg, recipients, send_independently=True):
             msg.recipients = recipients
             return send_email_process(msg)
 
+
 def send_email_process(msg, connected_instance=None):
-    '''
+    """
     发送
     :param msg:
     :param connected_instance: 已连接的实例
     :return:
-    '''
+    """
     error_info = None
     try:
         if connected_instance:
@@ -93,7 +96,7 @@ def send_email_process(msg, connected_instance=None):
         status = "error"
 
     log = {
-        "type":"email",
+        "type": "email",
         "error_info": error_info,
         'status': status,
         'subject': msg.subject,

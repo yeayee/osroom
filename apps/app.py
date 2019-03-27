@@ -15,10 +15,10 @@ from redis import StrictRedis
 from apps.configs.db_config import DB_CONFIG
 
 
-'''
+"""
  Flask app 与其他核心模块实例化
  注意: 不要将模块初始话设置放在本文件
-'''
+"""
 # 主程序
 web_start_log.info("Initialize the OsrApp")
 app = OsrApp(__name__)
@@ -38,4 +38,3 @@ oauth = OAuth()
 redis = StrictRedis(host=DB_CONFIG["redis"]["host"][0],
                     port=DB_CONFIG["redis"]["port"][0],
                     password=DB_CONFIG["redis"]["password"])
-

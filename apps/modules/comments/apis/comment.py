@@ -11,8 +11,7 @@ __author__ = 'Allen Woo'
 @api.route('/comment', methods=['GET'])
 @permission_required(use_default=False)
 def api_get_comment():
-
-    '''
+    """
     GET:
         获取文章的评论
         target_id:<str>, 目标id,比如文章post id
@@ -30,7 +29,7 @@ def api_get_comment():
         pre:<int>, 每页查询多少条, 默认是config.py配制文件中配制的数量
         :return:
 
-    '''
+    """
     data = comments()
     return response_format(data)
 
@@ -38,8 +37,7 @@ def api_get_comment():
 @api.route('/comment', methods=['POST', 'PUT', 'PATCH', 'DELETE'])
 @permission_required(use_default=False)
 def api_comment_op():
-
-    '''
+    """
     POST:
         评论发布
         target_id:<str>, 目标id,比如文章post id
@@ -64,7 +62,7 @@ def api_comment_op():
     DELETE:
         评论删除
         ids:<array>, comment ids
-    '''
+    """
     if request.c_method == "POST":
         data = comment_issue()
 
@@ -72,19 +70,19 @@ def api_comment_op():
         data = comment_delete()
 
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
+
 
 @api.route('/comment/like', methods=['PUT'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_comment_like():
-    '''
+    """
     PUT:
         给评论点赞
         id:<str>
     :return:
-    '''
+    """
     data = comment_like()
     return response_format(data)
-

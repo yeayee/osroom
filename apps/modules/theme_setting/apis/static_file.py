@@ -10,12 +10,12 @@ from apps.modules.theme_setting.process.static_file import get_static_file_conte
 
 __author__ = "Allen Woo"
 
-@api.route('/admin/static/file', methods=['GET','POST', "PUT", "DELETE"])
+
+@api.route('/admin/static/file', methods=['GET', 'POST', "PUT", "DELETE"])
 @osr_login_required
 @permission_required()
 def api_static_file():
-
-    '''
+    """
     GET:
         1.获取静态文件内容
         file_path:<str>,静态文件所在目录
@@ -32,7 +32,7 @@ def api_static_file():
         file_path:<str>,静态文件所在目录
         filename:<str>,文件名
         content:<str>, 内容
-    '''
+    """
 
     if request.c_method == "GET":
         if request.argget.all("filename"):
@@ -43,5 +43,5 @@ def api_static_file():
     elif request.c_method == "PUT":
         data = edit_static_file()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

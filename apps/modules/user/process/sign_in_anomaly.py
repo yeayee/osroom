@@ -1,6 +1,8 @@
 # -*-coding:utf-8-*-
 __author__ = 'Allen Woo'
-class AbnormalLogin():
+
+
+class AbnormalLogin:
 
     def __init__(self, old_login_logs, current_log):
         self.old_login_logs = old_login_logs
@@ -8,12 +10,12 @@ class AbnormalLogin():
 
     def area(self):
         log_cnt = len(self.old_login_logs)
-        dif_n = 0 # 不同的地址计数
-        same_n = 0 # 相同的地址计数
-        same_total = 0 # 相同地址总数
+        dif_n = 0  # 不同的地址计数
+        same_n = 0  # 相同的地址计数
+        same_total = 0  # 相同地址总数
         is_normal = True
         # 从最后一个开始取
-        for i in range(log_cnt-1, -1, -1):
+        for i in range(log_cnt - 1, -1, -1):
             geo = self.old_login_logs[i]["geo"]
             try:
                 if self.current_log["subdivisions"]["name"] != geo["subdivisions"]["name"]:
@@ -24,12 +26,12 @@ class AbnormalLogin():
                 else:
                     same_total += 1
                     same_n += 1
-                    if same_n >=2:
+                    if same_n >= 2:
                         is_normal = True
-            except:
+            except BaseException:
                 pass
 
-            if same_total >= log_cnt//3:
+            if same_total >= log_cnt // 3:
                 # 如果相同的地区占比大于等于log数的1/3, 计为正常
                 is_normal = True
 

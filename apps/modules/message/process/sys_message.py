@@ -13,12 +13,12 @@ from apps.utils.upload.file_up import file_del
 
 __author__ = "Allen Woo"
 
-def get_sys_message():
 
-    '''
+def get_sys_message():
+    """
     管理端获取消息
     :return:
-    '''
+    """
     data = {}
     ctype = request.argget.all("type")
     status = request.argget.all("status", "normal")
@@ -26,11 +26,11 @@ def get_sys_message():
     pre = str_to_num(request.argget.all("pre", 10))
     page = str_to_num(request.argget.all("page", 1))
 
-    q = {"status":status, "type":ctype}
+    q = {"status": status, "type": ctype}
     if keyword:
-        keyword = {"$regex":keyword, "$options":"$i"}
+        keyword = {"$regex": keyword, "$options": "$i"}
         q["$or"] = [
-            {"subject":keyword},
+            {"subject": keyword},
             {"from": keyword},
             {"to": keyword},
             {"body": keyword},
@@ -38,19 +38,24 @@ def get_sys_message():
 
         ]
     emails = mdb_sys.db.sys_message.find(q)
-    data_cnt =  emails.count(True)
-    emails = list( emails.sort([("time", -1)]).skip(pre * (page - 1)).limit(pre))
+    data_cnt = emails.count(True)
+    emails = list(emails.sort(
+        [("time", -1)]).skip(pre * (page - 1)).limit(pre))
     data["msgs"] = objid_to_str(emails)
-    data["msgs"] = datas_paging(pre=pre, page_num=page, data_cnt=data_cnt, datas=data["msgs"])
+    data["msgs"] = datas_paging(
+        pre=pre,
+        page_num=page,
+        data_cnt=data_cnt,
+        datas=data["msgs"])
 
     return data
 
-def delete_sys_message():
 
-    '''
+def delete_sys_message():
+    """
     删除已发送邮件
     :return:
-    '''
+    """
 
     ids = json_to_pyseq(request.argget.all("ids", []))
     for i in range(0, len(ids)):
@@ -61,7 +66,7 @@ def delete_sys_message():
     q2 = deepcopy(q)
     q2["type"] = "email"
     msgs = mdb_sys.db.sys_message.find(q2)
-    rm_imgs = [] # 要删除的邮件消息图片
+    rm_imgs = []  # 要删除的邮件消息图片
     for msg in msgs:
         srcs = richtext_extract_img(richtext=msg["html"])
         rm_imgs.extend(srcs)
@@ -74,7 +79,8 @@ def delete_sys_message():
         else:
             continue
         # 查找出图片对应的key
-        img_obj = mdb_sys.db.sys_msg_img.find_one({"imgs.key": {"$regex": key}})
+        img_obj = mdb_sys.db.sys_msg_img.find_one(
+            {"imgs.key": {"$regex": key}})
         if img_obj:
             for img in img_obj["imgs"]:
                 # 删除
@@ -83,8 +89,13 @@ def delete_sys_message():
 
     r = mdb_sys.db.sys_message.delete_many(q)
     if r.deleted_count:
-        data = {"msg": gettext("Successfully deleted"), "msg_type": "s", "http_status": 204}
+        data = {
+            "msg": gettext("Successfully deleted"),
+            "msg_type": "s",
+            "http_status": 204}
     else:
-        data = {"msg": gettext("Failed to delete"), "msg_type": "w", "http_status": 400}
+        data = {
+            "msg": gettext("Failed to delete"),
+            "msg_type": "w",
+            "http_status": 400}
     return data
-

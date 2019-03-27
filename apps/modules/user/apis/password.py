@@ -6,25 +6,27 @@ from apps.core.flask.response import response_format
 from apps.modules.user.process.password import account_password_reset, account_password_retrieve
 __author__ = "Allen Woo"
 
+
 @api.route('/account/password/reset', methods=['PUT'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_account_password_reset():
-    '''
+    """
     PUT:
         账户密码重设
         now_password:<str>,目前使用的密码
         password:<str>, 新密码
         password2:<str>, 再次确认新密码
         :return:
-    '''
+    """
     data = account_password_reset()
     return response_format(data)
 
-@api.route('/account/password/retrieve', methods=['PUT','POST'])
+
+@api.route('/account/password/retrieve', methods=['PUT', 'POST'])
 @permission_required(use_default=False)
 def api_account_password_retrieve():
-    '''
+    """
     PUT:
         忘记密码,重设
         获取验证码,只需要传回参数email,return回一个{code:{'_id':'', str:'',time:'' }}
@@ -34,6 +36,6 @@ def api_account_password_retrieve():
         password:<str>, 新密码
         password2:<str>, 再次确认密码
         :return:
-    '''
+    """
     data = account_password_retrieve()
     return response_format(data)

@@ -16,11 +16,12 @@ from apps.utils.format.time_format import time_to_utcdate
 
 __author__ = "Allen Woo"
 
+
 def get_theme_readme():
-    '''
+    """
     获取一个主题的文档信息
     :return:
-    '''
+    """
 
     name = request.argget.all('name')
     path = "{}/{}/readme.md".format(THEME_TEMPLATE_FOLDER, name)
@@ -28,18 +29,24 @@ def get_theme_readme():
         with open(path) as rf:
             md_text = rf.read()
 
-        data = {"msg":gettext("Get success"), "msg_type":"s", "http_status":200,
-                "readme":md_text}
+        data = {
+            "msg": gettext("Get success"),
+            "msg_type": "s",
+            "http_status": 200,
+            "readme": md_text}
     else:
-        data = {"msg": gettext("Readme file does not exist"), "msg_type": "e", "http_status": 400}
+        data = {
+            "msg": gettext("Readme file does not exist"),
+            "msg_type": "e",
+            "http_status": 400}
     return data
 
-def get_one_theme_info(theme_name):
 
-    '''
+def get_one_theme_info(theme_name):
+    """
     获取一个主题信息
     :return:
-    '''
+    """
     path = os.path.join(THEME_TEMPLATE_FOLDER, theme_name)
     if not os.path.isdir(path):
         return False
@@ -54,9 +61,12 @@ def get_one_theme_info(theme_name):
             if not os.path.exists(new_cover_dir):
                 os.makedirs(new_cover_dir)
 
-            cover_path = "{}/{}/{}".format(THEME_TEMPLATE_FOLDER, theme_conf["theme_name"],
-                                           theme_conf["cover_path"])
-            new_cover_path = "{}/{}_{}".format(new_cover_dir, theme_conf["theme_name"],
+            cover_path = "{}/{}/{}".format(
+                THEME_TEMPLATE_FOLDER,
+                theme_conf["theme_name"],
+                theme_conf["cover_path"])
+            new_cover_path = "{}/{}_{}".format(new_cover_dir,
+                                               theme_conf["theme_name"],
                                                os.path.split(theme_conf["cover_path"])[-1])
 
             if os.path.exists(cover_path):
@@ -67,7 +77,8 @@ def get_one_theme_info(theme_name):
             theme_conf["cover_url"] = "/static/media/theme_cover/{}_{}".format(
                 theme_conf["theme_name"],
                 os.path.split(theme_conf["cover_path"])[-1])
-            if theme_conf["theme_name"] == get_config("theme", "CURRENT_THEME_NAME"):
+            if theme_conf["theme_name"] == get_config(
+                    "theme", "CURRENT_THEME_NAME"):
                 theme_conf["current"] = True
             else:
                 theme_conf["current"] = False
@@ -77,14 +88,14 @@ def get_one_theme_info(theme_name):
 
 
 def get_themes():
-    '''
+    """
     获取当前已有主题信息
     :return:
-    '''
+    """
     if not os.path.exists(THEME_TEMPLATE_FOLDER):
         os.makedirs(THEME_TEMPLATE_FOLDER)
 
-    data = {"themes":[]}
+    data = {"themes": []}
     # 清理主题封面
     new_cover_dir = os.path.join(STATIC_PATH, "media/theme_cover")
     if os.path.exists(new_cover_dir):
@@ -104,9 +115,12 @@ def get_themes():
                 if not os.path.exists(new_cover_dir):
                     os.makedirs(new_cover_dir)
 
-                cover_path = "{}/{}/{}".format(THEME_TEMPLATE_FOLDER, theme_conf["theme_name"],
-                                               theme_conf["cover_path"])
-                new_cover_path = "{}/{}_{}".format(new_cover_dir, theme_conf["theme_name"],
+                cover_path = "{}/{}/{}".format(
+                    THEME_TEMPLATE_FOLDER,
+                    theme_conf["theme_name"],
+                    theme_conf["cover_path"])
+                new_cover_path = "{}/{}_{}".format(new_cover_dir,
+                                                   theme_conf["theme_name"],
                                                    os.path.split(theme_conf["cover_path"])[-1])
 
                 if os.path.exists(cover_path):
@@ -117,29 +131,31 @@ def get_themes():
                 theme_conf["cover_url"] = "/static/media/theme_cover/{}_{}".format(
                     theme_conf["theme_name"],
                     os.path.split(theme_conf["cover_path"])[-1])
-                if theme_conf["theme_name"] == get_config("theme", "CURRENT_THEME_NAME"):
+                if theme_conf["theme_name"] == get_config(
+                        "theme", "CURRENT_THEME_NAME"):
                     theme_conf["current"] = True
                 else:
                     theme_conf["current"] = False
                 data["themes"].append(theme_conf)
         else:
-            data["themes"].append({"theme_name":fname, "current":False, "error":r})
+            data["themes"].append(
+                {"theme_name": fname, "current": False, "error": r})
 
     return data
 
-def upload_theme():
 
-    '''
+def upload_theme():
+    """
     主题上传
     :return:
-    '''
+    """
     file = request.files["upfile"]
     file_name = os.path.splitext(file.filename)
     filename = os.path.splitext(file.filename)[0]
     extension = file_name[1]
     if not extension.strip(".").lower() in ["zip"]:
-        data = {"msg":gettext("File format error, please upload zip archive"),
-                "msg_type":"w", "http_status":401}
+        data = {"msg": gettext("File format error, please upload zip archive"),
+                "msg_type": "w", "http_status": 401}
         return data
 
     if not os.path.exists(THEME_TEMPLATE_FOLDER):
@@ -152,7 +168,8 @@ def upload_theme():
         return data
 
     # 保存主题
-    save_file = os.path.join("{}/{}".format(THEME_TEMPLATE_FOLDER, file.filename))
+    save_file = os.path.join(
+        "{}/{}".format(THEME_TEMPLATE_FOLDER, file.filename))
     file.save(save_file)
 
     # 解压
@@ -183,14 +200,21 @@ def upload_theme():
             if not os.path.exists(new_cover_dir):
                 os.makedirs(new_cover_dir)
 
-            cover_path = "{}/{}/{}".format(THEME_TEMPLATE_FOLDER, theme_conf["theme_name"], theme_conf["cover_path"])
-            new_cover_path = "{}/{}_{}".format(new_cover_dir,theme_conf["theme_name"],
+            cover_path = "{}/{}/{}".format(
+                THEME_TEMPLATE_FOLDER,
+                theme_conf["theme_name"],
+                theme_conf["cover_path"])
+            new_cover_path = "{}/{}_{}".format(new_cover_dir,
+                                               theme_conf["theme_name"],
                                                os.path.split(theme_conf["cover_path"])[-1])
 
             if os.path.exists(cover_path):
                 cover_path = cover_path.replace("//", "/")
                 shutil.copyfile(cover_path, new_cover_path)
-            data = {"msg":gettext("Theme installed successfully"), "msg_type":"s", "http_status":201}
+            data = {
+                "msg": gettext("Theme installed successfully"),
+                "msg_type": "s",
+                "http_status": 201}
     else:
         # 验证失败
         # 删除上传的文件
@@ -198,9 +222,10 @@ def upload_theme():
             shutil.rmtree(os.path.join(THEME_TEMPLATE_FOLDER, filename))
         elif os.path.join(THEME_TEMPLATE_FOLDER, theme_dirname):
             shutil.rmtree(os.path.join(THEME_TEMPLATE_FOLDER, theme_dirname))
-        data = {"msg":r, "msg_type":"e", "http_status":400}
+        data = {"msg": r, "msg_type": "e", "http_status": 400}
 
     return data
+
 
 def verify_theme(theme_path, theme_dirname, filename):
 
@@ -212,27 +237,34 @@ def verify_theme(theme_path, theme_dirname, filename):
             req_conf = THEME_REQUIRED_CONF.copy()
             req_conf = list(set(req_conf).difference(set(theme_conf.keys())))
             if req_conf:
-                data = gettext('Configuration file "conf.yaml" but few parameters "{}"').format(", ".join(req_conf))
+                data = gettext('Configuration file "conf.yaml" but few parameters "{}"').format(
+                    ", ".join(req_conf))
                 return False, data
             if theme_conf["theme_name"] != filename or theme_conf["theme_name"] != theme_dirname:
-                return False, gettext('The theme name and theme directory name in the configuration are inconsistent.'
-                                       '("{}" compared with "{}")'.format(theme_conf["theme_name"], theme_dirname))
+                return False, gettext(
+                    'The theme name and theme directory name in the configuration are inconsistent.'
+                    '("{}" compared with "{}")'.format(
+                        theme_conf["theme_name"], theme_dirname))
             return True, None
     else:
-        return False, gettext("The theme of the upload is incorrect, the configuration file(conf.yaml) does not exist")
+        return False, gettext(
+            "The theme of the upload is incorrect, the configuration file(conf.yaml) does not exist")
+
 
 def switch_theme():
-
-    '''
+    """
     切换主题
     :return:
-    '''
+    """
 
     theme_name = request.argget.all('theme_name')
 
     path = os.path.join(THEME_TEMPLATE_FOLDER, theme_name.strip())
     if not os.path.exists(path):
-        data = {"msg": gettext("Theme does not exist"), "msg_type": "e", "http_status": 400}
+        data = {
+            "msg": gettext("Theme does not exist"),
+            "msg_type": "e",
+            "http_status": 400}
         return data
 
     s, r = verify_theme(path, theme_name, theme_name)
@@ -240,7 +272,7 @@ def switch_theme():
         # 更新主题数据
         mdb_sys.db.sys_config.update_many(
             {"project": "theme", "key": "CURRENT_THEME_NAME"},
-            {"$set": {"value":theme_name.strip(), "update_time":time.time()}},
+            {"$set": {"value": theme_name.strip(), "update_time": time.time()}},
             upsert=True)
 
         theme_info = get_one_theme_info(theme_name)
@@ -251,31 +283,41 @@ def switch_theme():
                 upsert=True)
 
         mdb_sys.db.sys_config.update_many(
-            {"project": "site_config", "key": "STATIC_FILE_VERSION"},
-            {"$set": {"value": int(time_to_utcdate(time.time(),"%Y%m%d%H%M%S")), "update_time": time.time()}},
-            upsert=True)
+            {
+                "project": "site_config", "key": "STATIC_FILE_VERSION"}, {
+                "$set": {
+                    "value": int(
+                        time_to_utcdate(
+                            time.time(), "%Y%m%d%H%M%S")), "update_time": time.time()}}, upsert=True)
 
         cache.delete(CONFIG_CACHE_KEY)
-        data = {"msg":gettext("Switch success"), "msg_type":"s", "http_status":201}
+        data = {
+            "msg": gettext("Switch success"),
+            "msg_type": "s",
+            "http_status": 201}
     else:
         data = {"msg": r, "msg_type": "e", "http_status": 400}
     return data
 
 
 def delete_theme():
-
-    '''
+    """
     删除主题
     :return:
-    '''
+    """
 
     theme_name = request.argget.all('theme_name')
     path = os.path.join(THEME_TEMPLATE_FOLDER, theme_name.strip())
     if not os.path.exists(path):
-        data = {"msg": gettext("Theme does not exist"), "msg_type": "e", "http_status": 400}
+        data = {
+            "msg": gettext("Theme does not exist"),
+            "msg_type": "e",
+            "http_status": 400}
     elif get_config("theme", "CURRENT_THEME_NAME") == theme_name.strip():
-        data = {"msg": gettext("The current use of the theme can not be deleted"), "msg_type": "w",
-                "http_status": 400}
+        data = {
+            "msg": gettext("The current use of the theme can not be deleted"),
+            "msg_type": "w",
+            "http_status": 400}
     else:
         # 查看当前已安装主题数量
         num = 0
@@ -283,10 +325,12 @@ def delete_theme():
             path = os.path.join(THEME_TEMPLATE_FOLDER, fname)
             fpath = os.path.join(path, "conf.yaml")
             if os.path.isdir(path) and os.path.exists(fpath):
-                num+=1
+                num += 1
         if num < 2:
-            data = {"msg": gettext("Delete failed, at least keep a theme"), "msg_type": "w",
-                    "http_status": 400}
+            data = {
+                "msg": gettext("Delete failed, at least keep a theme"),
+                "msg_type": "w",
+                "http_status": 400}
         else:
 
             theme_path = os.path.join(THEME_TEMPLATE_FOLDER, theme_name)
@@ -298,21 +342,27 @@ def delete_theme():
 
             shutil.rmtree(theme_path)
 
-            mdb_sys.db.theme.delete_many({"theme_name": get_config("theme", "CURRENT_THEME_NAME")})
+            mdb_sys.db.theme.delete_many(
+                {"theme_name": get_config("theme", "CURRENT_THEME_NAME")})
 
             # 删除主题封面
             if theme_conf and "theme_name" in theme_conf and "cover_path" in theme_conf:
                 cover_dir = os.path.join(STATIC_PATH, "media/theme_cover")
-                cover_path = "{}/{}_{}".format(cover_dir, theme_conf["theme_name"],
-                                                   os.path.split(theme_conf["cover_path"])[-1])
+                cover_path = "{}/{}_{}".format(cover_dir,
+                                               theme_conf["theme_name"],
+                                               os.path.split(theme_conf["cover_path"])[-1])
 
                 if os.path.exists(cover_path):
                     cover_path = cover_path.replace("//", "/")
                     file_split = os.path.splitext(cover_path)
                     os.remove(cover_path)
                     # 删除比例缩放图
-                    for f in glob.glob(os.path.join("{}_w*_h*{}".format(file_split[0], file_split[1]))):
+                    for f in glob.glob(os.path.join(
+                            "{}_w*_h*{}".format(file_split[0], file_split[1]))):
                         os.remove(f)
 
-            data = {"msg": gettext("Successfully deleted"), "msg_type": "s", "http_status": 204}
+            data = {
+                "msg": gettext("Successfully deleted"),
+                "msg_type": "s",
+                "http_status": 204}
     return data

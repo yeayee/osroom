@@ -10,12 +10,12 @@ from apps.modules.theme_setting.process.page import add_page, delete_page
 
 __author__ = "Allen Woo"
 
-@api.route('/admin/theme/page', methods=['GET','POST', "PUT", "DELETE"])
+
+@api.route('/admin/theme/page', methods=['GET', 'POST', "PUT", "DELETE"])
 @osr_login_required
 @permission_required()
 def api_add_page():
-
-    '''
+    """
     POST:
         添加页面
         routing:<str>,路由
@@ -25,12 +25,12 @@ def api_add_page():
         file_path:<str>,页面html文件所在目录
         filename:<str>,页面html文件名
 
-    '''
+    """
 
     if request.c_method == "POST":
         data = add_page()
     elif request.c_method == "DELETE":
         data = delete_page()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

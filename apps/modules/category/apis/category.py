@@ -14,27 +14,29 @@ from apps.modules.category.process.category import categorys, category_add, cate
 
 __author__ = 'Allen Woo'
 
+
 @api.route('/content/category/info', methods=['GET'])
 @permission_required(use_default=False)
 def api_category_info():
-    '''
+    """
     获取指定category id的category信息
     :return:
-    '''
+    """
 
     data = get_category_info()
     return response_format(data)
 
+
 @api.route('/content/user/post/category', methods=['GET'])
 @permission_required(use_default=False)
 def api_get_user_category():
-    '''
+    """
     GET:
 
     action: < str >, 'get_category'
     type: < str >, 'post'
     user_id:<str>
-    '''
+    """
     if request.c_method == "GET":
         user_id = request.argget.all('user_id')
         s, r = arg_verify([(gettext("user_id"), user_id)], required=True)
@@ -43,15 +45,15 @@ def api_get_user_category():
         else:
             data = categorys(user_id=user_id)
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
 
-@api.route('/content/category', methods=['GET','POST', 'PUT','DELETE'])
+
+@api.route('/content/category', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_category():
-
-    '''
+    """
     GET:
 
         action:<str>, 可以为get_category, get_category_type, 默认get_category
@@ -76,9 +78,9 @@ def api_category():
     DELETE:
         删除文集名称
         ids:<array>, post category ids
-    '''
+    """
     if request.c_method == "GET":
-        if not request.argget.all("action")=="get_category_type":
+        if not request.argget.all("action") == "get_category_type":
             data = categorys()
         else:
             data = get_category_type()
@@ -90,6 +92,5 @@ def api_category():
     elif request.c_method == "DELETE":
         data = category_delete()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
-

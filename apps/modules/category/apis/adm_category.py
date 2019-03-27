@@ -11,12 +11,12 @@ from apps.modules.category.process.category import categorys, category_add, cate
 
 __author__ = 'Allen Woo'
 
-@api.route('/admin/content/category', methods=['GET','POST', 'PUT','DELETE'])
+
+@api.route('/admin/content/category', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required()
 def api_adm_category():
-
-    '''
+    """
     Admin管理端category管理
     GET:
         1.获取指定的type的所有分类
@@ -35,7 +35,7 @@ def api_adm_category():
     DELETE:
         删除文集名称
         ids:<array>, post category ids
-    '''
+    """
 
     if request.c_method == "GET":
         if not request.argget.all("get_type"):
@@ -50,6 +50,5 @@ def api_adm_category():
     elif request.c_method == "DELETE":
         data = category_delete(0)
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
-

@@ -13,8 +13,7 @@ from apps.modules.comments.process.adm_comment import adm_comments, adm_comment_
 @osr_login_required
 @permission_required()
 def api_adm_comment():
-
-    '''
+    """
     GET:
         获取评论
         status:<str>,"is_issued"（正常发布） or "not_audit"（等待审核） or "unqualified"（未通过审核） or "user_remove"(用户删除的)
@@ -45,11 +44,11 @@ def api_adm_comment():
         ids:<array>, comment id
         pending_delete:<int>, 1: is_delete为2, 标记为永久删除, 0:从数据库删除数据
         :return:
-    '''
+    """
     if request.c_method == "GET":
         data = adm_comments()
 
-    elif request.c_method in ["PUT","PATCH"]:
+    elif request.c_method in ["PUT", "PATCH"]:
         if request.argget.all("op") == "audit":
             data = adm_comment_audit()
         elif request.argget.all("op") == "restore":
@@ -59,8 +58,5 @@ def api_adm_comment():
         data = adm_comment_delete()
 
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
-
-
-

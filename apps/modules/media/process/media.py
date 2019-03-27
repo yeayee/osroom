@@ -19,22 +19,22 @@ from apps.utils.upload.get_filepath import get_file_url
 
 __author__ = "Allen Woo"
 
-def add_media(user_id=None):
 
-    '''
+def add_media(user_id=None):
+    """
     :param user_id: 媒体为管理端(系统)所有时需要传入user_id = 0
     :return:
-    '''
+    """
 
-    if user_id == None:
+    if user_id is None:
         user_id = current_user.str_id
     batch = request.argget.all("batch", False)
     name = request.argget.all("name")
     link = request.argget.all("link")
-    link_open_new_tab = str_to_num(request.argget.all("link_open_new_tab",1))
+    link_open_new_tab = str_to_num(request.argget.all("link_open_new_tab", 1))
     link_name = request.argget.all("link_name")
     title = request.argget.all("title")
-    text = request.argget.all("text","")
+    text = request.argget.all("text", "")
     text_html = request.argget.all("text_html", "")
     ctype = request.argget.all("ctype")
     category_id = request.argget.all("category_id")
@@ -42,14 +42,15 @@ def add_media(user_id=None):
     category = "Default"
 
     if category_id and category_id.lower() != "default":
-        media_category = mdb_web.db.category.find_one({"_id":ObjectId(category_id)})
+        media_category = mdb_web.db.category.find_one(
+            {"_id": ObjectId(category_id)})
         if media_category:
             category = media_category["name"]
     elif not category_id or category_id.lower() == "default":
         category_id = ""
 
     s, r = arg_verify([(gettext("type"), ctype)],
-                      only=get_config("category","CATEGORY_TYPE").values())
+                      only=get_config("category", "CATEGORY_TYPE").values())
     if not s:
         return r
     s, r = arg_verify([(gettext("name"), name)], required=True)
@@ -58,18 +59,19 @@ def add_media(user_id=None):
 
     # 如果有上传文件
     if request.files:
-        data = file_upload(return_key=True, prefix="multimedia/{}/".format(ctype))
+        data = file_upload(return_key=True,
+                           prefix="multimedia/{}/".format(ctype))
         if data["msg_type"] != "s":
             return data
 
-    if not batch and mdb_web.db.media.find_one({"name":name, "type":ctype}):
+    if not batch and mdb_web.db.media.find_one({"name": name, "type": ctype}):
         type_alias = ctype
-        for k,v in get_config("category","CATEGORY_TYPE").items():
+        for k, v in get_config("category", "CATEGORY_TYPE").items():
             if v == ctype:
                 type_alias = k
                 break
-        data = {"msg":gettext('The type "{}" exists in the name "{}"').format(type_alias, name),
-                "msg_type":"w", "http_status":403}
+        data = {"msg": gettext('The type "{}" exists in the name "{}"').format(
+            type_alias, name), "msg_type": "w", "http_status": 403}
     else:
         # 获取text_html使用的图片
         text_imgs = []
@@ -78,47 +80,50 @@ def add_media(user_id=None):
         else:
             srcs = []
         text_imgs = clean_tempfile(user_id=current_user.str_id,
-                              type="image",
-                              keey_file=srcs)
+                                   type="image",
+                                   keey_file=srcs)
 
         info = {
             "category": category,
             "category_id": category_id,
             "link": link,
-            "link_open_new_tab":link_open_new_tab,
-            "link_name":link_name,
+            "link_open_new_tab": link_open_new_tab,
+            "link_name": link_name,
             "title": title,
             "text": text,
-            "text_html":text_html,
-            "text_imgs":text_imgs,
+            "text_html": text_html,
+            "text_imgs": text_imgs,
             "type": ctype,
-            "time":time.time(),
-            "user_id":user_id
+            "time": time.time(),
+            "user_id": user_id
         }
         if "keys" in data:
             for key in data["keys"]:
-                rand_name = "{}_{}".format(name ,uuid1())
+                rand_name = "{}_{}".format(name, uuid1())
                 info["name"] = rand_name
                 info["url"] = key
             mdb_web.db.media.insert_one(info)
-            data["msg"] = gettext("{} uploaded successfully").format(ctype.capitalize())
+            data["msg"] = gettext("{} uploaded successfully").format(
+                ctype.capitalize())
         else:
             info["name"] = name
             info["url"] = None
             mdb_web.db.media.insert_one(info)
-            data["msg"] = gettext("Added successfully").format(ctype.capitalize())
+            data["msg"] = gettext("Added successfully").format(
+                ctype.capitalize())
         data["msg_type"] = "s"
         data["http_status"] = 201
 
     return data
 
+
 def get_media(user_id=None):
-    '''
+    """
     :param user_id: 媒体为管理端(系统)所有时需要传入user_id = 0
     :return:
-    '''
+    """
 
-    if user_id == None:
+    if user_id is None:
         user_id = current_user.str_id
     id = request.argget.all("id")
 
@@ -128,7 +133,8 @@ def get_media(user_id=None):
 
     data = {}
 
-    media = mdb_web.db.media.find_one({"_id":ObjectId(id), "user_id":user_id})
+    media = mdb_web.db.media.find_one(
+        {"_id": ObjectId(id), "user_id": user_id})
     if media:
         media["_id"] = str(media["_id"])
         if "url" in media and media["url"]:
@@ -139,35 +145,36 @@ def get_media(user_id=None):
 
 
 def get_medias(user_id=None):
-    '''
+    """
     :param user_id: 媒体为管理端(系统)所有时需要传入user_id = 0
     :return:
-    '''
+    """
 
-    if user_id == None:
+    if user_id is None:
         user_id = current_user.str_id
     keyword = request.argget.all("keyword")
     category_id = request.argget.all("category_id")
     ctype = request.argget.all("ctype")
-    page = str_to_num(request.argget.all("page",1))
+    page = str_to_num(request.argget.all("page", 1))
     pre = str_to_num(request.argget.all("pre", 12))
     sort = json_to_pyseq(request.argget.all('sort'))
     s, r = arg_verify([(gettext("type"), ctype)],
-                      only=get_config("category","CATEGORY_TYPE").values())
+                      only=get_config("category", "CATEGORY_TYPE").values())
     if not s:
         return r
 
     data = {}
     if category_id:
         if category_id == "default":
-            category_id = {"$in":[None, ""]}
-        query = {"category_id":category_id, "type":ctype}
+            category_id = {"$in": [None, ""]}
+        query = {"category_id": category_id, "type": ctype}
     else:
         query = {"type": ctype}
 
     if keyword:
-        k_rule = {"$regex":keyword, "$options":"$i"}
-        query["$or"] = [{"name":k_rule}, {"title":k_rule}, {"link":k_rule}, {"text":k_rule}]
+        k_rule = {"$regex": keyword, "$options": "$i"}
+        query["$or"] = [{"name": k_rule}, {"title": k_rule},
+                        {"link": k_rule}, {"text": k_rule}]
     query["user_id"] = user_id
 
     # sort
@@ -185,17 +192,21 @@ def get_medias(user_id=None):
         if "url" in d and d["url"]:
             d["url"] = get_file_url(d["url"])
 
-    data["medias"] = datas_paging(pre=pre, page_num=page, data_cnt=data_cnt, datas=medias)
+    data["medias"] = datas_paging(
+        pre=pre,
+        page_num=page,
+        data_cnt=data_cnt,
+        datas=medias)
     return data
 
-def edit_media(user_id=None):
 
-    '''
+def edit_media(user_id=None):
+    """
     :param user_id: 媒体为管理端(系统)所有时需要传入user_id = 0
     :return:
-    '''
+    """
 
-    if user_id == None:
+    if user_id is None:
         user_id = current_user.str_id
     media_id = request.argget.all("id")
     name = request.argget.all("name")
@@ -203,7 +214,7 @@ def edit_media(user_id=None):
     link_name = request.argget.all("link_name")
     link_open_new_tab = str_to_num(request.argget.all("link_open_new_tab", 1))
     title = request.argget.all("title")
-    text = request.argget.all("text","")
+    text = request.argget.all("text", "")
     text_html = request.argget.all("text_html", "")
     category_id = request.argget.all("category_id")
     s, r = arg_verify([("id", media_id)], required=True)
@@ -214,11 +225,12 @@ def edit_media(user_id=None):
     if not s:
         return r
 
-    old_media = mdb_web.db.media.find_one({"_id":ObjectId(media_id)})
+    old_media = mdb_web.db.media.find_one({"_id": ObjectId(media_id)})
 
     # 如果只是更新图片, 则保存上传图片
     if request.files:
-        data = file_upload(return_key=True, prefix="multimedia/{}/".format(old_media["type"]))
+        data = file_upload(return_key=True,
+                           prefix="multimedia/{}/".format(old_media["type"]))
         if data["msg_type"] != "s":
             return data
         else:
@@ -230,20 +242,26 @@ def edit_media(user_id=None):
                     temp_url = key
                 if temp_url:
                     mdb_web.db.media.update_one({"_id": ObjectId(media_id), "user_id": user_id},
-                                                {"$set": {"url":temp_url}})
-                    data = {"msg": gettext("Update picture successfully"), "msg_type": "s", "http_status": 201}
+                                                {"$set": {"url": temp_url}})
+                    data = {
+                        "msg": gettext("Update picture successfully"),
+                        "msg_type": "s",
+                        "http_status": 201}
                 else:
-                    data = {"msg": gettext("Failed to update"), "msg_type": "e", "http_status": 400}
+                    data = {
+                        "msg": gettext("Failed to update"),
+                        "msg_type": "e",
+                        "http_status": 400}
             return data
-
 
     category = "Default"
     not_updated_category = False
-    if category_id == None:
+    if category_id is None:
         # 不更新category
         not_updated_category = True
     elif category_id and category_id.lower() != "default":
-        media_category = mdb_web.db.category.find_one({"_id": ObjectId(category_id)})
+        media_category = mdb_web.db.category.find_one(
+            {"_id": ObjectId(category_id)})
         if media_category:
             category = media_category["name"]
 
@@ -251,7 +269,11 @@ def edit_media(user_id=None):
         category_id = ""
 
     # 处理其他字段更新
-    query = {"name": name, "type":old_media["type"],"_id": {"$ne": ObjectId(media_id)}}
+    query = {
+        "name": name,
+        "type": old_media["type"],
+        "_id": {
+            "$ne": ObjectId(media_id)}}
     if mdb_web.db.media.find_one(query):
         type_alias = old_media["type"]
 
@@ -259,8 +281,8 @@ def edit_media(user_id=None):
             if v == old_media["type"]:
                 type_alias = k
                 break
-        data = {"msg":gettext('The type "{}" exists in the name "{}"').format(type_alias, name),
-                "msg_type":"w", "http_status":403}
+        data = {"msg": gettext('The type "{}" exists in the name "{}"').format(
+            type_alias, name), "msg_type": "w", "http_status": 403}
     else:
         # 获取text_html使用的图片
         old_imgs = old_media.get("text_imgs", [])
@@ -270,45 +292,54 @@ def edit_media(user_id=None):
             srcs = []
 
         text_imgs = clean_tempfile(user_id=current_user.str_id,
-                                   type="image",old_file=old_imgs,
+                                   type="image", old_file=old_imgs,
                                    keey_file=srcs)
         info = {
-            "name":name,
+            "name": name,
             "link": link,
-            "link_name":link_name,
-            "link_open_new_tab":link_open_new_tab,
+            "link_name": link_name,
+            "link_open_new_tab": link_open_new_tab,
             "title": title,
             "text": text,
-            "text_html":text_html,
-            "text_imgs":text_imgs
+            "text_html": text_html,
+            "text_imgs": text_imgs
         }
 
         if not not_updated_category:
             info["category_id"] = category_id
             info["category"] = category
 
-        r = mdb_web.db.media.update_one({"_id":ObjectId(media_id),"user_id":user_id},
-                                    {"$set":info})
+        r = mdb_web.db.media.update_one(
+            {"_id": ObjectId(media_id), "user_id": user_id}, {"$set": info})
         if r.modified_count:
-            data = {"msg":gettext("Modify the success"), "msg_type":"s", "http_status":201}
+            data = {
+                "msg": gettext("Modify the success"),
+                "msg_type": "s",
+                "http_status": 201}
         else:
-            data = {"msg": gettext("The content is not modified"), "msg_type": "w", "http_status": 400}
+            data = {
+                "msg": gettext("The content is not modified"),
+                "msg_type": "w",
+                "http_status": 400}
 
     return data
 
+
 def del_media(user_id=None):
-    '''
+    """
     :param user_id: 媒体为管理端(系统)所有时需要传入user_id = 0
     :return:
-    '''
+    """
 
-    if user_id == None:
+    if user_id is None:
         user_id = current_user.str_id
-    media_ids = json_to_pyseq(request.argget.all("ids",[]))
+    media_ids = json_to_pyseq(request.argget.all("ids", []))
     deleted_count = 0
     for id in media_ids:
-        media = mdb_web.db.media.find_one({"_id": ObjectId(id), "user_id":user_id})
-        r = mdb_web.db.media.delete_one({"_id":ObjectId(id), "user_id":user_id})
+        media = mdb_web.db.media.find_one(
+            {"_id": ObjectId(id), "user_id": user_id})
+        r = mdb_web.db.media.delete_one(
+            {"_id": ObjectId(id), "user_id": user_id})
         # 是否存在上传的文件
         if r.deleted_count and "url" in media and media["url"]:
             file_del(media["url"])
@@ -317,8 +348,12 @@ def del_media(user_id=None):
             deleted_count += 1
 
     if deleted_count:
-        data = {"msg":gettext("{} files have been deleted").format(deleted_count), "msg_type":"s", "http_status":204}
+        data = {"msg": gettext("{} files have been deleted").format(
+            deleted_count), "msg_type": "s", "http_status": 204}
     else:
-        data = {"msg": gettext("Failed to delete"), "msg_type": "w", "http_status": 400}
+        data = {
+            "msg": gettext("Failed to delete"),
+            "msg_type": "w",
+            "http_status": 400}
 
     return data

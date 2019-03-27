@@ -8,12 +8,12 @@ from apps.modules.upload.process.upload_file import file_upload
 
 __author__ = "Allen Woo"
 
+
 @api.route('/upload/file', methods=['POST'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_file_upload():
-
-    '''
+    """
     POST
         文件上传
         api返回json数据,格式默认如下:
@@ -31,17 +31,20 @@ def api_file_upload():
         prefix:<str>, 默认为“generic/”, 则会将文件放入到generic目录下
         save_temporary_url：<0 or 1>,默认为1, 如果
         :return:
-    '''
-
+    """
 
     return_url_key = request.argget.all('return_url_key', "urls")
     return_state_key = request.argget.all('return_state_key', "state")
-    return_success = request.argget.all('return_success',"success")
-    return_error = request.argget.all('return_error',"error")
+    return_success = request.argget.all('return_success', "success")
+    return_error = request.argget.all('return_error', "error")
     prefix = request.argget.all('prefix', "generic/")
     save_temporary_url = request.argget.all('save_temporary_url', 1)
 
-    data = file_upload(return_url_key=return_url_key, return_state_key=return_state_key,
-                       return_success=return_success,return_error=return_error,
-                       save_temporary_url=save_temporary_url, prefix=prefix)
+    data = file_upload(
+        return_url_key=return_url_key,
+        return_state_key=return_state_key,
+        return_success=return_success,
+        return_error=return_error,
+        save_temporary_url=save_temporary_url,
+        prefix=prefix)
     return response_format(data)

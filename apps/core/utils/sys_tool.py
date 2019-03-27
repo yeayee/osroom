@@ -13,11 +13,11 @@ from apps.modules.user.process.get_or_update_user import get_one_user_mfilter, u
 
 __author__ = "Allen Woo"
 
-def copy_config_to_sample():
 
-    '''
+def copy_config_to_sample():
+    """
     复制db_account.py到db_account_sample,　并把密码替换掉，以免暴露到网上
-    '''
+    """
 
     from apps.configs.db_config import DB_CONFIG
 
@@ -29,28 +29,36 @@ def copy_config_to_sample():
                 if k1 == "password":
                     v[k1] = "<Your password>"
                 elif isinstance(v1, dict):
-                    for k2,v2 in v1.items():
+                    for k2, v2 in v1.items():
                         if k2 == "password":
                             v1[k2] = "<Your password>"
 
-
     # 复制配置文件为sample配置文件
-    info = '''# -*-coding:utf-8-*-\n__author__ = "Allen Woo"\n'''
+    info = """# -*-coding:utf-8-*-\n__author__ = "Allen Woo"\n"""
     temp_conf = str(json.dumps(local_config, indent=4, ensure_ascii=False))
     wf = open("{}/apps/configs/db_config_sample.py".format(PROJECT_PATH), "wb")
     wf.write(bytes(info, "utf-8"))
     wf.write(bytes("DB_CONFIG = ", "utf-8"))
-    wf.write(bytes(temp_conf.replace("false", "False").replace("true", "True").replace("null", "None"), "utf-8"))
+    wf.write(
+        bytes(
+            temp_conf.replace(
+                "false",
+                "False").replace(
+                "true",
+                "True").replace(
+                    "null",
+                    "None"),
+            "utf-8"))
     wf.close()
     print("It has been updated db_config_sample.py")
 
 
 def add_user(mdb_user):
-    '''
+    """
         初始化root用户角色, 管理员, 管理员基本资料
 
         :return:
-        '''
+        """
     from werkzeug.security import generate_password_hash
     from apps.utils.validation.str_format import email_format_ver, password_format_ver
     from apps.modules.user.models.user import user_model
@@ -60,7 +68,8 @@ def add_user(mdb_user):
     while True:
         username = input("Input username:")
         if re.search(r"[\.\*#\?]+", username):
-            print("[Warning]: The name format is not correct,You can't use '.','*','#','?'\n")
+            print(
+                "[Warning]: The name format is not correct,You can't use '.','*','#','?'\n")
         else:
             break
 
@@ -82,12 +91,12 @@ def add_user(mdb_user):
     try:
         mdb_user.db.create_collection("role")
         print(' * Created role collection')
-    except:
+    except BaseException:
         pass
     try:
         mdb_user.db.create_collection("user")
         print(' * Created user collection')
-    except:
+    except BaseException:
         pass
 
     # 初始化角色
@@ -114,13 +123,18 @@ def add_user(mdb_user):
     user = get_one_user_mfilter(username=username, email=email, op="or")
     if user:
         update_one_user(user_id=str(user["_id"]),
-                        updata={"$set":{"password": password_hash,
-                                        "role_id": str(root_id)}})
+                        updata={"$set": {"password": password_hash,
+                                         "role_id": str(root_id)}})
         print(" * This user already exists, updated password.")
     else:
         print(' * Create root user...')
-        user = user_model(username=username, email=email, password=password, custom_domain=-1,
-                          role_id=str(root_id), active=True)
+        user = user_model(
+            username=username,
+            email=email,
+            password=password,
+            custom_domain=-1,
+            role_id=str(root_id),
+            active=True)
         r = insert_one_user(updata=user)
         if r.inserted_id:
             print(" * Create a root user role successfully")
@@ -146,27 +160,30 @@ def add_user(mdb_user):
     role = mdb_user.db.role.find_one({"_id": root_id})
     hidden_password = "{}****{}".format(password[0:2], password[6:])
     print('The basic information is as follows')
-    print('Username: {}\nEmail: {}\nUser role: {}\nPassword: {}'.format(username, email, role["name"], hidden_password))
+    print('Username: {}\nEmail: {}\nUser role: {}\nPassword: {}'.format(
+        username, email, role["name"], hidden_password))
     print('End')
 
-def update_pylib(input_venv_path = True, latest=False):
 
-    '''
+def update_pylib(input_venv_path=True, latest=False):
+    """
     更新python环境库
     :param need_input:
     :return:
-    '''
+    """
     if input_venv_path:
         try:
-            input_str = input("Already running this script in your project python virtual environment?(yes/no):\n")
+            input_str = input(
+                "Already running this script in your project python virtual environment?(yes/no):\n")
             if input_str.upper() == "YES":
                 venv_path = None
             else:
-                venv_path =  CONFIG["py_venv"]["VENV_PATH"]["value"]
-                input_str = input("The default path is: {}, Use the default(yes/no)\n".format(venv_path))
+                venv_path = CONFIG["py_venv"]["VENV_PATH"]["value"]
+                input_str = input(
+                    "The default path is: {}, Use the default(yes/no)\n".format(venv_path))
                 if input_str.upper() != "YES":
                     venv_path = input("Enter a virtual environment:\n")
-        except:
+        except BaseException:
             venv_path = CONFIG["py_venv"]["VENV_PATH"]["value"]
     else:
         venv_path = CONFIG["py_venv"]["VENV_PATH"]["value"]
@@ -183,16 +200,16 @@ def update_pylib(input_venv_path = True, latest=False):
     s, r = subprocess.getstatusoutput("{}pip3 install -U pip".format(venv))
     print(r)
 
-    s,r = subprocess.getstatusoutput("{}pip3 freeze".format(venv))
+    s, r = subprocess.getstatusoutput("{}pip3 freeze".format(venv))
     old_reqs = r.split()
     with open("{}/requirements.txt".format(PROJECT_PATH)) as rf:
         new_reqs = rf.read().split()
 
     # 查找需要安装的包
-    ret_list = list(set(new_reqs)^set(old_reqs))
+    ret_list = list(set(new_reqs) ^ set(old_reqs))
     install_list = []
     for ret in ret_list:
-        if (not ret in old_reqs) and (ret in new_reqs):
+        if (ret not in old_reqs) and (ret in new_reqs):
             install_list.append(ret)
 
     if install_list:
@@ -209,14 +226,16 @@ def update_pylib(input_venv_path = True, latest=False):
         if latest:
             sf = sf.split("==")[0]
         print("pip install -U {}".format(sf))
-        s, r = subprocess.getstatusoutput("{}pip install -U {}".format(venv, sf))
+        s, r = subprocess.getstatusoutput(
+            "{}pip install -U {}".format(venv, sf))
         if s:
             install_failed.append(sf)
 
     for sf in install_failed:
         if latest:
             sf = sf.split("==")[0]
-        s, r = subprocess.getstatusoutput("{}pip install -U {}".format(venv, sf))
+        s, r = subprocess.getstatusoutput(
+            "{}pip install -U {}".format(venv, sf))
         if not s:
             install_failed.remove(sf)
     if install_failed:
@@ -227,16 +246,16 @@ def update_pylib(input_venv_path = True, latest=False):
         web_start_log.info(install_failed)
 
     # 查找需要卸载的包
-    s,r = subprocess.getstatusoutput("{}pip freeze".format(venv))
+    s, r = subprocess.getstatusoutput("{}pip freeze".format(venv))
     old_reqs = r.split()
-    ret_list = list(set(new_reqs)^set(old_reqs))
+    ret_list = list(set(new_reqs) ^ set(old_reqs))
     uninstall_list = []
     for ret in ret_list:
-        if (ret in old_reqs) and (not ret in new_reqs):
+        if (ret in old_reqs) and (ret not in new_reqs):
             uninstall_list.append(ret)
 
     for sf in uninstall_list[:]:
-        if not "==" in sf:
+        if "==" not in sf:
             uninstall_list.remove(sf)
 
     if uninstall_list:
@@ -248,4 +267,5 @@ def update_pylib(input_venv_path = True, latest=False):
             web_start_log.info(uninstall_list)
 
     if latest:
-        subprocess.getstatusoutput("{}pip freeze > {}/requirements.txt".format(venv, PROJECT_PATH))
+        subprocess.getstatusoutput(
+            "{}pip freeze > {}/requirements.txt".format(venv, PROJECT_PATH))

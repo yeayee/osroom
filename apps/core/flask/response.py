@@ -3,6 +3,7 @@ from flask import Response, jsonify
 
 __author__ = 'Allen Woo'
 
+
 class OsrResponse(Response):
     @classmethod
     def force_type(cls, rv, environ=None):
@@ -12,12 +13,11 @@ class OsrResponse(Response):
 
 
 def response_format(data, status=200):
-
-    '''
+    """
     :param data:
     :param status:http status
     :return:
-    '''
+    """
 
     if not isinstance(data, dict):
         return data, status

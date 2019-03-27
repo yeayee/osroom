@@ -6,7 +6,9 @@ import sys
 
 __author__ = 'Allen Woo'
 
-def usage_help(short_ops, short_opexplain, long_ops=[], long_opexplain=[], usage=[], action=[]):
+
+def usage_help(short_ops, short_opexplain, long_ops=[],
+               long_opexplain=[], usage=[], action=[]):
     if usage:
         print("Usage:")
         for u in usage:
@@ -19,7 +21,7 @@ def usage_help(short_ops, short_opexplain, long_ops=[], long_opexplain=[], usage
         if len(v) != 1:
             v2_n = 0
             for v2 in v:
-                print("\t-{}: {}".format(v2, short_opexplain[v2_n+i]))
+                print("\t-{}: {}".format(v2, short_opexplain[v2_n + i]))
                 v2_n += 1
             i += len(v)
         else:

@@ -10,11 +10,12 @@ from apps.modules.user.process.get_or_update_user import update_one_user
 
 __author__ = 'Allen Woo'
 
+
 def content_inform():
-    '''
+    """
     内容举报
     :return:
-    '''
+    """
 
     ctype = request.argget.all('ctype')
     cid = request.argget.all('cid')
@@ -30,37 +31,43 @@ def content_inform():
     if not s:
         return r
 
-    s, r = arg_verify(reqargs=[("category", category)],
-                      only=["ad", "junk_info", "plagiarize", "other"], required=True)
+    s, r = arg_verify(
+        reqargs=[
+            ("category", category)], only=[
+            "ad", "junk_info", "plagiarize", "other"], required=True)
     if not s:
         return r
 
-    if category=="other":
-        s, r = arg_verify(reqargs=[(gettext("details"), details)], required=True)
+    if category == "other":
+        s, r = arg_verify(
+            reqargs=[
+                (gettext("details"), details)], required=True)
         if not s:
             return r
 
     up_data = {
-        "$inc":{"inform.{}.cnt".format(category):1, "inform.total":1},
-        "$set": {"inform.update_time":time.time()}
+        "$inc": {"inform.{}.cnt".format(category): 1, "inform.total": 1},
+        "$set": {"inform.update_time": time.time()}
     }
 
     if details:
-        up_data["$addToSet"] = {"inform.{}.details".format(category):details}
+        up_data["$addToSet"] = {"inform.{}.details".format(category): details}
     if ctype == "post":
-        r = mdb_web.db.post.update_one({"_id":ObjectId(cid)}, up_data)
+        r = mdb_web.db.post.update_one({"_id": ObjectId(cid)}, up_data)
     elif ctype == "comment":
-        r = mdb_web.db.comment.update_one({"_id":ObjectId(cid)}, up_data)
+        r = mdb_web.db.comment.update_one({"_id": ObjectId(cid)}, up_data)
 
     elif ctype == "user":
         r = update_one_user(user_id=cid, updata=up_data)
 
     elif ctype == "media":
-        r = mdb_web.db.media.update_one({"_id":ObjectId(cid)}, up_data)
+        r = mdb_web.db.media.update_one({"_id": ObjectId(cid)}, up_data)
 
     if r.modified_count:
-        data = {'msg': gettext("Submitted successfully, thanks for your participation"),
-                'msg_type': "s", "http_status": 201}
+        data = {
+            'msg': gettext("Submitted successfully, thanks for your participation"),
+            'msg_type': "s",
+            "http_status": 201}
     else:
         data = {'msg': gettext("Submit failed, please try again"),
                 'msg_type': "w", "http_status": 201}

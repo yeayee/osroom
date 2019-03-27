@@ -1,17 +1,17 @@
 # -*-coding:utf-8-*-
 import platform
-
 import os
 from PIL import Image
 from apps.configs.sys_config import STATIC_PATH, VERSION
 
 __author__ = 'Allen Woo'
 
+
 def start_info():
-    '''
+    """
     启动时, 打印系统信息
     :return:
-    '''
+    """
 
     width = 77
     height = 7
@@ -32,7 +32,7 @@ def start_info():
         print(txt)
 
     version = VERSION
-    info = '''
+    info = """
     Welcome to use the osroom.
     osroom v{}
     osroom website: \033[1;34m http://osroom.com \033[0m
@@ -40,8 +40,9 @@ def start_info():
     License: BSD3
     The operating system: {}
     Server started...
-    '''.format(version, platform.system())
+    """.format(version, platform.system())
     print(info)
+
 
 def get_char(r, b, g, alpha=256):
 

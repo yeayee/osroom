@@ -12,11 +12,11 @@ from apps.modules.plug_in_manager.process.manager import start_plugin, stop_plug
 __author__ = "Allen Woo"
 
 
-@api.route('/admin/plugin', methods=['GET','POST',"PUT","DELETE"])
+@api.route('/admin/plugin', methods=['GET', 'POST', "PUT", "DELETE"])
 @osr_login_required
 @permission_required()
 def api_adm_plugin():
-    '''
+    """
     插件管理
     GET:
         获取所有插件
@@ -32,7 +32,7 @@ def api_adm_plugin():
         action:<str>, start:激活插件 stop:停用插件
         name:<str>, 插件名称
     :return:
-    '''
+    """
     if request.c_method == "GET":
         data = get_plugins()
     elif request.c_method == "POST":

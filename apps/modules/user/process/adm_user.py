@@ -20,7 +20,10 @@ def user():
     data = {}
     data["user"] = get_one_user(user_id=str(id))
     if not data["user"]:
-        data = {'msg': gettext("The specified user is not found"), 'msg_type': "w", "http_status":404}
+        data = {
+            'msg': gettext("The specified user is not found"),
+            'msg_type': "w",
+            "http_status": 404}
     else:
         data["user"]["_id"] = str(data["user"]["_id"])
         data["user"]["role_id"] = str(data["user"]["role_id"])
@@ -28,10 +31,10 @@ def user():
 
 
 def users():
-    '''
+    """
     Admin获取用户数据
     :return:
-    '''
+    """
     data = {}
     status = request.argget.all('status')
     page = int(request.argget.all('page', 1))
@@ -39,21 +42,32 @@ def users():
     keyword = request.argget.all('keyword', '').strip()
     if status == "normal" or not status:
         status = "normal"
-        query_conditions = {"is_delete": {"$in": [False, 0]}, "active": {"$in": [True, 1]}}
+        query_conditions = {
+            "is_delete": {
+                "$in": [
+                    False, 0]}, "active": {
+                "$in": [
+                    True, 1]}}
     elif status == "inactive":
-        query_conditions = {"is_delete": {"$in": [False, 0]}, "active": {"$in": [False, 0]}}
+        query_conditions = {
+            "is_delete": {
+                "$in": [
+                    False, 0]}, "active": {
+                "$in": [
+                    False, 0]}}
     elif status == "cancelled":
         query_conditions = {"is_delete": {"$in": [True, 1]}}
 
     if keyword:
-        keyword = {"$regex":keyword, "$options":"$i"}
+        keyword = {"$regex": keyword, "$options": "$i"}
         query_conditions["$or"] = [{"username": keyword},
                                    {"email": keyword},
                                    {"custom_domain": keyword}
                                    ]
     us = mdb_user.db.user.find(query_conditions, {"password": 0})
     data_cnt = us.count(True)
-    users = list(us.sort([("create_at",-1)]).skip(pre * (page - 1)).limit(pre))
+    users = list(us.sort([("create_at", -1)]
+                         ).skip(pre * (page - 1)).limit(pre))
     roles = list(mdb_user.db.role.find({}))
     for user in users:
         user['_id'] = str(user['_id'])
@@ -61,7 +75,8 @@ def users():
             if ObjectId(user["role_id"]) == role["_id"]:
                 user["role_name"] = role["name"]
 
-        user_login_log = mdb_user.db.user_login_log.find_one({"user_id": user["_id"]}, {"user_id": 0})
+        user_login_log = mdb_user.db.user_login_log.find_one(
+            {"user_id": user["_id"]}, {"user_id": 0})
         user["user_login_log"] = []
         if user_login_log:
             user_login_log["_id"] = str(user_login_log["_id"])
@@ -71,37 +86,47 @@ def users():
             #                                           reverse=True)
             user["user_login_log"] = user_login_log
 
-        user_op_log = mdb_user.db.user_op_log.find_one({'user_id': user["_id"]}, {"user_id": 0})
+        user_op_log = mdb_user.db.user_op_log.find_one(
+            {'user_id': user["_id"]}, {"user_id": 0})
         user["user_op_log"] = []
         if user_op_log:
             user_op_log["_id"] = str(user_op_log["_id"])
             user_op_log["logs"] = sorted(user_op_log["logs"],
-                                         key=lambda x:x["time"],
+                                         key=lambda x: x["time"],
                                          reverse=True)
             user["user_op_log"] = user_op_log
 
         user["role_id"] = str(user["role_id"])
         user["avatar_url"]["url"] = get_avatar_url(user["avatar_url"])
 
-    data["users"] = datas_paging(pre=pre, page_num=page, data_cnt=data_cnt, datas=users)
+    data["users"] = datas_paging(
+        pre=pre,
+        page_num=page,
+        data_cnt=data_cnt,
+        datas=users)
     data["status"] = status
     return data
 
 
 def user_edit():
-    '''
+    """
     用户编辑
     :return:
-    '''
+    """
     id = request.argget.all('id')
     role_id = request.argget.all('role_id')
     active = str_to_num(request.argget.all('active', 0))
 
-    s, r = arg_verify(reqargs=[("id", id), ("role_id", role_id)], required=True)
+    s, r = arg_verify(
+        reqargs=[
+            ("id", id), ("role_id", role_id)], required=True)
     if not s:
         return r
 
-    data = {'msg': gettext("Update success"), 'msg_type': "s", "http_status":201}
+    data = {
+        'msg': gettext("Update success"),
+        'msg_type': "s",
+        "http_status": 201}
     update_data = {
         'role_id': role_id,
         'active': active,
@@ -109,19 +134,26 @@ def user_edit():
     user = get_one_user(user_id=str(id))
     if user:
         # 权限检查
-        current_user_role = mdb_user.db.role.find_one({"_id": ObjectId(current_user.role_id)})
-        edit_user_role = mdb_user.db.role.find_one({"_id": ObjectId(user["role_id"])})
+        current_user_role = mdb_user.db.role.find_one(
+            {"_id": ObjectId(current_user.role_id)})
+        edit_user_role = mdb_user.db.role.find_one(
+            {"_id": ObjectId(user["role_id"])})
         if edit_user_role \
                 and get_num_digits(current_user_role["permissions"]) \
                 <= get_num_digits(edit_user_role["permissions"]):
             # 没有权限修改
-            data = {"msg_type": "w", "msg": gettext("No permission modification"),
-                    "http_status":401}
+            data = {
+                "msg_type": "w",
+                "msg": gettext("No permission modification"),
+                "http_status": 401}
             return data
 
     r = update_one_user(user_id=str(id), updata={"$set": update_data})
     if not r.modified_count:
-        data = {'msg': gettext("No changes"), 'msg_type': "w", "http_status":201}
+        data = {
+            'msg': gettext("No changes"),
+            'msg_type': "w",
+            "http_status": 201}
     return data
 
 
@@ -130,17 +162,21 @@ def user_del():
     permanent = request.argget.all('permanent', 0)
     try:
         permanent = int(permanent)
-    except:
+    except BaseException:
         pass
     noper = 0
     temp_ids = ids[:]
     ids = []
     for i in range(0, len(temp_ids)):
         # 检查是否有权限
-        current_user_role = mdb_user.db.role.find_one({"_id": ObjectId(current_user.role_id)})
+        current_user_role = mdb_user.db.role.find_one(
+            {"_id": ObjectId(current_user.role_id)})
         rm_user = get_one_user(user_id=str(temp_ids[i]))
-        rm_user_role = mdb_user.db.role.find_one({"_id": ObjectId(rm_user["role_id"])})
-        if get_num_digits(current_user_role["permissions"]) <= get_num_digits(rm_user_role["permissions"]):
+        rm_user_role = mdb_user.db.role.find_one(
+            {"_id": ObjectId(rm_user["role_id"])})
+        if get_num_digits(
+                current_user_role["permissions"]) <= get_num_digits(
+                rm_user_role["permissions"]):
             # 没有权限删除
             continue
         ids.append(ObjectId(temp_ids[i]))
@@ -149,24 +185,40 @@ def user_del():
         update_data = {
             'is_delete': 1
         }
-        r = mdb_user.db.user.update_many({"_id": {"$in": ids}}, {"$set": update_data})
+        r = mdb_user.db.user.update_many(
+            {"_id": {"$in": ids}}, {"$set": update_data})
         if r.modified_count:
             for id in ids:
                 clean_get_one_user_cache(user_id=id)
 
-            data = {'msg': gettext("Has recovered {} users, {} users can not operate").format(r.modified_count, noper),
-                    'msg_type': "s", "http_status":201}
+            data = {
+                'msg': gettext("Has recovered {} users, {} users can not operate").format(
+                    r.modified_count,
+                    noper),
+                'msg_type': "s",
+                "http_status": 201}
         else:
-            data = {'msg': gettext("Recycle user failed.May not have permission"), 'msg_type': "w", "http_status":401}
+            data = {
+                'msg': gettext("Recycle user failed.May not have permission"),
+                'msg_type': "w",
+                "http_status": 401}
     else:
         # 永久删除
-        r = mdb_user.db.user.delete_many({"_id": {"$in": ids}, "is_delete": {"$in": [1, True]}})
+        r = mdb_user.db.user.delete_many(
+            {"_id": {"$in": ids}, "is_delete": {"$in": [1, True]}})
         if r.deleted_count:
-            data = {'msg': gettext(
-                "{} users have been deleted and {} users can not be deleted".format(r.deleted_count, noper)),
-                    'msg_type': "s", "http_status":204}
+            data = {
+                'msg': gettext(
+                    "{} users have been deleted and {} users can not be deleted".format(
+                        r.deleted_count,
+                        noper)),
+                'msg_type': "s",
+                "http_status": 204}
         else:
-            data = {'msg': gettext("Failed to delete.May not have permission"), 'msg_type': "w", "http_status":401}
+            data = {
+                'msg': gettext("Failed to delete.May not have permission"),
+                'msg_type': "w",
+                "http_status": 401}
 
     return data
 
@@ -177,10 +229,14 @@ def user_restore():
     re_ids = []
     for i in range(0, len(ids)):
         # 检查是否有权限
-        current_user_role = mdb_user.db.role.find_one({"_id": ObjectId(current_user.role_id)})
+        current_user_role = mdb_user.db.role.find_one(
+            {"_id": ObjectId(current_user.role_id)})
         re_user = get_one_user(user_id=str(ids[i]))
-        re_user_role = mdb_user.db.role.find_one({"_id": ObjectId(re_user["role_id"])})
-        if get_num_digits(current_user_role["permissions"]) <= get_num_digits(re_user_role["permissions"]):
+        re_user_role = mdb_user.db.role.find_one(
+            {"_id": ObjectId(re_user["role_id"])})
+        if get_num_digits(
+                current_user_role["permissions"]) <= get_num_digits(
+                re_user_role["permissions"]):
             # 没有权限恢复
             noper += 1
             continue
@@ -190,16 +246,24 @@ def user_restore():
         'is_delete': 0
     }
 
-    r = mdb_user.db.user.update_many({"_id": {"$in": re_ids}}, {"$set": update_data})
+    r = mdb_user.db.user.update_many(
+        {"_id": {"$in": re_ids}}, {"$set": update_data})
     if r.modified_count:
         for id in re_ids:
             clean_get_one_user_cache(user_id=id)
 
-        data = {'msg': gettext(
-            "Restore the {} users,The other {} users have no power control".format(r.modified_count, noper)),
-                'msg_type': "s", "http_status":201}
+        data = {
+            'msg': gettext(
+                "Restore the {} users,The other {} users have no power control".format(
+                    r.modified_count,
+                    noper)),
+            'msg_type': "s",
+            "http_status": 201}
     else:
-        data = {'msg': gettext("Restore the failure.May not have permission"), 'msg_type': "w", "http_status":401}
+        data = {
+            'msg': gettext("Restore the failure.May not have permission"),
+            'msg_type': "w",
+            "http_status": 401}
     return data
 
 
@@ -210,10 +274,14 @@ def user_activation():
     ac_ids = []
     for i in range(0, len(ids)):
         # 检查是否有权限
-        current_user_role = mdb_user.db.role.find_one({"_id": ObjectId(current_user.role_id)})
+        current_user_role = mdb_user.db.role.find_one(
+            {"_id": ObjectId(current_user.role_id)})
         re_user = get_one_user(user_id=str(ids[i]))
-        re_user_role = mdb_user.db.role.find_one({"_id": ObjectId(re_user["role_id"])})
-        if get_num_digits(current_user_role["permissions"]) <= get_num_digits(re_user_role["permissions"]):
+        re_user_role = mdb_user.db.role.find_one(
+            {"_id": ObjectId(re_user["role_id"])})
+        if get_num_digits(
+                current_user_role["permissions"]) <= get_num_digits(
+                re_user_role["permissions"]):
             # 没有权限恢复
             noper += 1
             continue
@@ -223,14 +291,22 @@ def user_activation():
         'active': active
     }
 
-    r = mdb_user.db.user.update_many({"_id": {"$in": ac_ids}}, {"$set": update_data})
+    r = mdb_user.db.user.update_many(
+        {"_id": {"$in": ac_ids}}, {"$set": update_data})
     if r.modified_count:
         for id in ac_ids:
             clean_get_one_user_cache(user_id=id)
 
-        data = {'msg': gettext(
-            "{} user activation is successful, {} no permission to operate".format(r.modified_count, noper)),
-                'msg_type': "s", "http_status":201}
+        data = {
+            'msg': gettext(
+                "{} user activation is successful, {} no permission to operate".format(
+                    r.modified_count,
+                    noper)),
+            'msg_type': "s",
+            "http_status": 201}
     else:
-        data = {'msg': gettext("Activation failed.May not have permission"), 'msg_type': "w", "http_status":401}
+        data = {
+            'msg': gettext("Activation failed.May not have permission"),
+            'msg_type': "w",
+            "http_status": 401}
     return data

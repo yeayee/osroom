@@ -11,11 +11,11 @@ from apps.modules.user.process.adm_user import user, users, user_restore, user_a
 
 
 __author__ = "Allen Woo"
-@api.route('/admin/user', methods=['GET', 'PUT','DELETE'])
+@api.route('/admin/user', methods=['GET', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required()
 def api_adm_user():
-    '''
+    """
     GET:
         1. 获取指定ID的用户基本信息
         id:<str> , user id
@@ -43,7 +43,7 @@ def api_adm_user():
     DELETE:
         删除用户,非数据库删除
         ids:<array>
-    '''
+    """
     if request.c_method == "GET":
         if request.argget.all('id'):
             data = user()
@@ -62,24 +62,25 @@ def api_adm_user():
         data = user_del()
 
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
+
 
 @api.route('/admin/user/del', methods=['DELETE'])
 @osr_login_required
 @permission_required()
 def api_adm_user_del():
-    '''
+    """
 
     DELETE:
         永久删除用户,数据库中删除
         ids:<array>
         permanent:<int> 0 or 1, 0:非数据库删除,只是把状态改成"删除状态",为1:表示永久删除,
 
-    '''
+    """
 
     if request.c_method == "DELETE":
         data = user_del()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

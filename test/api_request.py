@@ -5,6 +5,7 @@ import requests
 
 __author__ = "Allen Woo"
 
+
 def api_request(url, json_params):
 
     url = "/api/admin/post?status=is_issued"
@@ -20,6 +21,7 @@ def api_request(url, json_params):
     print(custom_headers_response.content.decode("utf-8"))
     print(custom_headers_response.cookies)
     print(custom_headers_response.headers)
+
 
 def api_request_2(url, json_params):
 
@@ -37,6 +39,6 @@ def api_request_2(url, json_params):
     print(custom_headers_response.headers)
 
 
-
 if __name__ == '__main__':
     api_request("", '{}')
+    

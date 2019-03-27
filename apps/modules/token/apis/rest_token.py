@@ -10,27 +10,32 @@ from apps.modules.token.process.rest_token import get_secret_token, create_secre
 
 __author__ = "Allen Woo"
 
+
 @api.route('/token/access-token', methods=['GET'])
 @permission_required(use_default=False)
 def api_access_token():
-
-    '''
+    """
     GET:
         客户端获取/刷新AccessToken (必须使用SecretToken验证通过)
         如果请求头中带有ClientId 则使用客户端提供的ClientId, 否则创建新的ClientId
     :return:
-    '''
+    """
 
     data = rest_token_auth.create_access_token()
     return response_format(data)
 
 
-@api.route('/admin/token/secret-token', methods=['GET', 'POST', 'PUT','DELETE'])
+@api.route(
+    '/admin/token/secret-token',
+    methods=[
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE'])
 @osr_login_required
 @permission_required()
 def api_rest_token():
-
-    '''
+    """
     客户端访问使用的secret token管理
     GET:
         获取所有secret token
@@ -44,7 +49,7 @@ def api_rest_token():
         删除一个token
         token_id:<id>,token id
     :return:
-    '''
+    """
 
     if request.c_method == "GET":
         data = get_secret_token()
@@ -63,4 +68,3 @@ def api_rest_token():
     else:
         data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
-

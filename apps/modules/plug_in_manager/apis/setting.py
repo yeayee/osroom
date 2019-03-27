@@ -12,11 +12,11 @@ from apps.modules.plug_in_manager.process.setting import get_plugin_setting, upd
 __author__ = "Allen Woo"
 
 
-@api.route('/admin/plugin/setting', methods=['GET',"POST","PUT"])
+@api.route('/admin/plugin/setting', methods=['GET', "POST", "PUT"])
 @osr_login_required
 @permission_required()
 def api_adm_plugin_setting():
-    '''
+    """
     插件设置
     GET:
         获取插件设置
@@ -31,7 +31,7 @@ def api_adm_plugin_setting():
         key:<str>,KEY
         value:<可多种类型的数据>, 值
     :return:
-    '''
+    """
     if request.c_method == "GET":
         data = get_plugin_setting()
     elif request.c_method == "POST":
@@ -42,18 +42,19 @@ def api_adm_plugin_setting():
         data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
 
+
 @api.route('/admin/plugin/setting/install-requirement', methods=["PUT"])
 @osr_login_required
 @permission_required()
 def api_adm_install_requs():
-    '''
+    """
     插件需求包安装
     PUT:
         插件需求包安装
         plugin_name:<str>, 插件名
 
     :return:
-    '''
+    """
     if request.c_method == "PUT":
         data = install_require_package()
     else:

@@ -28,7 +28,12 @@ def comments():
     pre = int(request.argget.all('pre', pre))
     basic_query = {'issued': 1, 'is_delete': 0, 'type': target_type, "target_id": target_id,
                    '$or': [{'reply_id': {'$exists': False}}, {'reply_id': {'$in': [None, ""]}}]}
-    data = find_comments(query_conditions=basic_query, page=page, pre=pre, sort=sort, status=status)
+    data = find_comments(
+        query_conditions=basic_query,
+        page=page,
+        pre=pre,
+        sort=sort,
+        status=status)
     return data
 
 
@@ -39,30 +44,38 @@ def comment_issue():
                 "msg_type": "w", "http_status": 401}
         return data
 
-    target_id = request.argget.all('target_id') # 目标ID指的是什么事件的评论
+    target_id = request.argget.all('target_id')  # 目标ID指的是什么事件的评论
     target_type = request.argget.all('target_type', "post")
     content = request.argget.all('content')
-    reply_id = request.argget.all('reply_id') # 回复哪条评论
-    reply_user_id = request.argget.all('reply_user_id') # 回复的评论的用户ID
-    reply_username = request.argget.all('reply_username') # 回复的评论的用户名
+    reply_id = request.argget.all('reply_id')  # 回复哪条评论
+    reply_user_id = request.argget.all('reply_user_id')  # 回复的评论的用户ID
+    reply_username = request.argget.all('reply_username')  # 回复的评论的用户名
 
-    s, r = arg_verify(reqargs=[(gettext("comment"), content)], min_len=1, max_len=int(get_config("comment", "MAX_LEN")))
+    s, r = arg_verify(
+        reqargs=[
+            (gettext("comment"), content)], min_len=1, max_len=int(
+            get_config(
+                "comment", "MAX_LEN")))
     if not s:
         return r
-    s, r = arg_verify(reqargs=[("target_id", target_id), ("target_type", target_type)],required=True)
+    s, r = arg_verify(
+        reqargs=[
+            ("target_id", target_id), ("target_type", target_type)], required=True)
     if not s:
         return r
 
     if reply_id:
-        s, r = arg_verify(reqargs=[("reply_user_id", reply_user_id),("reply_username", reply_username)],
-                          required=True)
+        s, r = arg_verify(
+            reqargs=[
+                ("reply_user_id", reply_user_id), ("reply_username", reply_username)], required=True)
         if not s:
             return r
 
-    '''
+    """
     查看最后一次评论时间
-    '''
-    tquery = {"issue_time": {"$gt": time.time() - int(get_config("comment", "INTERVAL"))}}
+    """
+    tquery = {"issue_time": {"$gt": time.time() -
+                             int(get_config("comment", "INTERVAL"))}}
     if current_user.is_authenticated:
         user_id = current_user.str_id
         username = current_user.username
@@ -88,25 +101,28 @@ def comment_issue():
         tquery["email"] = email
 
     else:
-        data = {"msg": gettext("Guest reviews feature is not open, please login account comments"),
-                "msg_type": "w", "http_status": 401}
+        data = {
+            "msg": gettext("Guest reviews feature is not open, please login account comments"),
+            "msg_type": "w",
+            "http_status": 401}
         return data
 
-
     if mdb_web.db.comment.find(tquery).count(
-        True) >= int(get_config("comment", "NUM_OF_INTERVAL")):
+            True) >= int(get_config("comment", "NUM_OF_INTERVAL")):
         # 频繁评论
         data = {"msg": gettext("You comment too often and come back later"),
-                "msg_type": "e", "http_status":400}
+                "msg_type": "e", "http_status": 400}
         return data
 
     target = None
     if target_type == "post":
         target = mdb_web.db.post.find_one({"_id": ObjectId(target_id),
-                                         "issued": {"$in": [1, True]}})
+                                           "issued": {"$in": [1, True]}})
         if not target:
-            data = {"msg": gettext("Articles do not exist or have not been published"),
-                    "msg_type": "w", "http_status": 400}
+            data = {
+                "msg": gettext("Articles do not exist or have not been published"),
+                "msg_type": "w",
+                "http_status": 400}
             return data
 
         target_user_id = str(target["user_id"])
@@ -114,7 +130,7 @@ def comment_issue():
 
     if not target:
         data = {"msg": gettext("Your comment goal does not exist"),
-                "msg_type": "w", "http_status":400}
+                "msg_type": "w", "http_status": 400}
         return data
 
     issue_time = time.time()
@@ -123,7 +139,8 @@ def comment_issue():
 
     audit_score = r["score"]
     audit_label = r["label"]
-    if r["label"] == "detection_off" or ("suggestion" in r and r["suggestion"] == "review"):
+    if r["label"] == "detection_off" or (
+            "suggestion" in r and r["suggestion"] == "review"):
         # 未开启审核或无法自动鉴别,　等待人工审核
         audited = 0
         audit_way = "artificial"
@@ -149,8 +166,8 @@ def comment_issue():
         "issued": 1,
         "audited": audited,
         "audit_score": audit_score,
-        "audit_label":audit_label,
-        "audit_way":audit_way,
+        "audit_label": audit_label,
+        "audit_way": audit_way,
         "audit_user_id": None,
         "issue_time": issue_time,
         "word_num": len(content),
@@ -167,18 +184,25 @@ def comment_issue():
     r = mdb_web.db.comment.insert_one(comment)
 
     # 如果已审核, 并且违规分数高于正常
-    if audited and audit_score >= get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE"):
+    if audited and audit_score >= get_config(
+            "content_inspection", "ALLEGED_ILLEGAL_SCORE"):
         # 通知评论不通过
         msg_content = {"text": content}
-        insert_user_msg(user_id=user_id, ctype="notice", label="audit_failure",
-                        title=gettext("[Label:{}]Comment on alleged violations").format(audit_label), content=msg_content,
-                        target_id=str(r.inserted_id), target_type="comment")
+        insert_user_msg(
+            user_id=user_id,
+            ctype="notice",
+            label="audit_failure",
+            title=gettext("[Label:{}]Comment on alleged violations").format(audit_label),
+            content=msg_content,
+            target_id=str(
+                r.inserted_id),
+            target_type="comment")
 
     elif audit_score < get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE"):
         # 更新文章中的评论数目
         if target_type == "post":
-            mdb_web.db.post.update_one({"_id": ObjectId(target_id)}, {"$inc": {"comment_num": 1}})
-
+            mdb_web.db.post.update_one({"_id": ObjectId(target_id)}, {
+                                       "$inc": {"comment_num": 1}})
 
         if current_user.is_authenticated:
             # 评论正常才通知被评论用户
@@ -190,21 +214,32 @@ def comment_issue():
                 user_ids.remove(user_id)
 
             msg_content = {
-                           "id":str(r.inserted_id),
-                           "reply_id":reply_id,
-                           "reply_user_id":reply_user_id,
-                           "reply_username":reply_username,
-                           "user_id": user_id,
-                           "username": username,
-                           "text": content}
-            insert_user_msg(user_id=user_ids, ctype="notice", label="comment",
-                            title=target_brief_info,
-                            content=msg_content, target_id=target_id, target_type=target_type)
+                "id": str(r.inserted_id),
+                "reply_id": reply_id,
+                "reply_user_id": reply_user_id,
+                "reply_username": reply_username,
+                "user_id": user_id,
+                "username": username,
+                "text": content}
+            insert_user_msg(
+                user_id=user_ids,
+                ctype="notice",
+                label="comment",
+                title=target_brief_info,
+                content=msg_content,
+                target_id=target_id,
+                target_type=target_type)
 
     if current_user.is_authenticated:
-        data = {"msg": gettext("Successful reviews"), "msg_type": "s", "http_status":201}
+        data = {
+            "msg": gettext("Successful reviews"),
+            "msg_type": "s",
+            "http_status": 201}
     else:
-        data = {"msg": gettext("Success back, waiting for the system audit."), "msg_type": "s", "http_status": 201}
+        data = {
+            "msg": gettext("Success back, waiting for the system audit."),
+            "msg_type": "s",
+            "http_status": 201}
 
     return data
 
@@ -214,10 +249,8 @@ def comment_delete():
     reply_ids = ids[:]
     for i in range(0, len(ids)):
         ids[i] = ObjectId(ids[i])
-    r1 = mdb_web.db.comment.update_many({"_id": {"$in": ids}, "user_id": current_user.str_id},
-                                       {"$set": {"is_delete": 1}})
-
-
+    r1 = mdb_web.db.comment.update_many(
+        {"_id": {"$in": ids}, "user_id": current_user.str_id}, {"$set": {"is_delete": 1}})
 
     if r1.modified_count:
 
@@ -226,31 +259,38 @@ def comment_delete():
         # 更新target 中的评论数
         comments = []
         if r2.modified_count:
-            comments = list(mdb_web.db.comment.find({"reply_id": {"$in": reply_ids}},
-                                               {"target_id":1, "type":1}))
+            comments = list(mdb_web.db.comment.find(
+                {"reply_id": {"$in": reply_ids}}, {"target_id": 1, "type": 1}))
 
-        comments.extend(list(mdb_web.db.comment.find({"_id": {"$in": ids}},
-                                                     {"target_id":1, "type":1})))
+        comments.extend(list(mdb_web.db.comment.find(
+            {"_id": {"$in": ids}}, {"target_id": 1, "type": 1})))
         target_ids = []
         for c in comments:
-            target_ids.append((c["target_id"],c["type"]))
+            target_ids.append((c["target_id"], c["type"]))
         target_ids = dict(Counter(target_ids))
         if comments[0]["type"] == "post" and target_ids:
-            for k,v in target_ids.items():
+            for k, v in target_ids.items():
                 # 更新文章中的评论数
                 if k[1] == "post":
-                    mdb_web.db.post.update_many({"_id":ObjectId(k[0]) },
-                                                    {"$inc": {"comment_num": -1*v}})
+                    mdb_web.db.post.update_many({"_id": ObjectId(k[0])}, {
+                                                "$inc": {"comment_num": -1 * v}})
 
-        data = {"msg": gettext("Delete the success"), "msg_type": "s", "http_status":204}
+        data = {
+            "msg": gettext("Delete the success"),
+            "msg_type": "s",
+            "http_status": 204}
     else:
-        data = {"msg": gettext("Delete failed"), "msg_type": "w", "http_status":400}
+        data = {
+            "msg": gettext("Delete failed"),
+            "msg_type": "w",
+            "http_status": 400}
     return data
 
 
 def comment_like():
     id = request.argget.all('id')
-    like_comment = mdb_user.db.user_like.find_one({"user_id": current_user.str_id, "type": "comment"})
+    like_comment = mdb_user.db.user_like.find_one(
+        {"user_id": current_user.str_id, "type": "comment"})
     if not like_comment:
         user_like = {
             "values": [],
@@ -258,16 +298,16 @@ def comment_like():
             "user_id": current_user.str_id
         }
         mdb_user.db.user_like.insert_one(user_like)
-        r1 = mdb_user.db.user_like.update_one({"user_id": current_user.str_id, "type": "comment"},
-                                              {"$addToSet": {"values": id}})
-        r2 = mdb_web.db.comment.update_one({"_id": ObjectId(id)},
-                                           {"$inc": {"like": 1}, "$addToSet": {"like_user_id": current_user.str_id}})
+        r1 = mdb_user.db.user_like.update_one(
+            {"user_id": current_user.str_id, "type": "comment"}, {"$addToSet": {"values": id}})
+        r2 = mdb_web.db.comment.update_one({"_id": ObjectId(id)}, {
+                                           "$inc": {"like": 1}, "$addToSet": {"like_user_id": current_user.str_id}})
 
     else:
         if id in like_comment["values"]:
             like_comment["values"].remove(id)
-            r2 = mdb_web.db.comment.update_one({"_id": ObjectId(id)},
-                                               {"$inc": {"like": -1}, "$pull": {"like_user_id": current_user.str_id}})
+            r2 = mdb_web.db.comment.update_one({"_id": ObjectId(id)}, {
+                                               "$inc": {"like": -1}, "$pull": {"like_user_id": current_user.str_id}})
         else:
             like_comment["values"].append(id)
             r2 = mdb_web.db.comment.update_one({"_id": ObjectId(id)}, {"$inc": {"like": 1}, "$addToSet": {
@@ -276,7 +316,7 @@ def comment_like():
                                               {"$set": {"values": like_comment["values"]}})
 
     if r1.modified_count and r2.modified_count:
-        data = {"msg": gettext("Success"), "msg_type": "s", "http_status":201}
+        data = {"msg": gettext("Success"), "msg_type": "s", "http_status": 201}
     else:
-        data = {"msg": gettext("Failed"), "msg_type": "w", "http_status":400}
+        data = {"msg": gettext("Failed"), "msg_type": "w", "http_status": 400}
     return data

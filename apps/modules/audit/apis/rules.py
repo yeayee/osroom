@@ -13,21 +13,28 @@ __author__ = 'Allen Woo'
 @osr_login_required
 @permission_required()
 def api_audit_rule_key():
-
-    '''
+    """
     GET:
         获取审核规则的所有key与说明, 也就config设置中的audit
         :return:
-    '''
+    """
     keys = get_config("name_audit", "AUDIT_PROJECT_KEY")
-    data = {"keys":keys}
+    data = {"keys": keys}
     return response_format(data)
 
-@api.route('/admin/audit/rule', methods=['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
+
+@api.route(
+    '/admin/audit/rule',
+    methods=[
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE'])
 @osr_login_required
 @permission_required()
 def api_audit_rule():
-    '''
+    """
     GET:
         1. 获取所有验证规则
         project:<str>, "username", "post_category",
@@ -44,7 +51,7 @@ def api_audit_rule():
         删除规则
         ids:<array>, rule ids
         :return:
-    '''
+    """
     if request.c_method == "GET":
         data = audit_rules()
     elif request.c_method == "POST":
@@ -52,5 +59,5 @@ def api_audit_rule():
     elif request.c_method == "DELETE":
         data = audit_rule_delete()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

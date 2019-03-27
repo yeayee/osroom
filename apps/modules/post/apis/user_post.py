@@ -9,12 +9,12 @@ from apps.modules.post.process.user_post import post_issue, post_restore, post_d
 
 __author__ = 'Allen Woo'
 
+
 @api.route('/user/post', methods=['POST', 'PUT', 'PATCH', 'DELETE'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_user_post_op():
-
-    '''
+    """
     POST:
         内容发布
         title:<str>, 标题
@@ -47,10 +47,10 @@ def api_user_post_op():
         ids:<array>, posts id
         recycle:<int>,1 or 0,　1：则移入回收站, 0: 则直接标记为永久删除, 管理员才可见
 
-    '''
+    """
     if request.c_method == "POST":
         data = post_issue()
-    elif request.c_method in ["PUT","PATCH"]:
+    elif request.c_method in ["PUT", "PATCH"]:
         if request.argget.all('op') == "restore":
             data = post_restore()
         else:
@@ -58,5 +58,5 @@ def api_user_post_op():
     elif request.c_method == "DELETE":
         data = post_delete()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

@@ -11,6 +11,7 @@ from apps.core.utils.get_config import get_config
 
 __author__ = "Allen Woo"
 
+
 class User(UserMixin):
 
     def __init__(self, id, **kwargs):
@@ -42,17 +43,18 @@ class User(UserMixin):
                 user_info_mphone_num = None
             else:
                 temp_num = str(self.mphone_num)
-                user_info_mphone_num = "{}****{}".format(temp_num[0:3], temp_num[-5:-1]),
+                user_info_mphone_num = "{}****{}".format(
+                    temp_num[0:3], temp_num[-5:-1]),
             self.user_info = {
-                "username":self.username,
-                "active":self.active,
-                "is_delete":self.is_delete,
-                "email":self.email,
-                "mphone_num":user_info_mphone_num,
-                "custom_domain":self.custom_domain,
-                "avatar_url":self.avatar_url,
-                "role_id":self.role_id,
-                "id":self.id
+                "username": self.username,
+                "active": self.active,
+                "is_delete": self.is_delete,
+                "email": self.email,
+                "mphone_num": user_info_mphone_num,
+                "custom_domain": self.custom_domain,
+                "avatar_url": self.avatar_url,
+                "role_id": self.role_id,
+                "id": self.id
             }
         else:
             return
@@ -62,36 +64,35 @@ class User(UserMixin):
         raise ArithmeticError(gettext('Password is not a readable attribute'))
 
     def verify_password(self, password):
-        '''
+        """
         密码验证
         :param password:
         :return:
-        '''
+        """
         user = get_one_user(user_id=str(self.id))
         return check_password_hash(user["password"], password)
 
     def can(self, permissions):
-        '''
+        """
         是否有权限
         :param permissions:
         :return:
-        '''
+        """
         if not permissions:
             return True
         else:
             if self.active and not self.is_delete:
-                role = mdb_user.db.role.find_one({"_id":self.role_id})
+                role = mdb_user.db.role.find_one({"_id": self.role_id})
                 return role and int(permissions) & int(role['permissions'])
             else:
                 return False
 
     def page_permission_check(self, urls):
-
-        '''
+        """
         验证页面路由访问权限
         :param urls: 数组
         :return:
-        '''
+        """
         for url in urls:
             custom_per = custom_url_permissions(url=url, method="GET")
             if custom_per and current_user.can(custom_per):
@@ -102,10 +103,9 @@ class User(UserMixin):
     @property
     def is_staff(self):
 
-        role = mdb_user.db.role.find_one({"_id":self.role_id})
+        role = mdb_user.db.role.find_one({"_id": self.role_id})
 
         return role and int(role['permissions']) & int(get_permission("STAFF"))
-
 
     @property
     def is_active(self):
@@ -121,7 +121,7 @@ class User(UserMixin):
 
     @property
     def get_role_name(self):
-        role = mdb_user.db.role.find_one({"_id":self.role_id})
+        role = mdb_user.db.role.find_one({"_id": self.role_id})
         if role:
             return role["name"]
         return gettext("Unknown")
@@ -132,6 +132,7 @@ class User(UserMixin):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
 
 class AnonymousUser(AnonymousUserMixin):
 
@@ -155,19 +156,19 @@ class AnonymousUser(AnonymousUserMixin):
 
 
 def insert_op_log(log, user_id=None):
-    '''
+    """
     插入操作日志
     :param log:
     :param user_id:
     :return:
-    '''
+    """
     if current_user.is_authenticated:
         user_id = current_user.str_id
     elif user_id:
         user_id = user_id
     else:
         return False
-    user_op_log = mdb_user.db.user_op_log.find_one({'user_id':user_id})
+    user_op_log = mdb_user.db.user_op_log.find_one({'user_id': user_id})
     if user_op_log and "logs" in user_op_log:
         logs = user_op_log["logs"]
     else:
@@ -176,6 +177,6 @@ def insert_op_log(log, user_id=None):
     than_num = len(logs) - get_config("weblogger", "USER_OP_LOG_KEEP_NUM")
     if than_num > 0:
         del logs[0:than_num]
-    mdb_user.db.user_op_log.update_one({'user_id':user_id},
-                                      {"$set":{"logs":logs}},
-                                      upsert=True)
+    mdb_user.db.user_op_log.update_one({'user_id': user_id},
+                                       {"$set": {"logs": logs}},
+                                       upsert=True)

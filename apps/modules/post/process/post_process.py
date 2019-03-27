@@ -15,9 +15,20 @@ from apps.core.utils.get_config import get_config
 __author__ = 'Allen Woo'
 
 
-def get_posts_pr(field=None, page=1, pre=10, status="is_issued", sort=None, time_range=None,
-               matching_rec=None, keyword=None, other_filter=None, is_admin=False, *args, **kwargs):
-    '''
+def get_posts_pr(
+        field=None,
+        page=1,
+        pre=10,
+        status="is_issued",
+        sort=None,
+        time_range=None,
+        matching_rec=None,
+        keyword=None,
+        other_filter=None,
+        is_admin=False,
+        *args,
+        **kwargs):
+    """
     获取一些指定的post
     :param field:
     :param page:
@@ -32,11 +43,11 @@ def get_posts_pr(field=None, page=1, pre=10, status="is_issued", sort=None, time
     :param args:
     :param kwargs:
     :return:
-    '''
+    """
 
     if pre > get_config("post", "NUM_PAGE_MAX"):
-        data = {"msg":gettext('The "pre" must not exceed the maximum amount'),
-                "msg_type":"e", "http_status":400}
+        data = {"msg": gettext('The "pre" must not exceed the maximum amount'),
+                "msg_type": "e", "http_status": 400}
         return data
     query_conditions = {}
     if other_filter:
@@ -59,10 +70,12 @@ def get_posts_pr(field=None, page=1, pre=10, status="is_issued", sort=None, time
     use_cache = False
     if status == "no_issued":
         query_conditions['$or'] = [
-            {'issued':0},
-            {'is_delete':1},
-            {'audited':1, 'audit_score':{"$gte":get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE")}},
-        ]
+            {
+                'issued': 0}, {
+                'is_delete': 1}, {
+                'audited': 1, 'audit_score': {
+                    "$gte": get_config(
+                        "content_inspection", "ALLEGED_ILLEGAL_SCORE")}}, ]
     elif status == "draft":
         query_conditions['issued'] = 0
         query_conditions['is_delete'] = 0
@@ -72,19 +85,25 @@ def get_posts_pr(field=None, page=1, pre=10, status="is_issued", sort=None, time
         query_conditions['is_delete'] = 0
         # 没有审核, 而且默认评分涉嫌违规的
         query_conditions['audited'] = 0
-        query_conditions['audit_score'] = {"$gte": get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE")}
+        query_conditions['audit_score'] = {
+            "$gte": get_config(
+                "content_inspection",
+                "ALLEGED_ILLEGAL_SCORE")}
 
     elif status == "unqualified":
         query_conditions['issued'] = 1
         query_conditions['is_delete'] = 0
         query_conditions['audited'] = 1
-        query_conditions['audit_score'] = {"$gte":get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE")}
+        query_conditions['audit_score'] = {
+            "$gte": get_config(
+                "content_inspection",
+                "ALLEGED_ILLEGAL_SCORE")}
 
     elif status == "recycle":
         query_conditions['is_delete'] = 1
 
     elif status == "user_remove":
-        query_conditions['is_delete'] = {"$in":[2,3]}
+        query_conditions['is_delete'] = {"$in": [2, 3]}
 
     else:
         if not current_user.is_authenticated:
@@ -98,15 +117,18 @@ def get_posts_pr(field=None, page=1, pre=10, status="is_issued", sort=None, time
 
         query_conditions['issued'] = 1
         query_conditions['is_delete'] = 0
-        query_conditions['audit_score'] = {"$lt":get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE")}
+        query_conditions['audit_score'] = {
+            "$lt": get_config(
+                "content_inspection",
+                "ALLEGED_ILLEGAL_SCORE")}
 
     if keyword:
-        keyword = {"$regex":keyword, "$options":"$i"}
-        query_conditions["$or"] = [{"title":keyword},
-                                    {"content":keyword},
-                                    {"category":keyword},
-                                    {"tag":keyword}
-                                    ]
+        keyword = {"$regex": keyword, "$options": "$i"}
+        query_conditions["$or"] = [{"title": keyword},
+                                   {"content": keyword},
+                                   {"category": keyword},
+                                   {"tag": keyword}
+                                   ]
     # sort
     if sort:
         for i in range(0, len(sort)):
@@ -117,27 +139,34 @@ def get_posts_pr(field=None, page=1, pre=10, status="is_issued", sort=None, time
     # time_range
     if time_range:
         now_time = time.time()
-        gt_time = (now_time - 86400*(time_range-1)) - now_time%86400
-        query_conditions["issue_time"] = {'$gt':gt_time}
+        gt_time = (now_time - 86400 * (time_range - 1)) - now_time % 86400
+        query_conditions["issue_time"] = {'$gt': gt_time}
 
     get_userinfo = kwargs.get("get_userinfo", True)
 
     if use_cache:
         return get_posts_use_cache(query_conditions=query_conditions,
-                        field=field, sort=sort,
-                        pre=pre,
-                        page=page,
-                        get_userinfo=get_userinfo)
+                                   field=field, sort=sort,
+                                   pre=pre,
+                                   page=page,
+                                   get_userinfo=get_userinfo)
     else:
         return get_posts_query(query_conditions=query_conditions,
-                        field=field, sort=sort,
-                        pre=pre,
-                        page=page,
-                        get_userinfo=get_userinfo)
+                               field=field, sort=sort,
+                               pre=pre,
+                               page=page,
+                               get_userinfo=get_userinfo)
 
-@cache.cached(timeout=get_config("post","GET_POST_CACHE_TIME_OUT"))
-def get_posts_use_cache(query_conditions, field, sort, pre, page, get_userinfo):
-    '''
+
+@cache.cached(timeout=get_config("post", "GET_POST_CACHE_TIME_OUT"))
+def get_posts_use_cache(
+        query_conditions,
+        field,
+        sort,
+        pre,
+        page,
+        get_userinfo):
+    """
     调用get_posts_query, 主要提供缓存功能
     :param query_conditions:
     :param field:
@@ -146,11 +175,18 @@ def get_posts_use_cache(query_conditions, field, sort, pre, page, get_userinfo):
     :param page:
     :param get_userinfo:
     :return:
-    '''
-    return get_posts_query(query_conditions, field, sort, pre, page, get_userinfo)
+    """
+    return get_posts_query(
+        query_conditions,
+        field,
+        sort,
+        pre,
+        page,
+        get_userinfo)
+
 
 def get_posts_query(query_conditions, field, sort, pre, page, get_userinfo):
-    '''
+    """
     提供查询条件等获取文章
     :param query_conditions:
     :param field:
@@ -159,7 +195,7 @@ def get_posts_query(query_conditions, field, sort, pre, page, get_userinfo):
     :param page:
     :param get_userinfo:
     :return:
-    '''
+    """
     data = {}
     if field:
         ps = mdb_web.db.post.find(query_conditions, field)
@@ -167,33 +203,44 @@ def get_posts_query(query_conditions, field, sort, pre, page, get_userinfo):
         ps = mdb_web.db.post.find(query_conditions)
 
     data_cnt = ps.count(True)
-    posts = list(ps.sort(sort).skip(pre*(page-1)).limit(pre))
+    posts = list(ps.sort(sort).skip(pre * (page - 1)).limit(pre))
     for post in posts:
         post = objid_to_str(post, ["_id", "user_id", "audit_user_id"])
         # image
         if "cover_url" in post and post["cover_url"]:
             post["cover_url"] = get_file_url(post["cover_url"])
-        if "imgs" in post and  len(post["imgs"]):
+        if "imgs" in post and len(post["imgs"]):
             for i in range(0, len(post["imgs"])):
                 post["imgs"][i] = get_file_url(post["imgs"][i])
 
-        if not "user_id" in query_conditions.keys() and get_userinfo:
-            s, r = get_user_public_info(user_id=post["user_id"], is_basic=False)
+        if "user_id" not in query_conditions.keys() and get_userinfo:
+            s, r = get_user_public_info(
+                user_id=post["user_id"], is_basic=False)
             if s:
                 post["user"] = r
         # category
         if "category" in post and post["category"]:
             post["category"] = str(post["category"])
-            category = mdb_web.db.category.find_one({"_id":ObjectId(post["category"])})
+            category = mdb_web.db.category.find_one(
+                {"_id": ObjectId(post["category"])})
             if category:
                 post["category_name"] = category["name"]
 
-    data["posts"] = datas_paging(pre=pre, page_num=page, data_cnt = data_cnt, datas = posts)
+    data["posts"] = datas_paging(
+        pre=pre,
+        page_num=page,
+        data_cnt=data_cnt,
+        datas=posts)
     return data
 
 
-def get_post_pr(post_id="", other_filter=None, is_admin=False, *args, **kwargs):
-    '''
+def get_post_pr(
+        post_id="",
+        other_filter=None,
+        is_admin=False,
+        *args,
+        **kwargs):
+    """
     获取一个Post
     :param post_id:
     :param other_filter:
@@ -201,7 +248,7 @@ def get_post_pr(post_id="", other_filter=None, is_admin=False, *args, **kwargs):
     :param args:
     :param kwargs:
     :return:
-    '''
+    """
     data = {}
     query_conditions = {}
     if isinstance(other_filter, dict):
@@ -212,9 +259,11 @@ def get_post_pr(post_id="", other_filter=None, is_admin=False, *args, **kwargs):
     post = mdb_web.db.post.find_one(query_conditions)
     if post:
         if not is_admin:
-            if not post["issued"] or post["is_delete"] or post["audit_score"] >= get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE"):
+            if not post["issued"] or post["is_delete"] or post["audit_score"] >= get_config(
+                    "content_inspection", "ALLEGED_ILLEGAL_SCORE"):
                 # 未公开的
-                if not current_user.is_authenticated or current_user.str_id != str(post["user_id"]):
+                if not current_user.is_authenticated or current_user.str_id != str(
+                        post["user_id"]):
                     # 没有权限访问
                     abort(401)
 
@@ -225,12 +274,13 @@ def get_post_pr(post_id="", other_filter=None, is_admin=False, *args, **kwargs):
             for i in range(0, imgs_l):
                 post["imgs"][i] = get_file_url(post["imgs"][i])
 
-        s,r = get_user_public_info(user_id=post["user_id"], is_basic=False)
+        s, r = get_user_public_info(user_id=post["user_id"], is_basic=False)
         if s:
             post["user"] = r
         data["post"] = post
         if "category" in post and post["category"]:
-            category = mdb_web.db.category.find_one({"_id":ObjectId(str(post["category"]))})
+            category = mdb_web.db.category.find_one(
+                {"_id": ObjectId(str(post["category"]))})
             if category:
                 data["post"]["category_name"] = category["name"]
 
@@ -242,18 +292,18 @@ def get_post_pr(post_id="", other_filter=None, is_admin=False, *args, **kwargs):
 
 
 def delete_post(ids=[]):
-
-    '''
+    """
     完全删除一篇文章
     :return:
-    '''
-    posts = mdb_web.db.post.find({"_id":{"$in":ids}, "is_delete":{"$in":[2,3]}}, {"imgs":1})
+    """
+    posts = mdb_web.db.post.find(
+        {"_id": {"$in": ids}, "is_delete": {"$in": [2, 3]}}, {"imgs": 1})
     rm_pids = []
     if posts.count(True):
         for post in posts:
             # 删用户的post喜欢标记
-            mdb_user.db.user_like.update_many({"type":"post", "values":str(post["_id"])},
-                                             {"$pull":{"values":str(post["_id"])}})
+            mdb_user.db.user_like.update_many({"type": "post", "values": str(post["_id"])},
+                                              {"$pull": {"values": str(post["_id"])}})
 
             # 删图片
             for img in post["imgs"]:
@@ -262,24 +312,25 @@ def delete_post(ids=[]):
             if "cover_url" in post:
                 file_del(post["cover_url"])
             # 删post pv
-            mdb_web.db.access_record.delete_many({"post_id":post["_id"]})
-
+            mdb_web.db.access_record.delete_many({"post_id": post["_id"]})
 
             # 删除评论
-            comments = mdb_web.db.comment.find({"_target_id": post["_id"]}, {"_id":1})
+            comments = mdb_web.db.comment.find(
+                {"_target_id": post["_id"]}, {"_id": 1})
             mdb_web.db.comment.delete_many({"_target_id": post["_id"]})
             # 删用户的评论喜欢标记
             for comment in comments:
-                mdb_user.db.user_like.update_many({"type": "comment", "values": str(comment["_id"])},
-                                                  {"$pull": {"values": str(comment["_id"])}})
+                mdb_user.db.user_like.update_many({"type": "comment", "values": str(
+                    comment["_id"])}, {"$pull": {"values": str(comment["_id"])}})
             rm_pids.append(post["_id"])
 
-    r = mdb_web.db.post.delete_many({"_id":{"$in":rm_pids}, "is_delete":{"$in":[2,3]}})
+    r = mdb_web.db.post.delete_many(
+        {"_id": {"$in": rm_pids}, "is_delete": {"$in": [2, 3]}})
     if r.deleted_count:
-        data = {"msg":gettext("Removed from the database, {}").format(r.deleted_count),
-                "msg_type":"s", "http_status":204}
+        data = {"msg": gettext("Removed from the database, {}").format(
+            r.deleted_count), "msg_type": "s", "http_status": 204}
     else:
-        data = {"msg":gettext("No match to relevant data"),
-                "msg_type":"w", "http_status":400}
+        data = {"msg": gettext("No match to relevant data"),
+                "msg_type": "w", "http_status": 400}
 
     return data

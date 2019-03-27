@@ -16,10 +16,12 @@ from apps.configs.sys_config import PLUG_IN_FOLDER, PLUG_IN_FOLDER_NAME, PLUG_IN
 
 __author__ = "Allen Woo"
 
-class PluginManager():
-    '''
+
+class PluginManager:
+    """
     插件管理
-    '''
+    """
+
     def __init__(self):
         self.init_app()
 
@@ -32,25 +34,24 @@ class PluginManager():
         self.load_all_plugin()
 
     def load_plugin(self, plugin_name, is_import=False):
-
-        '''
+        """
         加载插件 import
         :param plugin_name:
         :return:
-        '''
+        """
 
         plug_path = os.path.join(self.plugin_path, plugin_name)
         s, r = verify_plugin(plug_path)
         if not s:
             # 标记插件为出错插件
-            mdb_sys.dbs["plugin"].update_one({"plugin_name": plugin_name, "update_time":{"$lt":self.current_time}},
-                                                 {"$set": {"error":r,
-                                                           "installed_time":self.current_time,
-                                                           "update_time":self.current_time,
-                                                            "active":0,
-                                                           "require_package_install_result":[]}
-                                                  },
-                                                 upsert=True)
+            mdb_sys.dbs["plugin"].update_one({"plugin_name": plugin_name,
+                                              "update_time": {"$lt": self.current_time}},
+                                             {"$set": {"error": r,
+                                                       "installed_time": self.current_time,
+                                                       "update_time": self.current_time,
+                                                       "active": 0,
+                                                       "require_package_install_result": []}},
+                                             upsert=True)
             return s, r
 
         # 查看是否有需求文件
@@ -66,23 +67,26 @@ class PluginManager():
             plug_conf = yaml.load(rf)
             hook_name = plug_conf["hook_name"]
             module = None
-            current_plug = mdb_sys.dbs["plugin"].find_one({"plugin_name": plugin_name})
+            current_plug = mdb_sys.dbs["plugin"].find_one(
+                {"plugin_name": plugin_name})
 
             freed = False
             # 如果插件存在, 并标记为删除，那就删除插件文件
             if current_plug and "is_deleted" in current_plug and current_plug["is_deleted"]:
                 try:
                     shutil.rmtree(plug_path)
-                except:
+                except BaseException:
                     pass
                 freed = True
 
             if is_import or (current_plug and current_plug["error"]):
                 # 需要导入插件模块或者插件模块之前鉴定有错误
                 startup_file_name = plug_conf["startup_file_name"]
-                plug_main_file_path = os.path.join(plug_path, startup_file_name)
+                plug_main_file_path = os.path.join(
+                    plug_path, startup_file_name)
                 if os.path.exists(plug_main_file_path):
-                    module_path = "apps.{}.{}.{}".format(PLUG_IN_FOLDER_NAME, plugin_name, startup_file_name[:-3])
+                    module_path = "apps.{}.{}.{}".format(
+                        PLUG_IN_FOLDER_NAME, plugin_name, startup_file_name[:-3])
                     try:
                         if module_path in sys.modules:
                             # 如果之前已加载
@@ -91,20 +95,25 @@ class PluginManager():
                             module = import_module(module_path)
                     except BaseException as e:
                         # 标记插件为出错插件
-                        mdb_sys.dbs["plugin"].update_one({"plugin_name": plugin_name,
-                                                          "update_time":{"$lt":self.current_time}},
-                                                         {"$set": {"error": str(e),
-                                                                   "update_time": self.current_time,
-                                                                   "active": 0,
-                                                                   "requirements_exist":requirements_exist,
-                                                                   "require_package_install_result": []}
-                                                          },
-                                                         upsert=True)
+                        mdb_sys.dbs["plugin"].update_one(
+                            {
+                                "plugin_name": plugin_name,
+                                "update_time": {
+                                    "$lt": self.current_time}},
+                            {
+                                "$set": {
+                                    "error": str(e),
+                                    "update_time": self.current_time,
+                                    "active": 0,
+                                    "requirements_exist": requirements_exist,
+                                    "require_package_install_result": []}},
+                            upsert=True)
 
                         return False, str(e)
 
                 else:
-                    return False, "{} {}".format(gettext("Plugin startup file does not exist"), plug_main_file_path)
+                    return False, "{} {}".format(
+                        gettext("Plugin startup file does not exist"), plug_main_file_path)
 
             # 需要更新的数据
             plug_conf["plugin_name"] = plugin_name
@@ -124,7 +133,7 @@ class PluginManager():
 
                 # 更新插件信息到数据库
                 mdb_sys.dbs["plugin"].update_one({"plugin_name": plugin_name,
-                                                  "update_time":{"$lt":self.current_time}},
+                                                  "update_time": {"$lt": self.current_time}},
                                                  {"$set": plug_conf})
 
             else:
@@ -135,15 +144,18 @@ class PluginManager():
                 mdb_sys.dbs["plugin"].insert_one(plug_conf)
 
             # 清理遗留缓存
-            cache.delete_autokey(fun="get_plugin_info", db_type="redis", hook_name=hook_name)
-            return True, {"module": module, "hook_name": hook_name, "plugin_name": plugin_name}
-
+            cache.delete_autokey(
+                fun="get_plugin_info",
+                db_type="redis",
+                hook_name=hook_name)
+            return True, {"module": module,
+                          "hook_name": hook_name, "plugin_name": plugin_name}
 
     def load_all_plugin(self):
-        '''
+        """
         加载全部插件
         :return:
-        '''
+        """
         # 遍历插件目录
         plugins = os.listdir(self.plugin_path)
         self.current_time = time.time()
@@ -156,15 +168,15 @@ class PluginManager():
                 self.load_plugin(f)
 
         # 清理已不存在插件的信息
-        mdb_sys.dbs["plugin"].delete_many({"update_time":{"$lt":self.current_time}})
+        mdb_sys.dbs["plugin"].delete_many(
+            {"update_time": {"$lt": self.current_time}})
 
     def call_plug(self, hook_name, *args, **kwargs):
-
-        '''
+        """
         通过hook_name调用已注册插件
         :param hook_name:
         :return:
-        '''
+        """
         data = "__no_plugin__"
         # 获取一个已激活插件
         activated_plugin = get_plugin_info(hook_name=hook_name)
@@ -187,12 +199,11 @@ class PluginManager():
         return data
 
     def register_plugin(self, plugin_name):
-
-        '''
+        """
         注册插件
         :param plugin_name:
         :return:
-        '''
+        """
         self.current_time = time.time()
         s, r = self.load_plugin(plugin_name, is_import=True)
         if s:
@@ -202,18 +213,19 @@ class PluginManager():
         return False
 
     def unregister_plugin(self, plugin_name):
-        '''
+        """
         注销插件, 只能
         :param pLuginName:
         :return:
-        '''
+        """
         if plugin_name in self.__registered_plugin_name_list:
-            for k,v in self.__registered_plugin.items():
+            for k, v in self.__registered_plugin.items():
                 if plugin_name == v["plugin_name"]:
                     del v["module"]
                     del self.__registered_plugin[k]
                     return True
         return False
+
 
 def verify_plugin(plugin_path):
 
@@ -224,13 +236,15 @@ def verify_plugin(plugin_path):
             req_conf = PLUG_IN_REQUIRED_CONF.copy()
             req_conf = list(set(req_conf).difference(set(plug_conf.keys())))
             if req_conf:
-                data = gettext('Configuration file "conf.yaml" but few parameters "{}"').format(", ".join(req_conf))
+                data = gettext('Configuration file "conf.yaml" but few parameters "{}"').format(
+                    ", ".join(req_conf))
                 return False, data
             elif not os.path.exists(os.path.join(plugin_path, plug_conf["startup_file_name"])):
                 data = gettext('Missing startup file in plugin package')
                 return False, data
 
-        startup_file = os.path.join(plugin_path, plug_conf["startup_file_name"])
+        startup_file = os.path.join(
+            plugin_path, plug_conf["startup_file_name"])
         func_main_exists = False
         with open(startup_file) as rf:
             for line in rf.readlines():
@@ -248,16 +262,17 @@ def verify_plugin(plugin_path):
         data = "The plugin of the upload is incorrect, the configuration file(conf.yaml) does not exist"
         return False, data
 
-@cache.cached(timeout=86400*7, key_base64=False, db_type="redis")
-def get_plugin_info(hook_name):
 
-    '''
+@cache.cached(timeout=86400 * 7, key_base64=False, db_type="redis")
+def get_plugin_info(hook_name):
+    """
     获取插件信息
     :hook_name url:
     :return:
-    '''
-    value = mdb_sys.dbs["plugin"].find_one({"hook_name": hook_name,"active":{"$in":[1, True]}},
-                                           {"_id": 0})
+    """
+    value = mdb_sys.dbs["plugin"].find_one(
+        {"hook_name": hook_name, "active": {"$in": [1, True]}}, {"_id": 0})
     return value
+
 
 plugin_manager = PluginManager()

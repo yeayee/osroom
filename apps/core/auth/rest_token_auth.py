@@ -16,11 +16,12 @@ from apps.utils.format.obj_format import objid_to_str
 
 __author__ = "Allen Woo"
 
-class RestTokenAuth():
 
-    '''
+class RestTokenAuth:
+
+    """
     客户端验证
-    '''
+    """
 
     @staticmethod
     def encode_auth_token():
@@ -30,7 +31,7 @@ class RestTokenAuth():
         :return: string
         """
         pyver_info = sys.version_info
-        if pyver_info[0]==3 and pyver_info[1]==6:
+        if pyver_info[0] == 3 and pyver_info[1] == 6:
             # 3.6版本以上才使用secrets
             import secrets
             id = "{}{}".format(str(uuid1()), secrets.token_urlsafe(32))
@@ -39,23 +40,23 @@ class RestTokenAuth():
 
         return {"token": base64.b64encode(id.encode()).decode()}
 
-    '''
+    """
     SecretToken
-    '''
-    def create_secret_token(self):
+    """
 
+    def create_secret_token(self):
         """
         管理端创建secret token
         """
 
-        tokens = mdb_sys.db.sys_token.find({"token_type" : "secret_token"})
+        tokens = mdb_sys.db.sys_token.find({"token_type": "secret_token"})
         if tokens.count(True) < 2:
             result = self.encode_auth_token()
 
-            token = {"token_type":"secret_token",
-                     "key":result["token"],
-                     "token":result["token"],
-                     "is_active":1,
+            token = {"token_type": "secret_token",
+                     "key": result["token"],
+                     "token": result["token"],
+                     "is_active": 1,
                      "time": time.time()}
             r = mdb_sys.db.sys_token.insert_one(token)
             token["_id"] = str(r.inserted_id)
@@ -64,14 +65,13 @@ class RestTokenAuth():
         return False, gettext("Create up to 2 tokens")
 
     def activate_secret_token(self, token_id):
-
         """
         激活secret token
         :return:
         """
 
         r = mdb_sys.db.sys_token.update_one({"_id": ObjectId(token_id)},
-                                                       {"$set":{"is_active":1}})
+                                            {"$set": {"is_active": 1}})
         if r.modified_count:
             cache.delete(REST_SECRET_TOKEN_CACHE_KEY)
             return True, gettext("Activate token successfully")
@@ -79,13 +79,12 @@ class RestTokenAuth():
             return False, gettext("Activation token failed")
 
     def disable_secret_token(self, token_id):
-
         """
         停用secret token
         :return:
         """
-        if mdb_sys.db.sys_token.find({"token_type": "secret_token",
-                                      "is_active":{"$in":[1,True]}}).count(True)>1:
+        if mdb_sys.db.sys_token.find({"token_type": "secret_token", "is_active": {
+                                     "$in": [1, True]}}).count(True) > 1:
             r = mdb_sys.db.sys_token.update_one({"_id": ObjectId(token_id)},
                                                 {"$set": {"is_active": 0}})
 
@@ -98,13 +97,13 @@ class RestTokenAuth():
             return False, gettext("Keep at least one active token")
 
     def delete_secret_token(self, token_id):
-
         """
         删除token, 至少保留一个token
         :return:
         """
 
-        if mdb_sys.db.sys_token.find({"token_type": "secret_token"}).count(True) > 1:
+        if mdb_sys.db.sys_token.find(
+                {"token_type": "secret_token"}).count(True) > 1:
             r = mdb_sys.db.sys_token.delete_one({"_id": ObjectId(token_id)})
             if r.deleted_count > 0:
                 cache.delete(REST_SECRET_TOKEN_CACHE_KEY)
@@ -114,13 +113,14 @@ class RestTokenAuth():
         else:
             return False, gettext("Delete failed, keep at least one token")
 
-
     @property
-    @cache.cached(key=REST_SECRET_TOKEN_CACHE_KEY, timeout=REST_SECRET_TOKEN_CACHE_TIMEOUT)
+    @cache.cached(
+        key=REST_SECRET_TOKEN_CACHE_KEY,
+        timeout=REST_SECRET_TOKEN_CACHE_TIMEOUT)
     def get_secret_tokens(self):
-        token_info = mdb_sys.db.sys_token.find({"token_type" : "secret_token"})
+        token_info = mdb_sys.db.sys_token.find({"token_type": "secret_token"})
         if not token_info.count(True):
-            s,r = self.create_secret_token()
+            s, r = self.create_secret_token()
             token_info = [r]
         else:
             token_info = objid_to_str(token_info)
@@ -128,9 +128,8 @@ class RestTokenAuth():
         for token in token_info:
             if token["is_active"]:
                 is_active_token.append(token["token"])
-        data = {"token_info":token_info, "is_active_token":is_active_token}
+        data = {"token_info": token_info, "is_active_token": is_active_token}
         return data
-
 
     def auth_rest_token(self):
 
@@ -146,8 +145,11 @@ class RestTokenAuth():
                     # 使用的是SecretToken, 固定Token
                     if not auth_header[1] in self.get_secret_tokens["is_active_token"]:
                         # SecretToken无效
-                        response = current_app.make_response(gettext("Invalid SecretToken for OSR-RestsToken"))
-                        raise SecretTokenError(response.get_data(as_text=True), response=response)
+                        response = current_app.make_response(
+                            gettext("Invalid SecretToken for OSR-RestsToken"))
+                        raise SecretTokenError(
+                            response.get_data(
+                                as_text=True), response=response)
 
                 elif auth_header[0] == "AccessToken":
                     auth_token_type = "access_token"
@@ -158,61 +160,83 @@ class RestTokenAuth():
             else:
                 is_malformed = True
             if is_malformed:
-                response = current_app.make_response(gettext("Token malformed, should be 'SecretToken <token>'"
-                                                             " or 'AccessToken <token>' and 'ClientId <client_id>'"))
-                raise SecretTokenError(response.get_data(as_text=True), response=response)
+                response = current_app.make_response(
+                    gettext(
+                        "Token malformed, should be 'SecretToken <token>'"
+                        " or 'AccessToken <token>' and 'ClientId <client_id>'"))
+                raise SecretTokenError(
+                    response.get_data(
+                        as_text=True),
+                    response=response)
         else:
             response = current_app.make_response(
-                gettext('Token is miss, unconventional web browsing requests please provide "OSR-RestToken",'
-                        ' otherwise provide "X-CSRFToken"'))
-            raise OsrTokenError(response.get_data(as_text=True), response=response)
+                gettext(
+                    'Token is miss, unconventional web browsing requests please provide "OSR-RestToken",'
+                    ' otherwise provide "X-CSRFToken"'))
+            raise OsrTokenError(
+                response.get_data(
+                    as_text=True),
+                response=response)
 
         return auth_token_type
 
-
-    '''
+    """
     Client Token
-    '''
+    """
 
     def create_access_token(self):
-
         """
         创建client token, 用于rest api常用验证
         """
         r = self.auth_rest_token()
         if r == "secret_token":
-            client_token = {"token":self.encode_auth_token()["token"],
-                            "expiration":time.time()+get_config("rest_auth_token", "REST_ACCESS_TOKEN_LIFETIME")}
+            client_token = {
+                "token": self.encode_auth_token()["token"],
+                "expiration": time.time() +
+                get_config(
+                    "rest_auth_token",
+                    "REST_ACCESS_TOKEN_LIFETIME")}
             sid = rest_session.set("access_token", client_token)
             if sid:
-                data = {"client_id":sid, "access_token":client_token["token"]}
+                data = {
+                    "client_id": sid,
+                    "access_token": client_token["token"]}
             else:
-                data = {"msg":gettext("Failed to get, please try again"),
-                        "msg_type":"w", "http_status":400}
+                data = {"msg": gettext("Failed to get, please try again"),
+                        "msg_type": "w", "http_status": 400}
         else:
-            data = {"msg": gettext("The OSR-RestToken provided by the request header is not a SecretToken"),
-                    "msg_type": "w", "http_status": 400}
+            data = {
+                "msg": gettext("The OSR-RestToken provided by the request header is not a SecretToken"),
+                "msg_type": "w",
+                "http_status": 400}
         return data
 
-
     def auth_access_token(self, token):
-
-        '''
+        """
         验证client id 与client token
         :return:
-        '''
+        """
         se_token = rest_session.get("access_token")
         if se_token:
 
-            if se_token["token"] != token or se_token["expiration"]<=time.time():
+            if se_token["token"] != token or se_token["expiration"] <= time.time():
                 # 验证失败或者已过期
-                response = current_app.make_response(gettext("Invalid AccessToken or AccessToken has expired"))
-                raise AccessTokenError(response.get_data(as_text=True), response=response)
+                response = current_app.make_response(
+                    gettext("Invalid AccessToken or AccessToken has expired"))
+                raise AccessTokenError(
+                    response.get_data(
+                        as_text=True),
+                    response=response)
         else:
 
             # 找不到相关token
-            response = current_app.make_response(gettext("Can not find the ClientId matching 'AccessToken'"))
-            raise AccessTokenError(response.get_data(as_text=True), response=response)
+            response = current_app.make_response(
+                gettext("Can not find the ClientId matching 'AccessToken'"))
+            raise AccessTokenError(
+                response.get_data(
+                    as_text=True),
+                response=response)
+
 
 class SecretTokenError(Unauthorized):
     """
@@ -220,11 +244,13 @@ class SecretTokenError(Unauthorized):
     """
     description = gettext('SecretToken in OSr-RestToken is invalid')
 
+
 class AccessTokenError(Unauthorized):
     """
     错误请求类： AccessToken错误
     """
     description = gettext('AccessToken in OSr-RestToken is invalid')
+
 
 class OsrTokenError(Unauthorized):
     """

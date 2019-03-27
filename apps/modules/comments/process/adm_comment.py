@@ -10,6 +10,7 @@ from apps.app import mdb_web, mdb_user
 from apps.core.utils.get_config import get_config
 __author__ = "Allen Woo"
 
+
 def adm_comments():
 
     sort = json_to_pyseq(request.argget.all('sort'))
@@ -17,32 +18,47 @@ def adm_comments():
     keyword = request.argget.all('keyword', "")
     page = int(request.argget.all('page', 1))
     pre = int(request.argget.all('pre', 10))
-    basic_query = {'issued':1, 'is_delete':0}
+    basic_query = {'issued': 1, 'is_delete': 0}
 
-    data = find_comments(query_conditions=basic_query, page=page, pre=pre, sort=sort, keyword=keyword,status=status)
+    data = find_comments(
+        query_conditions=basic_query,
+        page=page,
+        pre=pre,
+        sort=sort,
+        keyword=keyword,
+        status=status)
     return data
+
 
 def adm_comment_audit():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
-    score= int(request.argget.all("score", 0))
+    score = int(request.argget.all("score", 0))
     for i in range(0, len(ids)):
         ids[i] = ObjectId(ids[i])
-    r = mdb_web.db.comment.update_many({"_id":{"$in":ids}},
-                               {"$set":{"audited":1, "audit_score":score,
-                                        "audit_way":"artificial", "audit_user_id":current_user.str_id}})
+    r = mdb_web.db.comment.update_many({"_id": {"$in": ids}},
+                                       {"$set": {"audited": 1,
+                                                 "audit_score": score,
+                                                 "audit_way": "artificial",
+                                                 "audit_user_id": current_user.str_id}})
     if r.modified_count:
 
         if score >= get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE"):
 
             # 审核不通过，给用户通知
-            coms = mdb_web.db.comment.find({"_id": {"$in": ids}},
-                                         {"user_id":1, "content":1, "_id":1, "audit_score":1})
+            coms = mdb_web.db.comment.find({"_id": {"$in": ids}}, {
+                                           "user_id": 1, "content": 1, "_id": 1, "audit_score": 1})
             for com in coms:
-                msg_content = {"text":com["content"]}
-                insert_user_msg(user_id=com["user_id"], ctype="notice", label="comment",
-                                title=gettext("Comment on alleged violations"), content=msg_content,
-                                target_id=str(com["_id"]), target_type="comment")
+                msg_content = {"text": com["content"]}
+                insert_user_msg(
+                    user_id=com["user_id"],
+                    ctype="notice",
+                    label="comment",
+                    title=gettext("Comment on alleged violations"),
+                    content=msg_content,
+                    target_id=str(
+                        com["_id"]),
+                    target_type="comment")
         else:
             # 审核通过, 给被评论对象通知
             coms = mdb_web.db.comment.find({"_id": {"$in": ids}})
@@ -60,45 +76,57 @@ def adm_comment_audit():
                     msg_content["reply_user_id"] = com["reply_user_id"],
                     msg_content["reply_username"] = com["reply_username"]
 
+                insert_user_msg(
+                    user_id=user_ids,
+                    ctype="notice",
+                    label="comment",
+                    title=com["target_brief_info"],
+                    content=msg_content,
+                    target_id=com["target_id"],
+                    target_type=com["type"])
 
-                insert_user_msg(user_id=user_ids, ctype="notice", label="comment",
-                                title=com["target_brief_info"],
-                                content=msg_content,
-                                target_id=com["target_id"],
-                                target_type=com["type"])
-
-        data = {"msg":gettext("Submitted successfully, {}").format(r.modified_count),
-                "msg_type":"s", "http_status":201}
+        data = {"msg": gettext("Submitted successfully, {}").format(
+            r.modified_count), "msg_type": "s", "http_status": 201}
     else:
-        data = {"msg":gettext("Submitted failed"), "msg_type":"w", "http_status":400}
+        data = {
+            "msg": gettext("Submitted failed"),
+            "msg_type": "w",
+            "http_status": 400}
     return data
+
 
 def adm_comment_delete():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
-    pending_delete= int(request.argget.all("pending_delete", 1))
+    pending_delete = int(request.argget.all("pending_delete", 1))
 
     for i in range(0, len(ids)):
         ids[i] = ObjectId(ids[i])
     if pending_delete:
-        r = mdb_web.db.comment.update_many({"_id":{"$in":ids}},{"$set":{"is_delete":2}})
+        r = mdb_web.db.comment.update_many(
+            {"_id": {"$in": ids}}, {"$set": {"is_delete": 2}})
         if r.modified_count:
-            data = {"msg":gettext("Move to a permanently deleted area, {}").format(r.modified_count),
-                    "msg_type":"s", "http_status":204}
+            data = {"msg": gettext("Move to a permanently deleted area, {}").format(
+                r.modified_count), "msg_type": "s", "http_status": 204}
         else:
-            data = {"msg":gettext("Does not match the data to be deleted"), "msg_type":"w", "http_status":400}
+            data = {
+                "msg": gettext("Does not match the data to be deleted"),
+                "msg_type": "w",
+                "http_status": 400}
     else:
         for id in ids:
-            mdb_user.db.user_like.update_many({"type":"comment", "values":str(id)},
-                                             {"$pull":{"values":str(id)}})
-        r = mdb_web.db.comment.delete_many({"_id":{"$in":ids}, "is_delete":{"$in":[1,2]}})
+            mdb_user.db.user_like.update_many({"type": "comment", "values": str(id)},
+                                              {"$pull": {"values": str(id)}})
+        r = mdb_web.db.comment.delete_many(
+            {"_id": {"$in": ids}, "is_delete": {"$in": [1, 2]}})
         if r.deleted_count:
-            data = {"msg":gettext("Removed from the database, {}").format(r.deleted_count),
-                    "msg_type":"s", "http_status":204}
+            data = {"msg": gettext("Removed from the database, {}").format(
+                r.deleted_count), "msg_type": "s", "http_status": 204}
         else:
-            data = {"msg":gettext("No match to relevant data"),
-                    "msg_type":"w", "http_status":400}
+            data = {"msg": gettext("No match to relevant data"),
+                    "msg_type": "w", "http_status": 400}
     return data
+
 
 def adm_comment_restore():
 
@@ -106,11 +134,15 @@ def adm_comment_restore():
 
     for i in range(0, len(ids)):
         ids[i] = ObjectId(ids[i])
-    r = mdb_web.db.comment.update_many({"_id":{"$in":ids}, "is_delete":{"$in":[1,2]}},{"$set":{"is_delete":0}})
+    r = mdb_web.db.comment.update_many({"_id": {"$in": ids}, "is_delete": {
+                                       "$in": [1, 2]}}, {"$set": {"is_delete": 0}})
     if r.modified_count:
-        data = {"msg":gettext("Restore success, {}").format(r.modified_count),
-                "msg_type":"s", "http_status":201}
+        data = {"msg": gettext("Restore success, {}").format(r.modified_count),
+                "msg_type": "s", "http_status": 201}
     else:
-        data = {"msg":gettext("No match to relevant data"), "msg_type":"w", "http_status":400}
+        data = {
+            "msg": gettext("No match to relevant data"),
+            "msg_type": "w",
+            "http_status": 400}
 
     return data

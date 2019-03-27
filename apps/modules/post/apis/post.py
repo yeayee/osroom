@@ -12,7 +12,7 @@ __author__ = 'Allen Woo'
 @api.route('/post/tags', methods=['GET'])
 @permission_required(use_default=False)
 def api_post_tags():
-    '''
+    """
     GET:
         获取文章tag
         last_days:<int>, 获取最近几天时间的文章的tag
@@ -24,19 +24,18 @@ def api_post_tags():
         user_id:<str>, 获取单个用户的文章tag, 默认是全部用户的文章tag
         limit:<int>, 获取多少个tag
     :return:
-    '''
+    """
     if request.c_method == "GET":
         data = get_tags()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
 
 
 @api.route('/post', methods=['GET'])
 @permission_required(use_default=False)
 def api_post():
-
-    '''
+    """
     GET:
         1.获取一篇文章
         post_id:<str>,post id
@@ -62,7 +61,7 @@ def api_post():
         category_id:<str>, 获取指定文集的post时需要此参数
         tag:<str>, 获取存在此tag的posts时需要此参数
 
-    '''
+    """
 
     if request.c_method == "GET":
         if request.argget.all('post_id'):
@@ -70,7 +69,7 @@ def api_post():
         else:
             data = get_posts()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
 
 
@@ -78,17 +77,16 @@ def api_post():
 @osr_login_required
 @permission_required(use_default=False)
 def api_post_op():
-
-    '''
+    """
     PUT:
         喜欢文章
         action:<str>, 可以是like(点赞文章)
         id:<str>, post id
 
-    '''
+    """
     if request.c_method == "PUT":
         if request.argget.all('action') == "like":
             data = post_like()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

@@ -7,12 +7,12 @@ from apps.modules.user.process.email import email_update
 
 __author__ = "Allen Woo"
 
+
 @api.route('/account/email', methods=['PUT'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_account_email():
-
-    '''
+    """
     PUT
         账户邮件修改
         email:<email>, 要绑定的新邮箱
@@ -21,6 +21,6 @@ def api_account_email():
         password:<str>, 账户的登录密码
 
         :return:
-    '''
+    """
     data = email_update()
     return response_format(data)

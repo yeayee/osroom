@@ -11,11 +11,11 @@ from apps.modules.setting.process.settings import sys_config_version, conf_versi
     sys_config_edit
 
 __author__ = 'Allen Woo'
-@api.route('/admin/setting/sys/config/version', methods=['GET','PUT'])
+@api.route('/admin/setting/sys/config/version', methods=['GET', 'PUT'])
 @osr_login_required
 @permission_required()
 def api_sys_config_version():
-    '''
+    """
     GET:
         获取所有的系统配置版本, 和网站服务器主机
     PUT:
@@ -25,20 +25,21 @@ def api_sys_config_version():
         host_ip:<str>, 主机ip
 
     :return:
-    '''
+    """
     if request.c_method == "GET":
         data = sys_config_version()
     elif request.c_method == "PUT":
         data = conf_version_switch()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)
 
-@api.route('/admin/setting/sys/config', methods=['GET','PUT'])
+
+@api.route('/admin/setting/sys/config', methods=['GET', 'PUT'])
 @osr_login_required
 @permission_required()
 def api_sys_config():
-    '''
+    """
     GET:
         根据project获取当前最新配置(特殊配置将不会返回,如不允许再页面编辑的,即那些不带有"__restart__"key的)
         project:<array>, 能同时获取多个project的数据.不使用此参数则表示获取全部配置
@@ -51,11 +52,11 @@ def api_sys_config():
         info:<str>, 说明
 
     :return:
-    '''
+    """
     if request.c_method == "GET":
         data = get_sys_configs()
     elif request.c_method == "PUT":
         data = sys_config_edit()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

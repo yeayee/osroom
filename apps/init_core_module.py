@@ -9,17 +9,17 @@ from apps.configs.sys_config import CONFIG_CACHE_KEY, BABEL_TRANSLATION_DIRECTOR
     SESSION_COOKIE_PATH, SESSION_COOKIE_HTTPONLY, SESSION_COOKIE_SECURE, CSRF_ENABLED, WTF_CSRF_CHECK_DEFAULT, \
     WTF_CSRF_METHODS, SESSION_USE_SIGNER, PRESERVE_CONTEXT_ON_EXCEPTION, PLUG_IN_CONFIG_CACHE_KEY
 
-'''
+"""
 初始化一些核心模块
-'''
+"""
+
 
 def init_core_module(app):
-
-    '''
+    """
     初始化核心模块
     :param app:
     :return:
-    '''
+    """
     # app config
     web_start_log.info("Initialize the core module")
 
@@ -63,7 +63,8 @@ def init_core_module(app):
     from apps.core.flask.routing import push_url_to_db
 
     # 最大请求大小
-    app.config["MAX_CONTENT_LENGTH"] = get_config("system", "MAX_CONTENT_LENGTH")*1024*1024
+    app.config["MAX_CONTENT_LENGTH"] = get_config(
+        "system", "MAX_CONTENT_LENGTH") * 1024 * 1024
     # Session会话配置
     session_config = get_configs("session")
     session_config["SESSION_PROTECTION"] = SESSION_PROTECTION

@@ -13,31 +13,36 @@ from apps.configs.sys_config import LOG_PATH, WEBLOG_NORMAL_FILENAME, WEBLOG_EXC
 
 __author__ = 'Allen Woo'
 
-class WebLogger():
+
+class WebLogger:
 
     def __init__(self):
         self.set_logger = Logger().set_logger
 
     def init_app(self, app):
 
-        filename = os.path.abspath("{}/{}".format(LOG_PATH, WEBLOG_NORMAL_FILENAME))
-        normal_log, handler_normal = self.set_logger(WEBLOG_NORMAL_LEVEL, filename, 'web_normal', LOG_FORMATTER)
+        filename = os.path.abspath(
+            "{}/{}".format(LOG_PATH, WEBLOG_NORMAL_FILENAME))
+        normal_log, handler_normal = self.set_logger(
+            WEBLOG_NORMAL_LEVEL, filename, 'web_normal', LOG_FORMATTER)
 
-        filename = os.path.abspath("{}/{}".format(LOG_PATH, WEBLOG_EXCEP_FILENAME))
-        error_log, handler_error = self.set_logger(WEBLOG_EXCEP_LEVEL, filename, 'web_error', LOG_FORMATTER)
+        filename = os.path.abspath(
+            "{}/{}".format(LOG_PATH, WEBLOG_EXCEP_FILENAME))
+        error_log, handler_error = self.set_logger(
+            WEBLOG_EXCEP_LEVEL, filename, 'web_error', LOG_FORMATTER)
 
         @app.before_request
         def before_request_log():
-
-            '''
+            """
             DEFORE REQUEST
             :return:
-            '''
+            """
 
             global _weblog_g
             _weblog_g = {"log": {}}
             st = time.time()
-            _weblog_g["log"]['request_id'] = uuid1()  # "{}{}".format(st, randint(1, 1000000))
+            # "{}{}".format(st, randint(1, 1000000))
+            _weblog_g["log"]['request_id'] = uuid1()
             g.weblog_id = _weblog_g["log"]['request_id']
             _weblog_g["log"]['st'] = st
             _weblog_g["log"]['ip'] = request.remote_addr
@@ -48,16 +53,16 @@ class WebLogger():
 
         @app.teardown_request
         def teardown_request_log(exception):
-
-            '''
+            """
             Teardown request
             :param exception:
             :return:
-            '''
+            """
 
             try:
                 _weblog_g["log"]["method"] = request.c_method
-                _weblog_g["log"]['u_t_m'] = "{} ms".format((time.time() - _weblog_g["log"]['st']) * 1000)
+                _weblog_g["log"]['u_t_m'] = "{} ms".format(
+                    (time.time() - _weblog_g["log"]['st']) * 1000)
                 normal_log.info("[api|view] {}".format(_weblog_g["log"]))
                 if exception:
                     error_log.error(_weblog_g["log"])
@@ -67,20 +72,26 @@ class WebLogger():
                 error_log.error(_weblogger_error)
 
     def start_log(self):
-
-        '''
+        """
         :return: logger obj
-        '''
+        """
 
-        filename = os.path.abspath("{}/{}".format(LOG_PATH, WEBLOG_START_FILENAME))
-        sys_start_log, handler_start = self.set_logger(set_level=logging.INFO, logfile=filename,
-                                                       get_log_name='sys_start', formatter=LOG_FORMATTER)
+        filename = os.path.abspath(
+            "{}/{}".format(LOG_PATH, WEBLOG_START_FILENAME))
+        sys_start_log, handler_start = self.set_logger(
+            set_level=logging.INFO, logfile=filename, get_log_name='sys_start', formatter=LOG_FORMATTER)
         return sys_start_log
 
-class Logger():
 
-    def set_logger(self, set_level=logging.INFO,  logfile="{}.log".format(time.time()),
-                   get_log_name='logger', formatter='%(asctime)s %(levelname)s %(message)s'):
+class Logger:
+
+    def set_logger(
+            self,
+            set_level=logging.INFO,
+            logfile="{}.log".format(
+                time.time()),
+            get_log_name='logger',
+            formatter='%(asctime)s %(levelname)s %(message)s'):
 
         if not os.path.exists(os.path.split(logfile)[0]):
             os.makedirs(os.path.split(logfile)[0])
@@ -98,5 +109,6 @@ class Logger():
         logging.getLogger('{}'.format(get_log_name)).setLevel(logging.INFO)
         logg = logging.getLogger(get_log_name)
         return logg, file_handler
+
 
 web_start_log = WebLogger().start_log()

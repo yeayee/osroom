@@ -7,12 +7,12 @@ from apps.core.flask.response import response_format
 from apps.modules.user.process.avatar_upload import avatar_upload
 __author__ = "Allen Woo"
 
+
 @api.route('/account/upload/avatar', methods=['PUT'])
 @osr_login_required
 @permission_required(use_default=False)
 def api_avatar_upload():
-
-    '''
+    """
     PUT
         头像上传
         注意:虽然服务的提供图片裁剪功能，由于耗费服务器资源,非必要情况下请不要使用，请再客户端裁剪好再上传.
@@ -29,9 +29,6 @@ def api_avatar_upload():
 
 
     :return:
-    '''
+    """
     data = avatar_upload()
     return response_format(data)
-
-
-

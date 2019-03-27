@@ -7,22 +7,23 @@ from apps.modules.global_data.process.global_data import get_global_media, get_g
 
 __author__ = "Allen Woo"
 
+
 @api.route('/global', methods=['GET'])
 @permission_required(use_default=False)
 def api_current_global():
-    '''
+    """
     GET:
         获取当前全局数据,包括站点的公开设置, 当前登录用户的基本可公开信息
         :return:
-    '''
+    """
     data = get_global_site_data(req_type="api")
     return response_format(data)
+
 
 @api.route('/global/media', methods=['GET'])
 @permission_required(use_default=False)
 def api_get_media():
-
-    '''
+    """
     GET:
         1.获取指定的多媒体数据
         conditions:<array:dict>, Such as:[{'type':<str>, 'names':<array>, 'name_regex':''}]
@@ -50,7 +51,7 @@ def api_get_media():
         media_id:<str>
 
         :return:
-    '''
+    """
 
     data = get_global_media(dbname="mdb_web", collname="media")
     return response_format(data)
@@ -59,8 +60,7 @@ def api_get_media():
 @api.route('/global/theme-data/display', methods=['GET'])
 @permission_required(use_default=False)
 def api_get_theme_display_data():
-
-    '''
+    """
     GET:
         1.获取主题展示用的多媒体数据
         conditions:<array:dict>, Such as:[{'type':<str>, 'names':<array>, 'name_regex':''}]
@@ -78,7 +78,7 @@ def api_get_theme_display_data():
             ]
 
         :return:
-    '''
+    """
 
     data = get_global_media(dbname="mdb_sys", collname="theme_display_setting")
     return response_format(data)

@@ -8,7 +8,7 @@ sys.path.append(project_path)
 from tools.usage import usage_help
 __author__ = 'Allen Woo'
 
-class Transations():
+class Transations:
 
     def main(self):
 
@@ -79,9 +79,9 @@ class Transations():
 
     def init_tr(self):
 
-        '''
+        """
         compile transations
-        '''
+        """
         self.cfg_sack()
 
         if not self.quiet:
@@ -106,9 +106,9 @@ class Transations():
 
     def update_tr(self):
 
-        '''
+        """
         update transations
-        '''
+        """
 
         self.cfg_sack()
 
@@ -131,9 +131,9 @@ class Transations():
 
     def compile_tr(self):
 
-        '''
+        """
         compile transations
-        '''
+        """
 
         if not self.quiet:
             self.redirect = ""

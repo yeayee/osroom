@@ -9,12 +9,18 @@ from apps.core.flask.response import response_format
 from apps.modules.media.process.media import add_media, get_media, edit_media, del_media, get_medias
 __author__ = "Allen Woo"
 
-@api.route('/admin/upload/media-file', methods=['GET','POST',"PUT","DELETE"])
+
+@api.route(
+    '/admin/upload/media-file',
+    methods=[
+        'GET',
+        'POST',
+        "PUT",
+        "DELETE"])
 @osr_login_required
 @permission_required()
 def api_add_media():
-
-    '''
+    """
     GET
         1.获取多个多媒体信息
         file_type:<str>, 文件类型,可选"image", "video", "audio", "other"
@@ -91,7 +97,7 @@ def api_add_media():
         删除多媒体文件
         ids:<array>,要删除的文件的id
         :return:
-    '''
+    """
     if request.c_method == "GET":
         if request.argget.all("id"):
             data = get_media(0)

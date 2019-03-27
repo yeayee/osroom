@@ -1,22 +1,21 @@
 #-*-coding:utf-8-*-
 import sys
 from signal import signal, SIGCHLD, SIG_IGN
-
 from pymongo.errors import OperationFailure
-
 from apps.configs.config import CONFIG
 from apps.core.db.config_mdb import DatabaseConfig
 from apps.core.utils.sys_tool import update_pylib, add_user as add_user_process
 
 __author__ = 'all.woo'
 
-'''
+"""
 manage
-'''
+"""
+
 # 更新python第三方库
 print(" * Check or update Python third-party libraries")
 CONFIG["py_venv"]["VENV_PATH"]["value"] = sys.prefix
-update_pylib(input_venv_path = False)
+update_pylib(input_venv_path=False)
 
 # 网站还未启动的时候, 连接数据库, 更新collection
 from apps.core.utils.update_db_collection import update_mdb_collections, init_datas
@@ -65,15 +64,18 @@ start_info()
 init_core_module(app)
 module_import(MODULES)
 manager = Manager(app)
-if not "--debug" in sys.argv and not "-D" in sys.argv:
-    print(" * Signal:(SIGCHLD, SIG_IGN).Prevent child processes from becoming [Defunct processes].(Do not need to comment out)")
+if "--debug" not in sys.argv and "-D" not in sys.argv:
+    print(" * Signal:(SIGCHLD, SIG_IGN).Prevent child processes from becoming [Defunct processes]."
+          "(Do not need to comment out)")
     signal(SIGCHLD, SIG_IGN)
+
 
 @manager.command
 def add_user():
     update_mdb_collections(mdb_user=mdb_user, mdb_web=mdb_web, mdb_sys=mdb_sys)
     init_datas(mdb_user=mdb_user, mdb_web=mdb_web, mdb_sys=mdb_sys)
     add_user_process(mdb_user)
+
 
 if __name__ == '__main__':
     manager.run()

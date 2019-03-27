@@ -5,20 +5,22 @@ from apps.core.utils.get_config import get_config
 
 __author__ = 'Allen Woo'
 
+
 def content_inspection_text(content):
-    '''
+    """
     文本内容鉴定
     :param content:
     :return:
-    '''
+    """
     if get_config("content_inspection", "TEXT_OPEN"):
         # 调用内容审核插件
-        data = plugin_manager.call_plug("content_inspection_text", content=content)
+        data = plugin_manager.call_plug(
+            "content_inspection_text", content=content)
         if data == "__no_plugin__":
             if current_user.is_authenticated and current_user.is_staff:
-                return {"score":0, "label":"no_plugin"}
+                return {"score": 0, "label": "no_plugin"}
             else:
-                return {"score":100, "label": "no_plugin"}
+                return {"score": 100, "label": "no_plugin"}
         else:
             return data
     else:
@@ -26,11 +28,11 @@ def content_inspection_text(content):
 
 
 def content_inspection_image(url):
-    '''
+    """
     图片鉴定
     :param url:图片url
     :return:
-    '''
+    """
     if get_config("content_inspection", "IMAGE_OPEN"):
         # 调用内容审核插件
         data = plugin_manager.call_plug("content_inspection_image", url=url)
@@ -46,11 +48,11 @@ def content_inspection_image(url):
 
 
 def content_inspection_video(url):
-    '''
+    """
     视频鉴定
     :param url:视频url
     :return:
-    '''
+    """
     if get_config("content_inspection", "VEDIO_OPEN"):
         # 调用内容审核插件
         data = plugin_manager.call_plug("content_inspection_video", url=url)
@@ -66,11 +68,11 @@ def content_inspection_video(url):
 
 
 def content_inspection_audio(url):
-    '''
+    """
     音频鉴定
     :param url:音频url
     :return:
-    '''
+    """
     if get_config("content_inspection", "AUDIO_OPEN"):
         # 调用内容审核插件
         data = plugin_manager.call_plug("content_inspection_audio", url=url)

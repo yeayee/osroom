@@ -13,11 +13,12 @@ from apps.modules.user.process.user import User
 
 __author__ = "Allen Woo"
 
-class JwtAuth():
 
-    '''
+class JwtAuth:
+
+    """
     JWT用户验证
-    '''
+    """
 
     @staticmethod
     def encode_auth_token(user_id, login_time):
@@ -28,7 +29,9 @@ class JwtAuth():
         :return: string
         """
         iat = datetime.datetime.utcnow()
-        exp = iat + datetime.timedelta(days=0, seconds=get_config("rest_auth_token", "LOGIN_LIFETIME"))
+        exp = iat + datetime.timedelta(days=0,
+                                       seconds=get_config("rest_auth_token",
+                                                          "LOGIN_LIFETIME"))
 
         try:
             payload = {
@@ -38,11 +41,15 @@ class JwtAuth():
                 'data': {
                     'id': user_id,
                     'login_time': login_time,
-                    'cid':str(uuid1())
+                    'cid': str(uuid1())
                 }
             }
-            return {"token":jwt.encode(payload, current_app.secret_key,algorithm='HS256'),
-                    "cid":payload["data"]["cid"]}
+            return {
+                "token": jwt.encode(
+                    payload,
+                    current_app.secret_key,
+                    algorithm='HS256'),
+                "cid": payload["data"]["cid"]}
         except Exception as e:
             return e
 
@@ -54,7 +61,12 @@ class JwtAuth():
         :return: integer|string
         """
         try:
-            payload = jwt.decode(auth_token, current_app.secret_key, leeway=get_config("rest_auth_token", "LOGIN_LIFETIME"))
+            payload = jwt.decode(
+                auth_token,
+                current_app.secret_key,
+                leeway=get_config(
+                    "rest_auth_token",
+                    "LOGIN_LIFETIME"))
             #payload = jwt.decode(auth_token, get_config("key", "SECRET_KEY"), options={'verify_exp': True})
             if ('data' in payload and 'id' in payload['data']):
                 return payload
@@ -69,7 +81,6 @@ class JwtAuth():
             return gettext('Invalid OSR-BearerToken')
 
     def get_login_token(self, user):
-
         """
         用户登录成功后调用此函数,记录登录并获取token
         :param user:
@@ -79,15 +90,17 @@ class JwtAuth():
         result = self.encode_auth_token(user.str_id, now_time)
 
         # 查看当前jwt验证的登录客户端数
-        user_jwt = mdb_user.db.user.find_one({"_id": user.id, "jwt_login_time":{"$exists":True}},
-                                         {"jwt_login_time":1})
+        user_jwt = mdb_user.db.user.find_one(
+            {"_id": user.id, "jwt_login_time": {"$exists": True}}, {"jwt_login_time": 1})
         if user_jwt:
             jwt_login_time = user_jwt["jwt_login_time"]
             keys = jwt_login_time.keys()
-            if len(keys) >= get_config("rest_auth_token","MAX_SAME_TIME_LOGIN"):
+            if len(keys) >= get_config(
+                "rest_auth_token",
+                    "MAX_SAME_TIME_LOGIN"):
                 earliest = 0
                 earliest_cid = None
-                for k,v in jwt_login_time.items():
+                for k, v in jwt_login_time.items():
                     if v < earliest or earliest == 0:
                         earliest = v
                         earliest_cid = k
@@ -98,11 +111,10 @@ class JwtAuth():
 
         jwt_login_time[result["cid"]] = now_time
         update_one_user(user_id=user.id,
-                        updata={"$set":{"jwt_login_time":jwt_login_time}})
+                        updata={"$set": {"jwt_login_time": jwt_login_time}})
         return result["token"].decode()
 
     def user_identify(self):
-
         """
         用户鉴权
         :return: (status, )
@@ -115,21 +127,24 @@ class JwtAuth():
             if not isinstance(payload, str):
                 user = User(ObjectId(payload['data']['id']))
                 if not user:
-                    result = (None, gettext("User authentication failed, user does not exist"))
+                    result = (
+                        None, gettext("User authentication failed, user does not exist"))
                 else:
                     if user.jwt_login_time and payload['data']["cid"] in user.jwt_login_time and \
                             user.jwt_login_time[payload['data']["cid"]] == payload['data']['login_time']:
                         result = (True, user)
                     else:
-                        result = (None, gettext('User authentication token expired or changed. Please log in again for access'))
+                        result = (None, gettext(
+                            'User authentication token expired or changed. Please log in again for access'))
             else:
                 result = (None, gettext("Token is abnormal"))
         else:
-            result = (None, gettext('No user authentication token provided "OSR-BearerToken"'))
+            result = (
+                None,
+                gettext('No user authentication token provided "OSR-BearerToken"'))
         return result
 
     def clean_login(self):
-
         """
         清理用户登录
         :return:
@@ -141,7 +156,8 @@ class JwtAuth():
             if not isinstance(payload, str):
                 user = get_one_user(user_id=str(payload['data']['id']))
                 if not user:
-                    result = (None, gettext("User authentication failed, user does not exist"))
+                    result = (
+                        None, gettext("User authentication failed, user does not exist"))
                 else:
                     if payload['data']["cid"] in user["jwt_login_time"] and \
                             user["jwt_login_time"][payload['data']["cid"]] == payload['data']['login_time']:
@@ -150,8 +166,10 @@ class JwtAuth():
                         user = get_one_user(user_id=str(payload['data']['id']))
 
                         del user["jwt_login_time"][payload["data"]["cid"]]
-                        update_one_user(user_id=payload["data"]["id"],
-                                        updata={"$set":{"jwt_login_time": user["jwt_login_time"]}})
+                        update_one_user(
+                            user_id=payload["data"]["id"], updata={
+                                "$set": {
+                                    "jwt_login_time": user["jwt_login_time"]}})
 
                         result = (True, "")
                     else:
@@ -159,5 +177,7 @@ class JwtAuth():
             else:
                 result = (None, payload)
         else:
-            result = (None, gettext('No user authentication token provided "OSR-BearerToken"'))
+            result = (
+                None,
+                gettext('No user authentication token provided "OSR-BearerToken"'))
         return result

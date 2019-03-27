@@ -10,11 +10,12 @@ from apps.modules.permission.process.permission import permission, permissions, 
 
 __author__ = "Allen Woo"
 
-@api.route('/admin/permission', methods=['GET','POST', 'PUT', 'DELETE'])
+
+@api.route('/admin/permission', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required()
 def api_permission():
-    '''
+    """
     GET:
         1.获取系统的权限数据详情
         pre:<int>,每页获取几条数据,默认10
@@ -28,22 +29,22 @@ def api_permission():
     POST:
         添加一个权限
         name:<str>, 名称
-    　　 position:<int>, 二进制中的位置
-    　　 explain:<str>,说明
+    　　 　　 position:<int>, 二进制中的位置
+    　　 　　 explain:<str>,说明
         is_default:<int>, 0表示不作为默认权限, 1表示作为默认权限之一
     PUT:
         更新权限
         id:<str>,id
         name:<str>, 名称
-    　　 position:<int>, 二进制中的位置
-    　　 explain:<str>,说明
+    　　 　　 position:<int>, 二进制中的位置
+    　　 　　 explain:<str>,说明
         is_default:<int>, 0表示不作为默认权限, 1表示作为默认权限之一
 
     DELETE:
         删除手动添加的页面路由
         ids:<array>
     :return:
-    '''
+    """
 
     if request.c_method == "GET":
         if request.argget.all("id"):
@@ -59,5 +60,5 @@ def api_permission():
     elif request.c_method == "DELETE":
         data = delete_per()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

@@ -9,11 +9,11 @@ from apps.modules.content_inform.process.inform import content_inform
 
 __author__ = 'Allen Woo'
 
+
 @api.route('/inform/content', methods=['PUT'])
 @permission_required(use_default=False)
 def api_content_inform():
-
-    '''
+    """
     PUT:
         内容违规举报
         ctype:<str>, 内容的类型可选:post(文章), comment(评论), media(多媒体), user(用户)
@@ -22,9 +22,9 @@ def api_content_inform():
         details：<str>, 违规详情(选填)
 
 
-    '''
+    """
     if request.c_method == "PUT":
         data = content_inform()
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

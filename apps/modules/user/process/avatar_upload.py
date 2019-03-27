@@ -18,27 +18,36 @@ from apps.utils.upload.get_filepath import get_file_url
 
 __author__ = "Allen Woo"
 
+
 def avatar_upload():
-    '''
+    """
     头像上传
     :return:
-    '''
+    """
     result = None
     imgfile_base = request.argget.all("imgfile_base")
     max_size_mb = get_config("account", "USER_AVATAR_MAX_SIZE")
-    max_size_b = max_size_mb*1024*1024
+    max_size_b = max_size_mb * 1024 * 1024
     if imgfile_base:
-        if len(imgfile_base) >max_size_b:
-            data = {"msg":gettext("Upload avatar image can not exceed {}M".format(max_size_mb)),
-                    "msg_type":"w", "http_status":413}
+        if len(imgfile_base) > max_size_b:
+            data = {
+                "msg": gettext(
+                    "Upload avatar image can not exceed {}M".format(max_size_mb)),
+                "msg_type": "w",
+                "http_status": 413}
             return data
         else:
-            result = fileup_base_64(uploaded_files = [imgfile_base], prefix="user_avatar/")
+            result = fileup_base_64(
+                uploaded_files=[imgfile_base],
+                prefix="user_avatar/")
     else:
         file = request.files['upfile']
         if len(file.read()) > max_size_b:
-            data = {"msg":gettext("Upload avatar image can not exceed {}M".format(max_size_mb)),
-                    "msg_type":"w", "http_status":413}
+            data = {
+                "msg": gettext(
+                    "Upload avatar image can not exceed {}M".format(max_size_mb)),
+                "msg_type": "w",
+                "http_status": 413}
             return data
 
         if file:
@@ -48,7 +57,10 @@ def avatar_upload():
                     tailoring = json.loads(tailoring)
                 for k in ["width", "height", "x", "y", "rotate"]:
                     tailoring.setdefault(k, 0)
-            result = file_up(uploaded_files=[file], prefix="user_avatar/", tailoring=tailoring)
+            result = file_up(
+                uploaded_files=[file],
+                prefix="user_avatar/",
+                tailoring=tailoring)
 
     data = {}
     if result:
@@ -56,16 +68,21 @@ def avatar_upload():
         user = get_one_user(user_id=current_user.str_id)
         if user:
             if user['avatar_url'] and "key" in user['avatar_url'] \
-                    and  result["key"] != user['avatar_url']["key"]:
+                    and result["key"] != user['avatar_url']["key"]:
                 # 当使用了不同的名字删除老的头像
                 file_del(user['avatar_url'])
 
             update_data = {
-                "avatar_url" : result
+                "avatar_url": result
             }
-            r = update_one_user(user_id=current_user.str_id, updata={"$set":update_data})
+            r = update_one_user(
+                user_id=current_user.str_id, updata={
+                    "$set": update_data})
             if not r.matched_count:
-                data = {'msg':gettext("Save failed"), 'msg_type':"w", "http_status":400}
+                data = {
+                    'msg': gettext("Save failed"),
+                    'msg_type': "w",
+                    "http_status": 400}
             else:
                 if result["type"] == "local":
                     # 如果保存再本地的话, 保存为一定尺寸大小
@@ -73,9 +90,15 @@ def avatar_upload():
                     imgcp = ImageCompression(path, path)
                     ava_size = get_config("account", "USER_AVATAR_SIZE")
                     imgcp.custom_pixels(ava_size[0], ava_size[1])
-                data = {'msg':gettext("Save successfully"), 'msg_type':"s", "http_status":201}
+                data = {
+                    'msg': gettext("Save successfully"),
+                    'msg_type': "s",
+                    "http_status": 201}
     if not data:
-        data = {'msg':gettext("Upload failed"), 'msg_type':"w", "http_status":400}
+        data = {
+            'msg': gettext("Upload failed"),
+            'msg_type': "w",
+            "http_status": 400}
 
     # 清理user信息数据缓存
     delete_user_info_cache(user_id=current_user.str_id)

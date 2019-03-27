@@ -10,8 +10,7 @@ __author__ = "Allen Woo"
 @api.route('/search', methods=['GET'])
 @permission_required(use_default=False)
 def api_search():
-
-    '''
+    """
     GET:
         搜索(暂不支持全文搜索), 只能搜索文章, 用户
         keyword:<str>, Search keywords
@@ -19,7 +18,7 @@ def api_search():
         page:<int>,第几页，默认第1页
         pre:<int>, 每页多少条
 
-    '''
+    """
 
     data = search_process()
     return response_format(data)

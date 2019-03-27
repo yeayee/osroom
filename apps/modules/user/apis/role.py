@@ -11,11 +11,12 @@ from apps.modules.user.process.role import role, roles, add_role, edit_role, del
 
 __author__ = "Allen Woo"
 
-@api.route('/admin/role', methods=['GET','POST', 'PUT','DELETE'])
+
+@api.route('/admin/role', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required()
 def api_role():
-    '''
+    """
     GET:
         1. 获取指定ID的角色
         id:<str> ,role id
@@ -41,7 +42,7 @@ def api_role():
     DELETE:
         删除角色
         ids:<arry>, role ids
-    '''
+    """
 
     if request.c_method == "GET":
         if request.argget.all('id'):
@@ -59,5 +60,5 @@ def api_role():
         data = delete_role()
 
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

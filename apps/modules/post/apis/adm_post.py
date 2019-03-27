@@ -14,7 +14,7 @@ from apps.modules.post.process.adm_post import adm_get_post, adm_get_posts, adm_
 @osr_login_required
 @permission_required()
 def api_adm_post():
-    '''
+    """
     GET:
         1. 根据条件获取文章
         sort:<array>,排序, 1表示升序, -1表示降序.如:
@@ -51,7 +51,7 @@ def api_adm_post():
         ids:<array>, posts id
         pending_delete:<int>, 1: 标记is_delete为3, 对于post属于的用户永久删除, 0:从数据库删除数据
         :return:
-    '''
+    """
 
     if request.c_method == "GET":
         if request.argget.all('post_id'):
@@ -59,7 +59,7 @@ def api_adm_post():
         else:
             data = adm_get_posts()
 
-    elif request.c_method in ["PUT","PATCH"]:
+    elif request.c_method in ["PUT", "PATCH"]:
         if request.argget.all("op") == "audit":
             data = adm_post_audit()
         elif request.argget.all("op") == "restore":
@@ -69,5 +69,5 @@ def api_adm_post():
         data = adm_post_delete()
 
     else:
-        data = {"msg_type":"w", "msg":METHOD_WARNING, "http_status":405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
     return response_format(data)

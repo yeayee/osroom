@@ -1,4 +1,4 @@
-#-*-coding:utf-8-*-
+# -*-coding:utf-8-*-
 from flask_babel import gettext
 from flask_login import current_user
 from functools import wraps
@@ -10,16 +10,17 @@ from apps.core.flask.response import response_format
 from apps.core.utils.get_config import get_config
 
 __author__ = 'woo'
-'''
+"""
 decorators
-'''
+"""
+
 
 def permission_required(use_default=True):
-    '''
+    """
     权限验证
     :param permission:
     :return:
-    '''
+    """
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
@@ -36,18 +37,20 @@ def permission_required(use_default=True):
             else:
                 r = True
             if not r:
-                return response_format({"msg":gettext('Permission denied,requires "{}" permission').format(keys),
-                        "msg_type":"w", "http_status":401})
+                return response_format({"msg": gettext('Permission denied,requires "{}" permission').format(
+                    keys), "msg_type": "w", "http_status": 401})
             return f(*args, **kwargs)
         return decorated_function
     return decorator
 
 # page url permission required
+
+
 def page_permission_required():
-    '''
+    """
     页面路由权限验证
     :return:
-    '''
+    """
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
@@ -59,44 +62,55 @@ def page_permission_required():
                 r = current_user.can(custom_per)
                 if not r:
                     keys = " or ".join(get_permission_key(custom_per))
-                    return response_format({"msg": gettext('Permission denied,requires "{}" permission').format(keys),
-                            "msg_type": "w", "http_status": 401})
+                    return response_format({"msg": gettext('Permission denied,requires "{}" permission').format(
+                        keys), "msg_type": "w", "http_status": 401})
             return f(*args, **kwargs)
         return decorated_function
     return decorator
 
-@cache.cached(timeout=3600, key_base64=False, key=GET_DEFAULT_SYS_PER_CACHE_KEY, db_type="redis")
+
+@cache.cached(
+    timeout=3600,
+    key_base64=False,
+    key=GET_DEFAULT_SYS_PER_CACHE_KEY,
+    db_type="redis")
 def get_permissions_default():
-    '''
+    """
     获取所有权限值,并相"|"
     :return:
-    '''
-    query = {"value":{"$exists":True}, "is_default":1}
+    """
+    query = {"value": {"$exists": True}, "is_default": 1}
     pers = mdb_user.dbs["permission"].find(query)
     value = 0b0
     for per in pers:
         value = value | per["value"]
     return value
 
-@cache.cached(timeout=3600, key_base64=False, key=GET_ALL_PERS_CACHE_KEY, db_type="redis")
+
+@cache.cached(
+    timeout=3600,
+    key_base64=False,
+    key=GET_ALL_PERS_CACHE_KEY,
+    db_type="redis")
 def get_permissions():
-    '''
+    """
     获取所有权限
 
     :return:{name:<value>}
-    '''
-    query = {"value":{"$exists":True}}
+    """
+    query = {"value": {"$exists": True}}
     pers = mdb_user.dbs["permission"].find(query)
     value = {}
     for per in pers:
         value[per["name"]] = per["value"]
     return value
 
+
 def get_permission(name):
-    '''
+    """
     获取一个权限值
     :return:
-    '''
+    """
     pers = get_permissions()
     if name in pers:
         value = pers[name]
@@ -104,14 +118,15 @@ def get_permission(name):
         value = 0
     return value
 
+
 def get_permission_key(permission):
-    '''
+    """
     获取一个权限包括了那些权限, 返回他们的key
     :param permission:
     :return:
-    '''
+    """
     keys = []
-    for k,v in get_permissions().items():
+    for k, v in get_permissions().items():
         if int(v) & int(permission):
             keys.append(k)
 
@@ -119,10 +134,10 @@ def get_permission_key(permission):
 
 
 def custom_url_permissions(url=None, method="GET"):
-    '''
+    """
     获取自定义权限
     :return:
-    '''
+    """
     if not url:
         url = request.path
         method = request.c_method
@@ -133,24 +148,25 @@ def custom_url_permissions(url=None, method="GET"):
 
 
 def custom_url_login_auth(url=None, method="GET"):
-    '''
+    """
     获取自定义权限
     :return:
-    '''
+    """
     if not url:
         url = request.path
         method = request.c_method
 
     url_per = get_sys_url(url=url.rstrip("/"))
-    if url_per and url_per["type"]!="page" and method in url_per["login_auth"]:
+    if url_per and url_per["type"] != "page" and method in url_per["login_auth"]:
         return url_per["login_auth"][method]
+
 
 @cache.cached(timeout=3600, key_base64=False, db_type="redis")
 def get_sys_url(url):
-    '''
+    """
     获取url权限等信息
     :param url:
     :return:
-    '''
-    value = mdb_sys.db.sys_urls.find_one({"url": url}, {"_id":0})
+    """
+    value = mdb_sys.db.sys_urls.find_one({"url": url}, {"_id": 0})
     return value

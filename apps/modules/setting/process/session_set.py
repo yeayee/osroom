@@ -7,6 +7,7 @@ from apps.core.utils.get_config import get_config
 
 __author__ = "Allen Woo"
 
+
 def language_set():
 
     lan = request.argget.all('language', "zh_CN")
@@ -17,9 +18,14 @@ def language_set():
         session["language"] = lan
 
     if lan in list(get_config('babel', 'LANGUAGES').keys()):
-        data = {"msg_type":"s", "msg":gettext("Set up language success"), "http_status":201}
+        data = {
+            "msg_type": "s",
+            "msg": gettext("Set up language success"),
+            "http_status": 201}
     else:
-        data = {"msg_type": "e", "msg": gettext("Does not support this language"),
-                "http_status": 400}
+        data = {
+            "msg_type": "e",
+            "msg": gettext("Does not support this language"),
+            "http_status": 400}
 
     return data
