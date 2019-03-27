@@ -5,7 +5,6 @@ from flask_babel import gettext
 from apps.app import mdb_sys
 import regex as re
 from apps.core.flask.reqparse import arg_verify
-from apps.core.flask.response import response_format
 from apps.core.utils.get_config import get_config
 from apps.utils.format.obj_format import json_to_pyseq
 from apps.utils.pyssh.pyssh import audit_host_info, MySSH
@@ -70,9 +69,10 @@ def sys_host_edit():
 def sys_host_delete():
 
     ids = json_to_pyseq(request.argget.all('ids', []))
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
-    r = mdb_sys.db.sys_host.delete_many({"_id": {"$in": ids}})
+
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
+    r = mdb_sys.db.sys_host.delete_many({"_id":{"$in":ids}})
     if r.deleted_count:
         data = {"msg": gettext("Successfully deleted {} host information").format(
             r.deleted_count), "msg_type": "s", "http_status": 204}

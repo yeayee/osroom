@@ -28,15 +28,15 @@ class DatabaseConfig:
                 self.session_dbname = conf["dbname"]
 
             # 拼接uri
-            hosts = "mongodb://{username}:{password}@".format(
-                username=conf["username"], password=conf["password"])
-            n = len(conf["host"])
-            # Connect the cluster
-            for i in range(0, n):
-                if i == (n - 1):
-                    hosts = "{}{}".format(hosts, conf["host"][i])
+            hosts = "mongodb://{username}:{password}@".format(username=conf["username"],
+                                                              password=conf["password"])
+            l = len(conf["host"])
+            for i, chost in enumerate(conf["host"]):
+                if i == (l - 1):
+                    hosts = "{}{}".format(hosts, chost)
                 else:
-                    hosts = "{}{},".format(hosts, conf["host"][i])
+                    hosts = "{}{},".format(hosts, chost)
+
             hosts_uri = "%s/{}" % (hosts)
 
             # 其他配置

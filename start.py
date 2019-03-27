@@ -12,7 +12,7 @@ __author__ = 'all.woo'
 manage
 """
 
-# 更新python第三方库
+# 更新python第三方类库
 print(" * Check or update Python third-party libraries")
 CONFIG["py_venv"]["VENV_PATH"]["value"] = sys.prefix
 update_pylib(input_venv_path=False)

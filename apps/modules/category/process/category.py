@@ -145,10 +145,10 @@ def category_delete(user_id=None):
     if not isinstance(ids, list):
         ids = json.loads(ids)
 
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
-    r = mdb_web.db.category.delete_many(
-        {"_id": {"$in": ids}, "user_id": user_id})
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
+    r = mdb_web.db.category.delete_many({"_id": {"$in": ids},
+                                         "user_id": user_id})
     if r.deleted_count > 0:
         data = {"msg": gettext("Delete the success,{}").format(
             r.deleted_count), "msg_type": "s", "http_status": 204}

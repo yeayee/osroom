@@ -207,8 +207,8 @@ def delete_url():
     """
     ids = json_to_pyseq(request.argget.all("ids", []))
 
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
 
     url_pers = list(mdb_sys.db.sys_urls.find(
         {"_id": {"$in": ids}}, {"url": 1}))

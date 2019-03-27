@@ -1,6 +1,5 @@
 # -*-coding:utf-8-*-
 import json
-
 import markdown
 from bson import ObjectId
 from flask import request
@@ -218,10 +217,11 @@ def post_delete():
         is_delete = 2
         msg = gettext("Delete the success")
 
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
-    r = mdb_web.db.post.update_one({"_id": {"$in": ids}, "user_id": current_user.str_id}, {
-                                   "$set": {"is_delete": is_delete}})
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
+    r = mdb_web.db.post.update_one({"_id": {"$in": ids},
+                                    "user_id": current_user.str_id},
+                                   {"$set": {"is_delete": is_delete}})
     if r.modified_count:
         data = {"msg": gettext("{},{}").format(msg, r.modified_count),
                 "msg_type": "s", "http_status": 201}
@@ -238,8 +238,8 @@ def post_restore():
     ids = json_to_pyseq(request.argget.all('ids', []))
     if not isinstance(ids, list):
         ids = json.loads(ids)
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
 
     r = mdb_web.db.post.update_one({"_id": {"$in": ids},
                                     "user_id": current_user.str_id,

@@ -247,10 +247,11 @@ def comment_issue():
 def comment_delete():
     ids = json_to_pyseq(request.argget.all('ids', []))
     reply_ids = ids[:]
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
-    r1 = mdb_web.db.comment.update_many(
-        {"_id": {"$in": ids}, "user_id": current_user.str_id}, {"$set": {"is_delete": 1}})
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
+    r1 = mdb_web.db.comment.update_many({"_id": {"$in": ids},
+                                         "user_id": current_user.str_id},
+                                         {"$set": {"is_delete": 1}})
 
     if r1.modified_count:
 

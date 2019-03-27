@@ -58,8 +58,8 @@ def delete_sys_message():
     """
 
     ids = json_to_pyseq(request.argget.all("ids", []))
-    for i in range(0, len(ids)):
-        ids[i] = ObjectId(ids[i])
+    for i, id in enumerate(ids):
+        ids[i] = ObjectId(id)
     q = {"_id": {"$in": ids}}
 
     # 查找出要删除中的邮件消息
