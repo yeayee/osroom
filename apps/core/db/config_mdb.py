@@ -1,6 +1,5 @@
 # -*-coding:utf-8-*-
 from pymongo import ReadPreference
-
 from apps.configs.db_config import DB_CONFIG
 
 __author__ = 'Allen Woo'

@@ -1,4 +1,4 @@
-#-*-coding:utf-8-*-
+# -*-coding:utf-8-*-
 import sys
 from signal import signal, SIGCHLD, SIG_IGN
 from pymongo.errors import OperationFailure

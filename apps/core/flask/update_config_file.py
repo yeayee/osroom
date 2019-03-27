@@ -158,7 +158,7 @@ def update_config_file(mdb_sys, *args, **kwargs):
     return True
 
 
-def push_to_db(mdb_sys,local_config = None, now_version=None):
+def push_to_db(mdb_sys, local_config=None, now_version=None):
 
     """
     初始化或者更新配置数据到数据库, 顺便更新CONFIG变量的值
@@ -171,7 +171,6 @@ def push_to_db(mdb_sys,local_config = None, now_version=None):
         return False
 
     web_start_log.info("Push to the config version:{}".format(now_version))
-
 
     for k, v in local_config.items():
         if not isinstance(v, dict):
