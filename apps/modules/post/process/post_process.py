@@ -272,7 +272,7 @@ def get_post_pr(
         post["cover_url"] = get_file_url(post["cover_url"])
         imgs_l = len(post["imgs"])
         if imgs_l:
-            for i, img in enumerate(imgs_l):
+            for i, img in enumerate(post["imgs"]):
                 post["imgs"][i] = get_file_url(img)
 
         s, r = get_user_public_info(user_id=post["user_id"], is_basic=False)
