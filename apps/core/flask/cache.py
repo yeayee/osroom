@@ -307,8 +307,8 @@ class Cache:
         :param key_base64:
         :param key_prefix:
         :param db_type:
+        :param key_regex
         :param args:　使用缓存的函数的参数
-        :param kwargs:　使用缓存的函数的参数
         :param kwargs:　使用缓存的函数的参数
         :return:
         """

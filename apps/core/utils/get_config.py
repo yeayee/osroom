@@ -6,6 +6,8 @@ __author__ = 'Allen Woo'
 """
 注意:配置有cache,默认CONFIG_TIMEOUT秒过期, 修改配置的程序中保存新后应该删除此cache，让配置立即生效
 """
+
+
 @cache.cached(timeout=CONFIG_CACHE_TIMEOUT, key=CONFIG_CACHE_KEY)
 def get_all_config():
     """

@@ -185,9 +185,10 @@ def update_url():
         # 清除缓存
         r = mdb_sys.db.sys_urls.find_one({"_id": ObjectId(tid)})
         if r:
-            cache.delete(
-                key="get_sys_url_url_{}".format(
-                    r['url']), db_type="redis")
+            cache.delete_autokey(
+                fun="get_sys_url",
+                db_type="redis",
+                url=r['url'].rstrip("/"))
         data = {
             "msg": gettext("Modify the success"),
             "msg_type": "s",
@@ -217,10 +218,10 @@ def delete_url():
     if r.deleted_count:
         # 清除缓存
         for url_per in url_pers:
-            cache.delete(
-                key="get_sys_url_url_{}".format(
-                    url_per["url"]),
-                db_type="redis")
+            cache.delete_autokey(
+                fun="get_sys_url",
+                db_type="redis",
+                url=url_per['url'].rstrip("/"))
 
         data = {
             "msg": gettext("Successfully deleted"),
