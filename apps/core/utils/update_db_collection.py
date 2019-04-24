@@ -88,7 +88,7 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
             print("* [Initialization data] {}".format(data["coll"]))
             db.dbs[data["coll"]].insert_many(data["datas"])
 
-    theme = mdb_sys.db.sys_config.find(
+    theme = mdb_sys.dbs["sys_config"].find(
         {"project": "theme", "key": "CURRENT_THEME_NAME"})
     if not theme.count(True):
         # 如果未初始化过
@@ -119,7 +119,7 @@ def init_default_datas(mdb_sys, mdb_web):
         """
         版本更新兼容:找出原来的地方的数据复制, 并删除老数据
         """
-        exists_data = mdb_web.db.media.find_one({"name": data["name"]})
+        exists_data = mdb_web.dbs["media"].find_one({"name": data["name"]})
         old_id = None
         if exists_data:
             #  如果存在此数据
@@ -154,14 +154,14 @@ def init_default_datas(mdb_sys, mdb_web):
                     tempdata[k] = v
 
         # 查找是否存在分类
-        r = mdb_web.db.category.find_one({"name": tempdata["category"],
+        r = mdb_web.dbs["category"].find_one({"name": tempdata["category"],
                                           "type": "{}_theme".format(tempdata["type"]),
                                           "user_id": 0})
         if r:
             tempdata["category_id"] = str(r["_id"])
         else:
             # 不存在则创建
-            r = mdb_web.db.category.insert_one(
+            r = mdb_web.dbs["category"].insert_one(
                 {"name": tempdata["category"],
                  "type": "{}_theme".format(tempdata["type"]),
                  "user_id": 0})
@@ -169,4 +169,4 @@ def init_default_datas(mdb_sys, mdb_web):
         r = mdb_sys.dbs["theme_display_setting"].insert_one(tempdata)
         if r.inserted_id and old_id:
             # 删除旧的数据
-            mdb_web.db.media.delete_one({"_id": old_id})
+            mdb_web.dbs["media"].delete_one({"_id": old_id})

@@ -27,6 +27,8 @@ upload_temp/
 !*/themes/robots.txt
 
 # config
+config.py
+config.py*
 db_config.py
 db_config.py*
 
