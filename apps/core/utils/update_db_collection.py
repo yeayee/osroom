@@ -95,7 +95,7 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
         init_default_datas()
 
 
-def init_default_datas():
+def init_default_datas(mdb_sys, mdb_web):
     """
     默认主题初始化数据
     """
