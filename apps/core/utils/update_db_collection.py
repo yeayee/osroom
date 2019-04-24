@@ -67,13 +67,13 @@ def update_mdb_collections(mdb_sys, mdb_web, mdb_user):
 
 
 def init_datas(mdb_sys, mdb_web, mdb_user):
+    
     """
     初始web化数据
     :return:
     """
 
     for data in INIT_DATAS:
-
         db = mdb_sys
         if data["db"] == "osr_web":
             db = mdb_web
