@@ -67,7 +67,7 @@ def update_mdb_collections(mdb_sys, mdb_web, mdb_user):
 
 
 def init_datas(mdb_sys, mdb_web, mdb_user):
-    
+
     """
     初始web化数据
     :return:
@@ -92,7 +92,7 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
         {"project": "theme", "key": "CURRENT_THEME_NAME"})
     if not theme.count(True):
         # 如果未初始化过
-        init_default_datas()
+        init_default_datas(mdb_sys, mdb_web)
 
 
 def init_default_datas(mdb_sys, mdb_web):
