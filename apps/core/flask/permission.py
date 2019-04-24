@@ -18,7 +18,7 @@ decorators
 def permission_required(use_default=True):
     """
     权限验证
-    :param permission:
+    :param use_default:
     :return:
     """
     def decorator(f):
