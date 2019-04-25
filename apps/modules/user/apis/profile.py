@@ -8,6 +8,8 @@ from apps.core.flask.response import response_format
 from apps.modules.user.process.profile import profile_update, public_profile, user_basic_edit, all_profile
 
 __author__ = "Allen Woo"
+
+
 @api.route('/account/profile/public', methods=['GET'])
 @permission_required(use_default=False)
 def user_public():

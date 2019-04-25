@@ -8,6 +8,8 @@ from apps.core.flask.response import response_format
 from apps.modules.follow.process.user_follow import get_followed_users, get_fans_users, follow_user, unfollow
 
 __author__ = 'Allen Woo'
+
+
 @api.route('/user/follow', methods=['GET'])
 @permission_required(use_default=False)
 def api_get_user_follow():

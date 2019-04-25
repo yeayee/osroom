@@ -8,6 +8,8 @@ from apps.app import mdb_user, cache
 __author__ = "Allen Woo"
 
 # 查询比较多, 加上缓存
+
+
 @cache.cached(key_base64=False, db_type="mongodb")
 def get_user_public_info(**kwargs):
     """
@@ -37,6 +39,7 @@ def get_user_public_info(**kwargs):
             user["follow"] = get_user_follow_data(
                 user["_id"], determine_following=determine_following)
         return True, user
+
 
 # 查询比较多, 加上缓存
 @cache.cached(key_base64=False, db_type="mongodb")

@@ -9,6 +9,8 @@ from apps.modules.audit.process.rules import audit_rules, audit_rule_add, audit_
 from apps.core.utils.get_config import get_config
 
 __author__ = 'Allen Woo'
+
+
 @api.route('/admin/audit/rule/key', methods=['GET'])
 @osr_login_required
 @permission_required()
@@ -23,14 +25,7 @@ def api_audit_rule_key():
     return response_format(data)
 
 
-@api.route(
-    '/admin/audit/rule',
-    methods=[
-        'GET',
-        'POST',
-        'PUT',
-        'PATCH',
-        'DELETE'])
+@api.route('/admin/audit/rule', methods=['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 @osr_login_required
 @permission_required()
 def api_audit_rule():

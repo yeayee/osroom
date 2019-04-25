@@ -10,13 +10,7 @@ from apps.modules.theme_setting.process.display_setting import add_display_setti
 __author__ = "Allen Woo"
 
 
-@api.route(
-    '/admin/theme/display-setting',
-    methods=[
-        'GET',
-        'POST',
-        "PUT",
-        "DELETE"])
+@api.route('/admin/theme/display-setting', methods=["GET", "POST", "PUT", "DELETE"])
 @osr_login_required
 @permission_required()
 def api_add_display_setting():

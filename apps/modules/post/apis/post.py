@@ -9,6 +9,8 @@ from apps.modules.post.process.get_post_tags import get_tags
 from apps.modules.post.process.post import get_post, get_posts, post_like
 
 __author__ = 'Allen Woo'
+
+
 @api.route('/post/tags', methods=['GET'])
 @permission_required(use_default=False)
 def api_post_tags():

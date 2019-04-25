@@ -11,6 +11,8 @@ from apps.modules.user.process.adm_user import user, users, user_restore, user_a
 
 
 __author__ = "Allen Woo"
+
+
 @api.route('/admin/user', methods=['GET', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required()

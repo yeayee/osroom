@@ -10,13 +10,7 @@ from apps.modules.media.process.media import add_media, get_media, edit_media, d
 __author__ = "Allen Woo"
 
 
-@api.route(
-    '/admin/upload/media-file',
-    methods=[
-        'GET',
-        'POST',
-        "PUT",
-        "DELETE"])
+@api.route('/admin/upload/media-file', methods=['GET', "POST", "PUT", "DELETE"])
 @osr_login_required
 @permission_required()
 def api_add_media():

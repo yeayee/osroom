@@ -12,6 +12,8 @@ from apps.modules.setting.process.host_setting import get_sys_host, sys_host_edi
 
 
 __author__ = "Allen Woo"
+
+
 @api.route('/admin/setting/sys/host', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required()

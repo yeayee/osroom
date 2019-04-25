@@ -11,6 +11,8 @@ from apps.utils.format.obj_format import json_to_pyseq
 
 
 __author__ = "Allen Woo"
+
+
 @api.route('/admin/report/basic', methods=['GET'])
 @osr_login_required
 @permission_required()

@@ -11,6 +11,8 @@ from apps.modules.setting.process.settings import sys_config_version, conf_versi
     sys_config_edit
 
 __author__ = 'Allen Woo'
+
+
 @api.route('/admin/setting/sys/config/version', methods=['GET', 'PUT'])
 @osr_login_required
 @permission_required()

@@ -6,7 +6,7 @@ from flask_babel import gettext
 from flask_login import current_user
 
 from apps.core.flask.reqparse import arg_verify
-from apps.utils.async.async import async_process
+from apps.utils.async.async import async_thread
 from apps.utils.format.obj_format import objid_to_str, json_to_pyseq
 from apps.utils.validation.str_format import short_str_verifi
 from apps.app import mdb_web
@@ -114,7 +114,7 @@ def category_edit(user_id=None):
         r = mdb_web.db.category.update_one(
             {"_id": ObjectId(tid), "user_id": user_id}, {"$set": {"name": name}})
         if r.modified_count:
-            update_media_category_name(id, name)
+            update_media_category_name(tid, name)
             data = {
                 "msg": gettext("Modify the success"),
                 "msg_type": "s",
@@ -127,7 +127,7 @@ def category_edit(user_id=None):
     return data
 
 
-@async_process
+@async_thread
 def update_media_category_name(category_id, new_name):
     """
     更新多媒体与文章category的名称

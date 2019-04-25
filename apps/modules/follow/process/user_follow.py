@@ -118,13 +118,16 @@ def get_followed_users():
     if not s:
         return r
     data = {"users": []}
-    follow_user = mdb_user.db.user_follow.find_one(
-        {"user_id": user_id, "type": "account"})
+    follow_user = mdb_user.db.user_follow.find_one({"user_id": user_id, "type": "account"})
     if follow_user:
         data_cnt = len(follow_user["follow"])
         for tid in follow_user["follow"][(page - 1) * pre: page * pre]:
             s, r = get_user_public_info(
-                user_id=str(tid), is_basic=False, determine_following=False)
+                user_id=str(tid),
+                is_basic=False,
+                determine_following=False,
+                current_user_isauth=current_user.is_authenticated
+            )
             if s:
                 data["users"].append(r)
     else:
@@ -153,7 +156,9 @@ def get_fans_users():
     fans = mdb_user.db.user_follow.find({"type": "account", "follow": user_id})
     data_cnt = fans.count(True)
     for user in fans.skip(pre * (page - 1)).limit(pre):
-        s, r = get_user_public_info(user_id=user["user_id"], is_basic=False)
+        s, r = get_user_public_info(user_id=user["user_id"],
+                                    is_basic=False,
+                                    current_user_isauth=current_user.is_authenticated)
         if s:
             data["users"].append(r)
     data["users"] = datas_paging(

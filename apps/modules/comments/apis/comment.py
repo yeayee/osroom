@@ -8,6 +8,8 @@ from apps.core.flask.response import response_format
 from apps.modules.comments.process.comment import comments, comment_issue, comment_delete, comment_like
 
 __author__ = 'Allen Woo'
+
+
 @api.route('/comment', methods=['GET'])
 @permission_required(use_default=False)
 def api_get_comment():

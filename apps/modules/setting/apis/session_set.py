@@ -1,5 +1,4 @@
 # -*-coding:utf-8-*-
-from flask import request
 from apps.core.blueprint import api
 from apps.core.flask.permission import permission_required
 from apps.core.flask.response import response_format

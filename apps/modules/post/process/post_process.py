@@ -216,7 +216,9 @@ def get_posts_query(query_conditions, field, sort, pre, page, get_userinfo):
 
         if "user_id" not in query_conditions.keys() and get_userinfo:
             s, r = get_user_public_info(
-                user_id=post["user_id"], is_basic=False)
+                user_id=post["user_id"],
+                is_basic=False,
+                current_user_isauth=current_user.is_authenticated)
             if s:
                 post["user"] = r
         # category
@@ -275,7 +277,9 @@ def get_post_pr(
             for i, img in enumerate(post["imgs"]):
                 post["imgs"][i] = get_file_url(img)
 
-        s, r = get_user_public_info(user_id=post["user_id"], is_basic=False)
+        s, r = get_user_public_info(user_id=post["user_id"],
+                                    is_basic=False,
+                                    current_user_isauth=current_user.is_authenticated)
         if s:
             post["user"] = r
         data["post"] = post

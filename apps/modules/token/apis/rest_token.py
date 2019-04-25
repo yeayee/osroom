@@ -25,13 +25,7 @@ def api_access_token():
     return response_format(data)
 
 
-@api.route(
-    '/admin/token/secret-token',
-    methods=[
-        'GET',
-        'POST',
-        'PUT',
-        'DELETE'])
+@api.route('/admin/token/secret-token', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @osr_login_required
 @permission_required()
 def api_rest_token():

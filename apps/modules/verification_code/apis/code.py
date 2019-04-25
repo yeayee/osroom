@@ -1,5 +1,4 @@
 # -*-coding:utf-8-*-
-from apps.core.flask.login_manager import osr_login_required
 from apps.core.blueprint import api
 from apps.core.flask.permission import permission_required
 from apps.core.flask.response import response_format
@@ -7,6 +6,8 @@ from apps.modules.verification_code.process.image_code import get_code
 from apps.modules.verification_code.process.send_code import send_code
 
 __author__ = 'Allen Woo'
+
+
 @api.route('/vercode/send', methods=['POST'])
 @permission_required(use_default=False)
 def api_send_code():

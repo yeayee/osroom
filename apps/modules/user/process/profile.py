@@ -42,7 +42,9 @@ def public_profile():
             "http_status": 400}
         return data
 
-    s, r = get_user_public_info(user_id=user_id, is_basic=is_basic)
+    s, r = get_user_public_info(user_id=user_id,
+                                is_basic=is_basic,
+                                current_user_isauth=current_user.is_authenticated)
     if not s:
         data = {'msg': r, 'msg_type': "w", "http_status": 400}
     else:
@@ -57,7 +59,9 @@ def all_profile():
     """
     is_basic = str_to_num(request.argget.all('is_basic', 1))
     data = {}
-    s, r = get_user_all_info(user_id=current_user.str_id, is_basic=is_basic)
+    s, r = get_user_all_info(user_id=current_user.str_id,
+                             is_basic=is_basic,
+                             current_user_isauth=current_user.is_authenticated)
     if not s:
         data = {'msg': r, 'msg_type': "w", "http_status": 400}
     else:
