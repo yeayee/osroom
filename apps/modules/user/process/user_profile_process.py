@@ -98,6 +98,8 @@ def get_user_follow_data(user_id, determine_following=True):
             follow["current_following"] = True
         else:
             follow["current_following"] = False
+    else:
+        follow["current_following"] = False
     return follow
 
 

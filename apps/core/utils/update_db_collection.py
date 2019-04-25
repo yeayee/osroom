@@ -75,10 +75,8 @@ def init_datas(mdb_sys, mdb_web, mdb_user):
     """
 
     # 复制最新配置文件
-    print("==============")
     config_sample_path = "{}/configs/config_sample.py".format(APPS_PATH)
     target_path = "{}/configs/config.py".format(APPS_PATH)
-    print(config_sample_path)
     if os.path.exists(config_sample_path):
         print("Copy config file")
         if os.path.exists(target_path):
