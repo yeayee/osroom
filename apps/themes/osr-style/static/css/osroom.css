@@ -525,6 +525,7 @@ body {
     -webkit-border-radius:2px!important;
     -moz-border-radius:2px!important;
     border-radius:2px!important;
+    margin: 2px!important;
 }
 .osr-hollow{
     background: #ffffff00!important;
@@ -995,7 +996,6 @@ li.have-img {
     font-size: 20px;
     color: #fff;
     text-align: center;
-    text-shadow:
 }
 .osr-carousel-control.left{
     left: 0px;
@@ -1068,7 +1068,7 @@ li.have-img {
 }
 
 @keyframes k-loadingA {
-	0 {
+	0% {
 	height:15px
 }
 50% {
@@ -1078,7 +1078,7 @@ li.have-img {
 	height:15px
 }
 }@keyframes k-loadingB {
-	0 {
+	0% {
 	width:15px
 }
 50% {
@@ -1088,7 +1088,7 @@ li.have-img {
 	width:15px
 }
 }@keyframes k-loadingC {
-	0 {
+	0% {
 	transform:translate(0,0)
 }
 50% {
@@ -1098,7 +1098,7 @@ li.have-img {
 	transform:translate(0,0)
 }
 }@keyframes k-loadingD {
-	0 {
+	0% {
 	transform:rotate(0deg)
 }
 50% {
@@ -1108,7 +1108,7 @@ li.have-img {
 	transform:rotate(360deg)
 }
 }@keyframes k-loadingE {
-	0 {
+	0% {
 	transform:rotate(0deg)
 }
 100% {
