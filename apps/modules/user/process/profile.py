@@ -30,7 +30,7 @@ def public_profile():
         data = {
             'd_msg': gettext('Lack of parameters "user_id"'),
             'd_msg_type': "e",
-            "http_status": 400}
+            "custom_status": 400}
         return data
 
     try:
@@ -39,14 +39,14 @@ def public_profile():
         data = {
             'd_msg': gettext('This may be a visitor"'),
             'd_msg_type': "e",
-            "http_status": 400}
+            "custom_status": 400}
         return data
 
     s, r = get_user_public_info(user_id=user_id,
                                 is_basic=is_basic,
                                 current_user_isauth=current_user.is_authenticated)
     if not s:
-        data = {'msg': r, 'msg_type': "w", "http_status": 400}
+        data = {'msg': r, 'msg_type': "w", "custom_status": 400}
     else:
         data["user"] = r
     return data
@@ -63,7 +63,7 @@ def all_profile():
                              is_basic=is_basic,
                              current_user_isauth=current_user.is_authenticated)
     if not s:
-        data = {'msg': r, 'msg_type': "w", "http_status": 400}
+        data = {'msg': r, 'msg_type': "w", "custom_status": 400}
     else:
         data["user"] = r
     return data
@@ -85,7 +85,7 @@ def profile_update():
                 time_to_utcdate(
                     tformat="%Y%m%d")),
             'msg_type': "e",
-            "http_status": 400}
+            "custom_status": 400}
         return data
     birthday = int(birthday)
     s, r = arg_verify(
@@ -100,12 +100,12 @@ def profile_update():
             data = {
                 'msg': gettext("Address format is not in conformity with the requirements"),
                 'msg_type': "e",
-                "http_status": 400}
+                "custom_status": 400}
             return data
     if homepage:
         s, r = url_format_ver(homepage)
         if not s:
-            return {"msg": r, "msg_type": "w", "http_status": 403}
+            return {"msg": r, "msg_type": "w", "custom_status": 403}
 
     update_data = {
         'gender': gender,
@@ -124,12 +124,12 @@ def profile_update():
         data = {
             'msg': gettext("Update succeed"),
             'msg_type': "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             'msg': gettext("No changes"),
             'msg_type': "w",
-            "http_status": 201}
+            "custom_status": 201}
     return data
 
 
@@ -147,7 +147,7 @@ def user_basic_edit():
         return r
     r, s = short_str_verifi(username, "username")
     if not r:
-        data = {'msg': s, 'msg_type': "e", "http_status": 422}
+        data = {'msg': s, 'msg_type': "e", "custom_status": 422}
         return data
 
     update_data = {}
@@ -158,7 +158,7 @@ def user_basic_edit():
         if r:
             update_data["custom_domain"] = custom_domain
         else:
-            data = {'msg': s, 'msg_type': "e", "http_status": 422}
+            data = {'msg': s, 'msg_type': "e", "custom_status": 422}
             return data
 
     update_data["username"] = username
@@ -169,7 +169,7 @@ def user_basic_edit():
         data = {
             'msg': gettext("The editor saves failure"),
             'msg_type': "e",
-            "http_status": 400}
+            "custom_status": 400}
         return data
 
     update_data["update_time"] = time.time()
@@ -180,18 +180,18 @@ def user_basic_edit():
         data = {
             'msg': gettext("Name has been used"),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
     elif "custom_domain" in update_data.keys() \
             and mdb_user.db.user.find_one({"_id": {"$ne": current_user.id}, "custom_domain": custom_domain}):
         data = {
             'msg': gettext("Domain has been used"),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
     elif "custom_domain" in update_data.keys() and mdb_user.db.user.find_one({"_id": current_user.id, "custom_domain": {"$ne": -1}}):
         data = {
             'msg': gettext("Personality custom domain cannot be modified"),
             'msg_type': "w",
-            "http_status": 400}
+            "custom_status": 400}
     else:
         r = update_one_user(
             user_id=current_user.str_id, updata={
@@ -200,12 +200,12 @@ def user_basic_edit():
             data = {
                 'msg': gettext("No changes"),
                 'msg_type': "w",
-                "http_status": 201}
+                "custom_status": 201}
         else:
             delete_user_info_cache(user_id=current_user.str_id)
             data = {
                 'msg': gettext("Update success"),
                 'msg_type': "s",
-                "http_status": 201}
+                "custom_status": 201}
 
     return data

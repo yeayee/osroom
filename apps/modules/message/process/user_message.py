@@ -179,12 +179,12 @@ def update_user_msgs():
         data = {
             'msg': gettext("Update succeed"),
             'msg_type': "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             'msg': gettext("No changes"),
             'msg_type': "w",
-            "http_status": 201}
+            "custom_status": 201}
     return data
 
 
@@ -209,10 +209,10 @@ def delete_user_msgs(is_admin=None):
         data = {
             "msg": gettext("Successfully deleted"),
             "msg_type": "s",
-            "http_status": 204}
+            "custom_status": 204}
     else:
         data = {
             "msg": gettext("Failed to delete"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data

@@ -58,5 +58,5 @@ def api_adm_comment():
         data = adm_comment_delete()
 
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

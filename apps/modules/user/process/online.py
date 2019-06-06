@@ -16,7 +16,7 @@ def sign_up():
         data = {
             "msg": gettext('Sorry, temporarily unregistered function'),
             "msy_type": "w",
-            "http_status": 401}
+            "custom_status": 401}
     else:
         email = request.argget.all('email', '').strip()
         mobile_phone_number = str_to_num(
@@ -47,7 +47,7 @@ def sign_in():
         data = {
             "d_msg": gettext("remember_me requires an integer"),
             "d_msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
         return data
 
     data = p_sign_in(

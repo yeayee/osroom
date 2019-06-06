@@ -31,16 +31,16 @@ def api_account_data_availability():
         data = r
     elif mdb_user.db.user.find_one({"_id": {"$ne": current_user.id}, field: value}):
         data = {'msg': gettext("This {} address has been registered").format(
-            field), 'msg_type': "w", "http_status": 403}
+            field), 'msg_type': "w", "custom_status": 403}
     elif mdb_user.db.user.find_one({"_id": current_user.id, field: value}):
         data = {
             'msg': gettext(
                 "This is the email address you currently use".format(field)),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
     else:
         data = {'msg': gettext("This {} can be used").format(field),
-                'msg_type': "s", "http_status": 200}
+                'msg_type': "s", "custom_status": 200}
     return response_format(data)
 
 

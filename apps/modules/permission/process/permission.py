@@ -29,7 +29,7 @@ def permission():
         data = {
             'msg': gettext("The specified permission is not found"),
             'msg_type': "w",
-            "http_status": 404}
+            "custom_status": 404}
     else:
         data["per"]["_id"] = str(data["per"]["_id"])
         data["per"]["pos"] = get_num_digits(data["per"]["value"])
@@ -92,7 +92,7 @@ def add_per():
     data = {
         'msg': gettext("Add a success"),
         'msg_type': "s",
-        "http_status": 201}
+        "custom_status": 201}
 
     s, r = arg_verify(
         reqargs=[
@@ -108,15 +108,15 @@ def add_per():
                 "Must be an integer greater than 0,"
                 " less than or equal to {}".format(hightest_pos)),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
 
     elif mdb_user.db.permission.find_one({"name": name}):
         data = {'msg': gettext("Permission name or valready exists"),
-                'msg_type': "w", "http_status": 403}
+                'msg_type': "w", "custom_status": 403}
 
     elif mdb_user.db.permission.find_one({"value": permissions}):
         data = {'msg': gettext('Location has been used'),
-                'msg_type': "w", "http_status": 403}
+                'msg_type': "w", "custom_status": 403}
     else:
         user_role = mdb_user.db.role.find_one(
             {"_id": ObjectId(current_user.role_id)})
@@ -127,7 +127,7 @@ def add_per():
                     "The current user permissions are lower than the permissions that you want to add,"
                     " without permission to add"),
                 "msg_type": "w",
-                "http_status": 401}
+                "custom_status": 401}
             return data
 
         mdb_user.db.permission.insert_one({"name": name,
@@ -160,7 +160,7 @@ def edit_per():
                 "Must be an integer greater than 0,"
                 " less than or equal to {}".format(hightest_pos)),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
         return data
 
     data = {
@@ -168,7 +168,7 @@ def edit_per():
             "The current user permissions are lower than the permissions you want to modify,"
             " without permission to modify"),
         "msg_type": "w",
-        "http_status": 401}
+        "custom_status": 401}
     user_role = mdb_user.db.role.find_one(
         {"_id": ObjectId(current_user.role_id)})
     # 如果当前用户的权限最高位 小于 要修改成的这个角色权重的最高位,是不可以的
@@ -186,11 +186,11 @@ def edit_per():
         data = {
             'msg': gettext("Permission name already exists"),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
 
     elif mdb_user.db.permission.find_one({"value": permissions, "_id": {"$ne": ObjectId(tid)}}):
         data = {'msg': gettext('Location has been used'),
-                'msg_type': "w", "http_status": 403}
+                'msg_type': "w", "custom_status": 403}
     else:
         old_per = mdb_user.db.permission.find_one({"_id": ObjectId(tid)})
         old_per_value = old_per["permissions"]
@@ -201,7 +201,7 @@ def edit_per():
             data = {
                 'msg': gettext("No changes"),
                 'msg_type': "w",
-                "http_status": 201}
+                "custom_status": 201}
         else:
             update_role_and_api_per(old_per_value, new_per_value=0)
             updated_rolename = r["updated_rolename"]
@@ -219,7 +219,7 @@ def edit_per():
                 'msg': gettext(
                     "The update is successful. {}".format(msg_updated_rolename)),
                 'msg_type': "s",
-                "http_status": 201}
+                "custom_status": 201}
 
     return data
 
@@ -278,7 +278,7 @@ def delete_per():
             'msg': gettext(
                 'Successfully deleted. {}'.format(msg_updated_rolename)),
             'msg_type': 'success',
-            "http_status": 204}
+            "custom_status": 204}
     else:
         warning_msg = ""
         if unauth_del_pers:
@@ -287,7 +287,7 @@ def delete_per():
         elif preserve:
             warning_msg = gettext("{}{} are permissions that must be retained.").format(
                 warning_msg, ",".join(preserve))
-        data = {'msg': warning_msg, 'msg_type': 'warning', "http_status": 400}
+        data = {'msg': warning_msg, 'msg_type': 'warning', "custom_status": 400}
 
     return data
 

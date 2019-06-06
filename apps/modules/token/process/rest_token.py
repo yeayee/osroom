@@ -27,10 +27,10 @@ def create_secret_token():
     data = {
         "msg_type": "s",
         "msg": gettext("Created successfully"),
-        "http_status": 201}
+        "custom_status": 201}
     s, r = rest_token_auth.create_secret_token()
     if not s:
-        data = {"msg_type": "w", "msg": r, "http_status": 403}
+        data = {"msg_type": "w", "msg": r, "custom_status": 403}
 
     return data
 
@@ -47,9 +47,9 @@ def activate_secret_token():
         return r
     s, r = rest_token_auth.activate_secret_token(token_id)
     if s:
-        data = {"msg_type": "s", "msg": r, "http_status": 201}
+        data = {"msg_type": "s", "msg": r, "custom_status": 201}
     else:
-        data = {"msg_type": "w", "msg": r, "http_status": 400}
+        data = {"msg_type": "w", "msg": r, "custom_status": 400}
     return data
 
 
@@ -66,9 +66,9 @@ def disable_secret_token():
 
     s, r = rest_token_auth.disable_secret_token(token_id)
     if s:
-        data = {"msg_type": "s", "msg": r, "http_status": 201}
+        data = {"msg_type": "s", "msg": r, "custom_status": 201}
     else:
-        data = {"msg_type": "w", "msg": r, "http_status": 400}
+        data = {"msg_type": "w", "msg": r, "custom_status": 400}
     return data
 
 
@@ -84,7 +84,7 @@ def delete_secret_token():
         return r
     s, r = rest_token_auth.delete_secret_token(token_id)
     if s:
-        data = {"msg_type": "s", "msg": r, "http_status": 201}
+        data = {"msg_type": "s", "msg": r, "custom_status": 201}
     else:
-        data = {"msg_type": "w", "msg": r, "http_status": 400}
+        data = {"msg_type": "w", "msg": r, "custom_status": 400}
     return data

@@ -41,7 +41,7 @@ def comment_issue():
 
     if not get_config("comment", "OPEN_COMMENT"):
         data = {"msg": gettext("Comment feature is not open"),
-                "msg_type": "w", "http_status": 401}
+                "msg_type": "w", "custom_status": 401}
         return data
 
     target_id = request.argget.all('target_id')  # 目标ID指的是什么事件的评论
@@ -89,13 +89,13 @@ def comment_issue():
         # 用户名格式验证
         r, s = short_str_verifi(username)
         if not r:
-            data = {'msg': s, 'msg_type': "e", "http_status": 422}
+            data = {'msg': s, 'msg_type': "e", "custom_status": 422}
             return data
 
         # 邮箱格式验证
         r, s = email_format_ver(email)
         if not r:
-            data = {'msg': s, 'msg_type': "e", "http_status": 422}
+            data = {'msg': s, 'msg_type': "e", "custom_status": 422}
             return data
 
         tquery["email"] = email
@@ -104,14 +104,14 @@ def comment_issue():
         data = {
             "msg": gettext("Guest reviews feature is not open, please login account comments"),
             "msg_type": "w",
-            "http_status": 401}
+            "custom_status": 401}
         return data
 
     if mdb_web.db.comment.find(tquery).count(
             True) >= int(get_config("comment", "NUM_OF_INTERVAL")):
         # 频繁评论
         data = {"msg": gettext("You comment too often and come back later"),
-                "msg_type": "e", "http_status": 400}
+                "msg_type": "e", "custom_status": 400}
         return data
 
     target = None
@@ -122,7 +122,7 @@ def comment_issue():
             data = {
                 "msg": gettext("Articles do not exist or have not been published"),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
             return data
 
         target_user_id = str(target["user_id"])
@@ -130,7 +130,7 @@ def comment_issue():
 
     if not target:
         data = {"msg": gettext("Your comment goal does not exist"),
-                "msg_type": "w", "http_status": 400}
+                "msg_type": "w", "custom_status": 400}
         return data
 
     issue_time = time.time()
@@ -234,12 +234,12 @@ def comment_issue():
         data = {
             "msg": gettext("Successful reviews"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             "msg": gettext("Success back, waiting for the system audit."),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
 
     return data
 
@@ -279,12 +279,12 @@ def comment_delete():
         data = {
             "msg": gettext("Delete the success"),
             "msg_type": "s",
-            "http_status": 204}
+            "custom_status": 204}
     else:
         data = {
             "msg": gettext("Delete failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -319,7 +319,7 @@ def comment_like():
                                               {"$set": {"values": like_comment["values"]}})
 
     if r1.modified_count and r2.modified_count:
-        data = {"msg": gettext("Success"), "msg_type": "s", "http_status": 201}
+        data = {"msg": gettext("Success"), "msg_type": "s", "custom_status": 201}
     else:
-        data = {"msg": gettext("Failed"), "msg_type": "w", "http_status": 400}
+        data = {"msg": gettext("Failed"), "msg_type": "w", "custom_status": 400}
     return data

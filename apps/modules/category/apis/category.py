@@ -45,7 +45,7 @@ def api_get_user_category():
         else:
             data = categorys(user_id=user_id)
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)
 
 
@@ -92,5 +92,5 @@ def api_category():
     elif request.c_method == "DELETE":
         data = category_delete()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

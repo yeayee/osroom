@@ -32,5 +32,5 @@ def api_add_page():
     elif request.c_method == "DELETE":
         data = delete_page()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

@@ -101,7 +101,7 @@ def post_like():
                                               {"$set": {"values": like["values"]}})
 
     if r1.modified_count and r2.modified_count:
-        data = {"msg": gettext("Success"), "msg_type": "s", "http_status": 201}
+        data = {"msg": gettext("Success"), "msg_type": "s", "custom_status": 201}
     else:
-        data = {"msg": gettext("Failed"), "msg_type": "w", "http_status": 400}
+        data = {"msg": gettext("Failed"), "msg_type": "w", "custom_status": 400}
     return data

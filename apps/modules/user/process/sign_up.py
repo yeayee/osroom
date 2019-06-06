@@ -29,7 +29,7 @@ def p_sign_up(
     if current_user.is_authenticated:
         data['msg'] = gettext("Is logged in")
         data["msg_type"] = "s"
-        data["http_status"] = 201
+        data["custom_status"] = 201
         data['to_url'] = request.argget.all(
             'next') or get_config("login_manager", "LOGIN_IN_TO")
         return data
@@ -39,22 +39,22 @@ def p_sign_up(
     # 密码格式验证
     s2, r2 = password_format_ver(password)
     if not s1:
-        data = {'msg': r1, 'msg_type': "e", "http_status": 422}
+        data = {'msg': r1, 'msg_type': "e", "custom_status": 422}
     elif mdb_user.db.user.find_one({"username": username}):
         # 是否存在用户名
         data = {
             'msg': gettext("Name has been used"),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
     elif not s2:
-        data = {'msg': r2, 'msg_type': "e", "http_status": 400}
+        data = {'msg': r2, 'msg_type': "e", "custom_status": 400}
         return data
     elif password2 != password:
         # 检验两次密码
         data = {
             'msg': gettext("The two passwords don't match"),
             'msg_type': "e",
-            "http_status": 400}
+            "custom_status": 400}
     if data:
         return data
 
@@ -63,13 +63,13 @@ def p_sign_up(
         # 邮箱格式验证
         s, r = email_format_ver(email)
         if not s:
-            data = {'msg': r, 'msg_type': "e", "http_status": 422}
+            data = {'msg': r, 'msg_type': "e", "custom_status": 422}
         elif mdb_user.db.user.find_one({"email": email}):
             # 邮箱是否注册过
             data = {
                 'msg': gettext("This email has been registered in the site oh, please login directly."),
                 'msg_type': "w",
-                "http_status": 403}
+                "custom_status": 403}
         if data:
             return data
 
@@ -79,20 +79,20 @@ def p_sign_up(
             data = {
                 'msg': gettext("Verification code error"),
                 'msg_type': "e",
-                "http_status": 401}
+                "custom_status": 401}
             return data
 
     elif mobile_phone_number:
         # 手机注册
         s, r = mobile_phone_format_ver(mobile_phone_number)
         if not s:
-            data = {'msg': r, 'msg_type': "e", "http_status": 422}
+            data = {'msg': r, 'msg_type': "e", "custom_status": 422}
         elif mdb_user.db.user.find_one({"mphone_num": mobile_phone_number}):
             # 手机是否注册过
             data = {
                 'msg': gettext("This number has been registered in the site oh, please login directly."),
                 'msg_type': "w",
-                "http_status": 403}
+                "custom_status": 403}
 
         if data:
             return data
@@ -103,7 +103,7 @@ def p_sign_up(
             data = {
                 'msg': gettext("Verification code error"),
                 'msg_type': "e",
-                "http_status": 401}
+                "custom_status": 401}
             return data
 
     if not data:
@@ -140,10 +140,10 @@ def p_sign_up(
 
             data = {'msg': gettext('Registered successfully'),
                     'to_url': '/sign-in',
-                    'msg_type': 's', "http_status": 201}
+                    'msg_type': 's', "custom_status": 201}
         else:
             data = {'msg': gettext('Data saved incorrectly, please try again'),
-                    'msg_type': 'e', "http_status": 201}
+                    'msg_type': 'e', "custom_status": 201}
         return data
 
     return data

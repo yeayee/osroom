@@ -115,19 +115,19 @@ def sign_out():
             data = {
                 "msg": gettext("Successfully logged out"),
                 "msg_type": "s",
-                "http_status": 201,
+                "custom_status": 201,
                 "to_url": get_config(
                     "login_manager",
                     "LOGIN_OUT_TO")}
         else:
-            data = {"msg": r, "msg_type": "s", "http_status": 400}
+            data = {"msg": r, "msg_type": "s", "custom_status": 400}
     else:
         logout_user()
 
         data = {
             "msg": gettext("Successfully logged out"),
             "msg_type": "s",
-            "http_status": 201,
+            "custom_status": 201,
             "to_url": get_config(
                 "login_manager",
                 "LOGIN_OUT_TO")}

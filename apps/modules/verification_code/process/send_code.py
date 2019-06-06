@@ -40,7 +40,7 @@ def send_code():
         # 邮箱格式验证
         r, s = email_format_ver(account)
         if not r:
-            data = {'msg': s, 'msg_type': "e", "http_status": 422}
+            data = {'msg': s, 'msg_type': "e", "custom_status": 422}
             return data
 
         if exist_account:
@@ -48,7 +48,7 @@ def send_code():
                 data = {
                     'msg': gettext("This account is not registered on this platform"),
                     'msg_type': "w",
-                    "http_status": 400}
+                    "custom_status": 400}
                 return data
 
         r, s = call_verification(code_url_obj, code)
@@ -67,7 +67,7 @@ def send_code():
         # 移动号码格式格式验证
         r, s = mobile_phone_format_ver(account)
         if not r:
-            data = {'msg': s, 'msg_type': "e", "http_status": 422}
+            data = {'msg': s, 'msg_type': "e", "custom_status": 422}
             return data
 
         if exist_account:
@@ -76,7 +76,7 @@ def send_code():
                 data = {
                     'msg': gettext("This account is not registered on this platform"),
                     'msg_type': "w",
-                    "http_status": 400}
+                    "custom_status": 400}
                 return data
 
         r, s = call_verification(code_url_obj, code)
@@ -122,7 +122,7 @@ def call_verification(code_url_obj, code):
                     "The system detects that your network is sending verification codes frequently."
                     " Please try again later!"),
                 'msg_type': "w",
-                "http_status": 401}
+                "custom_status": 401}
             return False, data
 
         elif freq > get_config("verify_code", "MAX_NUM_SEND_SAMEIP_PERMIN_NO_IMGCODE") + 1:
@@ -133,7 +133,7 @@ def call_verification(code_url_obj, code):
                 data = {
                     'msg': gettext("Image verification code error, email not sent"),
                     'msg_type': "e",
-                    "http_status": 401}
+                    "custom_status": 401}
                 # 验证错误,开启验证码验证
                 data["open_img_verif_code"] = True
                 data["code"] = create_img_code()
@@ -146,7 +146,7 @@ def call_verification(code_url_obj, code):
                     "The system detected that your operation is too frequent and"
                     " you need to verify the picture verification code"),
                 'msg_type': "w",
-                "http_status": 401}
+                "custom_status": 401}
 
             data["open_img_verif_code"] = True
             data["code"] = create_img_code()

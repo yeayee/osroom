@@ -58,5 +58,5 @@ def api_user_post_op():
     elif request.c_method == "DELETE":
         data = post_delete()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

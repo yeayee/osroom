@@ -69,21 +69,21 @@ def category_add(user_id=None):
             get_config(
                 "category", "CATEGORY_MAX_LEN")))
     if not s1:
-        data = {"msg": v, "msg_type": "w", "http_status": 422}
+        data = {"msg": v, "msg_type": "w", "custom_status": 422}
     elif not s2:
         data = r2
     elif mdb_web.db.category.find_one({"type": ntype, "user_id": user_id, "name": name}):
         data = {
             "msg": gettext("Name already exists"),
             "msg_type": "w",
-            "http_status": 403}
+            "custom_status": 403}
     else:
         mdb_web.db.category.insert_one(
             {"type": ntype, "user_id": user_id, "name": name})
         data = {
             "msg": gettext("Add a success"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     return data
 
 
@@ -102,14 +102,14 @@ def category_edit(user_id=None):
             get_config(
                 "category", "CATEGORY_MAX_LEN")))
     if not s1:
-        data = {"msg": v, "msg_type": "w", "http_status": 422}
+        data = {"msg": v, "msg_type": "w", "custom_status": 422}
     elif not s2:
         data = r2
     elif mdb_web.db.category.find_one({"_id": {"$ne": ObjectId(tid)}, "type": ntype, "user_id": user_id, "name": name}):
         data = {
             "msg": gettext("Name already exists"),
             "msg_type": "w",
-            "http_status": 403}
+            "custom_status": 403}
     else:
         r = mdb_web.db.category.update_one(
             {"_id": ObjectId(tid), "user_id": user_id}, {"$set": {"name": name}})
@@ -118,12 +118,12 @@ def category_edit(user_id=None):
             data = {
                 "msg": gettext("Modify the success"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
         else:
             data = {
                 "msg": gettext("No modification"),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
     return data
 
 
@@ -151,10 +151,10 @@ def category_delete(user_id=None):
                                          "user_id": user_id})
     if r.deleted_count > 0:
         data = {"msg": gettext("Delete the success,{}").format(
-            r.deleted_count), "msg_type": "s", "http_status": 204}
+            r.deleted_count), "msg_type": "s", "custom_status": 204}
     else:
         data = {
             "msg": gettext("Delete failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data

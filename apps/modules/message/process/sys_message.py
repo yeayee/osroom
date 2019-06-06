@@ -92,10 +92,10 @@ def delete_sys_message():
         data = {
             "msg": gettext("Successfully deleted"),
             "msg_type": "s",
-            "http_status": 204}
+            "custom_status": 204}
     else:
         data = {
             "msg": gettext("Failed to delete"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data

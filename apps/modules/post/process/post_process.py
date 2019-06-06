@@ -47,7 +47,7 @@ def get_posts_pr(
 
     if pre > get_config("post", "NUM_PAGE_MAX"):
         data = {"msg": gettext('The "pre" must not exceed the maximum amount'),
-                "msg_type": "e", "http_status": 400}
+                "msg_type": "e", "custom_status": 400}
         return data
     query_conditions = {}
     if other_filter:
@@ -333,9 +333,9 @@ def delete_post(ids=[]):
         {"_id": {"$in": rm_pids}, "is_delete": {"$in": [2, 3]}})
     if r.deleted_count:
         data = {"msg": gettext("Removed from the database, {}").format(
-            r.deleted_count), "msg_type": "s", "http_status": 204}
+            r.deleted_count), "msg_type": "s", "custom_status": 204}
     else:
         data = {"msg": gettext("No match to relevant data"),
-                "msg_type": "w", "http_status": 400}
+                "msg_type": "w", "custom_status": 400}
 
     return data

@@ -68,5 +68,5 @@ def api_account_profile():
     elif request.c_method == "PUT":
         data = profile_update()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

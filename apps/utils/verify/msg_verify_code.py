@@ -83,7 +83,7 @@ def create_code_send(account, account_type):
                    html_msg=html
                    )
         return {"msg": gettext("Has been sent. If not, please check spam"),
-                "msg_type": "s", "http_status": 201}
+                "msg_type": "s", "custom_status": 201}
 
     elif account_type == "mobile_phone":
 
@@ -104,9 +104,9 @@ def create_code_send(account, account_type):
         if not s:
             mdb_web.db.verify_code.update_one({"_id": ObjectId(_code['_id'])},
                                               {"$set": {"error": r}})
-            return {"msg": r, "msg_type": "w", "http_status": 400}
+            return {"msg": r, "msg_type": "w", "custom_status": 400}
 
-        return {"msg": r, "msg_type": "w", "http_status": 201}
+        return {"msg": r, "msg_type": "w", "custom_status": 201}
 
 
 def email_code_html_body(code):

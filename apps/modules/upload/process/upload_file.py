@@ -55,32 +55,32 @@ def file_upload(
                     data = {return_url_key: urls,
                             return_state_key: return_success,
                             "msg": gettext("Uploaded successfully"),
-                            "msg_type": "s", "http_status": 201}
+                            "msg_type": "s", "custom_status": 201}
                     if return_key:
                         data["keys"] = r
                 else:
                     data = {
                         return_state_key: return_error,
                         "msg": gettext("Upload failed"),
-                        "msg_type": "e", "http_status": 400
+                        "msg_type": "e", "custom_status": 400
                     }
 
             else:
                 data = {
                     return_state_key: return_error,
                     "msg": gettext("Get file error"),
-                    "msg_type": "e", "http_status": 400
+                    "msg_type": "e", "custom_status": 400
                 }
         else:
             data = {
                 return_state_key: return_error,
                 "msg": gettext("Get file error"),
                 "msg_type": "e",
-                "http_status": 400}
+                "custom_status": 400}
     else:
         data = {
             return_state_key: return_error,
             "msg": gettext("No file submitted"),
             "msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
     return data

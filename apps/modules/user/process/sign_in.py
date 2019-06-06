@@ -41,7 +41,7 @@ def p_sign_in(
                                                       current_user.mphone_num]:
         data['msg'] = gettext("Is logged in")
         data["msg_type"] = "s"
-        data["http_status"] = 201
+        data["custom_status"] = 201
         data['to_url'] = request.argget.all(
             'next') or get_config("login_manager", "LOGIN_IN_TO")
         return data
@@ -59,7 +59,7 @@ def p_sign_in(
         data = {
             "msg": gettext("Account or password error"),
             "msg_type": "e",
-            "http_status": 401}
+            "custom_status": 401}
         return data
 
     user = User(user["_id"])
@@ -76,7 +76,7 @@ def p_sign_in(
             data["open_img_verif_code"] = True
             data['msg'] = gettext("Verification code error")
             data["msg_type"] = "e"
-            data["http_status"] = 401
+            data["custom_status"] = 401
             return data
 
     # 密码验证
@@ -96,7 +96,7 @@ def p_sign_in(
 
             data['msg'] = gettext("Sign in success")
             data["msg_type"] = "s"
-            data["http_status"] = 201
+            data["custom_status"] = 201
             data["to_url"] = request.argget.all(
                 'next') or get_config("login_manager", "LOGIN_IN_TO")
             return data
@@ -104,7 +104,7 @@ def p_sign_in(
         # 未激活
         data['msg'] = gettext("Account is inactive or frozen")
         data["msg_type"] = "w"
-        data["http_status"] = 401
+        data["custom_status"] = 401
 
     else:
         #　密码错误
@@ -118,7 +118,7 @@ def p_sign_in(
             data["open_img_verif_code"] = True
         data['msg'] = gettext("Account or password error")
         data["msg_type"] = "e"
-        data["http_status"] = 401
+        data["custom_status"] = 401
     return data
 
 
@@ -201,7 +201,7 @@ def third_party_sign_in(platform_name):
         data = {
             "msg": gettext("No login processing plugin for this platform, please install the relevant plugin first"),
             "msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
         return data
 
     unionid = data.get("unionid")
@@ -221,14 +221,14 @@ def third_party_sign_in(platform_name):
             data = {
                 "msg": gettext("Sign in success"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
         else:
 
             # 未激活
             data = {
                 "msg": gettext("Account is inactive or frozen"),
                 "msg_type": "w",
-                "http_status": 401}
+                "custom_status": 401}
 
     else:
         # 第一次登录, 注册信息
@@ -275,8 +275,8 @@ def third_party_sign_in(platform_name):
 
             data = {'msg': gettext('Registered successfully'),
                     'to_url': '/sign-in',
-                    'msg_type': 's', "http_status": 201}
+                    'msg_type': 's', "custom_status": 201}
         else:
             data = {'msg': gettext('Data saved incorrectly, please try again'),
-                    'msg_type': 'e', "http_status": 400}
+                    'msg_type': 'e', "custom_status": 400}
     return data

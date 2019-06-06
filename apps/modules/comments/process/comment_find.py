@@ -24,7 +24,7 @@ def find_comments(
     data = {}
     if pre > get_config("comment", "NUM_PAGE_MAX"):
         data = {"msg": gettext('The "pre" must not exceed the maximum amount'),
-                "msg_type": "e", "http_status": 400}
+                "msg_type": "e", "custom_status": 400}
         return data
 
     query_conditions = deepcopy(query_conditions)

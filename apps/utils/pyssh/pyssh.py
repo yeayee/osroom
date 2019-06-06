@@ -57,6 +57,6 @@ def audit_host_info(host_info):
         data = {
             "msg": gettext("Please improve the host information"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
         return False, data
     return True, None

@@ -79,7 +79,7 @@ def update_plugin_setting():
         data = {
             "msg": gettext("There is no such data"),
             "msg_type": "e",
-            "http_status": 404}
+            "custom_status": 404}
     else:
         try:
             if old_conf["value_type"] == "int" or old_conf["value_type"] == "binary":
@@ -123,7 +123,7 @@ def update_plugin_setting():
                         "msg": gettext('The format of the "value" errors, need a "{}" type').format(
                             old_conf["value_type"]),
                         "msg_type": "e",
-                        "http_status": 400}
+                        "custom_status": 400}
                     return data
             elif old_conf["value_type"] == "tuple":
                 if not isinstance(value, tuple):
@@ -133,7 +133,7 @@ def update_plugin_setting():
                         "msg": gettext('The format of the "value" errors, need a "{}" type').format(
                             old_conf["value_type"]),
                         "msg_type": "e",
-                        "http_status": 400}
+                        "custom_status": 400}
                     return data
             elif old_conf["value_type"] == "password":
                 value = str(value)
@@ -142,14 +142,14 @@ def update_plugin_setting():
                     "msg": gettext('There is no {}').format(
                         old_conf["value_type"]),
                     "msg_type": "e",
-                    "http_status": 400}
+                    "custom_status": 400}
                 return data
         except Exception as e:
             data = {
                 "msg": gettext('The format of the "value" errors, need a "{}" type').format(
                     old_conf["value_type"]),
                 "msg_type": "e",
-                "http_status": 400}
+                "custom_status": 400}
             return data
 
         conf = {"value": value, "update_time": time.time()}
@@ -164,7 +164,7 @@ def update_plugin_setting():
         data = {
             "msg": gettext("Modify the success"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     return data
 
 
@@ -188,12 +188,12 @@ def refresh_plugin_setting():
         data = {
             "msg": gettext("Refreshed successfully"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             "msg": gettext("Failed to refresh. Please check the previous plug-in page for error messages"),
             "msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
 
     return data
 
@@ -214,7 +214,7 @@ def install_require_package():
         data = {
             "msg": gettext("There is no requirement file"),
             "msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
         return data
 
     with open(plugin_req_file_path) as rf:
@@ -282,12 +282,12 @@ def install_require_package():
             "msg": gettext("Some host connections failed. Successfully connected host has installed requirements package in the background"),
             "data": connection_failed,
             "msg_type": "w",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             "msg": gettext("Executed related installation commands in the background"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     return data
 
 

@@ -38,7 +38,7 @@ def permission_required(use_default=True):
                 r = True
             if not r:
                 return response_format({"msg": gettext('Permission denied,requires "{}" permission').format(
-                    keys), "msg_type": "w", "http_status": 401})
+                    keys), "msg_type": "w", "custom_status": 401})
             return f(*args, **kwargs)
         return decorated_function
     return decorator
@@ -63,7 +63,7 @@ def page_permission_required():
                 if not r:
                     keys = " or ".join(get_permission_key(custom_per))
                     return response_format({"msg": gettext('Permission denied,requires "{}" permission').format(
-                        keys), "msg_type": "w", "http_status": 401})
+                        keys), "msg_type": "w", "custom_status": 401})
             return f(*args, **kwargs)
         return decorated_function
     return decorator

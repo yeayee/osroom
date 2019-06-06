@@ -25,13 +25,13 @@ def account_password_reset():
         data = {
             'msg': gettext("Now use the password mistake"),
             'msg_type': "w",
-            "http_status": 401}
+            "custom_status": 401}
         return data
     elif pass1 != pass2:
         data = {
             'msg': gettext("Two password is not the same"),
             'msg_type': "w",
-            "http_status": 400}
+            "custom_status": 400}
     else:
         data = p_password_reset(now_pass, pass1)
     return data
@@ -48,7 +48,7 @@ def account_password_retrieve():
         data = {
             'msg': 'Two password is not the same',
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     else:
         data = p_retrieve_password(email, code, password, password2)
 
@@ -68,7 +68,7 @@ def p_password_reset(old_pass, new_pass):
 
     r, s = password_format_ver(new_pass)
     if not r:
-        data = {"msg_type": "w", "msg": s, "http_status": 400}
+        data = {"msg_type": "w", "msg": s, "custom_status": 400}
         return data
 
     if current_user.verify_password(old_pass) or current_user.no_password:
@@ -92,7 +92,7 @@ def p_password_reset(old_pass, new_pass):
             data = {
                 "msg_type": "s",
                 "msg": gettext("Password change is successful, please login again"),
-                "http_status": 201}
+                "custom_status": 201}
             logout_user()
             data['to_url'] = get_config("login_manager", "LOGIN_VIEW")
 
@@ -100,11 +100,11 @@ def p_password_reset(old_pass, new_pass):
             data = {
                 "msg_type": "w",
                 "msg": gettext("Password change failed(unknown error)"),
-                "http_status": 400}
+                "custom_status": 400}
         return data
 
     data = {
-        "msg_type": "e", "http_status": 400,
+        "msg_type": "e", "custom_status": 400,
         "msg": gettext("Now use the password mistake")}
 
     return data
@@ -125,14 +125,14 @@ def p_retrieve_password(email, code, password, password2):
         data = {
             'msg': gettext('Account does not exist'),
             'msg_type': 'e',
-            "http_status": 404}
+            "custom_status": 404}
         return data
 
     s, r = email_format_ver(email=email)
     if s:
         user = get_one_user(email=email)
     else:
-        data = {"msg": r, "msg_type": "e", "http_status": 403}
+        data = {"msg": r, "msg_type": "e", "custom_status": 403}
         return data
 
     if user:
@@ -141,21 +141,21 @@ def p_retrieve_password(email, code, password, password2):
         data = {
             'msg': gettext('Account does not exist'),
             'msg_type': 'e',
-            "http_status": 404}
+            "custom_status": 404}
         return data
 
     if not r:
         data = {'msg': gettext('Email or SMS verification code error'),
-                'msg_type': 'e', "http_status": 401}
+                'msg_type': 'e', "custom_status": 401}
     else:
         if user:
             r = password_format_ver(password)
             if not r:
-                data = {"msg": r, "msg_type": "e", "http_status": "403"}
+                data = {"msg": r, "msg_type": "e", "custom_status": "403"}
                 return data
             elif password != password2:
                 data = {'msg': gettext('Two password is not the same'),
-                        'msg_type': 'w', "http_status": 400}
+                        'msg_type': 'w', "custom_status": 400}
             else:
                 password_hash = generate_password_hash(password)
                 # 将jwt_login_time设为{}退出所有jwt登录的用户
@@ -189,12 +189,12 @@ def p_retrieve_password(email, code, password, password2):
                     data = {
                         'msg': gettext('Password reset successfully.Please return to login page to login'),
                         'msg_type': 's',
-                        "http_status": 201}
+                        "custom_status": 201}
                     logout_user()
                 else:
                     data = {
                         "msg_type": "w",
                         "msg": gettext("Reset password failed(unknown error)"),
-                        "http_status": 400}
+                        "custom_status": 400}
                 return data
     return data

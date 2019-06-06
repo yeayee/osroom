@@ -69,7 +69,7 @@ def start_plugin():
                     " please stop it first").format(
                     other_plugin["plugin_name"]),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
             return data
     r = mdb_sys.db.plugin.update_one(find_query, {"$set": {"active": 1}})
     register_r = plugin_manager.register_plugin(name)
@@ -85,17 +85,17 @@ def start_plugin():
         data = {
             "msg": gettext("Plug-in activated successfully"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     elif r.matched_count and register_r:
         data = {
             "msg": gettext("Plug-in is already activated"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     else:
         data = {
             "msg": gettext("Plug-in activation failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -123,12 +123,12 @@ def stop_plugin():
         data = {
             "msg": gettext("Plug-in stopped successfully"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             "msg": gettext("Plug-in failed to stop"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -152,7 +152,7 @@ def delete_plugin():
         data = {
             "msg": gettext("Successfully deleted"),
             "msg_type": "s",
-            "http_status": 204}
+            "custom_status": 204}
         # 删除配置
         mdb_sys.db.plugin_config.delete_many({"plugin_name": name})
 
@@ -166,7 +166,7 @@ def delete_plugin():
         data = {
             "msg": gettext("Failed to delete"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -182,7 +182,7 @@ def upload_plugin():
     extension = file_name[1]
     if not extension.strip(".").lower() in ["zip"]:
         data = {"msg": gettext("File format error, please upload zip archive"),
-                "msg_type": "w", "http_status": 401}
+                "msg_type": "w", "custom_status": 401}
         return data
 
     if not os.path.exists(PLUG_IN_FOLDER):
@@ -194,7 +194,7 @@ def upload_plugin():
                 {"plugin_name": filename, "is_deleted": {"$in": [0, False]}}):
             # 如果插件没有准备删除标志
             data = {"msg": gettext("The same name plugin already exists"),
-                    "msg_type": "w", "http_status": 403}
+                    "msg_type": "w", "custom_status": 403}
             return data
         else:
             # 否则清除旧的插件
@@ -213,7 +213,7 @@ def upload_plugin():
 
         if os.path.isdir(fpath) or os.path.exists(fpath):
             data = {"msg": gettext("The same name theme already exists"),
-                    "msg_type": "w", "http_status": 403}
+                    "msg_type": "w", "custom_status": 403}
             os.remove(save_file)
             return data
 
@@ -225,9 +225,9 @@ def upload_plugin():
 
     s, r = verify_plugin(fpath)
     if s:
-        data = {"msg": r, "msg_type": "s", "http_status": 201}
+        data = {"msg": r, "msg_type": "s", "custom_status": 201}
     else:
-        data = {"msg": r, "msg_type": "e", "http_status": 400}
+        data = {"msg": r, "msg_type": "e", "custom_status": 400}
     if data["msg_type"] != "s":
         # 删除上传的文件
         if os.path.exists(os.path.join(PLUG_IN_FOLDER, filename)):

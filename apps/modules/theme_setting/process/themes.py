@@ -32,13 +32,13 @@ def get_theme_readme():
         data = {
             "msg": gettext("Get success"),
             "msg_type": "s",
-            "http_status": 200,
+            "custom_status": 200,
             "readme": md_text}
     else:
         data = {
             "msg": gettext("Readme file does not exist"),
             "msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -155,7 +155,7 @@ def upload_theme():
     extension = file_name[1]
     if not extension.strip(".").lower() in ["zip"]:
         data = {"msg": gettext("File format error, please upload zip archive"),
-                "msg_type": "w", "http_status": 401}
+                "msg_type": "w", "custom_status": 401}
         return data
 
     if not os.path.exists(THEME_TEMPLATE_FOLDER):
@@ -164,7 +164,7 @@ def upload_theme():
     fpath = os.path.join(THEME_TEMPLATE_FOLDER, filename)
     if os.path.isdir(fpath) or os.path.exists(fpath):
         data = {"msg": gettext("The same name theme already exists"),
-                "msg_type": "w", "http_status": 403}
+                "msg_type": "w", "custom_status": 403}
         return data
 
     # 保存主题
@@ -180,7 +180,7 @@ def upload_theme():
         if os.path.isdir(fpath) or os.path.exists(fpath):
 
             data = {"msg": gettext("The same name theme already exists"),
-                    "msg_type": "w", "http_status": 403}
+                    "msg_type": "w", "custom_status": 403}
             os.remove(save_file)
             return data
 
@@ -214,7 +214,7 @@ def upload_theme():
             data = {
                 "msg": gettext("Theme installed successfully"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
     else:
         # 验证失败
         # 删除上传的文件
@@ -222,7 +222,7 @@ def upload_theme():
             shutil.rmtree(os.path.join(THEME_TEMPLATE_FOLDER, filename))
         elif os.path.join(THEME_TEMPLATE_FOLDER, theme_dirname):
             shutil.rmtree(os.path.join(THEME_TEMPLATE_FOLDER, theme_dirname))
-        data = {"msg": r, "msg_type": "e", "http_status": 400}
+        data = {"msg": r, "msg_type": "e", "custom_status": 400}
 
     return data
 
@@ -264,7 +264,7 @@ def switch_theme():
         data = {
             "msg": gettext("Theme does not exist"),
             "msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
         return data
 
     s, r = verify_theme(path, theme_name, theme_name)
@@ -294,9 +294,9 @@ def switch_theme():
         data = {
             "msg": gettext("Switch success"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
-        data = {"msg": r, "msg_type": "e", "http_status": 400}
+        data = {"msg": r, "msg_type": "e", "custom_status": 400}
     return data
 
 
@@ -312,12 +312,12 @@ def delete_theme():
         data = {
             "msg": gettext("Theme does not exist"),
             "msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
     elif get_config("theme", "CURRENT_THEME_NAME") == theme_name.strip():
         data = {
             "msg": gettext("The current use of the theme can not be deleted"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     else:
         # 查看当前已安装主题数量
         num = 0
@@ -330,7 +330,7 @@ def delete_theme():
             data = {
                 "msg": gettext("Delete failed, at least keep a theme"),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
         else:
 
             theme_path = os.path.join(THEME_TEMPLATE_FOLDER, theme_name)
@@ -364,5 +364,5 @@ def delete_theme():
             data = {
                 "msg": gettext("Successfully deleted"),
                 "msg_type": "s",
-                "http_status": 204}
+                "custom_status": 204}
     return data

@@ -108,7 +108,7 @@ function osrHttpUpload(type, url, data, args){
     }
     var name = data.name;
     if(data.get(data.get("name"))=="undefined"){
-        var msg = {"msg":'{{_("请选择要上传的文件")}}', "msg_type":"e", "http_status":400}
+        var msg = {"msg":'{{_("请选择要上传的文件")}}', "msg_type":"e", "custom_status":400}
         alert_msg(msg);
         var result = {data:msg, status:"error"};
 

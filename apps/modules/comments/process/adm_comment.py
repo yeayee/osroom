@@ -90,12 +90,12 @@ def adm_comment_audit():
                     target_type=com["type"])
 
         data = {"msg": gettext("Submitted successfully, {}").format(
-            r.modified_count), "msg_type": "s", "http_status": 201}
+            r.modified_count), "msg_type": "s", "custom_status": 201}
     else:
         data = {
             "msg": gettext("Submitted failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -111,12 +111,12 @@ def adm_comment_delete():
             {"_id": {"$in": ids}}, {"$set": {"is_delete": 2}})
         if r.modified_count:
             data = {"msg": gettext("Move to a permanently deleted area, {}").format(
-                r.modified_count), "msg_type": "s", "http_status": 204}
+                r.modified_count), "msg_type": "s", "custom_status": 204}
         else:
             data = {
                 "msg": gettext("Does not match the data to be deleted"),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
     else:
         for tid in ids:
             mdb_user.db.user_like.update_many({"type": "comment", "values": str(tid)},
@@ -125,10 +125,10 @@ def adm_comment_delete():
             {"_id": {"$in": ids}, "is_delete": {"$in": [1, 2]}})
         if r.deleted_count:
             data = {"msg": gettext("Removed from the database, {}").format(
-                r.deleted_count), "msg_type": "s", "http_status": 204}
+                r.deleted_count), "msg_type": "s", "custom_status": 204}
         else:
             data = {"msg": gettext("No match to relevant data"),
-                    "msg_type": "w", "http_status": 400}
+                    "msg_type": "w", "custom_status": 400}
     return data
 
 
@@ -142,11 +142,11 @@ def adm_comment_restore():
                                        {"$set": {"is_delete": 0}})
     if r.modified_count:
         data = {"msg": gettext("Restore success, {}").format(r.modified_count),
-                "msg_type": "s", "http_status": 201}
+                "msg_type": "s", "custom_status": 201}
     else:
         data = {
             "msg": gettext("No match to relevant data"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
 
     return data

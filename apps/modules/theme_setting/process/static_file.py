@@ -104,7 +104,7 @@ def get_static_file_content():
     file = "{}/{}/{}".format(path, file_path, filename)
     if not os.path.exists(file) or THEME_TEMPLATE_FOLDER not in file:
         data = {"msg": gettext("File not found,'{}'").format(file),
-                "msg_type": "w", "http_status": 404}
+                "msg_type": "w", "custom_status": 404}
     else:
         with open(file) as wf:
             content = wf.read()
@@ -133,11 +133,11 @@ def edit_static_file():
 
     if not os.path.exists(file):
         data = {"msg": gettext("File does not exist can not be edited,'{}'").format(
-            file), "msg_type": "w", "http_status": 404}
+            file), "msg_type": "w", "custom_status": 404}
     else:
         with open(file, "w") as wf:
             wf.write(content)
 
         data = {"msg": gettext("Saved successfully"),
-                "msg_type": "s", "http_status": 201}
+                "msg_type": "s", "custom_status": 201}
     return data

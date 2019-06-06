@@ -95,12 +95,12 @@ def adm_post_audit():
                     target_type="post")
 
         data = {"msg": gettext("Submitted successfully, {}").format(
-            r.modified_count), "msg_type": "s", "http_status": 201}
+            r.modified_count), "msg_type": "s", "custom_status": 201}
     else:
         data = {
             "msg": gettext("Submitted failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -115,12 +115,12 @@ def adm_post_delete():
             {"_id": {"$in": ids}}, {"$set": {"is_delete": 3}})
         if r.modified_count:
             data = {"msg": gettext("Move to a permanently deleted area, {}").format(
-                r.modified_count), "msg_type": "s", "http_status": 204}
+                r.modified_count), "msg_type": "s", "custom_status": 204}
         else:
             data = {
                 "msg": gettext("No match to relevant data"),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
     else:
         data = delete_post(ids=ids)
     return data
@@ -136,11 +136,11 @@ def adm_post_restore():
                                     {"$set": {"is_delete": 0}})
     if r.modified_count:
         data = {"msg": gettext("Restore success, {}").format(r.modified_count),
-                "msg_type": "s", "http_status": 201}
+                "msg_type": "s", "custom_status": 201}
     else:
         data = {
             "msg": gettext("No match to relevant data"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
 
     return data

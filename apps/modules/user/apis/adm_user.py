@@ -64,7 +64,7 @@ def api_adm_user():
         data = user_del()
 
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)
 
 
@@ -84,5 +84,5 @@ def api_adm_user_del():
     if request.c_method == "DELETE":
         data = user_del()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

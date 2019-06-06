@@ -67,8 +67,8 @@ def content_inform():
         data = {
             'msg': gettext("Submitted successfully, thanks for your participation"),
             'msg_type': "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {'msg': gettext("Submit failed, please try again"),
-                'msg_type': "w", "http_status": 201}
+                'msg_type': "w", "custom_status": 201}
     return data

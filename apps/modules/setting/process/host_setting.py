@@ -44,7 +44,7 @@ def sys_host_edit():
     if not s:
         return r
     if msg:
-        data = {"msg": msg, "msg_type": "w", "http_status": 422}
+        data = {"msg": msg, "msg_type": "w", "custom_status": 422}
     else:
         r = mdb_sys.db.sys_host.update_one({"host_info.local_ip": ip},
                                            {"$set": {"host_info.port": port,
@@ -57,12 +57,12 @@ def sys_host_edit():
             data = {
                 "msg": gettext("The update is successful"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
         else:
             data = {
                 "msg": gettext("No changes"),
                 "msg_type": "w",
-                "http_status": 201}
+                "custom_status": 201}
     return data
 
 
@@ -75,12 +75,12 @@ def sys_host_delete():
     r = mdb_sys.db.sys_host.delete_many({"_id":{"$in":ids}})
     if r.deleted_count:
         data = {"msg": gettext("Successfully deleted {} host information").format(
-            r.deleted_count), "msg_type": "s", "http_status": 204}
+            r.deleted_count), "msg_type": "s", "custom_status": 204}
     else:
         data = {
             "msg": gettext("Failed to delete"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -101,14 +101,14 @@ def sys_host_exec_cmd():
                             password=host_info["password"])
             except BaseException as e:
                 data = {"msg": gettext("[{}] {}").format(ip, str(e)),
-                        "msg_type": "e", "http_status": 400}
+                        "msg_type": "e", "custom_status": 400}
                 return data
 
             if not ssh:
                 data = {
                     "msg": gettext("Connection host[{}] failed,Check the host Settings").format(ip),
                     "msg_type": "e",
-                    "http_status": 400}
+                    "custom_status": 400}
                 return data
         result = []
         if not exec_cmd and "cmd" in host:
@@ -134,11 +134,11 @@ def sys_host_exec_cmd():
                 result.append(stdout.read().decode().split("\n"))
         ssh.close()
         data = {"msg": gettext("Command executed {}").format(ip),
-                "msg_type": "s", "http_status": 201,
+                "msg_type": "s", "custom_status": 201,
                 "result": result, "cmd": exec_cmd}
     else:
         data = {"msg": gettext("There is no host {}").format(
-            ip), "msg_type": "e", "http_status": 400}
+            ip), "msg_type": "e", "custom_status": 400}
 
     return data
 
@@ -160,22 +160,22 @@ def sys_host_connect_test():
                             password=host_info["password"])
             except BaseException as e:
                 data = {"msg": gettext("[{}] {}").format(ip, str(e)),
-                        "msg_type": "e", "http_status": 400}
+                        "msg_type": "e", "custom_status": 400}
                 return data
             if not ssh:
                 data = {
                     "msg": gettext("Connection host[{}] failed").format(ip),
                     "msg_type": "e",
-                    "http_status": 400}
+                    "custom_status": 400}
             else:
 
                 data = {
                     "msg": gettext("Successfully connecting server host"),
                     "msg_type": "s",
-                    "http_status": 201}
+                    "custom_status": 201}
     else:
         data = {
             "msg": gettext("Host does not exist"),
             "msg_type": "e",
-            "http_status": 400}
+            "custom_status": 400}
     return data

@@ -203,12 +203,12 @@ class RestTokenAuth:
                     "access_token": client_token["token"]}
             else:
                 data = {"msg": gettext("Failed to get, please try again"),
-                        "msg_type": "w", "http_status": 400}
+                        "msg_type": "w", "custom_status": 400}
         else:
             data = {
                 "msg": gettext("The OSR-RestToken provided by the request header is not a SecretToken"),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
         return data
 
     def auth_access_token(self, token):

@@ -30,7 +30,7 @@ def sys_log():
                 data = {
                     "msg": gettext("Connection host[{}] failed,Check the host Settings").format(ip),
                     "msg_type": "e",
-                    "http_status": 400}
+                    "custom_status": 400}
                 return data
         sftp = ssh.client.open_sftp()
         remote_file = "{}/logs/{}".format(PROJECT_PATH, name)
@@ -70,5 +70,5 @@ def sys_log():
         os.remove(local_file)
     else:
         data = {"msg": gettext("There is no host {}").format(ip),
-                "msg_type": "e", "http_status": 400}
+                "msg_type": "e", "custom_status": 400}
     return data

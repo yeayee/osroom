@@ -53,7 +53,7 @@ def audit_rule_add():
             data = {
                 "msg": gettext("The rule already exists"),
                 "msg_type": "w",
-                "http_status": 403}
+                "custom_status": 403}
         else:
             mdb_sys.db.audit_rules.insert_one({"rule": rule,
                                                "project": project,
@@ -62,7 +62,7 @@ def audit_rule_add():
             data = {
                 "msg": gettext("Add a success"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
     return data
 
 
@@ -77,10 +77,10 @@ def audit_rule_delete():
     r = mdb_sys.db.audit_rules.delete_many({"_id": {"$in": ids}})
     if r.deleted_count > 0:
         data = {"msg": gettext("Delete the success,{}").format(
-            r.deleted_count), "msg_type": "s", "http_status": 204}
+            r.deleted_count), "msg_type": "s", "custom_status": 204}
     else:
         data = {
             "msg": gettext("Delete failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data

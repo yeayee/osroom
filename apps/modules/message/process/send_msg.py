@@ -119,5 +119,5 @@ def send_msg():
                 data["msg_type"] = "w"
 
     data["msg"] = data["msg"].strip(". ")
-    data["http_status"] = 201
+    data["custom_status"] = 201
     return data

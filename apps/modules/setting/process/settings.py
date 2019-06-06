@@ -41,7 +41,7 @@ def conf_version_switch():
         data = {
             "msg": gettext("Lack of parameter"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
 
     else:
         if switch_version:
@@ -49,12 +49,12 @@ def conf_version_switch():
                 data = {
                     "msg": "There is no the version history",
                     "msg_type": "w",
-                    "http_status": 400}
+                    "custom_status": 400}
             elif not mdb_sys.db.sys_config.find_one({"conf_version": switch_version}):
                 data = {
                     "msg": "This configuration version data does not exist",
                     "msg_type": "w",
-                    "http_status": 404}
+                    "custom_status": 404}
             else:
                 host_version = mdb_sys.db.sys_host.find_one(
                     {"type": "web", "host_info.local_ip": host_ip})
@@ -67,7 +67,7 @@ def conf_version_switch():
                 data = {
                     "msg": gettext("Switch success"),
                     "msg_type": "s",
-                    "http_status": 201}
+                    "custom_status": 201}
 
         if disable_update is not None:
             disable_update = int(disable_update)
@@ -76,7 +76,7 @@ def conf_version_switch():
             data = {
                 "msg": gettext("Switch success"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
 
     return data
 
@@ -164,7 +164,7 @@ def get_sys_configs():
         data = {
             "msg": gettext("There is no such data"),
             "msg_type": "warning",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -189,7 +189,7 @@ def sys_config_edit():
         data = {
             "msg": gettext("There is no such data"),
             "msg_type": "e",
-            "http_status": 404}
+            "custom_status": 404}
     else:
         try:
             if old_conf["type"] == "int" or old_conf["type"] == "binary":
@@ -231,7 +231,7 @@ def sys_config_edit():
                 if not isinstance(value, dict):
                     data = {
                         "msg": gettext('The format of the "value" errors, need a "{}" type').format(
-                            old_conf["type"]), "msg_type": "e", "http_status": 400}
+                            old_conf["type"]), "msg_type": "e", "custom_status": 400}
                     return data
             elif old_conf["type"] == "tuple":
                 if not isinstance(value, tuple):
@@ -239,7 +239,7 @@ def sys_config_edit():
                 if not isinstance(value, tuple):
                     data = {
                         "msg": gettext('The format of the "value" errors, need a "{}" type').format(
-                            old_conf["type"]), "msg_type": "e", "http_status": 400}
+                            old_conf["type"]), "msg_type": "e", "custom_status": 400}
                     return data
             elif old_conf["type"] == "password":
                 value = str(value)
@@ -248,14 +248,14 @@ def sys_config_edit():
                     "msg": gettext('There is no {}').format(
                         old_conf["type"]),
                     "msg_type": "e",
-                    "http_status": 400}
+                    "custom_status": 400}
                 return data
         except Exception as e:
             data = {
                 "msg": gettext('The format of the "value" errors, need a "{}" type').format(
                     old_conf["type"]),
                 "msg_type": "e",
-                "http_status": 400}
+                "custom_status": 400}
             return data
         if not info:
             info = old_conf["info"]
@@ -301,5 +301,5 @@ def sys_config_edit():
         data = {
             "msg": gettext("Modify the success"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     return data

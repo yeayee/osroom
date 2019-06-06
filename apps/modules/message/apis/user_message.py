@@ -39,5 +39,5 @@ def api_user_message():
     elif request.c_method == "DELETE":
         data = delete_user_msgs()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

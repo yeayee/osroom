@@ -11,7 +11,7 @@ class ArgVerify:
         for reqarg in kwargs.get("reqargs"):
             if not reqarg[1]:
                 data = {'msg': gettext('The "{}" cannot be empty').format(
-                    reqarg[0]), 'msg_type': "w", "http_status": 422}
+                    reqarg[0]), 'msg_type': "w", "custom_status": 422}
                 return False, data
         return True, None
 
@@ -21,7 +21,7 @@ class ArgVerify:
         for reqarg in kwargs.get("reqargs"):
             if len(reqarg[1]) < vr:
                 data = {'msg': gettext('The minimum length of "{}" is {} characters').format(
-                    reqarg[0], vr), 'msg_type': "w", "http_status": 422}
+                    reqarg[0], vr), 'msg_type': "w", "custom_status": 422}
                 return False, data
         return True, None
 
@@ -31,7 +31,7 @@ class ArgVerify:
         for reqarg in kwargs.get("reqargs"):
             if len(reqarg[1]) > vr:
                 data = {'msg': gettext('The maximum length of "{}" is {} characters').format(
-                    reqarg[0], vr), 'msg_type': "w", "http_status": 422}
+                    reqarg[0], vr), 'msg_type': "w", "custom_status": 422}
                 return False, data
         return True, None
 
@@ -41,7 +41,7 @@ class ArgVerify:
         for reqarg in kwargs.get("reqargs"):
             if not isinstance(reqarg[1], vr):
                 data = {'msg': gettext('"{}" needs to be of type {}').format(
-                    reqarg[0], vr.__name__), 'msg_type': "w", "http_status": 422}
+                    reqarg[0], vr.__name__), 'msg_type': "w", "custom_status": 422}
                 return False, data
         return True, None
 
@@ -54,7 +54,7 @@ class ArgVerify:
                         reqarg[0],
                         ",".join(vr)),
                     'msg_type': "w",
-                    "http_status": 422}
+                    "custom_status": 422}
                 return False, data
         return True, None
 
@@ -63,7 +63,7 @@ class ArgVerify:
         for reqarg in kwargs.get("reqargs"):
             if reqarg[1] in vr:
                 data = {'msg': gettext('The value of parameter "{}" can not be "{}"').format(
-                    reqarg[0], ",".join(vr)), 'msg_type': "w", "http_status": 422}
+                    reqarg[0], ",".join(vr)), 'msg_type': "w", "custom_status": 422}
                 return False, data
         return True, None
 
@@ -76,7 +76,7 @@ class ArgVerify:
                         reqarg[0],
                         ",".join(vr)),
                     'msg_type': 'error',
-                    "http_status": 422}
+                    "custom_status": 422}
                 return False, data
         return True, None
 
@@ -88,14 +88,14 @@ class ArgVerify:
                 if not re.search(vr["rule"], reqarg[1]):
                     return False, {
                         'msg': gettext('The value of parameter "{}" is illegal').format(
-                            reqarg[0]), 'msg_type': "w", "http_status": 422}
+                            reqarg[0]), 'msg_type': "w", "custom_status": 422}
 
         else:
             for reqarg in kwargs.get("reqargs"):
                 if re.search(vr["rule"], reqarg[1]):
                     return False, {
                         'msg': gettext('The value of parameter "{}" is illegal').format(
-                            reqarg[0]), 'msg_type': "w", "http_status": 422}
+                            reqarg[0]), 'msg_type': "w", "custom_status": 422}
 
         return True, None
 

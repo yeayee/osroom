@@ -35,7 +35,7 @@ def add_page():
         data = r
     elif re.search(regex_filter, routing):
         data = {"msg": gettext("This route can not be used"), "msg_type": "w",
-                "http_status": 403}
+                "custom_status": 403}
     else:
         filename = os.path.split(routing)[-1]
         path = "{}/{}/{}/{}".format(
@@ -54,14 +54,14 @@ def add_page():
             data = {
                 "msg": gettext("This route can not be used"),
                 "msg_type": "w",
-                "http_status": 403}
+                "custom_status": 403}
             return data
 
         # 是否存在同名的html文件
         file = "{}/{}.{}".format(path, filename, ctype)
         if os.path.exists(file):
             data = {"msg": gettext("Routing existing"), "msg_type": "w",
-                    "http_status": 403}
+                    "custom_status": 403}
             return data
 
         if not os.path.exists(path):
@@ -75,7 +75,7 @@ def add_page():
                                     upsert=True)
 
         data = {"msg": gettext("Added successfully"), "msg_type": "s",
-                "http_status": 201, "url": "/{}".format(routing.strip("/"))}
+                "custom_status": 201, "url": "/{}".format(routing.strip("/"))}
     return data
 
 
@@ -98,7 +98,7 @@ def delete_page():
             "theme", "CURRENT_THEME_NAME")}, {"$pull": {"custom_pages": filename}})
 
         data = {"msg": gettext("File not found,'{}'").format(file),
-                "msg_type": "w", "http_status": 404}
+                "msg_type": "w", "custom_status": 404}
     else:
 
         custom = mdb_sys.db.theme.find_one({"theme_name": get_config(
@@ -110,10 +110,10 @@ def delete_page():
             if not os.listdir(file_path):
                 shutil.rmtree(file_path)
             data = {"msg": gettext("Successfully deleted"), "msg_type": "s",
-                    "http_status": 204}
+                    "custom_status": 204}
         else:
             data = {
                 "msg": gettext("This file can not be deleted"),
                 "msg_type": "w",
-                "http_status": 403}
+                "custom_status": 403}
     return data

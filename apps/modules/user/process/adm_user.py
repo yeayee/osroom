@@ -22,7 +22,7 @@ def user():
         data = {
             'msg': gettext("The specified user is not found"),
             'msg_type': "w",
-            "http_status": 404}
+            "custom_status": 404}
     else:
         data["user"]["_id"] = str(data["user"]["_id"])
         data["user"]["role_id"] = str(data["user"]["role_id"])
@@ -125,7 +125,7 @@ def user_edit():
     data = {
         'msg': gettext("Update success"),
         'msg_type': "s",
-        "http_status": 201}
+        "custom_status": 201}
     update_data = {
         'role_id': role_id,
         'active': active,
@@ -144,7 +144,7 @@ def user_edit():
             data = {
                 "msg_type": "w",
                 "msg": gettext("No permission modification"),
-                "http_status": 401}
+                "custom_status": 401}
             return data
 
     r = update_one_user(user_id=str(tid), updata={"$set": update_data})
@@ -152,7 +152,7 @@ def user_edit():
         data = {
             'msg': gettext("No changes"),
             'msg_type': "w",
-            "http_status": 201}
+            "custom_status": 201}
     return data
 
 
@@ -191,12 +191,12 @@ def user_del():
                     r.modified_count,
                     noper),
                 'msg_type': "s",
-                "http_status": 201}
+                "custom_status": 201}
         else:
             data = {
                 'msg': gettext("Recycle user failed.May not have permission"),
                 'msg_type': "w",
-                "http_status": 401}
+                "custom_status": 401}
     else:
         # 永久删除
         r = mdb_user.db.user.delete_many(
@@ -208,12 +208,12 @@ def user_del():
                         r.deleted_count,
                         noper)),
                 'msg_type': "s",
-                "http_status": 204}
+                "custom_status": 204}
         else:
             data = {
                 'msg': gettext("Failed to delete.May not have permission"),
                 'msg_type': "w",
-                "http_status": 401}
+                "custom_status": 401}
 
     return data
 
@@ -253,12 +253,12 @@ def user_restore():
                     r.modified_count,
                     noper)),
             'msg_type': "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             'msg': gettext("Restore the failure.May not have permission"),
             'msg_type': "w",
-            "http_status": 401}
+            "custom_status": 401}
     return data
 
 
@@ -298,10 +298,10 @@ def user_activation():
                     r.modified_count,
                     noper)),
             'msg_type': "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             'msg': gettext("Activation failed.May not have permission"),
             'msg_type': "w",
-            "http_status": 401}
+            "custom_status": 401}
     return data

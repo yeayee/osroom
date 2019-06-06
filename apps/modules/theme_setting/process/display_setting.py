@@ -71,7 +71,7 @@ def add_display_setting():
                 type_alias = k
                 break
         data = {"msg": gettext('The type "{}" exists in the name "{}"').format(
-            type_alias, name), "msg_type": "w", "http_status": 403}
+            type_alias, name), "msg_type": "w", "custom_status": 403}
     else:
         # 获取text_html使用的图片
         text_imgs = []
@@ -112,7 +112,7 @@ def add_display_setting():
             data["msg"] = gettext("Added successfully").format(
                 ctype.capitalize())
         data["msg_type"] = "s"
-        data["http_status"] = 201
+        data["custom_status"] = 201
 
     return data
 
@@ -242,12 +242,12 @@ def edit_display_setting():
                     data = {
                         "msg": gettext("Update picture successfully"),
                         "msg_type": "s",
-                        "http_status": 201}
+                        "custom_status": 201}
                 else:
                     data = {
                         "msg": gettext("Failed to update"),
                         "msg_type": "e",
-                        "http_status": 400}
+                        "custom_status": 400}
             return data
 
     category = "Default"
@@ -278,7 +278,7 @@ def edit_display_setting():
                 type_alias = k
                 break
         data = {"msg": gettext('The type "{}" exists in the name "{}"').format(
-            type_alias, name), "msg_type": "w", "http_status": 403}
+            type_alias, name), "msg_type": "w", "custom_status": 403}
     else:
         # 获取text_html使用的图片
         old_imgs = old_display_setting.get("text_imgs", [])
@@ -311,12 +311,12 @@ def edit_display_setting():
             data = {
                 "msg": gettext("Modify the success"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
         else:
             data = {
                 "msg": gettext("The content is not modified"),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
 
     return data
 
@@ -343,11 +343,11 @@ def del_display_setting():
 
     if deleted_count:
         data = {"msg": gettext("{} files have been deleted").format(
-            deleted_count), "msg_type": "s", "http_status": 204}
+            deleted_count), "msg_type": "s", "custom_status": 204}
     else:
         data = {
             "msg": gettext("Failed to delete"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
 
     return data

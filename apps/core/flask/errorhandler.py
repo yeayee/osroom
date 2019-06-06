@@ -44,7 +44,7 @@ class ErrorHandler:
         @app.errorhandler(SecretTokenError)
         def handle_rest_token_error(e):
             data = {
-                "http_status": e.code,
+                "custom_status": e.code,
                 "msg": e.description,
                 "msg_type": "e",
                 "error_id": 40101}
@@ -53,7 +53,7 @@ class ErrorHandler:
         @app.errorhandler(AccessTokenError)
         def handle_rest_token_error(e):
             data = {
-                "http_status": e.code,
+                "custom_status": e.code,
                 "msg": e.description,
                 "msg_type": "e",
                 "error_id": 40102}
@@ -62,7 +62,7 @@ class ErrorHandler:
         @app.errorhandler(CSRFError)
         def handle_csrf_error(e):
             data = {
-                "http_status": e.code,
+                "custom_status": e.code,
                 "msg": e.description,
                 "msg_type": "e",
                 "error_id": 40103}
@@ -71,7 +71,7 @@ class ErrorHandler:
         @app.errorhandler(OsrTokenError)
         def handle_osr_token_error(e):
             data = {
-                "http_status": e.code,
+                "custom_status": e.code,
                 "msg": e.description,
                 "msg_type": "e",
                 "error_id": 40104,
@@ -84,7 +84,7 @@ class ErrorHandler:
         @app.errorhandler(LoginReqError)
         def handle_login_error(e):
             data = {
-                "http_status": e.code,
+                "custom_status": e.code,
                 "msg": gettext("Not logged in"),
                 "error_msg": e.description,
                 "msg_type": "e",
@@ -132,7 +132,7 @@ def internal_server_error(e):
             "Server error, please check whether the third-party plug-in is normal")
         msg_type = "e"
 
-    data = {"http_status": code, "request_id": g.weblog_id,
+    data = {"custom_status": code, "request_id": g.weblog_id,
             "msg": msg,
             "msg_type": msg_type}
     if request.path.startswith(api.url_prefix):

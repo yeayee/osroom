@@ -30,7 +30,7 @@ def api_post_tags():
     if request.c_method == "GET":
         data = get_tags()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)
 
 
@@ -71,7 +71,7 @@ def api_post():
         else:
             data = get_posts()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)
 
 
@@ -90,5 +90,5 @@ def api_post_op():
         if request.argget.all('action') == "like":
             data = post_like()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

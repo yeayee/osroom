@@ -21,6 +21,13 @@ def response_format(data, status=200):
 
     if not isinstance(data, dict):
         return data, status
-    if "http_status" not in data.keys():
+    if "custom_status" not in data.keys():
         return data, status
-    return data, data["http_status"]
+
+    # custom_status osroom自定义状态码
+    # 401是无权访问, 405表示该请求方式不存在
+    if data["custom_status"] in [400, 402, 403, 404, 422]:
+        status = 200
+    else:
+        status = data["custom_status"]
+    return data, status

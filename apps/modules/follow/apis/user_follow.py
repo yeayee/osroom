@@ -31,7 +31,7 @@ def api_get_user_follow():
         else:
             data = get_fans_users()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)
 
 
@@ -57,5 +57,5 @@ def api_user_follow():
     elif request.c_method == "DELETE":
         data = unfollow()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

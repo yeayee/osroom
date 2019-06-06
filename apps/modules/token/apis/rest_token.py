@@ -60,5 +60,5 @@ def api_rest_token():
     elif request.c_method == "DELETE":
         data = delete_secret_token()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

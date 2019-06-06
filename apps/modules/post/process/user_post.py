@@ -33,7 +33,7 @@ def post_issue():
     tag_max_num = get_config("post", "TAG_MAX_NUM")
     if len(tags) > tag_max_num:
         data = {"msg": gettext("Up to {} tags are used").format(tag_max_num),
-                "msg_type": "w", "http_status": 403}
+                "msg_type": "w", "custom_status": 403}
         return data
 
     tags = list(set(tags))
@@ -196,12 +196,12 @@ def post_issue():
             data = {
                 "msg": gettext("Issue success"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
         else:
             data = {
                 "msg": gettext("Save success"),
                 "msg_type": "s",
-                "http_status": 201}
+                "custom_status": 201}
     return data
 
 
@@ -224,12 +224,12 @@ def post_delete():
                                    {"$set": {"is_delete": is_delete}})
     if r.modified_count:
         data = {"msg": gettext("{},{}").format(msg, r.modified_count),
-                "msg_type": "s", "http_status": 201}
+                "msg_type": "s", "custom_status": 201}
     else:
         data = {
             "msg": gettext("No match to relevant data"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -247,10 +247,10 @@ def post_restore():
                                    {"$set": {"is_delete": 0}})
     if r.modified_count:
         data = {"msg": gettext("Restore success,{}").format(r.modified_count),
-                "msg_type": "s", "http_status": 201}
+                "msg_type": "s", "custom_status": 201}
     else:
         data = {
             "msg": gettext("Restore failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data

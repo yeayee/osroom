@@ -35,7 +35,7 @@ def get_url():
         data = {
             "msg": gettext("No relevant data found"),
             "msg_type": "w",
-            "http_status": 404}
+            "custom_status": 404}
     return data
 
 
@@ -103,7 +103,7 @@ def add_url():
         data = {
             'msg': gettext("Routing already exists"),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
     else:
         url_url = {"url": url.rstrip("/"),
                    "methods": ["GET"],
@@ -116,14 +116,14 @@ def add_url():
             data = {
                 "msg": gettext("Added successfully"),
                 "msg_type": "s",
-                "http_status": 201,
+                "custom_status": 201,
                 "inserted_id": str(
                     r.inserted_id)}
         else:
             data = {
                 "msg": gettext("Add failed"),
                 "msg_type": "w",
-                "http_status": 400}
+                "custom_status": 400}
     return data
 
 
@@ -161,7 +161,7 @@ def update_url():
             "The current user permissions are lower than the permissions you want to modify,"
             " without permission to modify"),
         "msg_type": "w",
-        "http_status": 401}
+        "custom_status": 401}
     user_role = mdb_user.db.role.find_one(
         {"_id": ObjectId(current_user.role_id)})
     # 如果当前用户的权限最高位 小于 要修改成的权重的最高位,是不可以的
@@ -192,12 +192,12 @@ def update_url():
         data = {
             "msg": gettext("Modify the success"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             "msg": gettext("No modification"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data
 
 
@@ -226,10 +226,10 @@ def delete_url():
         data = {
             "msg": gettext("Successfully deleted"),
             "msg_type": "s",
-            "http_status": 204}
+            "custom_status": 204}
     else:
         data = {
             "msg": gettext("Delete failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
     return data

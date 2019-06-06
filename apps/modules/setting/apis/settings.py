@@ -33,7 +33,7 @@ def api_sys_config_version():
     elif request.c_method == "PUT":
         data = conf_version_switch()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)
 
 
@@ -60,5 +60,5 @@ def api_sys_config():
     elif request.c_method == "PUT":
         data = sys_config_edit()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

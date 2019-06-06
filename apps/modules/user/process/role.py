@@ -21,7 +21,7 @@ def role():
         data = {
             'msg': gettext("The specified role is not found"),
             'msg_type': "w",
-            "http_status": 404}
+            "custom_status": 404}
     else:
         data["role"]["_id"] = str(data["role"]["_id"])
 
@@ -53,7 +53,7 @@ def add_role():
     data = {
         'msg': gettext("Add a success"),
         'msg_type': "s",
-        "http_status": 201}
+        "custom_status": 201}
 
     permissions = 0x0
     for i in temp_permissions:
@@ -74,7 +74,7 @@ def add_role():
                     "The current user permissions are lower than the permissions that you want to add,"
                     " without permission to add"),
                 "msg_type": "w",
-                "http_status": 401}
+                "custom_status": 401}
             return data
 
         if default:
@@ -87,7 +87,7 @@ def add_role():
                 data = {
                     'msg': gettext("Existing default role"),
                     'msg_type': "w",
-                    "http_status": 403}
+                    "custom_status": 403}
         else:
             mdb_user.db.role.insert_one({"name": name,
                                          "instructions": instructions,
@@ -98,7 +98,7 @@ def add_role():
         data = {
             'msg': gettext("Role name already exists"),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
 
     return data
 
@@ -124,7 +124,7 @@ def edit_role():
             "The current user permissions are lower than the permissions you want to modify,"
             " without permission to modify"),
         "msg_type": "w",
-        "http_status": 401}
+        "custom_status": 401}
     user_role = mdb_user.db.role.find_one(
         {"_id": ObjectId(current_user.role_id)})
     # 如果当前用户的权限最高位 小于 要修改成的这个角色权重的最高位,是不可以的
@@ -147,7 +147,7 @@ def edit_role():
     data = {
         'msg': gettext("Save success"),
         'msg_type': "s",
-        "http_status": 201}
+        "custom_status": 201}
     if not mdb_user.db.role.find_one(
             {"name": name, "_id": {"$ne": ObjectId(rid)}}):
         if default:
@@ -159,12 +159,12 @@ def edit_role():
                     data = {
                         'msg': gettext("No changes"),
                         'msg_type': "w",
-                        "http_status": 201}
+                        "custom_status": 201}
             else:
                 data = {
                     'msg': gettext("Existing default role"),
                     'msg_type': "w",
-                    "http_status": 403}
+                    "custom_status": 403}
         else:
             r = mdb_user.db.role.update_one(
                 {"_id": ObjectId(rid)}, {"$set": role})
@@ -172,13 +172,13 @@ def edit_role():
                 data = {
                     'msg': gettext("No changes"),
                     'msg_type': "w",
-                    "http_status": 201}
+                    "custom_status": 201}
 
     else:
         data = {
             'msg': gettext("Role name already exists"),
             'msg_type': "w",
-            "http_status": 403}
+            "custom_status": 403}
 
     return data
 
@@ -209,7 +209,7 @@ def delete_role():
             mdb_user.db.role.delete_many({"_id": rid})
     if not noper:
         data = {'msg': gettext('Delete the success, {} of the roles have users and cannot be deleted').format(
-            exist_user_role), 'msg_type': 's', "http_status": 204}
+            exist_user_role), 'msg_type': 's', "custom_status": 204}
     else:
         data = {
             'msg': gettext(
@@ -218,6 +218,6 @@ def delete_role():
                 noper,
                 exist_user_role),
             'msg_type': 'w',
-            "http_status": 400}
+            "custom_status": 400}
 
     return data

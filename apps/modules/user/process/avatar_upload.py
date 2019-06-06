@@ -34,7 +34,7 @@ def avatar_upload():
                 "msg": gettext(
                     "Upload avatar image can not exceed {}M".format(max_size_mb)),
                 "msg_type": "w",
-                "http_status": 413}
+                "custom_status": 413}
             return data
         else:
             result = fileup_base_64(
@@ -47,7 +47,7 @@ def avatar_upload():
                 "msg": gettext(
                     "Upload avatar image can not exceed {}M".format(max_size_mb)),
                 "msg_type": "w",
-                "http_status": 413}
+                "custom_status": 413}
             return data
 
         if file:
@@ -82,7 +82,7 @@ def avatar_upload():
                 data = {
                     'msg': gettext("Save failed"),
                     'msg_type': "w",
-                    "http_status": 400}
+                    "custom_status": 400}
             else:
                 if result["type"] == "local":
                     # 如果保存再本地的话, 保存为一定尺寸大小
@@ -93,12 +93,12 @@ def avatar_upload():
                 data = {
                     'msg': gettext("Save successfully"),
                     'msg_type': "s",
-                    "http_status": 201}
+                    "custom_status": 201}
     if not data:
         data = {
             'msg': gettext("Upload failed"),
             'msg_type': "w",
-            "http_status": 400}
+            "custom_status": 400}
 
     # 清理user信息数据缓存
     delete_user_info_cache(user_id=current_user.str_id)

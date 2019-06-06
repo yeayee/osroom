@@ -50,14 +50,14 @@ def follow_user():
         data = {
             "msg": gettext("Followed"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
 
     elif len(ids) == 1 and ids[0] == current_user.str_id:
         data = {"msg": gettext("You can't follow yourself"),
-                "msg_type": "w", "http_status": 400}
+                "msg_type": "w", "custom_status": 400}
     else:
         data = {"msg": gettext("You are already following this user"),
-                "msg_type": "w", "http_status": 400}
+                "msg_type": "w", "custom_status": 400}
 
     return data
 
@@ -94,13 +94,13 @@ def unfollow():
         data = {
             "msg": gettext("Unfollow success"),
             "msg_type": "s",
-            "http_status": 201}
+            "custom_status": 201}
     else:
         delete_user_info_cache(user_id=current_user.str_id)
         data = {
             "msg": gettext("Unfollow failed"),
             "msg_type": "w",
-            "http_status": 400}
+            "custom_status": 400}
 
     return data
 

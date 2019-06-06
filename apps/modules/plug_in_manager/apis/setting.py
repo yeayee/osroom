@@ -39,7 +39,7 @@ def api_adm_plugin_setting():
     elif request.c_method == "PUT":
         data = update_plugin_setting()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)
 
 
@@ -58,5 +58,5 @@ def api_adm_install_requs():
     if request.c_method == "PUT":
         data = install_require_package()
     else:
-        data = {"msg_type": "w", "msg": METHOD_WARNING, "http_status": 405}
+        data = {"msg_type": "w", "msg": METHOD_WARNING, "custom_status": 405}
     return response_format(data)

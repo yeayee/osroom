@@ -21,11 +21,11 @@ def language_set():
         data = {
             "msg_type": "s",
             "msg": gettext("Set up language success"),
-            "http_status": 201}
+            "custom_status": 201}
     else:
         data = {
             "msg_type": "e",
             "msg": gettext("Does not support this language"),
-            "http_status": 400}
+            "custom_status": 400}
 
     return data
