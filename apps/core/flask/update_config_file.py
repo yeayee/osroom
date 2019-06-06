@@ -105,7 +105,7 @@ def update_config_file(mdb_sys, *args, **kwargs):
     if not r:
         web_start_log.error("Config update:[file to db] Push failure")
         return False
-    
+
     web_start_log.info("Configuration updates and merge is complete")
     return True
 

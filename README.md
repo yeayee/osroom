@@ -1,12 +1,14 @@
 
 <div align=center><img width="auto" height="50" src="https://raw.githubusercontent.com/osroom/osroom/dev/apps/static/sys_imgs/osroom-logo.png" alt="osroom"/></div>
 
-> Version v1.0 (低频维护)
+> Version v1.0.1
 
 
 | Version  | Status  |  Other   |
 | --- | --- | --- |
 |   [dev](/osroom/osroom)    |  开发...   |    开发版 |
+|   [v1.0.1](/osroom/osroom/tree/v1.0.1)    |  完成|    无 |
+|   [v1.0](/osroom/osroom/tree/v1.0)    |  完成  |    无 |
 
 
 OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ Redis开发的一个Web系统（CMF , Rest Api）.
