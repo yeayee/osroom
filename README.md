@@ -6,7 +6,7 @@
 
 | Version  | Status  |  Other   |
 | --- | --- | --- |
-|   [dev](https://github.com/osroom/osroom)    |  开发...   |    开发版 |
+|   [dev](/osroom/osroom)    |  开发...   |    开发版 |
 
 
 OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ Redis开发的一个Web系统（CMF , Rest Api）.

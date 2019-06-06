@@ -105,40 +105,7 @@ def update_config_file(mdb_sys, *args, **kwargs):
     if not r:
         web_start_log.error("Config update:[file to db] Push failure")
         return False
-
-    # # 写配置文件
-    # info = """#!/usr/bin/env python\n# -*-coding:utf-8-*-\n__author__ = "Allen Woo"\n"""
-    # doc = "__readme__= '''{}'''\n".format(__readme__)
-    #
-    # # write config.py
-    #
-    # # 把password类型替换成*, 再写入文件，防止提交代码时把密码上传到git
-    # for k, v in local_config.items():
-    #     for k1, v1 in v.items():
-    #         if k1.startswith("__") and k1.endswith("__"):
-    #             continue
-    #         if "type" in v1 and v1["type"] == "password":
-    #             # 由于上一个版的password已被替换，现在需要把把它写写入到CONFIG中
-    #             CONFIG[k][k1]["value"] = v1["value"]
-    #             # 替换密码
-    #             v1["value"] = "<Your password>"
-    #
-    # temp_conf = str(json.dumps(local_config, indent=4, ensure_ascii=False))
-    # wf = open("{}/apps/configs/config.py".format(PROJECT_PATH), "wb")
-    # wf.write(bytes(info, "utf-8"))
-    # wf.write(bytes(doc, "utf-8"))
-    # # 修改配置为同步数据库配置到文件
-    # wf.write(bytes("# Danger: If True, the database configuration data will be overwritten\n", "utf-8"))
-    # wf.write(bytes("# 危险:如果为True, 则会把该文件配置覆盖掉数据库中保存的配置\n", "utf-8"))
-    # wf.write(bytes("OVERWRITE_DB = False\n", "utf-8"))
-    # wf.write(bytes("CONFIG = ", "utf-8"))
-    # wf.write(bytes(temp_conf.replace("false",
-    #                                  "False").replace("true",
-    #                                                   "True").replace("null",
-    #                                                                   "None"),
-    #                "utf-8"))
-    # wf.close()
-
+    
     web_start_log.info("Configuration updates and merge is complete")
     return True
 
