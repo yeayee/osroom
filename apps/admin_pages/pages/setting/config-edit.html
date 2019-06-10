@@ -189,8 +189,13 @@
                 try{
                     var temp_val = JSON.parse(value_txt.eq(i).val());
                 }catch(e){
-                     alert_msg({"msg":'['+temp_key+"]{{_('的value格式错误,请检查')}}", "msg_type":"e"});
-                     return;
+                    var temp_val = value_txt.eq(i).val();
+                    if(!temp_val){
+                        alert_msg({"msg":"{{_('Value不能为空')}}", "msg_type":"e"});
+                        return;
+                    }
+                     // alert_msg({"msg":'['+temp_key+"]{{_('的value格式错误,请检查')}}", "msg_type":"e"});
+                     // return;
                 }
                 value[temp_key]= temp_val
             }
