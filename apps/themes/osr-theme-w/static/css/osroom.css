@@ -636,13 +636,13 @@ body {
 
 /* Btn */
 .osr-btn{
-    margin: 3px 5px 2px 5px;
+    margin: 5px 5px 5px 5px;
     -webkit-border-radius:5px!important;
     -moz-border-radius:5px!important;
     border-radius:5px!important;
 }
 
-.osr-btn:hover,.osr-btn:focus {
+.osr-btn:hover{
     color: #ffffff !important;
     background: #3399ff !important;
 }
@@ -1142,9 +1142,18 @@ li.have-img {
     height: 100vh;
     min-height: 700px;
     background-size: cover;
+    top:-20px;
 }
 
-.osr-bg-cover:before, .osr-bg-cover:after {
+.osr-full-bg-cover {
+    position: relative;
+    height: 100vh;
+    min-height: 900px;
+    background-size: cover;
+    top:-56px;
+}
+
+.osr-bg-cover:before, .osr-bg-cover:after,.osr-full-bg-cover:before,.osr-full-bg-cover:after {
     position: absolute;
     z-index: 0;
     content: '';
@@ -1519,4 +1528,18 @@ li.have-img {
 .osr-text-margin {
     margin-bottom: 5px;
     margin-top: 5px;
+}
+
+.osr-div-center{
+    position:absolute;
+    height:auto;
+    top:30px;
+    left: 0px;
+    right: 0px;
+}
+
+.osr-hollow-color, osr-hollow-color:after{
+    background-color: #fff0 !important;
+    background-image: none !important;
+    border: 1px solid #8a9192 !important;
 }
