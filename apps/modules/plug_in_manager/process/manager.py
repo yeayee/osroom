@@ -5,7 +5,7 @@ import shutil
 from flask import request
 from flask_babel import gettext
 
-from apps.app import mdbs
+from apps.app import mdbs, cache
 from apps.configs.sys_config import PLUG_IN_FOLDER, PLUG_IN_REQUIRED_CONF, PLUG_IN_CONFIG_CACHE_KEY
 from apps.core.flask.reqparse import arg_verify
 from apps.core.plug_in.manager import plugin_manager, verify_plugin
