@@ -58,7 +58,9 @@
         var result = osrHttp("GET","/api/admin/theme/display-setting",d,args={not_prompt:true});
         result.then(function (r) {
             vue.media = r.data.media;
-            vue.media.code = JSON.stringify(vue.media.code);
+            if (vue.media.code_type == "json") {
+                vue.media.code = JSON.stringify(vue.media.code);
+            }
             editor.txt.html(vue.media.text_html);
             get_category();
         });
