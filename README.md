@@ -6,7 +6,7 @@
 |   Version  |   Status  |  Other   |
 | --- | --- | --- |
 |   [dev](https://github.com/osroom/osroom)    |  开发...   |    v1.x.x更新到dev版本时需要重新配置数据库文件
-|   [v1.1.0](https://github.com/osroom/osroom/tree/v1.1.0)    |  低频率维护   |  v1.x.x更新到dev版本时需要重新配置数据库文件   |
+|   [v1.1.1](https://github.com/osroom/osroom/tree/v1.1.1)    |  低频率维护   |  v1.x.x更新到dev版本时需要重新配置数据库文件   |
 
 OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ Redis开发的一个Web系统（CMF , Rest Api）.
 
