@@ -86,6 +86,14 @@
 		"text": "管理端->主题展示设置->图文里添加或修改，删除"
 	},
 	{
+		"name": "home-display-img-4",
+		"category": "首页展示",
+		"type": "image",
+		"title": "Home页面图片展示窗",
+		"link": "",
+		"text": "管理端->主题展示设置->图文里添加或修改，删除"
+	},
+	{
 		"name": "display_tag",
 		"category": "首页展示",
 		"type": "text",
@@ -97,8 +105,8 @@
 	{
 		"name": "设置请看以下链接",
 		"category": "其他图片",
-		"type": "text",
-		"title": "主题Top背景图",
+		"type": "image",
+		"title": "主题Top背景图backgroud_url",
 		"switch":1,
 		"link": "",
 		"text": "/osr-admin/setting/config-edit?project=theme_global_conf, FREE中添加一个KEY: backgroud_url, Value为该图片链接"
@@ -106,8 +114,8 @@
 	{
 		"name": "设置请看以下链接",
 		"category": "其他图片",
-		"type": "text",
-		"title": "文章默认图片",
+		"type": "image",
+		"title": "文章默认图片post_cover_url",
 		"switch":1,
 		"link": "",
 		"text": "/osr-admin/setting/config-edit?project=theme_global_conf, FREE中添加一个KEY: post_cover_url, Value为该图片链接"
