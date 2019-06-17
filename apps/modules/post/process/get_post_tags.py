@@ -64,14 +64,11 @@ def _get_tags(user_id, last_days, tlimit, sort):
     ut = time.time()
     s_time = ut - last_days * 86400 - ut % 86400
     query_conditions = {
-        "issue_time": {
-            "$gt": s_time},
+        "issue_time": {"$gt": s_time},
         "issued": 1,
         "is_delete": 0,
         "audit_score": {
-            "$lt": get_config(
-                "content_inspection",
-                "ALLEGED_ILLEGAL_SCORE")}}
+            "$lt": get_config("content_inspection", "ALLEGED_ILLEGAL_SCORE")}}
     if user_id:
         query_conditions["user_id"] = user_id
 
@@ -82,7 +79,6 @@ def _get_tags(user_id, last_days, tlimit, sort):
         {"$unwind": "$tags"},
         {
             "$group": {"_id": "$tags",
-                       "tag_cnt": {"$sum": 1},
                        "like": {"$sum": "$like"},
                        "comment_num": {"$sum": "$comment_num"}}
         },
@@ -90,15 +86,36 @@ def _get_tags(user_id, last_days, tlimit, sort):
         {"$limit": tlimit},
     ], allowDiskUse=True)
     data = {"tags": []}
+    temp_tags = []
     for result in r:
         tr = {
             "tag": result["_id"],
             "like": result["like"],
-            "tag_cnt": result["tag_cnt"],
             "comment_num": result["comment_num"]
         }
+        temp_tags.append(result["_id"])
         data["tags"].append(tr)
 
+    # 计算每个标签实际的文章数量(未过滤时间)
+    query_conditions["tags"] = {"$in": temp_tags}
+    del query_conditions["issue_time"]
+    r = mdbs["web"].db.post.aggregate([
+        {"$match": query_conditions},
+        {"$unwind": "$tags"},
+        {
+            "$group": {"_id": "$tags",
+                       "tag_cnt": {"$sum": 1}}
+        }
+    ], allowDiskUse=True)
+    temp_tags_cnt = {}
+    for result in r:
+        temp_tags_cnt[result["_id"]] = result["tag_cnt"]
+
+    for tag in data["tags"]:
+        if tag["tag"] in temp_tags_cnt:
+            tag["tag_cnt"] = temp_tags_cnt[tag["tag"]]
+        else:
+            tag["tag_cnt"] = 0
     # 保留一份长期缓存
     cache.set(
         key="LAST_POST_TAGS_CACHE",

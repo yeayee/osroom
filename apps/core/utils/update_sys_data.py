@@ -3,6 +3,7 @@ import json
 import os
 import shutil
 import time
+from collections import OrderedDict
 from copy import deepcopy
 from apps.configs.sys_config import APPS_PATH
 from apps.core.logger.web_logging import web_start_log
@@ -42,7 +43,7 @@ def update_mdb_collections(mdbs):
                     web_start_log.warning(e)
 
     # 将最新的数据库结构写入配置文件, 方便开发者了解结构
-    new_collections = {}
+    new_collections = OrderedDict({})
     for dbname, mdb in mdbs.items():
         new_collections[dbname] = {}
         collnames = mdb.dbs.collection_names()
