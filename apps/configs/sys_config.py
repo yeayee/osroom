@@ -17,7 +17,7 @@ __author__ = 'Allen Woo'
 """
 Osroom版本
 """
-VERSION = "1.0 Beta"
+VERSION = "2.0 Beta"
 
 """
   需要导入的模块

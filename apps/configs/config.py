@@ -638,6 +638,12 @@ CONFIG = {
             "value": "",
             "type": "string",
             "info": "APP(Web)管理端Title前缀"
+        },
+        "TITLE_PREFIX_ADM": {
+            "sort": 7,
+            "value": "",
+            "type": "string",
+            "info": "APP(Web)管理端Title前缀"
         }
     },
     "system": {
