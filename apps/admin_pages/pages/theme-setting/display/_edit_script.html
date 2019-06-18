@@ -27,7 +27,8 @@
     // 加载完页面执行
     $(document).ready(function(){
         var id = $("#id").attr("content")
-        vue.category_id = $("#cid").attr("content")
+        vue.media.type = media_type;
+        vue.media.category_id = $("#cid").attr("content")
         if(vue.cid=="null" || vue.cid == "undefined" || vue.cid == undefined){
             vue.cid = ""
         }
@@ -43,7 +44,9 @@
     //获取分类
     function get_category(){
 
-        var result = osrHttp("GET","/api/admin/content/theme-category",{type:vue.media.type}, args={not_prompt:true});
+        var result = osrHttp("GET","/api/admin/content/theme-category",
+            {type:vue.media.type},
+            args={not_prompt:true});
         result.then(function (r) {
             vue.media_categorys = r.data.categorys;
         });

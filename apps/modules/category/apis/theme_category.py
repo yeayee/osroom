@@ -25,9 +25,9 @@ def api_theme_category():
 
         2. 获取所有的type: config.py文件中category的所有CATEGORY TYPE
             action:<str>, 为get_category_type
-        解释:
-            在分类中(category)又分为几种类型(type)
-            如: type为post有几个category
+            解释:
+                在分类中(category)又分为几种类型(type)
+                如: type为post有几个category
 
     POST:
         添加文集

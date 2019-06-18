@@ -59,7 +59,7 @@ def async_get_tags(user_id, last_days, tlimit, sort):
     _get_tags(user_id=user_id, last_days=last_days, tlimit=tlimit, sort=sort)
 
 
-@cache.cached(timeout=3600 * 12, key_base64=False, db_type="redis")
+#@cache.cached(timeout=3600 * 12, key_base64=False, db_type="redis")
 def _get_tags(user_id, last_days, tlimit, sort):
     ut = time.time()
     s_time = ut - last_days * 86400 - ut % 86400
@@ -116,6 +116,10 @@ def _get_tags(user_id, last_days, tlimit, sort):
             tag["tag_cnt"] = temp_tags_cnt[tag["tag"]]
         else:
             tag["tag_cnt"] = 0
+
+    # sort
+    data["tags"] = sorted(data["tags"], key=lambda x: x["tag_cnt"], reverse=True)
+    print(data["tags"])
     # 保留一份长期缓存
     cache.set(
         key="LAST_POST_TAGS_CACHE",
