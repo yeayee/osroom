@@ -2,12 +2,11 @@
 {% block title %}{{_("搜索")}}-{% endblock %}
 {% block content %}
 <div id="app" v-cloak>
-
     <div class="row osr-page" style="padding-top:30px">
          <div class="input-group text-center" style="max-width: 400px;margin-right: auto;margin-left: auto;">
             <input type="text" name="q" class="form-control osr-input input-md" v-model="keyword" placeholder="{{_('文章 用户')}}">
             <span class="input-group-btn">
-                <button  class="btn btn-md osr-btn btn-flat" v-on:click="global_search(keyword, target, 1)"
+                <button  class="btn btn-md osr-btn-blue" v-on:click="global_search(keyword, target, 1)"
                 style="background:#27c24c;color:#fff">
                     {{_("搜索")}}
                 </button>
