@@ -56,7 +56,7 @@
 
         // 获取category
         result = get_category_info()
-        if(!vue.user_id){
+        if(!vue.user_id && result){
              result.then(function (r) {
                 //获取用户资料
                 get_user();
@@ -73,16 +73,17 @@
     });
 
     function get_category_info(){
-        d = {
-            id:vue.category_id
+        if(vue.category_id){
+            d = {
+                id:vue.category_id
+            }
+             var result = osrHttp("GET","/api/content/category/info",d,args={not_prompt:true});
+            result.then(function (r) {
+                vue.category = r.data.category;
+                vue.user_id = vue.category.user_id;
+            });
+            return result;
         }
-
-        var result = osrHttp("GET","/api/content/category/info",d,args={not_prompt:true});
-        result.then(function (r) {
-            vue.category = r.data.category;
-            vue.user_id = vue.category.user_id;
-        });
-        return result;
     }
     function get_user(){
         d = {

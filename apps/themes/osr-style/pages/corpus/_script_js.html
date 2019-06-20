@@ -71,14 +71,15 @@
         d = {
             id:vue.category_id
         }
+         if(vue.category_id) {
+             var result = osrHttp("GET", "/api/content/category/info", d, args = {not_prompt: true});
+             result.then(function (r) {
+                 vue.category = r.data.category;
+                 vue.user_id = vue.category.user_id;
+             });
 
-        var result = osrHttp("GET","/api/content/category/info",d,args={not_prompt:true});
-        result.then(function (r) {
-            vue.category = r.data.category;
-            vue.user_id = vue.category.user_id;
-        });
-
-        return result;
+             return result;
+         }
     }
     function get_user(){
         d = {
