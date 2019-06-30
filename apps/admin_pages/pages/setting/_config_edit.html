@@ -40,6 +40,7 @@
                              {{_("添加元素")}}
                          </button>
                      </p>
+                      <span id="list_input"></span>
                       <div :id="conf.key+'_input_'+index" v-for="v,index in conf.value"
                            class="form-group">
                           <input  class="form-control osr-input" type="text" :value="v" />
@@ -56,7 +57,7 @@
                         </button>
                      </p>
                       <data :id="conf.key+'_add'"></data>
-
+                        <span id="dict_input"></span>
                       <div :id="conf.key+'_input_'+k" v-for="v,k in conf.value"
                            class="form-group">
                            <input class="form-control osr-input" type="text" :value="k" />
@@ -93,7 +94,7 @@
         html = '<div id="'+id+ '" class="list_dict form-group form-icon form-feedback">'
                 +'<input class="form-control osr-input" type="text" placeholder="Value" /></div>';
 
-        $("#"+conf_key+"_input_0").before(html);
+        $("#list_input").before(html);
     }
 
     function add_dict_tag(conf_key){
@@ -101,7 +102,7 @@
         html = '<div id="'+id+ '" class="list_dict form-group form-icon form-feedback">'
                 +'<input class="form-control osr-input" type="text" placeholder="Key:String" />'
                 +'<textarea class="form-control osr-input" style="height:80px;" placeholder="Value:String or Json"  ></textarea></div>'
-         $("#"+conf_key+"_add").before(html);
+         $("#dict_input").before(html);
     }
 
     function remove_tag(id){

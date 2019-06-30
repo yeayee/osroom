@@ -8,7 +8,7 @@ import time
 from apps.modules.user.process.get_or_update_user import update_one_user
 from apps.modules.user.process.user_profile_process import get_user_all_info, get_user_public_info, \
     delete_user_info_cache
-from apps.utils.validation.str_format import ver_user_domainhacks, short_str_verifi
+from apps.utils.validation.str_format import ver_user_domainhacks, short_str_verifi, content_attack_defense
 from apps.core.flask.reqparse import arg_verify
 from apps.utils.format.obj_format import json_to_pyseq, str_to_num
 from apps.utils.format.time_format import time_to_utcdate
@@ -107,6 +107,13 @@ def profile_update():
         if not s:
             return {"msg": r, "msg_type": "w", "custom_status": 403}
 
+    r = content_attack_defense(info)
+    if r["security"] < 100:
+        data = {
+            'msg': gettext("User profile information is illegal"),
+            'msg_type': "e",
+            "custom_status": 400}
+        return data
     update_data = {
         'gender': gender,
         'homepage': homepage,
@@ -160,6 +167,7 @@ def user_basic_edit():
         else:
             data = {'msg': s, 'msg_type': "e", "custom_status": 422}
             return data
+
 
     update_data["username"] = username
     # editor

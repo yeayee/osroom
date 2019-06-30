@@ -4,7 +4,9 @@ import regex as re
 from flask_babel import gettext
 from apps.app import mdbs
 from apps.core.flask.reqparse import arg_verify
+from apps.core.utils.get_config import get_config
 from apps.utils.content_evaluation.content import content_inspection_text
+from apps.utils.format.url_format import get_domain
 
 __author__ = 'Allen Woo'
 
@@ -26,8 +28,7 @@ def short_str_verifi(short_str, project=None, allow_special_chart=False):
         if re.search(r"[\.\*#\?]+", short_str):
             return False, gettext(
                 "The name format is not correct,You can't use '.','*','#','?'")
-    warning_msg = gettext(
-        "Some contents contain sensitive information or do not meet the requirements of this site. Please correct it and try again.")
+    warning_msg = gettext("Some contents contain sensitive information or do not meet the requirements of this site. Please correct it and try again.")
     if not (current_user.is_authenticated and current_user.is_staff):
         rules = mdbs["sys"].db.audit_rules.find({"project": project})
         for rule in rules:
@@ -124,3 +125,34 @@ def password_format_ver(password):
             return False, gettext(
                 'The password is too simple, can not use continuous characters!')
     return True, ""
+
+
+def content_attack_defense(content):
+    """
+    外站链接过滤
+    :param content:
+    :return:
+    """
+    switch = get_config("security", "SWITCH")
+    security = 100
+    if switch:
+        wlists = get_config("security", "LINK_WHITELIST")
+        r = re.findall(r".*http[s]?://([a-zA-Z0-9]+\.[a-zA-Z0-9]+\.?[a-zA-Z0-9-]{0,10})",
+                     content)
+        if r:
+            for link in r:
+                if link not in wlists:
+                    new_link = link.replace(".", ". ").replace("/", "/ ").replace("&", "&amp;").replace("?", "&;")
+                    new_link = "{}[{}]".format(gettext(new_link, "Unvalidated link"))
+                    content = content.replace(link, new_link)
+                    security -= 5
+
+        temp_content = content
+        rules = mdbs["sys"].db.audit_rules.find({"project": "content_security"})
+        for rule in rules:
+            content = re.sub(r".*{}".format(rule["rule"]), "[Illegal content]", content)
+        if temp_content != content:
+            security -= 20
+            content = content.replace("<", "&lt").replace(">", "&gt")
+    return {"content": content, "security": security}
+

@@ -11,5 +11,8 @@ def get_domain(url):
     :param url:
     :return:
     """
-    res = get_tld(url, as_object=True)
+    try:
+        res = get_tld(url, as_object=True)
+    except:
+        return False
     return "{}.{}".format(res.subdomain, res.tld)

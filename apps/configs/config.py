@@ -217,20 +217,39 @@ CONFIG = {
             "info": "内容检测分数高于多少分时属于涉嫌违规(0-100分,对于需要检查的内容有效)"
         }
     },
-    "name_audit": {
+    "security": {
+        "SWITCH": {
+            "sort": 1,
+            "value": True,
+            "type": "bool",
+            "info": "安全审核开关，建议打开，防止部分内容注入攻击"
+        },
+        "LINK_WHITELIST": {
+            "sort": 99,
+            "value": [],
+            "type": "list",
+            "info": "Link白名单: 当SWITCH开启时生效，post(文章)和comment(评论)等提交的内容都会对除白名单的Link/URL外Link做修改"
+        },
+        "__restart__": "not_must",
+        "__info__": "网站安全设置",
+        "__sort__": 99
+    },
+    "content_audit": {
         "AUDIT_PROJECT_KEY": {
             "sort": 99,
             "value": {
                 "class_name": "审核一些短的分类名称, 如category, tag",
-                "username": "审核用户名"
+                "username": "审核用户名(username)",
+                "content_security": "审核post(文章)和comment(评论)等长内容的安全性"
             },
             "type": "dict",
             "info": "审核项目的Key(键),审核时会使用一个Key来获取审核规则,正则去匹配用户输入的内容"
         },
         "__restart__": "not_must",
-        "__info__": "名称验证, 如用户名,分类名称",
+        "__info__": "名称,内容验证, 如用户名,分类名称",
         "__sort__": 8
     },
+
     "key": {
         "SECURITY_PASSWORD_SALT": {
             "sort": 99,

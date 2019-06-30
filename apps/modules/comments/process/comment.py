@@ -13,7 +13,7 @@ from apps.core.utils.get_config import get_config
 from apps.modules.message.process.user_message import insert_user_msg
 from apps.utils.content_evaluation.content import content_inspection_text
 from apps.utils.format.obj_format import json_to_pyseq
-from apps.utils.validation.str_format import short_str_verifi, email_format_ver
+from apps.utils.validation.str_format import short_str_verifi, email_format_ver, content_attack_defense
 from apps.app import mdbs
 __author__ = "Allen Woo"
 
@@ -153,6 +153,15 @@ def comment_issue():
         audit_label = r["label"]
         audited = 1
         audit_way = "auto"
+        # 加强审核
+
+    cad = content_attack_defense(content)
+    content = cad["content"]
+    if cad["security"] < 100:
+        audit_label = "attack"
+        audited = 1
+        audit_way = "auto"
+        audit_score = 100
 
     comment = {
         "target_id": str(target_id),
@@ -183,9 +192,10 @@ def comment_issue():
 
     r = mdbs["web"].db.comment.insert_one(comment)
 
+
     # 如果已审核, 并且违规分数高于正常
-    if audited and audit_score >= get_config(
-            "content_inspection", "ALLEGED_ILLEGAL_SCORE"):
+    if (audited and audit_score >= get_config(
+            "content_inspection", "ALLEGED_ILLEGAL_SCORE")) or cad["security"] < 100:
         # 通知评论不通过
         msg_content = {"text": content}
         insert_user_msg(

@@ -20,7 +20,7 @@ def api_audit_rule_key():
         获取审核规则的所有key与说明, 也就config设置中的audit
         :return:
     """
-    keys = get_config("name_audit", "AUDIT_PROJECT_KEY")
+    keys = get_config("content_audit", "AUDIT_PROJECT_KEY")
     data = {"keys": keys}
     return response_format(data)
 
