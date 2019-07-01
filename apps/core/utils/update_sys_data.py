@@ -42,6 +42,9 @@ def update_mdb_collections(mdbs):
                 else:
                     web_start_log.warning(e)
 
+
+def update_mdbcolls_json_file(mdbs):
+
     # 将最新的数据库结构写入配置文件, 方便开发者了解结构
     new_collections = OrderedDict({})
     for dbname, mdb in mdbs.items():
@@ -55,7 +58,6 @@ def update_mdb_collections(mdbs):
             if data:
                 for k, v in data.items():
                     new_collections[dbname][collname][k] = str(type(v))
-
     with open("{}/configs/collections.json".format(APPS_PATH), "w") as wf:
         collections = json.dumps(new_collections, indent=4, ensure_ascii=False)
         wf.write(collections)

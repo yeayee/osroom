@@ -23,7 +23,8 @@ else:
 
 
 # 网站还未启动的时候, 连接数据库, 更新collection
-from apps.core.utils.update_sys_data import update_mdb_collections, init_datas, compatible_processing
+from apps.core.utils.update_sys_data import update_mdb_collections, init_datas, compatible_processing, \
+    update_mdbcolls_json_file
 from apps.core.db.mongodb import PyMongo
 print(" * Check or update the database collection")
 database = DatabaseConfig()
@@ -90,6 +91,15 @@ def add_user():
     update_mdb_collections(mdbs=mdbs)
     init_datas(mdbs=mdbs)
     add_user_process(mdbs=mdbs)
+
+
+@manager.command
+def dbcoll_to_file():
+    """
+    更新mdb collections到json文件中
+    :return:
+    """
+    update_mdbcolls_json_file(mdbs=mdbs)
 
 
 if __name__ == '__main__':
