@@ -91,6 +91,7 @@ CONFIG_CACHE_TIMEOUT = 3600 * 24  # 单位s
  日志 log
 """
 # weblog
+SOCKET_PORT = 6005
 LOG_PATH = "{}/logs".format(PROJECT_PATH)
 WEBLOG_START_FILENAME = "site_start.log"
 WEBLOG_NORMAL_FILENAME = "osroom.log"

@@ -127,7 +127,7 @@ def category_edit(user_id=None):
     return data
 
 
-@async_thread
+@async_thread()
 def update_media_category_name(category_id, new_name):
     """
     更新多媒体与文章category的名称

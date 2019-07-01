@@ -8,7 +8,7 @@ from apps.app import mdbs
 __author__ = "Allen Woo"
 
 
-@async_process
+@async_process()
 def post_pv(post_id):
     """
     记录post的访问量

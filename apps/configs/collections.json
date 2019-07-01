@@ -1,279 +1,282 @@
 {
-    "user": {
-        "user_follow": {
-            "type": "<class 'str'>",
-            "user_id": "<class 'str'>",
-            "follow": "<class 'list'>"
-        },
-        "user_like": {
-            "type": "<class 'str'>",
-            "user_id": "<class 'str'>",
-            "values": "<class 'list'>"
-        },
-        "user": {
-            "email": "<class 'str'>",
-            "role_id": "<class 'str'>",
-            "birthday": "<class 'int'>",
-            "create_at": "<class 'float'>",
-            "mphone_num": "<class 'str'>",
-            "update_at": "<class 'float'>",
-            "gender": "<class 'str'>",
-            "password": "<class 'str'>",
-            "avatar_url": "<class 'dict'>",
-            "pay": "<class 'dict'>",
-            "introduction": "<class 'str'>",
-            "is_delete": "<class 'bool'>",
-            "editor": "<class 'str'>",
-            "address": "<class 'dict'>",
-            "username": "<class 'str'>",
-            "active": "<class 'bool'>",
-            "update_time": "<class 'float'>",
-            "jwt_login_time": "<class 'dict'>",
-            "custom_domain": "<class 'str'>",
-            "homepage": "<class 'str'>",
-            "follow_user_num": "<class 'float'>"
-        },
-        "user_op_log": {
-            "user_id": "<class 'str'>",
-            "logs": "<class 'list'>"
-        },
-        "message": {
-            "link": "<class 'NoneType'>",
-            "target_id": "<class 'str'>",
-            "user_id": "<class 'str'>",
-            "is_sys_msg": "<class 'bool'>",
-            "label": "<class 'str'>",
-            "title": "<class 'str'>",
-            "target_type": "<class 'str'>",
-            "content": "<class 'dict'>",
-            "type": "<class 'str'>",
-            "time": "<class 'float'>",
-            "status": "<class 'str'>"
-        },
-        "role": {
-            "instructions": "<class 'str'>",
-            "default": "<class 'int'>",
-            "permissions": "<class 'bson.int64.Int64'>",
-            "name": "<class 'str'>"
-        },
-        "user_login_log": {
-            "user_id": "<class 'str'>",
-            "pass_error": "<class 'int'>",
-            "login_info": "<class 'list'>"
-        },
-        "permission": {
-            "value": "<class 'bson.int64.Int64'>",
-            "name": "<class 'str'>",
-            "is_default": "<class 'int'>",
-            "explain": "<class 'str'>"
-        }
-    },
     "sys": {
-        "sessions": {},
-        "sys_call_record": {
-            "user_id": "<class 'str'>",
-            "ip": "<class 'str'>",
-            "type": "<class 'str'>",
-            "time": "<class 'float'>",
-            "req_path": "<class 'str'>"
-        },
-        "sys_freq_record": {},
-        "sys_url": {},
         "audit_rules": {
-            "rule": "<class 'str'>",
-            "project": "<class 'str'>",
-            "time": "<class 'float'>"
-        },
-        "theme_display_setting": {
-            "name": "<class 'str'>",
-            "category": "<class 'str'>",
-            "type": "<class 'str'>",
-            "text": "<class 'str'>",
-            "title": "<class 'str'>",
-            "text_html": "<class 'str'>",
-            "link": "<class 'str'>",
-            "link_open_new_tab": "<class 'int'>",
-            "link_name": "<class 'str'>",
-            "text_imgs": "<class 'list'>",
             "time": "<class 'float'>",
-            "user_id": "<class 'int'>",
-            "url": "<class 'str'>",
-            "category_id": "<class 'str'>",
-            "theme_name": "<class 'str'>"
-        },
-        "sys_host": {
-            "conf_version": "<class 'str'>",
-            "switch_conf_version": "<class 'NoneType'>",
-            "host_info": "<class 'dict'>",
-            "type": "<class 'str'>",
-            "disable_update_conf": "<class 'int'>",
-            "start_log": "<class 'str'>"
-        },
-        "plugin_config": {
-            "value_type": "<class 'str'>",
-            "value": "<class 'str'>",
-            "key": "<class 'str'>",
-            "plugin_name": "<class 'str'>",
-            "info": "<class 'str'>",
-            "update_time": "<class 'float'>",
-            "reactivate": "<class 'bool'>"
-        },
-        "theme": {},
-        "sys_msg_img": {},
-        "flask-session": {
-            "val": "<class 'bytes'>",
-            "id": "<class 'str'>",
-            "expiration": "<class 'datetime.datetime'>"
-        },
-        "plugin": {
-            "license": "<class 'str'>",
-            "active": "<class 'int'>",
-            "update_time": "<class 'float'>",
-            "author": "<class 'str'>",
-            "error": "<class 'int'>",
-            "is_deleted": "<class 'int'>",
-            "installed_time": "<class 'float'>",
-            "execution_func_name": "<class 'str'>",
-            "author_uri": "<class 'str'>",
-            "version": "<class 'str'>",
-            "introduce": "<class 'str'>",
-            "plugin_name": "<class 'str'>",
-            "plugin_uri": "<class 'str'>",
-            "alias_name": "<class 'str'>",
-            "hook_name": "<class 'str'>",
-            "startup_file_name": "<class 'str'>",
-            "requirements_exist": "<class 'bool'>",
-            "require_package_install_result": "<class 'list'>"
+            "project": "<class 'str'>",
+            "rule": "<class 'str'>"
         },
         "sys_message": {
-            "status": "<class 'str'>",
-            "from": "<class 'list'>",
+            "from": "<class 'str'>",
             "subject": "<class 'str'>",
+            "msgid": "<class 'NoneType'>",
+            "to": "<class 'list'>",
+            "type": "<class 'str'>",
+            "status": "<class 'str'>",
             "date": "<class 'float'>",
             "time": "<class 'float'>",
-            "to": "<class 'list'>",
             "html": "<class 'str'>",
-            "body": "<class 'NoneType'>",
-            "error_info": "<class 'NoneType'>",
-            "msgid": "<class 'str'>",
-            "type": "<class 'str'>"
+            "body": "<class 'str'>",
+            "error_info": "<class 'str'>"
         },
-        "sys_urls": {
-            "methods": "<class 'list'>",
-            "endpoint": "<class 'str'>",
-            "type": "<class 'str'>",
-            "custom_permission": "<class 'dict'>",
-            "update_time": "<class 'float'>",
-            "url": "<class 'str'>",
-            "create": "<class 'str'>"
-        },
+        "sys_msg_img": {},
         "sys_token": {
-            "is_active": "<class 'int'>",
-            "key": "<class 'str'>",
-            "token": "<class 'str'>",
+            "time": "<class 'float'>",
             "token_type": "<class 'str'>",
-            "time": "<class 'float'>"
+            "is_active": "<class 'int'>",
+            "token": "<class 'str'>",
+            "key": "<class 'str'>"
+        },
+        "sys_host": {
+            "cmd": "<class 'str'>",
+            "disable_update_conf": "<class 'int'>",
+            "switch_conf_version": "<class 'NoneType'>",
+            "conf_version": "<class 'str'>",
+            "type": "<class 'str'>",
+            "start_log": "<class 'str'>",
+            "restart_cmd": "<class 'str'>",
+            "host_info": "<class 'dict'>"
         },
         "sys_config": {
-            "new_version": "<class 'str'>",
-            "used_versions": "<class 'list'>",
-            "update_time": "<class 'float'>"
+            "update_time": "<class 'float'>",
+            "project": "<class 'str'>",
+            "conf_version": "<class 'str'>",
+            "value": "<class 'int'>",
+            "info": "<class 'str'>",
+            "key": "<class 'str'>",
+            "type": "<class 'str'>"
+        },
+        "plugin_config": {
+            "value": "<class 'int'>",
+            "info": "<class 'str'>",
+            "reactivate": "<class 'bool'>",
+            "update_time": "<class 'float'>",
+            "key": "<class 'str'>",
+            "plugin_name": "<class 'str'>",
+            "value_type": "<class 'str'>"
+        },
+        "sys_freq_record": {},
+        "theme_display_setting": {
+            "text": "<class 'str'>",
+            "name": "<class 'str'>",
+            "link": "<class 'str'>",
+            "type": "<class 'str'>",
+            "category_id": "<class 'str'>",
+            "title": "<class 'str'>",
+            "theme_name": "<class 'str'>",
+            "category": "<class 'str'>"
+        },
+        "flask-session": {
+            "id": "<class 'str'>",
+            "expiration": "<class 'datetime.datetime'>",
+            "val": "<class 'bytes'>"
+        },
+        "sessions": {
+            "id": "<class 'str'>",
+            "expiration": "<class 'datetime.datetime'>",
+            "val": "<class 'bytes'>"
+        },
+        "sys_url": {
+            "value": "<class 'bson.int64.Int64'>",
+            "name": "<class 'str'>",
+            "explain": "<class 'str'>",
+            "is_default": "<class 'int'>"
+        },
+        "osr_session": {
+            "id": "<class 'str'>",
+            "expiration": "<class 'datetime.datetime'>",
+            "val": "<class 'bytes'>"
+        },
+        "plugin": {
+            "update_time": "<class 'float'>",
+            "active": "<class 'int'>",
+            "alias_name": "<class 'str'>",
+            "plugin_name": "<class 'str'>",
+            "error": "<class 'int'>",
+            "plugin_uri": "<class 'str'>",
+            "introduce": "<class 'str'>",
+            "startup_file_name": "<class 'str'>",
+            "author": "<class 'str'>",
+            "author_uri": "<class 'str'>",
+            "execution_func_name": "<class 'str'>",
+            "require_package_install_result": "<class 'list'>",
+            "requirements_exist": "<class 'bool'>",
+            "hook_name": "<class 'str'>",
+            "installed_time": "<class 'float'>",
+            "license": "<class 'str'>",
+            "is_deleted": "<class 'int'>",
+            "version": "<class 'str'>"
         },
         "osr_cache": {
             "key": "<class 'str'>",
-            "value": "<class 'dict'>",
-            "expiration": "<class 'float'>"
+            "expiration": "<class 'float'>",
+            "value": "<class 'list'>"
         },
-        "osr_session": {}
+        "theme": {},
+        "sys_urls": {
+            "methods": "<class 'list'>",
+            "login_auth": "<class 'dict'>",
+            "custom_permission": "<class 'dict'>",
+            "endpoint": "<class 'str'>",
+            "create": "<class 'str'>",
+            "type": "<class 'str'>",
+            "url": "<class 'str'>"
+        },
+        "sys_call_record": {}
     },
-    "web": {
-        "post": {
-            "brief_content": "<class 'str'>",
-            "like_user_id": "<class 'list'>",
-            "reviewed_score": "<class 'int'>",
-            "imgs": "<class 'list'>",
+    "user": {
+        "permission": {
+            "value": "<class 'bson.int64.Int64'>",
+            "name": "<class 'str'>",
+            "explain": "<class 'str'>",
+            "is_default": "<class 'int'>"
+        },
+        "user_op_log": {
+            "logs": "<class 'list'>",
+            "user_id": "<class 'str'>"
+        },
+        "user_like": {
+            "values": "<class 'list'>",
+            "type": "<class 'str'>",
+            "user_id": "<class 'str'>",
+            "like_user_id": "<class 'list'>"
+        },
+        "user_login_log": {
+            "pass_error": "<class 'int'>",
+            "login_info": "<class 'list'>",
+            "user_id": "<class 'str'>"
+        },
+        "user_follow": {
+            "type": "<class 'str'>",
+            "follow": "<class 'list'>",
+            "user_id": "<class 'str'>"
+        },
+        "message": {
+            "link": "<class 'NoneType'>",
+            "time": "<class 'float'>",
+            "status": "<class 'str'>",
+            "is_sys_msg": "<class 'bool'>",
             "user_id": "<class 'str'>",
             "title": "<class 'str'>",
-            "comment_num": "<class 'int'>",
-            "reviewer_id": "<class 'NoneType'>",
-            "issue_time": "<class 'float'>",
-            "like": "<class 'int'>",
-            "update_time": "<class 'float'>",
-            "reviewed": "<class 'int'>",
+            "type": "<class 'str'>",
+            "content": "<class 'str'>"
+        },
+        "user": {
+            "avatar_url": "<class 'dict'>",
             "editor": "<class 'str'>",
-            "tags": "<class 'list'>",
-            "date": "<class 'bson.int64.Int64'>",
-            "word_num": "<class 'int'>",
-            "issued": "<class 'int'>",
-            "review_way": "<class 'str'>",
-            "category": "<class 'str'>",
-            "content": "<class 'str'>",
-            "is_delete": "<class 'int'>",
-            "cover_url": "<class 'NoneType'>",
-            "pv": "<class 'int'>"
-        },
-        "display_setting": {},
-        "theme_category": {
-            "name": "<class 'str'>",
-            "type": "<class 'str'>",
-            "user_id": "<class 'int'>",
-            "theme_name": "<class 'str'>"
-        },
-        "tempfile": {},
-        "comment": {
-            "type": "<class 'str'>",
-            "target_brief_info": "<class 'str'>",
-            "audit_label": "<class 'str'>",
-            "word_num": "<class 'int'>",
-            "audited": "<class 'int'>",
-            "issue_time": "<class 'float'>",
-            "content": "<class 'str'>",
+            "update_time": "<class 'float'>",
+            "address": "<class 'dict'>",
+            "birthday": "<class 'int'>",
+            "pay": "<class 'dict'>",
+            "fans_num": "<class 'int'>",
+            "mphone_num": "<class 'NoneType'>",
+            "inform": "<class 'dict'>",
+            "is_delete": "<class 'bool'>",
+            "homepage": "<class 'str'>",
+            "password": "<class 'str'>",
+            "role_id": "<class 'str'>",
+            "create_at": "<class 'float'>",
+            "introduction": "<class 'str'>",
+            "custom_domain": "<class 'int'>",
+            "email": "<class 'str'>",
             "username": "<class 'str'>",
-            "is_delete": "<class 'int'>",
-            "date": "<class 'bson.int64.Int64'>",
-            "audit_way": "<class 'str'>",
-            "like": "<class 'int'>",
-            "like_user_id": "<class 'list'>",
-            "audit_score": "<class 'int'>",
-            "audit_user_id": "<class 'str'>",
-            "issued": "<class 'int'>",
-            "target_user_id": "<class 'str'>",
-            "target_id": "<class 'str'>",
-            "user_id": "<class 'str'>",
-            "email": "<class 'NoneType'>"
+            "jwt_login_time": "<class 'dict'>",
+            "update_at": "<class 'float'>",
+            "active": "<class 'bool'>",
+            "follow_user_num": "<class 'int'>",
+            "gender": "<class 'str'>"
         },
-        "verify_code": {
-            "str": "<class 'str'>",
-            "to_email": "<class 'str'>",
-            "type": "<class 'str'>",
-            "time": "<class 'float'>"
+        "role": {
+            "permissions": "<class 'bson.int64.Int64'>",
+            "name": "<class 'str'>",
+            "default": "<class 'int'>",
+            "instructions": "<class 'str'>"
+        }
+    },
+    "web": {
+        "tempfile": {},
+        "post": {
+            "imgs": "<class 'list'>",
+            "update_time": "<class 'float'>",
+            "category": "<class 'str'>",
+            "issue_time": "<class 'float'>",
+            "comment_num": "<class 'int'>",
+            "reviewed_score": "<class 'int'>",
+            "date": "<class 'bson.int64.Int64'>",
+            "editor": "<class 'str'>",
+            "reviewer_id": "<class 'NoneType'>",
+            "issued": "<class 'int'>",
+            "tags": "<class 'list'>",
+            "is_delete": "<class 'int'>",
+            "brief_content": "<class 'str'>",
+            "user_id": "<class 'str'>",
+            "reviewed": "<class 'int'>",
+            "word_num": "<class 'int'>",
+            "title": "<class 'str'>",
+            "like_user_id": "<class 'list'>",
+            "review_way": "<class 'str'>",
+            "like": "<class 'int'>",
+            "content": "<class 'str'>"
         },
         "category": {
-            "user_id": "<class 'str'>",
             "type": "<class 'str'>",
-            "name": "<class 'str'>"
+            "name": "<class 'str'>",
+            "user_id": "<class 'int'>"
         },
+        "theme_category": {
+            "type": "<class 'str'>",
+            "name": "<class 'str'>",
+            "theme_name": "<class 'str'>",
+            "user_id": "<class 'int'>"
+        },
+        "display_setting": {},
         "msg_code": {},
+        "access_record": {
+            "sids": "<class 'list'>",
+            "post_id": "<class 'str'>",
+            "pv": "<class 'int'>"
+        },
+        "verify_code": {
+            "time": "<class 'float'>",
+            "to_email": "<class 'str'>",
+            "str": "<class 'str'>",
+            "type": "<class 'str'>"
+        },
         "media": {
-            "category": "<class 'str'>",
-            "category_id": "<class 'str'>",
-            "link": "<class 'NoneType'>",
-            "link_open_new_tab": "<class 'int'>",
-            "link_name": "<class 'NoneType'>",
-            "title": "<class 'NoneType'>",
             "text": "<class 'str'>",
+            "name": "<class 'str'>",
+            "link": "<class 'NoneType'>",
+            "category_id": "<class 'str'>",
             "text_html": "<class 'str'>",
+            "category": "<class 'str'>",
+            "link_open_new_tab": "<class 'int'>",
             "text_imgs": "<class 'list'>",
             "type": "<class 'str'>",
-            "time": "<class 'float'>",
             "user_id": "<class 'int'>",
-            "name": "<class 'str'>",
+            "title": "<class 'NoneType'>",
+            "time": "<class 'float'>",
+            "link_name": "<class 'NoneType'>",
             "url": "<class 'dict'>"
         },
-        "access_record": {
-            "post_id": "<class 'str'>",
-            "sids": "<class 'list'>",
-            "pv": "<class 'int'>"
+        "comment": {
+            "issue_time": "<class 'float'>",
+            "word_num": "<class 'int'>",
+            "audit_score": "<class 'int'>",
+            "audit_label": "<class 'str'>",
+            "type": "<class 'str'>",
+            "content": "<class 'str'>",
+            "audit_user_id": "<class 'NoneType'>",
+            "issued": "<class 'int'>",
+            "email": "<class 'NoneType'>",
+            "target_id": "<class 'str'>",
+            "username": "<class 'str'>",
+            "target_brief_info": "<class 'str'>",
+            "user_id": "<class 'str'>",
+            "audit_way": "<class 'str'>",
+            "is_delete": "<class 'int'>",
+            "like_user_id": "<class 'list'>",
+            "target_user_id": "<class 'str'>",
+            "like": "<class 'int'>",
+            "audited": "<class 'int'>"
         }
     }
 }

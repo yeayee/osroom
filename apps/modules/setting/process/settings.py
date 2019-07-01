@@ -226,7 +226,6 @@ def sys_config_edit():
                     value = [v.strip("\n") for v in value]
 
             elif old_conf["type"] == "dict":
-                print(value)
                 if not isinstance(value, dict):
                     value = json.loads(value)
                 if not isinstance(value, dict):

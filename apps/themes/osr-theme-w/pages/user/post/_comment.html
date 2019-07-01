@@ -33,7 +33,7 @@
           </header>
           <!--正文-->
           <div class="osr-text">
-            <div :id="'#comment'+ct._id" v-html="ct.content"></div>
+            <div :id="'#comment'+ct._id" >{[ct.content]}</div>
           </div>
           <br>
           <div>
@@ -73,7 +73,7 @@
                         {{_('回复')}}<a :href="'/user?id='+treply.reply_user_id">
                             @{[treply.reply_username]}:
                         </a>
-                        <div :id="'#comment'+treply._id" v-html="treply.content"></div>
+                        <div :id="'#comment'+treply._id" >{[treply.content]}</div>
                     </div>
                     <br>
                     {% if current_user.is_authenticated %}

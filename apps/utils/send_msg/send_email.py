@@ -52,7 +52,7 @@ def send_email(subject, recipients, text_msg=None, html_msg=None, attach=None,
                          send_independently=send_independently)
 
 
-@async_process
+@async_process()
 def send_async_email(app, msg, recipients, send_independently=True):
     """
     异步发送email

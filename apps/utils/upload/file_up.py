@@ -381,7 +381,7 @@ def file_rename(file_url_obj, new_filename):
         return data
 
 
-@async_process
+@async_process()
 def call_file_detection(files_file_url_obj):
     """
     调用文件检查

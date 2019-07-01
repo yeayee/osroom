@@ -143,7 +143,7 @@ def content_attack_defense(content):
             for link in r:
                 if link not in wlists:
                     new_link = link.replace(".", ". ").replace("/", "/ ").replace("&", "&amp;").replace("?", "&;")
-                    new_link = "{}[{}]".format(gettext(new_link, "Unvalidated link"))
+                    new_link = "{}[{}]".format(new_link, gettext("Unvalidated link"))
                     content = content.replace(link, new_link)
                     security -= 5
 

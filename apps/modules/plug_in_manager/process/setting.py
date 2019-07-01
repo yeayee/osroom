@@ -290,7 +290,7 @@ def install_require_package():
     return data
 
 
-@async_process
+@async_process()
 def install_process(plugin_name, host_info, packages):
     """
     子进程执行安装

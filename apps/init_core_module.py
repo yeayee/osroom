@@ -1,9 +1,10 @@
 # -*-coding:utf-8-*-
 from apps.core.db.config_mdb import DatabaseConfig
-from apps.core.logger.web_logging import web_start_log
+from apps.core.logger.logger_server import LogServerUDP
+from apps.core.logger.web_logging import web_start_log, WebLogger
 from apps.configs.config import CONFIG
 from apps.utils.format.obj_format import ConfDictToClass
-from apps.app import login_manager, redis, sess, cache, csrf, babel, mdbs, mail, oauth, weblog, rest_session
+from apps.app import login_manager, redis, sess, cache, csrf, babel, mdbs, mail, oauth, rest_session
 from apps.configs.sys_config import CONFIG_CACHE_KEY, BABEL_TRANSLATION_DIRECTORIES, SESSION_PROTECTION, \
     SESSION_COOKIE_PATH, SESSION_COOKIE_HTTPONLY, SESSION_COOKIE_SECURE, CSRF_ENABLED, WTF_CSRF_CHECK_DEFAULT, \
     WTF_CSRF_METHODS, SESSION_USE_SIGNER, PRESERVE_CONTEXT_ON_EXCEPTION, PLUG_IN_CONFIG_CACHE_KEY
@@ -99,8 +100,6 @@ def init_core_module(app):
     login_manager.init_app(app)
     #login_manager.anonymous_user = AnonymousUser()
     login_manager.session_protection = SESSION_PROTECTION
-
-    weblog.init_app(app)
     oauth.init_app(app)
     # 让路由支持正则
     app.url_map.converters['regex'] = RegexConverter
@@ -121,3 +120,12 @@ def init_core_module(app):
 
     # 错误处理
     ErrorHandler(app)
+
+    # Logger
+    # Other
+    log_udp = LogServerUDP()
+    r = log_udp.init_app()
+    if r:
+        log_udp.log_server()
+    weblog = WebLogger()
+    weblog.init_app(app)
