@@ -1,9 +1,7 @@
 # -*-coding:utf-8-*-
 import time
 import logging
-
 import logging.config
-from logging.handlers import TimedRotatingFileHandler
 import os
 from uuid import uuid1
 from flask import request, g
@@ -22,8 +20,8 @@ class WebLogger:
 
     def init_app(self, app):
 
-        filename = os.path.abspath("{}/{}".format(WEBLOG_NORMAL_LEVEL, WEBLOG_NORMAL_FILENAME))
-        normal_log = LoggerClientUDP(set_level=WEBLOG_EXCEP_LEVEL,
+        filename = os.path.abspath("{}/{}".format(LOG_PATH, WEBLOG_NORMAL_FILENAME))
+        normal_log = LoggerClientUDP(set_level=WEBLOG_NORMAL_LEVEL,
                                      logfile=filename,
                                      get_log_name='web_normal',
                                      formatter=LOG_FORMATTER)
