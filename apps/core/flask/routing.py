@@ -24,12 +24,11 @@ def push_url_to_db(app):
     """
     now_time = time.time()
     for rule in app.url_map.iter_rules():
-        if rule.endpoint.startswith(
-                "api.") or rule.endpoint.startswith("open_api."):
+        if rule.endpoint.startswith("api.") or rule.endpoint.startswith("open_api."):
             type = "api"
         else:
             continue
-
+            
         r = mdbs["sys"].dbs["sys_urls"].find_one({"url": rule.rule.rstrip("/")})
         if not r:
             # 不存在
@@ -41,11 +40,13 @@ def push_url_to_db(app):
                                                 "create": "auto",
                                                 "update_time": now_time})
 
-        elif r and r["update_time"] < now_time:
-            # 如果存在, 并且更新时间比现在前(防止同时启动多个进程时错乱，导致下面程序当旧数据清理)
-            mdbs["sys"].dbs["sys_urls"].update_one({"_id": r["_id"],
-                                                "update_time": {"$lt": now_time}},
-                                               {"$set": {"methods": list(rule.methods),
+        elif r:
+            new_methods = list(rule.methods)
+            if r["methods"]:
+                new_methods.extend(r["methods"])
+            new_methods = list(set(new_methods))
+            mdbs["sys"].dbs["sys_urls"].update_one({"_id": r["_id"]},
+                                               {"$set": {"methods": new_methods,
                                                          "endpoint": rule.endpoint,
                                                          "type": type,
                                                          "create": "auto",
