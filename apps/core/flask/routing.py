@@ -28,7 +28,7 @@ def push_url_to_db(app):
             type = "api"
         else:
             continue
-            
+
         r = mdbs["sys"].dbs["sys_urls"].find_one({"url": rule.rule.rstrip("/")})
         if not r:
             # 不存在
