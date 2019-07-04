@@ -20,7 +20,10 @@ def update_mdb_collections(mdbs):
     """
 
     # 读取配置中的数据库json 数据
-    with open("{}/configs/collections.json".format(APPS_PATH)) as rf:
+    coll_json_file = "{}/configs/mdb_collections.json".format(APPS_PATH)
+    if not os.path.exists(coll_json_file):
+        return
+    with open(coll_json_file) as rf:
         jsondata = rf.read()
         if jsondata:
             collections = json.loads(jsondata)
@@ -58,7 +61,7 @@ def update_mdbcolls_json_file(mdbs):
             if data:
                 for k, v in data.items():
                     new_collections[dbname][collname][k] = str(type(v))
-    with open("{}/configs/collections.json".format(APPS_PATH), "w") as wf:
+    with open("{}/configs/mdb_collections.json".format(APPS_PATH), "w") as wf:
         collections = json.dumps(new_collections, indent=4, ensure_ascii=False)
         wf.write(collections)
 
@@ -106,9 +109,9 @@ def init_theme_data(mdbs):
         return True
 
     if mdbs["sys"].dbs["theme_display_setting"].find_one({"theme_name": theme_name}):
-        print("* [Init theme] No initialization required")
+        print(" * [Init theme] No initialization required")
         return True
-
+    init_data = []
     init_file = "{}/themes/{}/init_setting.json".format(APPS_PATH, theme_name)
     if os.path.exists(init_file):
         # 读取数据

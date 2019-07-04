@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*-coding:utf-8-*-
 import sys
 from signal import signal, SIGCHLD, SIG_IGN
@@ -12,17 +13,10 @@ __author__ = 'all.woo'
 """
 manage
 """
+
+# 网站还未启动的时候, 临时连接数据库, 更新collection
+
 print("\033[1;36m[OSROOM] Staring...\033[0m")
-if "--debug" not in sys.argv and "-D" not in sys.argv:
-    # 更新python第三方类库
-    print(" * Check or update Python third-party libraries")
-    CONFIG["py_venv"]["VENV_PATH"]["value"] = sys.prefix
-    update_pylib(input_venv_path=False)
-else:
-    print(" * Using --debug, the system will not check Python dependencies")
-
-
-# 网站还未启动的时候, 连接数据库, 更新collection
 from apps.core.utils.update_sys_data import update_mdb_collections, init_datas, compatible_processing, \
     update_mdbcolls_json_file
 from apps.core.db.mongodb import PyMongo
@@ -42,18 +36,15 @@ while db_init:
                 sys.exit()
             mdb.init_app(config_prefix=name.upper(),
                          db_config=database.__dict__["{}_URI".format(name.upper())])
-
     except OperationFailure as e:
         print("\n[Mongodb] *{}".format(e))
         print("Mongodb validation failure, the user name,"
               " password mistake or database configuration errors.\n"
               "Tip: to open database authentication configuration")
         sys.exit(-1)
-
     if db_init == 2:
         update_mdb_collections(mdbs=mdbs)
     db_init -= 1
-
 
 # 更新配置文件
 from apps.core.flask.update_config_file import update_config_file
@@ -66,7 +57,8 @@ del CONFIG["py_venv"]
 
 compatible_processing(mdbs=mdbs)
 init_datas(mdbs=mdbs)
-
+for mdb in mdbs.values():
+    mdb.close()
 
 # 启动网站
 from flask_script import Manager
@@ -103,4 +95,15 @@ def dbcoll_to_file():
 
 
 if __name__ == '__main__':
+    """
+    使用Flask 自带 server启动网站
+    """
+    print(" * Use the Web service that comes with Flask")
+    if "--debug" not in sys.argv and "-D" not in sys.argv:
+        # 更新python第三方类库
+        print(" * Check or update Python third-party libraries")
+        update_pylib(input_venv_path=False)
+    else:
+        print(" * Using --debug, the system will not check Python dependencies")
+
     manager.run()

@@ -58,7 +58,6 @@ def main():
             add_user(mdbs=mdbs)
 
         elif op == "-h" or op == "--help":
-
             usage_help(s_ops, s_opexplain, l_ops, l_opexplain, action=action)
 
     if is_up_pylib:

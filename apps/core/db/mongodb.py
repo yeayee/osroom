@@ -58,6 +58,11 @@ class PyMongo:
         self.dbs = self.connection[self.config['db']]
         self.db = Conlections(self.dbs)
 
+    def close(self):
+        self.connection.close()
+
+    def __del__(self):
+        self.close()
 
 class Conlections:
 

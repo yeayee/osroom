@@ -9,7 +9,6 @@ from copy import deepcopy
 from apps.configs.config import CONFIG
 from apps.configs.sys_config import PROJECT_PATH, SUPER_PER
 from apps.core.logger.web_logging import web_start_log
-from apps.modules.user.process.get_or_update_user import get_one_user_mfilter, update_one_user, insert_one_user
 
 __author__ = "Allen Woo"
 
@@ -55,13 +54,14 @@ def copy_config_to_sample():
 
 def add_user(mdbs):
     """
-        初始化root用户角色, 管理员, 管理员基本资料
+    初始化root用户角色, 管理员, 管理员基本资料
 
-        :return:
-        """
+    :return:
+    """
     from werkzeug.security import generate_password_hash
     from apps.utils.validation.str_format import email_format_ver, password_format_ver
     from apps.modules.user.models.user import user_model
+    from apps.modules.user.process.get_or_update_user import get_one_user_mfilter, update_one_user, insert_one_user
 
     print(' * [User] add')
     is_continue = False
@@ -186,7 +186,7 @@ def update_pylib(input_venv_path=True, latest=False):
         except BaseException:
             venv_path = CONFIG["py_venv"]["VENV_PATH"]["value"]
     else:
-        venv_path = CONFIG["py_venv"]["VENV_PATH"]["value"]
+        venv_path = None
 
     if venv_path:
         if os.path.exists("{}/bin/activate".format(venv_path)):
@@ -196,7 +196,7 @@ def update_pylib(input_venv_path=True, latest=False):
     else:
         venv = ""
 
-    print(" * Update pip...({})".format(venv))
+    print(" * Update pip...{}".format(venv))
     s, r = subprocess.getstatusoutput("{}pip3 install -U pip".format(venv))
     print(r)
 
@@ -208,9 +208,17 @@ def update_pylib(input_venv_path=True, latest=False):
     # 查找需要安装的包
     ret_list = list(set(new_reqs) ^ set(old_reqs))
     install_list = []
-    for ret in ret_list:
-        if (ret not in old_reqs) and (ret in new_reqs):
-            install_list.append(ret)
+    if latest:
+        install_list = new_reqs
+    else:
+        # 非更新到最新的时候，找出需要安装的
+        for ret in ret_list:
+            if (ret not in old_reqs) and (ret in new_reqs):
+                install_list.append(ret)
+
+    for pylib in install_list[:]:
+        if "==" not in pylib:
+            install_list.remove(pylib)
 
     if install_list:
         msg = " * To install the following libs"
@@ -238,16 +246,24 @@ def update_pylib(input_venv_path=True, latest=False):
             "{}pip install -U {}".format(venv, sf))
         if not s:
             install_failed.remove(sf)
+        else:
+            print(r)
+
     if install_failed:
         msg = " * Installation failed library, please manually install"
         print(msg)
         print(install_failed)
         web_start_log.info(msg)
         web_start_log.info(install_failed)
+    if latest:
+        subprocess.getstatusoutput(
+            "{}pip freeze > {}/requirements.txt".format(venv, PROJECT_PATH))
 
     # 查找需要卸载的包
     s, r = subprocess.getstatusoutput("{}pip freeze".format(venv))
     old_reqs = r.split()
+    with open("{}/requirements.txt".format(PROJECT_PATH)) as rf:
+        new_reqs = rf.read().split()
     ret_list = list(set(new_reqs) ^ set(old_reqs))
     uninstall_list = []
     for ret in ret_list:
@@ -259,13 +275,14 @@ def update_pylib(input_venv_path=True, latest=False):
             uninstall_list.remove(sf)
 
     if uninstall_list:
-        msg = " * Now don't need python library:"
+        msg = " * Now don't need python library(uninstall cmd):\n"
         print(msg)
-        print(uninstall_list)
+        uninstall_cmd = "pip uninstall"
+        for pylib in uninstall_list:
+            uninstall_cmd = "{} {}".format(uninstall_cmd, pylib)
+        print(uninstall_cmd + "\n")
         if not input_venv_path:
             web_start_log.info(msg)
             web_start_log.info(uninstall_list)
 
-    if latest:
-        subprocess.getstatusoutput(
-            "{}pip freeze > {}/requirements.txt".format(venv, PROJECT_PATH))
+

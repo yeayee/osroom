@@ -3,7 +3,7 @@ import base64
 from functools import wraps
 import time
 from flask import current_app, request
-from apps.utils.format.obj_format import json_to_pyseq
+from apps.utils.format.obj_format import json_to_pyseq, pyseq_to_json
 
 __author__ = "Allen Woo"
 
@@ -16,8 +16,10 @@ class Cache:
 
     def __init__(self, app=None):
         self.cache_none = type(CacheNone())
+        self.cache_none_obj = CacheNone()
         if app is not None:
             self.init_app(app)
+        self.redis_exists_exception = False
 
     def init_app(self, app, **kwargs):
 
@@ -144,47 +146,31 @@ class Cache:
         """
 
         key = "{}{}".format(self.config['CACHE_KEY_PREFIX'], key)
-        if not db_type:
-            if self.config["CACHE_TYPE"] == "redis":
-                value = self.redis.get(key)
-                if value:
-                    value = json_to_pyseq(value.decode("utf-8"))
-                    return value
-                # 防止value为None时, 所以查询不到缓存时, 使用cache空类
+        if (db_type == "redis" or (not db_type and self.config["CACHE_TYPE"] == "redis")) \
+                and not self.redis_exists_exception:
+            value = self.redis.get(key)
+            if value:
+                value = value.decode("utf-8")
+                if value == self.cache_none_obj.value:
+                    return None
+                value = json_to_pyseq(value)
+                return value
+            # 防止value为None所以查询不到缓存时, 使用cache空类
+            return self.cache_none
+
+        elif db_type == "mongodb" or (not db_type and self.config["CACHE_TYPE"] == "mongodb") \
+                or self.redis_exists_exception:
+
+            value = self.mdb_coll.find_one({"key": key}, {"_id": 0})
+            if value and value["expiration"] < time.time():
+                # 已过期
+                self.delete(key, db_type=db_type)
                 return self.cache_none
+            elif value:
+                return value["value"]
 
-            else:
-                value = self.mdb_coll.find_one({"key": key}, {"_id": 0})
-                if value and value["expiration"] < time.time():
-                    # 已过期
-                    self.delete(key, db_type=db_type)
-                    return self.cache_none
-                elif value:
-                    return value["value"]
-
-                # 防止value为None时, 所以查询不到缓存时, 使用cache空类
-                return self.cache_none
-        else:
-            if db_type == "redis":
-                value = self.redis.get(key)
-                if value:
-                    value = json_to_pyseq(value.decode("utf-8"))
-                    return value
-                # 防止value为None时, 所以查询不到缓存时, 使用cache空类
-                return self.cache_none
-
-            elif db_type == "mongodb":
-
-                value = self.mdb_coll.find_one({"key": key}, {"_id": 0})
-                if value and value["expiration"] < time.time():
-                    # 已过期
-                    self.delete(key, db_type=db_type)
-                    return self.cache_none
-                elif value:
-                    return value["value"]
-
-                # 防止value为None时, 所以查询不到缓存时, 使用cache空类
-                return self.cache_none
+            # 防止value为None时, 所以查询不到缓存时, 使用cache空类
+            return self.cache_none
 
     def set(self, key, value, ex=None, db_type=None):
         """
@@ -199,40 +185,35 @@ class Cache:
         if ex is None:
             ex = self.config["CACHE_DEFAULT_TIMEOUT"]
 
-        if not db_type:
-            if self.config["CACHE_TYPE"] == "redis":
-                self.redis.set(key, value, ex=ex)
+        if (db_type == "redis" or (not db_type and self.config["CACHE_TYPE"] == "redis")) \
+                and not self.redis_exists_exception:
+            json_value = pyseq_to_json(value)
+            try:
+                if json_value is None:
+                    json_value = self.cache_none_obj.value
+                self.redis.set(key, json_value, ex=ex)
+                self.redis_exists_exception = False
+            except Exception as e:
+                self.redis_exists_exception = True
+                print(key)
+                print(e)
+                print("ERROR: Redis error")
+
+            return value
+
+        elif db_type == "mongodb" or (not db_type and self.config["CACHE_TYPE"] == "mongodb")\
+                or self.redis_exists_exception:
+
+            r = self.mdb_coll.update_one({"key": key},
+                                         {"$set": {"value": value, "expiration": time.time() + ex}},
+                                         upsert=True)
+            if r.modified_count:
+                return value
+
+            elif not r.modified_count and not r.matched_count:
                 return value
             else:
-
-                r = self.mdb_coll.update_one({"key": key},
-                                             {"$set": {"value": value, "expiration": time.time() + ex}},
-                                             upsert=True)
-                if r.modified_count:
-                    return value
-
-                elif not r.modified_count and not r.matched_count:
-                    return value
-                else:
-                    return None
-
-        else:
-            if db_type == "redis":
-                self.redis.set(key, value, ex=ex)
-                return value
-
-            elif db_type == "mongodb":
-
-                r = self.mdb_coll.update_one({"key": key},
-                                             {"$set": {"value": value, "expiration": time.time() + ex}},
-                                             upsert=True)
-                if r.modified_count:
-                    return value
-
-                elif not r.modified_count and not r.matched_count:
-                    return value
-                else:
-                    return None
+                return None
 
     def delete(self, key, db_type=None, key_regex=False):
         """
@@ -242,8 +223,10 @@ class Cache:
         :return:
         """
         key = "{}{}".format(self.config['CACHE_KEY_PREFIX'], key)
-        if not db_type:
-            if self.config["CACHE_TYPE"] == "redis":
+
+        if (db_type == "redis" or (not db_type and self.config["CACHE_TYPE"] == "redis")) \
+                and not self.redis_exists_exception:
+            try:
                 if key_regex:
                     key = key.replace(".*", "*")
                     keys = self.redis.keys(pattern=key)
@@ -251,29 +234,16 @@ class Cache:
                         self.redis.delete(key.decode())
                 else:
                     self.redis.delete(key)
+                self.redis_exists_exception = False
+            except Exception:
+                self.redis_exists_exception = True
+        elif db_type == "mongodb" or (not db_type and self.config["CACHE_TYPE"] == "mongodb")\
+                or self.redis_exists_exception:
+            if key_regex:
+                q = {"key": {"$regex": key}}
             else:
-                if key_regex:
-                    q = {"key": {"$regex": key}}
-                else:
-                    q = {"key": key}
-
-                self.mdb_coll.delete_many(q)
-        else:
-            if db_type == "redis":
-                if key_regex:
-                    key = key.replace(".*", "*")
-                    keys = self.redis.keys(pattern=key)
-                    for key in keys:
-                        self.redis.delete(key.decode())
-                else:
-                    self.redis.delete(key)
-
-            elif db_type == "mongodb":
-                if key_regex:
-                    q = {"key": {"$regex": key}}
-                else:
-                    q = {"key": key}
-                self.mdb_coll.delete_many(q)
+                q = {"key": key}
+            self.mdb_coll.delete_many(q)
 
     def delete_autokey(
             self,
@@ -369,5 +339,8 @@ class CacheNone:
     def __init__(self):
         pass
 
+    value = "OSR_Cache_None"
+
     def __str__(self):
-        return "Cache None"
+        return self.value
+

@@ -64,7 +64,7 @@ class PluginManager:
         fpath = os.path.join(plug_path, "conf.yaml")
         with open(fpath) as rf:
             # 读取插件配置文件
-            plug_conf = yaml.load(rf)
+            plug_conf = yaml.safe_load(rf)
             hook_name = plug_conf["hook_name"]
             module = None
             current_plug = mdbs["sys"].dbs["plugin"].find_one(
@@ -232,7 +232,7 @@ def verify_plugin(plugin_path):
     conf_path = os.path.join(plugin_path, "conf.yaml")
     if os.path.exists(conf_path) and os.path.isfile(conf_path):
         with open(conf_path) as rf:
-            plug_conf = yaml.load(rf)
+            plug_conf = yaml.safe_load(rf)
             req_conf = PLUG_IN_REQUIRED_CONF.copy()
             req_conf = list(set(req_conf).difference(set(plug_conf.keys())))
             if req_conf:

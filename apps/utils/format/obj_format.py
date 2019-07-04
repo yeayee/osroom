@@ -52,6 +52,23 @@ def json_to_pyseq(tjson):
     return tjson
 
 
+def pyseq_to_json(pyseq):
+
+    if isinstance(pyseq, (dict, list)):
+        try:
+            pyseq = json.dumps(pyseq)
+        except TypeError:
+            if isinstance(pyseq, list):
+                pyseq = list(pyseq)
+                pyseq = json.dumps(pyseq)
+            else:
+                for k, v in pyseq.items():
+                    if isinstance(v, list):
+                        pyseq[k] = list(v)
+                pyseq = json.dumps(pyseq)
+    return pyseq
+
+
 def str_to_num(string, type=int):
     """
     字符串转数字

@@ -739,7 +739,7 @@ CONFIG = {
         "__info__": "主题配置",
         "CURRENT_THEME_NAME": {
             "sort": 99,
-            "value": "osr-style-w",
+            "value": "osr-theme-w",
             "type": "string",
             "info": "当前主题名称,需与主题主目录名称相同"
         }

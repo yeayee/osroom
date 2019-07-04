@@ -61,7 +61,7 @@ def get_one_theme_info(theme_name):
     if s:
         fpath = os.path.join(path, "conf.yaml")
         with open(fpath) as rf:
-            theme_conf = yaml.load(rf)
+            theme_conf = yaml.safe_load(rf)
 
             # 每次都拷贝一次, 防止有上传新的主题:主题封面拷贝到apps/static
             if not os.path.exists(new_cover_dir):
@@ -115,7 +115,7 @@ def get_themes():
         if s:
             fpath = os.path.join(path, "conf.yaml")
             with open(fpath) as rf:
-                theme_conf = yaml.load(rf)
+                theme_conf = yaml.safe_load(rf)
 
                 # 每次都拷贝一次, 防止有上传新的主题:主题封面拷贝到apps/static
                 if not os.path.exists(new_cover_dir):
@@ -200,7 +200,7 @@ def upload_theme():
         # 主题配置文件
         fpath = os.path.join(fpath, "conf.yaml")
         with open(fpath) as rf:
-            theme_conf = yaml.load(rf)
+            theme_conf = yaml.safe_load(rf)
             # 主题封面拷贝到apps/static
             new_cover_dir = os.path.join(STATIC_PATH, "media/theme_cover")
             if not os.path.exists(new_cover_dir):
@@ -239,7 +239,7 @@ def verify_theme(theme_path, theme_dirname, filename):
     fpath = os.path.join(theme_path, "conf.yaml")
     if os.path.exists(fpath) and os.path.isfile(fpath):
         with open(fpath) as rf:
-            theme_conf = yaml.load(rf)
+            theme_conf = yaml.safe_load(rf)
             req_conf = THEME_REQUIRED_CONF.copy()
             req_conf = list(set(req_conf).difference(set(theme_conf.keys())))
             if req_conf:
@@ -402,7 +402,7 @@ def delete_theme():
             theme_conf = None
             if os.path.isfile(fpath) and os.path.exists(fpath):
                 with open(fpath) as rf:
-                    theme_conf = yaml.load(rf)
+                    theme_conf = yaml.safe_load(rf)
 
             shutil.rmtree(theme_path)
 
