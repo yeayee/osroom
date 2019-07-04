@@ -5,7 +5,7 @@ import os
 from flask_mail import Message
 from apps.core.plug_in.manager import plugin_manager
 from apps.core.utils.get_config import get_config
-from apps.utils.async.async import async_process
+from apps.utils.osr_async.osr_async import async_process
 from apps.app import mail, app, mdbs
 
 __author__ = 'woo'
@@ -52,6 +52,7 @@ def send_email(subject, recipients, text_msg=None, html_msg=None, attach=None,
                          send_independently=send_independently)
 
 
+# 之后需要改成celery异步
 @async_process()
 def send_async_email(app, msg, recipients, send_independently=True):
     """

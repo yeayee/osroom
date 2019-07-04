@@ -6,7 +6,7 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 
 from apps.configs.sys_config import LOG_PATH, SOCKET_PORT
-from apps.utils.async.async import async_process
+from apps.utils.osr_async.osr_async import async_process
 
 
 class LoggerClientUDP:

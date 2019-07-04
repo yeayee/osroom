@@ -10,7 +10,7 @@ import os
 from apps.configs.sys_config import STATIC_PATH, VIOLATION_IMG_PATH
 from apps.core.plug_in.manager import plugin_manager
 from apps.core.utils.get_config import get_config
-from apps.utils.async.async import async_process
+from apps.utils.osr_async.osr_async import async_process
 from apps.utils.content_evaluation.content import content_inspection_image
 from apps.utils.format.time_format import time_to_utcdate
 from apps.utils.upload.get_filepath import get_file_url, get_localfile_path
@@ -381,6 +381,7 @@ def file_rename(file_url_obj, new_filename):
         return data
 
 
+# 之后需要改成celery异步
 @async_process()
 def call_file_detection(files_file_url_obj):
     """
