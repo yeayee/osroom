@@ -17,6 +17,12 @@ OSROOM是使用Python3(>=3.4) 语言,基于Flask微型框架 + Mongodb(>=3.4)+ R
 
 ### 文档
 
+使用前请更新python lib
+
+```shell
+pip install -U -r requirements.txt
+```
+
 长期可访问文档地址: https://osroom.github.io/osroom-doc
 
 其他相关问题解决方案: [OSROOM问题](https://demo.osroom.com/corpus?id=5c8271171d41c812d7169e00)
