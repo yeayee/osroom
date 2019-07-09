@@ -49,6 +49,10 @@ class LoggerClientUDP:
         self.set["log_level"] = "critical"
         self.send_log(log=log)
 
+    def exception(self, log, **kwargs):
+        self.set["log_level"] = "error"
+        self.send_log(log=log)
+
     def send_log(self, log):
         set = json.dumps(self.set)
         log = "{}{}{}".format(set, self.sp, log)
