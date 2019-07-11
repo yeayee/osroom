@@ -46,7 +46,7 @@ def get_tags():
         return data
 
 
-@async_process()
+# @async_process()
 def async_get_tags(user_id, last_days, tlimit, sort):
     """
     开子进程统计tag结果
@@ -55,11 +55,11 @@ def async_get_tags(user_id, last_days, tlimit, sort):
     :param sort:
     :return:
     """
-    mdbs["web"].init_app(reinit=True)
+    # mdbs["web"].init_app(reinit=True)
     _get_tags(user_id=user_id, last_days=last_days, tlimit=tlimit, sort=sort)
 
 
-# @cache.cached(timeout=3600 * 12, key_base64=False, db_type="redis")
+@cache.cached(timeout=3600 * 6, key_base64=False, db_type="redis")
 def _get_tags(user_id, last_days, tlimit, sort):
     ut = time.time()
     s_time = ut - last_days * 86400 - ut % 86400
