@@ -183,9 +183,13 @@ def p_retrieve_password(email, code, password, password2):
                             }
                     html = get_email_html(data)
 
-                    send_email(subject=subject,
-                               recipients=[user["email"]],
-                               html_msg=html)
+                    msg = {
+                        "subject": subject,
+                        "recipients": [user["email"]],
+                        "html_msg": html
+                    }
+                    send_email(msg=msg)
+
                     data = {
                         'msg': gettext('Password reset successfully.Please return to login page to login'),
                         'msg_type': 's',

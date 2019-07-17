@@ -129,9 +129,14 @@ def p_sign_up(
                         "other_info": gettext("End"),
                         }
                 html = get_email_html(data)
-                send_email(subject=subject,
-                           recipients=[email],
-                           html_msg=html)
+
+                msg = {
+                    "subject": subject,
+                    "recipients": [email],
+                    "html_msg": html
+                }
+                send_email(msg=msg)
+
             elif mobile_phone_number:
                 # 发送短信
                 content = "[{}] Successful registration account.".format(

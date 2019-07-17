@@ -67,3 +67,27 @@ def get_render_template(path):
     g.site_global = dict(g.site_global,
                          **get_global_site_data(req_type="view"))
     return render_template('{}.html'.format(path), data=data)
+
+
+def get_render_template_email(path, params):
+    """
+        根据路由path,返回一个render_template
+        :param path:
+        :return:
+        """
+    # 拼接当前主题目录
+    path = "{}/pages/{}".format(get_config("theme",
+                                           "CURRENT_THEME_NAME"), path)
+    absolute_path = os.path.abspath(
+        "{}/{}.html".format(theme_view.template_folder, path))
+    if not os.path.isfile(absolute_path):
+        path = "{}/index".format(path)
+        absolute_path = os.path.abspath(
+            "{}/{}.html".format(theme_view.template_folder, path))
+        if not os.path.isfile(absolute_path):
+            abort(404)
+
+    g.site_global = dict(g.site_global,
+                         **get_global_site_data(req_type="view"))
+    return render_template('{}.html'.format(path), data=params)
+

@@ -1,18 +1,12 @@
 # -*-coding:utf-8-*-
-import os
 import random
 from bson import ObjectId
-from flask import render_template, url_for
 from flask_babel import gettext
 import time
-from apps.core.blueprint import theme_view, admin_view
-from apps.core.plug_in.manager import plugin_manager
 from apps.core.template.get_template import get_email_html
-from apps.core.template.template import render_absolute_path_template
 from apps.utils.send_msg.send_email import send_email
 from apps.app import mdbs
 from apps.core.utils.get_config import get_config
-from apps.utils.format.time_format import time_to_utcdate
 from apps.utils.send_msg.send_message import send_mobile_msg
 
 
@@ -78,10 +72,14 @@ def create_code_send(account, account_type):
                 "other_info": "",
                 }
         html = get_email_html(data)
-        send_email(subject=subject,
-                   recipients=[account],
-                   html_msg=html
-                   )
+
+        msg = {
+            "subject": subject,
+            "recipients": [account],
+            "html_msg": html
+        }
+        send_email(msg=msg)
+
         return {"msg": gettext("Has been sent. If not, please check spam"),
                 "msg_type": "s", "custom_status": 201}
 

@@ -182,9 +182,12 @@ def login_log(user, client):
                     }
             html = get_email_html(data)
 
-            send_email(subject=subject,
-                       recipients=[user.email],
-                       html_msg=html)
+            msg = {
+                "subject": subject,
+                "recipients": [user["email"]],
+                "html_msg": html
+            }
+            send_email(msg=msg)
 
 
 def third_party_sign_in(platform_name):
