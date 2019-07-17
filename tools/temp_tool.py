@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*-coding:utf-8-*-
 import collections
 import getopt
@@ -7,8 +8,6 @@ current_path = os.path.abspath(os.path.dirname(__file__))
 project_path = os.path.abspath("{}/..".format(current_path))
 sys.path.append(project_path)
 from tools.usage import usage_help
-from tools.usage import usage_help
-
 __author__ = 'Allen Woo'
 
 

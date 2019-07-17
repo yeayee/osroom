@@ -1,7 +1,11 @@
+#!/usr/bin/env python3
 # -*-coding:utf-8-*-
 import getopt
 import os
 import sys
+current_path = os.path.abspath(os.path.dirname(__file__))
+project_path = os.path.abspath("{}/../..".format(current_path))
+sys.path.append(project_path)
 from tools.usage import usage_help
 
 __author__ = 'Allen Woo'
@@ -90,6 +94,7 @@ class Transations:
                     l_opexplain,
                     action=action)
 
+        print(self.save_path)
         if not os.path.exists(self.save_path):
             os.makedirs(self.save_path)
 

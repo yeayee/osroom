@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-06-14 16:20+0800\n"
+"POT-Creation-Date: 2019-07-17 16:42+0800\n"
 "PO-Revision-Date: 2018-01-04 20:50+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.5.1\n"
+"Generated-By: Babel 2.7.0\n"
 
 #: apps/themes/osr-style/pages/401.html:2
 #: apps/themes/osr-theme-w/pages/401.html:2
@@ -104,7 +104,7 @@ msgstr "Default"
 #: apps/themes/osr-style/pages/post/_posts.html:35
 #: apps/themes/osr-style/pages/post/index.html:26
 #: apps/themes/osr-style/pages/post/index.html:100
-#: apps/themes/osr-style/pages/search/index.html:69
+#: apps/themes/osr-style/pages/search/index.html:68
 #: apps/themes/osr-style/pages/user/_self_introduction.html:5
 #: apps/themes/osr-style/pages/user/_user_info.html:4
 #: apps/themes/osr-style/pages/user/follow/index.html:30
@@ -175,7 +175,7 @@ msgstr "Retrieve password"
 #: apps/themes/osr-theme-w/pages/post/_comment.html:215
 #: apps/themes/osr-theme-w/pages/recover-password.html:14
 #: apps/themes/osr-theme-w/pages/recover-password.html:17
-#: apps/themes/osr-theme-w/pages/sign-up.html:22
+#: apps/themes/osr-theme-w/pages/sign-up.html:24
 msgid "电子邮箱"
 msgstr "E-mail"
 
@@ -184,7 +184,7 @@ msgstr "E-mail"
 #: apps/themes/osr-style/pages/sign-up.html:20
 #: apps/themes/osr-theme-w/pages/account/settings/email.html:26
 #: apps/themes/osr-theme-w/pages/recover-password.html:15
-#: apps/themes/osr-theme-w/pages/sign-up.html:20
+#: apps/themes/osr-theme-w/pages/sign-up.html:22
 msgid "邮箱地址不合法"
 msgstr "The email address is illegal"
 
@@ -193,7 +193,7 @@ msgstr "The email address is illegal"
 #: apps/themes/osr-style/pages/sign-up.html:21
 #: apps/themes/osr-theme-w/pages/account/settings/email.html:27
 #: apps/themes/osr-theme-w/pages/recover-password.html:16
-#: apps/themes/osr-theme-w/pages/sign-up.html:21
+#: apps/themes/osr-theme-w/pages/sign-up.html:23
 msgid "邮箱地址不能为空"
 msgstr "E-mail address cannot be blank"
 
@@ -201,8 +201,8 @@ msgstr "E-mail address cannot be blank"
 #: apps/themes/osr-style/pages/sign-in.html:21
 #: apps/themes/osr-style/pages/sign-up.html:26
 #: apps/themes/osr-theme-w/pages/recover-password.html:21
-#: apps/themes/osr-theme-w/pages/sign-in.html:21
-#: apps/themes/osr-theme-w/pages/sign-up.html:26
+#: apps/themes/osr-theme-w/pages/sign-in.html:23
+#: apps/themes/osr-theme-w/pages/sign-up.html:28
 msgid "输入密码"
 msgstr "Enter the password"
 
@@ -221,16 +221,16 @@ msgstr "Enter the password"
 #: apps/themes/osr-theme-w/pages/recover-password.html:22
 #: apps/themes/osr-theme-w/pages/recover-password.html:23
 #: apps/themes/osr-theme-w/pages/recover-password.html:29
-#: apps/themes/osr-theme-w/pages/sign-up.html:27
-#: apps/themes/osr-theme-w/pages/sign-up.html:28
-#: apps/themes/osr-theme-w/pages/sign-up.html:34
+#: apps/themes/osr-theme-w/pages/sign-up.html:29
+#: apps/themes/osr-theme-w/pages/sign-up.html:30
+#: apps/themes/osr-theme-w/pages/sign-up.html:36
 msgid "至少8个字符"
 msgstr "At least 8 characters"
 
 #: apps/themes/osr-style/pages/recover-password.html:27
 #: apps/themes/osr-style/pages/sign-up.html:32
 #: apps/themes/osr-theme-w/pages/recover-password.html:27
-#: apps/themes/osr-theme-w/pages/sign-up.html:32
+#: apps/themes/osr-theme-w/pages/sign-up.html:34
 msgid "再次输入密码"
 msgstr "Enter password again"
 
@@ -239,7 +239,7 @@ msgstr "Enter password again"
 #: apps/themes/osr-style/pages/sign-up.html:35
 #: apps/themes/osr-theme-w/pages/account/settings/reset-password.html:33
 #: apps/themes/osr-theme-w/pages/recover-password.html:30
-#: apps/themes/osr-theme-w/pages/sign-up.html:35
+#: apps/themes/osr-theme-w/pages/sign-up.html:37
 msgid "前后密码不一致"
 msgstr "Inconsistent password before and after"
 
@@ -260,19 +260,19 @@ msgstr "Back to Login"
 #: apps/themes/osr-theme-w/pages/based/_header_bar_menu_user.html:106
 #: apps/themes/osr-theme-w/pages/based/_mb_header_bar.html:22
 #: apps/themes/osr-theme-w/pages/sign-in.html:2
-#: apps/themes/osr-theme-w/pages/sign-in.html:47
+#: apps/themes/osr-theme-w/pages/sign-in.html:49
 msgid "登录"
 msgstr "Login"
 
 #: apps/themes/osr-style/pages/sign-in.html:15
-#: apps/themes/osr-theme-w/pages/sign-in.html:15
+#: apps/themes/osr-theme-w/pages/sign-in.html:17
 msgid "用户名或电子邮箱"
 msgstr "Username or E-mail"
 
 #: apps/themes/osr-style/pages/sign-in.html:16
 #: apps/themes/osr-style/pages/sign-in.html:17
-#: apps/themes/osr-theme-w/pages/sign-in.html:16
-#: apps/themes/osr-theme-w/pages/sign-in.html:17
+#: apps/themes/osr-theme-w/pages/sign-in.html:18
+#: apps/themes/osr-theme-w/pages/sign-in.html:19
 msgid "用户名或电子邮箱错误"
 msgstr "Username or Email Error"
 
@@ -286,8 +286,8 @@ msgstr "Username or Email Error"
 #: apps/themes/osr-theme-w/pages/account/settings/email.html:19
 #: apps/themes/osr-theme-w/pages/account/settings/reset-password.html:18
 #: apps/themes/osr-theme-w/pages/account/settings/reset-password.html:19
-#: apps/themes/osr-theme-w/pages/sign-in.html:22
-#: apps/themes/osr-theme-w/pages/sign-in.html:23
+#: apps/themes/osr-theme-w/pages/sign-in.html:24
+#: apps/themes/osr-theme-w/pages/sign-in.html:25
 msgid "密码错误"
 msgstr "Bad password"
 
@@ -296,7 +296,7 @@ msgstr "Bad password"
 #: apps/themes/osr-style/pages/sign-in.html:28
 #: apps/themes/osr-theme-w/pages/account/settings/_send_code.html:24
 #: apps/themes/osr-theme-w/pages/module/_send_code.html:33
-#: apps/themes/osr-theme-w/pages/sign-in.html:28
+#: apps/themes/osr-theme-w/pages/sign-in.html:30
 msgid "图片验证码"
 msgstr "Picture verification code"
 
@@ -317,39 +317,39 @@ msgstr "Picture verification code"
 #: apps/themes/osr-theme-w/pages/module/_send_code.html:6
 #: apps/themes/osr-theme-w/pages/module/_send_code.html:7
 #: apps/themes/osr-theme-w/pages/module/_send_code.html:34
-#: apps/themes/osr-theme-w/pages/sign-in.html:29
+#: apps/themes/osr-theme-w/pages/sign-in.html:31
 msgid "验证码错误"
 msgstr "Verification code error"
 
 #: apps/themes/osr-style/pages/sign-in.html:40
-#: apps/themes/osr-theme-w/pages/sign-in.html:40
+#: apps/themes/osr-theme-w/pages/sign-in.html:42
 msgid "记住登录"
 msgstr "Remember to sign in"
 
 #: apps/themes/osr-style/pages/sign-in.html:41
-#: apps/themes/osr-theme-w/pages/sign-in.html:41
+#: apps/themes/osr-theme-w/pages/sign-in.html:43
 msgid "忘记密码"
 msgstr "Forgot your password?"
 
 #: apps/themes/osr-style/pages/sign-in.html:52
 #: apps/themes/osr-style/pages/sign-up.html:2
 #: apps/themes/osr-style/pages/sign-up.html:43
-#: apps/themes/osr-theme-w/pages/sign-in.html:52
+#: apps/themes/osr-theme-w/pages/sign-in.html:54
 #: apps/themes/osr-theme-w/pages/sign-up.html:2
-#: apps/themes/osr-theme-w/pages/sign-up.html:43
+#: apps/themes/osr-theme-w/pages/sign-up.html:45
 msgid "注册"
 msgstr "Sign up"
 
 #: apps/themes/osr-style/pages/sign-in.html:59
-#: apps/themes/osr-theme-w/pages/sign-in.html:59
+#: apps/themes/osr-theme-w/pages/sign-in.html:61
 msgid "点击 \"登录\" 即表示您同意并愿意遵守"
 msgstr "By clicking \"Login\" you are agreeing and willing to comply"
 
 #: apps/themes/osr-style/pages/sign-in.html:60
 #: apps/themes/osr-style/pages/sign-up.html:53
 #: apps/themes/osr-style/pages/statement/index.html:10
-#: apps/themes/osr-theme-w/pages/sign-in.html:60
-#: apps/themes/osr-theme-w/pages/sign-up.html:53
+#: apps/themes/osr-theme-w/pages/sign-in.html:62
+#: apps/themes/osr-theme-w/pages/sign-up.html:55
 #: apps/themes/osr-theme-w/pages/statement/index.html:10
 msgid "用户协议"
 msgstr "User Agreement"
@@ -357,7 +357,7 @@ msgstr "User Agreement"
 #: apps/themes/osr-style/pages/account/settings/_basis.html:17
 #: apps/themes/osr-style/pages/sign-up.html:14
 #: apps/themes/osr-theme-w/pages/account/settings/_basis.html:17
-#: apps/themes/osr-theme-w/pages/sign-up.html:14
+#: apps/themes/osr-theme-w/pages/sign-up.html:16
 msgid "用户名"
 msgstr "Username"
 
@@ -366,28 +366,28 @@ msgstr "Username"
 #: apps/themes/osr-style/pages/sign-up.html:15
 #: apps/themes/osr-theme-w/pages/account/settings/_basis.html:20
 #: apps/themes/osr-theme-w/pages/account/settings/_basis.html:33
-#: apps/themes/osr-theme-w/pages/sign-up.html:15
+#: apps/themes/osr-theme-w/pages/sign-up.html:17
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
 #: apps/themes/osr-style/pages/sign-up.html:16
-#: apps/themes/osr-theme-w/pages/sign-up.html:16
+#: apps/themes/osr-theme-w/pages/sign-up.html:18
 msgid "用户名至少3个字符"
 msgstr "Username is at least 3 characters"
 
 #: apps/themes/osr-style/pages/sign-up.html:48
-#: apps/themes/osr-theme-w/pages/sign-up.html:48
+#: apps/themes/osr-theme-w/pages/sign-up.html:50
 msgid "已有账户"
 msgstr "Existing Account"
 
 #: apps/themes/osr-style/pages/sign-up.html:52
-#: apps/themes/osr-theme-w/pages/sign-up.html:52
+#: apps/themes/osr-theme-w/pages/sign-up.html:54
 msgid "点击 \"注册\" 即表示您同意并愿意遵守"
 msgstr "By clicking \"Register\" you agree and you are willing to abide"
 
 #: apps/themes/osr-style/pages/sign-up.html:55
 #: apps/themes/osr-style/pages/statement/index.html:15
-#: apps/themes/osr-theme-w/pages/sign-up.html:55
+#: apps/themes/osr-theme-w/pages/sign-up.html:57
 #: apps/themes/osr-theme-w/pages/statement/index.html:15
 msgid "隐私政策"
 msgstr "Privacy Policy"
@@ -805,8 +805,8 @@ msgstr "Violation Details (required if you select \"Other\")"
 
 #: apps/themes/osr-style/pages/based/_m_left_menu.html:10
 #: apps/themes/osr-style/pages/search/index.html:2
-#: apps/themes/osr-style/pages/search/index.html:12
-#: apps/themes/osr-style/pages/search/index.html:20
+#: apps/themes/osr-style/pages/search/index.html:11
+#: apps/themes/osr-style/pages/search/index.html:19
 #: apps/themes/osr-theme-w/pages/based/_m_left_menu.html:10
 #: apps/themes/osr-theme-w/pages/search/index.html:2
 #: apps/themes/osr-theme-w/pages/search/index.html:12
@@ -1150,7 +1150,7 @@ msgstr "articles"
 
 #: apps/themes/osr-style/pages/corpus/index.html:26
 #: apps/themes/osr-style/pages/post/index.html:2
-#: apps/themes/osr-style/pages/search/index.html:27
+#: apps/themes/osr-style/pages/search/index.html:26
 #: apps/themes/osr-style/pages/user/index.html:24
 #: apps/themes/osr-theme-w/pages/corpus/index.html:41
 #: apps/themes/osr-theme-w/pages/post/index.html:2
@@ -1241,7 +1241,7 @@ msgstr "Uploaded"
 
 #: apps/themes/osr-style/pages/photo/index.html:81
 #: apps/themes/osr-style/pages/post/_comment.html:306
-#: apps/themes/osr-style/pages/search/index.html:90
+#: apps/themes/osr-style/pages/search/index.html:89
 #: apps/themes/osr-style/pages/user/follow/index.html:63
 #: apps/themes/osr-style/pages/user/message/index.html:85
 #: apps/themes/osr-style/pages/user/post/_comment.html:155
@@ -1265,7 +1265,7 @@ msgstr "{{photos.current_page]}Page/Total {[photos.page_total]}Page"
 
 #: apps/themes/osr-style/pages/photo/index.html:87
 #: apps/themes/osr-style/pages/post/_comment.html:310
-#: apps/themes/osr-style/pages/search/index.html:96
+#: apps/themes/osr-style/pages/search/index.html:95
 #: apps/themes/osr-style/pages/user/follow/index.html:69
 #: apps/themes/osr-style/pages/user/message/index.html:89
 #: apps/themes/osr-style/pages/user/post/_comment.html:159
@@ -1566,18 +1566,18 @@ msgstr "Article Report"
 msgid "当前访问的内容已不存在"
 msgstr "Currently visited content no longer exists"
 
-#: apps/themes/osr-style/pages/search/index.html:8
-#: apps/themes/osr-style/pages/search/index.html:19
+#: apps/themes/osr-style/pages/search/index.html:7
+#: apps/themes/osr-style/pages/search/index.html:18
 #: apps/themes/osr-theme-w/pages/search/index.html:8
 msgid "文章 用户"
 msgstr "Articles User"
 
-#: apps/themes/osr-style/pages/search/index.html:32
+#: apps/themes/osr-style/pages/search/index.html:31
 #: apps/themes/osr-theme-w/pages/search/index.html:27
 msgid "用户"
 msgstr "User"
 
-#: apps/themes/osr-style/pages/search/index.html:93
+#: apps/themes/osr-style/pages/search/index.html:92
 #: apps/themes/osr-theme-w/pages/search/index.html:88
 msgid "第{[posts.items.current_page]}页/共{[posts.items.page_total]}页"
 msgstr "Page{[posts.items.current_page]}/Pages of {[posts.items.page_total]}"
@@ -1714,3 +1714,4 @@ msgstr "New contens"
 #: apps/themes/osr-theme-w/pages/_index_s3.html:81
 msgid "没有更多了哦"
 msgstr "It's at the bottom"
+
