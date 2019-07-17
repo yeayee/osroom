@@ -43,7 +43,6 @@
                               </th>
                               <th>{{_("标题")}}</th>
                               <th>{{_("内容")}}</th>
-                              <th>{{_("发件人")}}</th>
                               <th>{{_("收件人")}}</th>
                               <th>{{_("状态")}}</th>
                               <th v-if="status!='normal'" >{{_("异常|错误信息")}}</th>
@@ -66,9 +65,6 @@
                                         <a class="osr-pointer" v-on:click="put_email_view(index)" data-toggle="modal" data-target="#email-info">
                                             {{_("详情")}}
                                         </a>
-                                    </td>
-                                    <td >
-                                        {[email.from]}
                                     </td>
 
                                     <td >
@@ -148,6 +144,11 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title">{[email_view.subject]}</h4>
+                    <span>{{_("发件人")}}: </span>
+                    <span v-for="(v, index) in email_view.from">
+                        <span v-if="index==0">{[v]}</span>
+                        <span v-else><{[v]}></span>
+                    </span>
                 </div>
                 <div class="modal-body" style="width:100%" v-html="email_view.html">
 
