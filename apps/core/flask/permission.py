@@ -2,7 +2,7 @@
 from flask_babel import gettext
 from flask_login import current_user
 from functools import wraps
-from flask import request
+from flask import request, abort
 from werkzeug.utils import redirect
 from apps.app import cache, mdbs
 from apps.configs.sys_config import GET_DEFAULT_SYS_PER_CACHE_KEY, GET_ALL_PERS_CACHE_KEY
@@ -43,9 +43,8 @@ def permission_required(use_default=True):
         return decorated_function
     return decorator
 
+
 # page url permission required
-
-
 def page_permission_required():
     """
     页面路由权限验证
@@ -61,13 +60,37 @@ def page_permission_required():
             if custom_per:
                 r = current_user.can(custom_per)
                 if not r:
-                    keys = " or ".join(get_permission_key(custom_per))
-                    return response_format({"msg": gettext('Permission denied,requires "{}" permission').format(
-                        keys), "msg_type": "w", "custom_status": 401})
+                    abort(401)
             return f(*args, **kwargs)
         return decorated_function
     return decorator
 
+
+def adm_page_permission_required():
+    """
+    页面路由权限验证
+    :return:
+    """
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            custom_login_required = custom_url_login_auth()
+            if custom_login_required and current_user.is_anonymous:
+                return redirect(get_config("login_manager", "LOGIN_VIEW"))
+            custom_per = custom_url_permissions()
+            if custom_per:
+                r = current_user.can(custom_per)
+                if not r:
+                    abort(401)
+            else:
+                staff_per = get_permission("STAFF")
+                r = current_user.can(staff_per)
+                if not r:
+                    abort(401)
+
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
 
 @cache.cached(
     timeout=3600,

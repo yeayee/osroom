@@ -26,7 +26,7 @@ def push_url_to_db(app):
     # back up
     ut = time_to_utcdate(time.time(), "%Y%m%d%H")
     if not mdbs["sys"].dbs["sys_urls_back"].find_one({"backup_time": ut}):
-        sys_urls = list(mdbs["site"].dbs["sys_urls"].find({}, {"_id": 0}))
+        sys_urls = list(mdbs["sys"].dbs["sys_urls"].find({}, {"_id": 0}))
         for sys_url in sys_urls:
             sys_url["backup_time"] = ut
         mdbs["sys"].dbs["sys_urls_back"].insert(sys_urls)
@@ -41,13 +41,14 @@ def push_url_to_db(app):
         r = mdbs["sys"].dbs["sys_urls"].find_one({"url": rule.rule.rstrip("/")})
         if not r:
             # 不存在
-            mdbs["sys"].dbs["sys_urls"].insert_one({"url": rule.rule.rstrip("/"),
-                                                "methods": list(rule.methods),
-                                                "endpoint": rule.endpoint,
-                                                "custom_permission": {},
-                                                "type": type,
-                                                "create": "auto",
-                                                "update_time": now_time})
+            mdbs["sys"].dbs["sys_urls"].insert_one({
+                "url": rule.rule.rstrip("/"),
+                "methods": list(rule.methods),
+                "endpoint": rule.endpoint,
+                "custom_permission": {},
+                "type": type,
+                "create": "auto",
+                "update_time": now_time})
 
         elif r:
             new_methods = list(rule.methods)
