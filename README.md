@@ -3,6 +3,8 @@
 
 > dev(开放更新中,可在Tag中可以选择以往的其他版本)
 
+- 当前更新比较多，请及时更新新版本
+
 |   Version  |   Status  |  Other   |
 | --- | --- | --- |
 |   [dev](https://github.com/osroom/osroom)    |  开发...   |    v1.x.x更新到dev版本时需要重新配置数据库文件
