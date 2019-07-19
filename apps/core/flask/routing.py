@@ -24,13 +24,16 @@ def push_url_to_db(app):
     :return:
     """
     # back up
-    ut = time_to_utcdate(time.time(), "%Y%m%d%H")
-    if not mdbs["sys"].dbs["sys_urls_back"].find_one({"backup_time": ut}):
+    now_time = time.time()
+    ud = time_to_utcdate(now_time, "%Y%m%d%H")
+    days_ago_t = now_time - 86400 * 7
+    days_ago_d = time_to_utcdate(days_ago_t, "%Y%m%d%H")
+    if not mdbs["sys"].dbs["sys_urls_back"].find_one({"backup_time": ud}):
         sys_urls = list(mdbs["sys"].dbs["sys_urls"].find({}, {"_id": 0}))
         for sys_url in sys_urls:
-            sys_url["backup_time"] = ut
+            sys_url["backup_time"] = ud
         mdbs["sys"].dbs["sys_urls_back"].insert(sys_urls)
-        mdbs["sys"].dbs["sys_urls_back"].delete_many({"backup_time": {"$lt": ut}})
+        mdbs["sys"].dbs["sys_urls_back"].delete_many({"backup_time": {"$lt": days_ago_d}})
 
     for rule in app.url_map.iter_rules():
         if rule.endpoint.startswith("api.") or rule.endpoint.startswith("open_api."):
