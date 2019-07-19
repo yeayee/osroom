@@ -16,7 +16,7 @@
       delimiters:['{[', ']}'],
       data:{
             category_id:null,
-            category:{name:null},
+            category:{name:'{{_("全部文章")}}'},
             user:{profile:{}, avatar_url:{}, follow:{}},
             posts:{datas:[]},
             sort:"t-desc",
@@ -126,7 +126,11 @@
 
     function switch_category(category) {
         vue.category_id = category?category._id:null;
-        vue.category = category;
+        vue.category = category?category:{name:'{{_("全部文章")}}'};
+        if (vue.category.name == ""){
+            vue.category.name='{{_("默认文集")}}';
+        }
+
         get_posts(vue.status, 1, vue.sort, vue.keyword);
     }
 
@@ -179,6 +183,7 @@
                     +"&sort="+vue.sort
                     +"&page="+page
         history_state(null, url);
+        document.title = vue.category.name + "-" + "{{g.site_global.site_config.TITLE_SUFFIX}}";
 
     }
 

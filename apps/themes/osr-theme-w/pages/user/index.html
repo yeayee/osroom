@@ -10,7 +10,7 @@
               {{_("全部文章")}}
             </span>
         </a>
-        <a id="ciddefault"  v-on:click="switch_category({'_id':'default'})"
+        <a id="ciddefault"  v-on:click="switch_category({'_id':'default', 'name':''})"
            class="btn osr-btn btn-m"  :style="'background-color:'+colors[1]">
             <span style="color:#ffffff">
               {{_("默认文集")}}
@@ -36,8 +36,7 @@
                     <span class="name">
                         <span class="text-success fa fa-clipboard">
                         &nbsp;</span>
-                        <span v-if="category.name" >{[category.name]}</span>
-                        <span v-else >{{_("默认文集")}}</span>
+                        {[category.name]}
                     </span>
                 </div>
             </div>
