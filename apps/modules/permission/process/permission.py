@@ -192,35 +192,39 @@ def edit_per():
         data = {'msg': gettext('Location has been used'),
                 'msg_type': "w", "custom_status": 403}
     else:
-        old_per = mdbs["user"].db.permission.find_one({"_id": ObjectId(tid)})
-        old_per_value = old_per["permissions"]
+        old_per = mdbs["user"].db.permission.find_one({"_id": ObjectId(tid),
+                                                       "value":{"$exists": True}})
+        if old_per:
+            old_per_value = old_per["value"]
 
-        r = mdbs["user"].db.permission.update_one(
-            {"_id": ObjectId(tid)}, {"$set": per})
-        if not r.modified_count:
-            data = {
-                'msg': gettext("No changes"),
-                'msg_type': "w",
-                "custom_status": 201}
+            r = mdbs["user"].db.permission.update_one({"_id": ObjectId(tid)}, {"$set": per})
+            if not r.modified_count:
+                data = {
+                    'msg': gettext("No changes"),
+                    'msg_type': "w",
+                    "custom_status": 201}
+            else:
+                r = update_role_and_api_per(old_per_value, new_per_value=0)
+                updated_rolename = r["updated_rolename"]
+                msg_updated_rolename = gettext("The role of the chain reaction is: \n")
+                if updated_rolename:
+                    for ur in updated_rolename:
+                        msg_updated_rolename = '{}, "{}"'.format(msg_updated_rolename, ur)
+                else:
+                    msg_updated_rolename = '{} 0'.format(msg_updated_rolename)
+                # 刷新缓存
+                cache.delete(key=GET_DEFAULT_SYS_PER_CACHE_KEY, db_type="redis")
+                cache.delete(key=GET_ALL_PERS_CACHE_KEY, db_type="redis")
+                data = {
+                    'msg': gettext(
+                        "The update is successful. {}".format(msg_updated_rolename)),
+                    'msg_type': "s",
+                    "custom_status": 201}
         else:
-            update_role_and_api_per(old_per_value, new_per_value=0)
-            updated_rolename = r["updated_rolename"]
-            msg_updated_rolename = gettext(
-                "The role of the chain reaction is: \n")
-            if updated_rolename:
-                for ur in updated_rolename:
-                    msg_updated_rolename = '{}, "{}"'.format(
-                        msg_updated_rolename, ur)
-
-            # 刷新缓存
-            cache.delete(key=GET_DEFAULT_SYS_PER_CACHE_KEY, db_type="redis")
-            cache.delete(key=GET_ALL_PERS_CACHE_KEY, db_type="redis")
             data = {
-                'msg': gettext(
-                    "The update is successful. {}".format(msg_updated_rolename)),
-                'msg_type': "s",
-                "custom_status": 201}
-
+                'msg': gettext("Update failed"),
+                'msg_type': "w",
+                "custom_status": 400}
     return data
 
 
@@ -302,14 +306,12 @@ def update_role_and_api_per(old_per_value, new_per_value=0):
     # 更新使用了该权限的role
     # 当前所有的用户角色
     updated_rolename = []
-    roles = mdbs["user"].role.find()
+    roles = mdbs["user"].db.role.find()
     for role in roles:
         if role["permissions"] & old_per_value and not (
-                role["permissions"] & get_permission(["ROOT"])):
-            role_new_per = (
-                role["permissions"] -
-                old_per_value) | new_per_value
-            mdbs["user"].role.update_many({"_id": role["_id"]}, {
+                role["permissions"] & get_permission("ROOT")):
+            role_new_per = (role["permissions"] - old_per_value) | new_per_value
+            mdbs["user"].db.role.update_many({"_id": role["_id"]}, {
                                       "$set": {"permissions": role_new_per}})
             updated_rolename.append(role["name"])
 

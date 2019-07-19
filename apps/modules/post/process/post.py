@@ -49,11 +49,15 @@ def get_posts():
         # 获取指定用户的post
         other_filter["user_id"] = user_id
 
+    # 如果category_id为None， 则获取全部分类文章
     if category_id:
+
         try:
             ObjectId(category_id)
+            # 指定分类
             other_filter["category"] = category_id
         except BaseException:
+            # 默认文集
             other_filter["category"] = None
 
     if tag:

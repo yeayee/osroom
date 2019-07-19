@@ -34,7 +34,8 @@ def get_user_public_info(**kwargs):
         return False, gettext("The specified user is not found")
     else:
         user["_id"] = str(user["_id"])
-        user["homepage"] = user["homepage"]
+        if "homepage" not in user:
+            user["homepage"] = ""
         user["custom_domain"] = str(user["custom_domain"])
         user["avatar_url"]["url"] = get_avatar_url(user["avatar_url"])
         if not is_basic:

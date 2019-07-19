@@ -65,12 +65,12 @@
 
             <!--文集-->
             <div class="category">
-                <a  v-if="post.category_name" :href="'/corpus?id='+post.category+'&user_id='+post.user._id" >
+                <a  v-if="post.category_name" :href="'/user?cid='+post.category+'&id='+post.user._id" >
                     <span  class="fa fa-folder-o">
                       {[post.category_name]}
                     </span>
                 </a>
-                <a  v-else :href="'/corpus?user_id='+post.user._id">
+                <a  v-else :href="'/user?id='+post.user._id+'&cid=default'">
                     <span class="fa fa-folder-o">
                         {{_("默认文集")}}
                     </span>

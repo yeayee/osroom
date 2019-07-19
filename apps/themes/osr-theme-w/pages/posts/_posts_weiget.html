@@ -39,10 +39,10 @@
                 </div>
                 <div class="osr-text-margin">
                     <span>
-                        <a  class="osr-date" v-if="post.category_name" :href="'/corpus?id='+post.category+'&user_id='+post.user._id" >
+                        <a  class="osr-date" v-if="post.category_name" :href="'/user?cid='+post.category+'&id='+post.user._id" >
                           <i class="fa fa-folder-o osr-color-blue"></i>&nbsp;{[post.category_name]}
                         </a>
-                        <a class="osr-date" v-else :href="'/corpus?user_id='+post.user._id">
+                        <a class="osr-date" v-else :href="'/user?id='+post.user._id+'&cid=default'">
                            <i class="fa fa-folder-o osr-color-blue"></i>&nbsp;{{_("默认文集")}}
                         </a>
                     </span>
