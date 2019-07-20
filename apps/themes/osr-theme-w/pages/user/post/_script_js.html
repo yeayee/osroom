@@ -207,7 +207,21 @@
             }
         });
     }
+     //恢复
+    function restore_posts(id){
 
+        d = {
+            op:"restore",
+            ids:JSON.stringify([id])
+        }
+
+        var result = osrHttp("PUT","/api/user/post",d);
+        result.then(function (r) {
+            if(r.data.msg_type=='s'){
+                get_posts(vue.status, 1, vue.sort, vue.keyword)
+            }
+        });
+    }
     //添加关注
     function follow(id){
 
