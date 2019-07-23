@@ -54,17 +54,17 @@
             <header class="panel-heading tab-bg-dark-navy-blue osr-panel-heading">
                 <ul class="nav nav-tabs">
                     <li id="head_li_sort_t-desc">
-                        <a data-toggle="tab" class="osr-pointer" v-on:click="get_posts('is_issued',1,'t-desc','')">
+                        <a data-toggle="tab" class="osr-pointer" v-on:click="switch_state('is_issued','t-desc')">
                             <i class="fa fa-file-text-o"></i> {{_("文章")}}
                         </a>
                     </li>
                     <li id="head_li_sort_hot">
-                        <a data-toggle="tab" class="osr-pointer" v-on:click="get_posts('is_issued',1,'hot','')">
+                        <a data-toggle="tab" class="osr-pointer" v-on:click="switch_state('is_issued','hot')">
                             <i class="fa fa-thermometer-full"></i> {{_("热门")}}
                         </a>
                     </li>
                     <li id="head_li_status_draft" v-show="is_myself" >
-                        <a data-toggle="tab" class="osr-pointer" v-on:click="get_posts('draft',1,'t-desc','')">
+                        <a data-toggle="tab" class="osr-pointer" v-on:click="switch_state('draft','t-desc')">
                             <i class="fa fa-save"></i> {{_("草稿")}}
                         </a>
                     </li>

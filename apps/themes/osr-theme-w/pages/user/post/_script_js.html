@@ -71,7 +71,7 @@
             document.title = vue.category.name + "-" + "{{g.site_global.site_config.TITLE_SUFFIX}}";
         }
         // get post
-        get_posts(vue.status, vue.page, vue.sort, vue.keyword);
+        get_posts(vue.page, vue.sort);
 
     });
 
@@ -131,13 +131,17 @@
             vue.category.name='{{_("默认文集")}}';
         }
 
-        get_posts(vue.status, 1, vue.sort, vue.keyword);
+        get_posts(1, vue.sort);
+    }
+
+    function switch_state(status, sort) {
+        vue.status = status;
+        vue.sort = sort;
+        get_posts(1, vue.sort);
     }
 
     //获取
-    function get_posts(status, page, sort, keyword){
-        vue.status = status;
-        vue.keyword = keyword;
+    function get_posts(page, sort){
         vue.sort = sort;
         vue.page = page;
         if(!sort || vue.status=="draft" || vue.status=="recycle"){
@@ -203,7 +207,7 @@
         var result = osrHttp("DELETE", "/api/user/post",d);
         result.then(function (r) {
              if(r.data.msg_type=='s'){
-                get_posts(vue.status, 1, vue.sort, vue.keyword)
+                get_posts(1, vue.sort)
             }
         });
     }
@@ -218,7 +222,7 @@
         var result = osrHttp("PUT","/api/user/post",d);
         result.then(function (r) {
             if(r.data.msg_type=='s'){
-                get_posts(vue.status, 1, vue.sort, vue.keyword)
+                get_posts(1, vue.sort)
             }
         });
     }

@@ -18,17 +18,17 @@
             <header class="panel-heading tab-bg-dark-navy-blue osr-panel-heading">
                 <ul class="nav nav-tabs">
                     <li id="head_li_status_recycle">
-                        <a data-toggle="tab"  class="osr-pointer" v-on:click="get_posts('recycle',1,'t-desc','')">
+                        <a data-toggle="tab"  class="osr-pointer" v-on:click="switch_state('recycle','t-desc')">
                             <i class="fa fa-recycle"></i> {{_("回收站")}}
                         </a>
                     </li>
                     <li id="head_li_status_not_audit">
-                        <a data-toggle="tab"  class="osr-pointer" v-on:click="get_posts('not_audit',1,'t-desc','')">
+                        <a data-toggle="tab"  class="osr-pointer" v-on:click="switch_state('not_audit','t-desc')">
                             <i class="fa fa-hourglass-start "></i> {{_("待审核")}}
                         </a>
                     </li>
                     <li id="head_li_status_unqualified">
-                        <a data-toggle="tab" class="osr-pointer" v-on:click="get_posts('unqualified',1,'t-desc','')">
+                        <a data-toggle="tab" class="osr-pointer" v-on:click="switch_state('unqualified','t-desc')">
                             <i class="fa fa-frown-o"></i> {{_("违规内容")}}
                         </a>
                     </li>

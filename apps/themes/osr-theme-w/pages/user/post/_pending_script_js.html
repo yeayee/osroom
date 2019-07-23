@@ -64,7 +64,7 @@
         }
 
         // get post
-        get_posts(vue.status, vue.page, vue.sort, vue.keyword);
+        get_posts(vue.page, vue.sort);
         get_user();
 
 
@@ -98,10 +98,8 @@
         });
     }
     //获取
-    function get_posts(status, page, sort, keyword){
+    function get_posts(page, sort){
 
-        vue.keyword = keyword;
-        vue.status = status;
         vue.sort = sort;
         vue.page = page;
         if(!sort || vue.status=="draft" || vue.status=="recycle"){
@@ -176,11 +174,15 @@
         var result = osrHttp("DELETE","/api/user/post",d);
         result.then(function (r) {
             if(r.data.msg_type=='s'){
-                get_posts(vue.status, 1, vue.sort, vue.keyword)
+                get_posts(1, vue.sort)
             }
         });
     }
-
+    function switch_state(status, sort) {
+        vue.status = status;
+        vue.sort = sort;
+        get_posts(1, vue.sort);
+    }
     //恢复
     function restore_posts(id){
 
@@ -192,7 +194,7 @@
         var result = osrHttp("PUT","/api/user/post",d);
         result.then(function (r) {
             if(r.data.msg_type=='s'){
-                get_posts(vue.status, 1, vue.sort, vue.keyword)
+                get_posts(1, vue.sort)
             }
         });
     }
