@@ -195,7 +195,8 @@ body {
     position: fixed!important;
 }
 .osr-adm-logo{
-    height:22px!important;
+    min-height: 28px!important;
+    max-height: 35px!important;
     margin: -5px 0px 0px 0px;
 }
 .osr-logo{
@@ -270,7 +271,7 @@ body {
 
 
 .osr-sidebar-sm-logo{
-    height: 14px!important;
+    max-height: 30px!important;
     width: auto!important;
     margin: 0px 0px 2px 0px;
 }

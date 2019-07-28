@@ -28,17 +28,19 @@
     width: 40px;
 }
 
+
 .osr-m-logo{
     position: absolute;
-    top: 50%;
+    top: 30px;
     left: 50%;
     transform: translate(-50%, -50%);
-    color:#848788;
+    color:#ffffff;
     font-size:20px;
 }
 
 .osr-m-logo>img{
-    height: 24px;
+    min-height: 30px;
+    max-height: 40px;
 }
 
 /** end header **/
