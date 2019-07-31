@@ -97,7 +97,6 @@ def comment_issue():
         if not r:
             data = {'msg': s, 'msg_type': "e", "custom_status": 422}
             return data
-
         tquery["email"] = email
 
     else:

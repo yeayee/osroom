@@ -74,9 +74,12 @@
         var result = osrHttp("GET","/api/post", d, args={not_prompt:true});
         result.then(function (r) {
             $.each(r.data.posts.datas, function(index, value) {
-                if(value.editor=="markdown"){
-                    r.data.posts.datas[index]["brief_content"] = marked(value.brief_content);
+                if(value["tags"].length>3 && value.brief_content.length>25){
+                    value.brief_content = value.brief_content.slice(0, 25)
                 }
+                // if(value.editor=="markdown"){
+                //     r.data.posts.datas[index]["brief_content"] = marked(value.brief_content);
+                // }
             });
             vue.pages = paging(page_total=r.data.posts.page_total, current_page=r.data.posts.current_page);
             vue.posts = r.data.posts;

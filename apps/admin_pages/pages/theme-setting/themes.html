@@ -75,6 +75,10 @@
                               <a v-if="!theme.current && !theme.error" v-on:click="switch_theme(theme.theme_name)" class="btn osr-btn btn-info">
                                  {{_("启用")}}
                               </a>
+                              <a href="/osr-admin/setting/config-edit?project=theme_global_conf" class="btn osr-btn btn-success">
+                                 {{_("菜单设置")}}
+                              </a>
+
                               <a  v-on:click="warning_modal({'msg':'{{_('确定? 只恢复已删除的默认设置')}}' }, 'restore', theme.theme_name)" class="btn osr-btn btn-default">
                                   <i class="fa fa-refresh"></i> {{_("恢复已删默认设置")}}
                               </a>

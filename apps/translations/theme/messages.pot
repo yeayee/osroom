@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-07-17 16:42+0800\n"
+"POT-Creation-Date: 2019-07-31 11:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,16 +23,16 @@ msgid "401无权访问"
 msgstr ""
 
 #: apps/themes/osr-style/pages/401.html:32
-#: apps/themes/osr-theme-w/pages/401.html:32
+#: apps/themes/osr-theme-w/pages/401.html:17
 msgid "无权访问该页面"
 msgstr ""
 
 #: apps/themes/osr-style/pages/401.html:32
 #: apps/themes/osr-style/pages/404.html:33
 #: apps/themes/osr-style/pages/500.html:32
-#: apps/themes/osr-theme-w/pages/401.html:32
-#: apps/themes/osr-theme-w/pages/404.html:33
-#: apps/themes/osr-theme-w/pages/500.html:32
+#: apps/themes/osr-theme-w/pages/401.html:17
+#: apps/themes/osr-theme-w/pages/404.html:16
+#: apps/themes/osr-theme-w/pages/500.html:16
 msgid "回到首页"
 msgstr ""
 
@@ -42,17 +42,16 @@ msgid "404页面不存在"
 msgstr ""
 
 #: apps/themes/osr-style/pages/404.html:33
-#: apps/themes/osr-theme-w/pages/404.html:33
+#: apps/themes/osr-theme-w/pages/404.html:16
 msgid "该页面不存在"
 msgstr ""
 
 #: apps/themes/osr-style/pages/500.html:2
-#: apps/themes/osr-theme-w/pages/500.html:2
 msgid "500Server Error"
 msgstr ""
 
 #: apps/themes/osr-style/pages/500.html:32
-#: apps/themes/osr-theme-w/pages/500.html:32
+#: apps/themes/osr-theme-w/pages/500.html:16
 msgid "错误ID"
 msgstr ""
 
@@ -67,10 +66,9 @@ msgstr ""
 #: apps/themes/osr-style/pages/corpus/index.html:31
 #: apps/themes/osr-style/pages/post/_posts.html:11
 #: apps/themes/osr-style/pages/user/index.html:29
-#: apps/themes/osr-theme-w/pages/corpus/index.html:46
 #: apps/themes/osr-theme-w/pages/post/_posts.html:11
 #: apps/themes/osr-theme-w/pages/posts/index.html:14
-#: apps/themes/osr-theme-w/pages/user/index.html:44
+#: apps/themes/osr-theme-w/pages/user/index.html:63
 msgid "热门"
 msgstr ""
 
@@ -86,10 +84,11 @@ msgstr ""
 #: apps/themes/osr-theme-w/pages/_index_s3.html:48
 #: apps/themes/osr-theme-w/pages/content/writer.html:12
 #: apps/themes/osr-theme-w/pages/content/writer.html:15
-#: apps/themes/osr-theme-w/pages/corpus/_script_js.html:19
 #: apps/themes/osr-theme-w/pages/post/_posts.html:26
 #: apps/themes/osr-theme-w/pages/post/index.html:75
 #: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:46
+#: apps/themes/osr-theme-w/pages/user/index.html:16
+#: apps/themes/osr-theme-w/pages/user/post/_script_js.html:131
 #: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:11
 #: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:22
 #: apps/themes/osr-theme-w/pages/user/post/preview.html:64
@@ -134,7 +133,7 @@ msgstr ""
 
 #: apps/themes/osr-style/pages/_index_s2.html:108
 #: apps/themes/osr-style/pages/post/_posts.html:76
-#: apps/themes/osr-theme-w/pages/_index_s3.html:78
+#: apps/themes/osr-theme-w/pages/_index_s3.html:77
 #: apps/themes/osr-theme-w/pages/post/_posts.html:76
 msgid "查看更多"
 msgstr ""
@@ -730,8 +729,10 @@ msgstr ""
 msgid "确认密码"
 msgstr ""
 
-#: apps/themes/osr-style/pages/based/_header_bar_menu_left.html:2
-#: apps/themes/osr-theme-w/pages/based/_header_bar_menu_left.html:2
+#: apps/themes/osr-style/pages/based/_header_bar_menu_left.html:4
+#: apps/themes/osr-style/pages/based/_header_bar_menu_left.html:8
+#: apps/themes/osr-theme-w/pages/based/_header_bar_menu_left.html:4
+#: apps/themes/osr-theme-w/pages/based/_header_bar_menu_left.html:8
 msgid "首页"
 msgstr ""
 
@@ -854,13 +855,13 @@ msgstr ""
 msgid "欢迎使用"
 msgstr ""
 
-#: apps/themes/osr-style/pages/based/footer.html:24
-#: apps/themes/osr-theme-w/pages/based/footer.html:26
+#: apps/themes/osr-style/pages/based/footer.html:25
+#: apps/themes/osr-theme-w/pages/based/footer.html:27
 msgid "版本"
 msgstr ""
 
-#: apps/themes/osr-style/pages/based/footer.html:36
-#: apps/themes/osr-theme-w/pages/based/footer.html:39
+#: apps/themes/osr-style/pages/based/footer.html:39
+#: apps/themes/osr-theme-w/pages/based/footer.html:41
 msgid "提供"
 msgstr ""
 
@@ -1101,8 +1102,8 @@ msgstr ""
 msgid "更新草稿"
 msgstr ""
 
-#: apps/themes/osr-style/pages/content/writer.html:264
-#: apps/themes/osr-theme-w/pages/content/writer.html:264
+#: apps/themes/osr-style/pages/content/writer.html:266
+#: apps/themes/osr-theme-w/pages/content/writer.html:267
 msgid "确认已保存内容后才离开哦"
 msgstr ""
 
@@ -1116,7 +1117,7 @@ msgstr ""
 #: apps/themes/osr-style/pages/corpus/index.html:12
 #: apps/themes/osr-style/pages/user/_self_introduction.html:15
 #: apps/themes/osr-theme-w/pages/content/category/index.html:10
-#: apps/themes/osr-theme-w/pages/corpus/index.html:2
+#: apps/themes/osr-theme-w/pages/user/index.html:2
 msgid "文集"
 msgstr ""
 
@@ -1138,8 +1139,7 @@ msgstr ""
 #: apps/themes/osr-style/pages/corpus/tag.html:16
 #: apps/themes/osr-style/pages/user/index.html:11
 #: apps/themes/osr-style/pages/user/post/pending.html:11
-#: apps/themes/osr-theme-w/pages/corpus/index.html:33
-#: apps/themes/osr-theme-w/pages/user/index.html:26
+#: apps/themes/osr-theme-w/pages/user/index.html:45
 #: apps/themes/osr-theme-w/pages/user/post/pending.html:11
 msgid "篇"
 msgstr ""
@@ -1148,10 +1148,9 @@ msgstr ""
 #: apps/themes/osr-style/pages/post/index.html:2
 #: apps/themes/osr-style/pages/search/index.html:26
 #: apps/themes/osr-style/pages/user/index.html:24
-#: apps/themes/osr-theme-w/pages/corpus/index.html:41
 #: apps/themes/osr-theme-w/pages/post/index.html:2
 #: apps/themes/osr-theme-w/pages/search/index.html:22
-#: apps/themes/osr-theme-w/pages/user/index.html:39
+#: apps/themes/osr-theme-w/pages/user/index.html:58
 msgid "文章"
 msgstr ""
 
@@ -1240,7 +1239,7 @@ msgstr ""
 #: apps/themes/osr-style/pages/user/message/index.html:85
 #: apps/themes/osr-style/pages/user/post/_comment.html:155
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:86
-#: apps/themes/osr-theme-w/pages/_index_s3.html:92
+#: apps/themes/osr-theme-w/pages/_index_s3.html:91
 #: apps/themes/osr-theme-w/pages/photo/index.html:80
 #: apps/themes/osr-theme-w/pages/post/_comment.html:306
 #: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:109
@@ -1264,7 +1263,7 @@ msgstr ""
 #: apps/themes/osr-style/pages/user/message/index.html:89
 #: apps/themes/osr-style/pages/user/post/_comment.html:159
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:92
-#: apps/themes/osr-theme-w/pages/_index_s3.html:98
+#: apps/themes/osr-theme-w/pages/_index_s3.html:97
 #: apps/themes/osr-theme-w/pages/photo/index.html:86
 #: apps/themes/osr-theme-w/pages/post/_comment.html:310
 #: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:115
@@ -1582,25 +1581,25 @@ msgid "作者简介"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/_self_introduction.html:20
-#: apps/themes/osr-theme-w/pages/corpus/index.html:10
 #: apps/themes/osr-theme-w/pages/user/index.html:10
+#: apps/themes/osr-theme-w/pages/user/post/_script_js.html:19
+#: apps/themes/osr-theme-w/pages/user/post/_script_js.html:129
 msgid "全部文章"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/index.html:2
 #: apps/themes/osr-style/pages/user/post/pending.html:2
-#: apps/themes/osr-theme-w/pages/user/index.html:2
 #: apps/themes/osr-theme-w/pages/user/post/pending.html:2
 msgid "主页"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/index.html:16
-#: apps/themes/osr-theme-w/pages/user/index.html:31
+#: apps/themes/osr-theme-w/pages/user/index.html:50
 msgid "待处理"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/index.html:34
-#: apps/themes/osr-theme-w/pages/user/index.html:49
+#: apps/themes/osr-theme-w/pages/user/index.html:68
 msgid "草稿"
 msgstr ""
 
@@ -1659,7 +1658,7 @@ msgid "恢复"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:89
-#: apps/themes/osr-theme-w/pages/_index_s3.html:95
+#: apps/themes/osr-theme-w/pages/_index_s3.html:94
 #: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:112
 #: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:121
 msgid "第{[posts.current_page]}页/共{[posts.page_total]}页"
@@ -1692,6 +1691,10 @@ msgstr ""
 msgid "预览"
 msgstr ""
 
+#: apps/themes/osr-theme-w/pages/500.html:2
+msgid "500 Server Error"
+msgstr ""
+
 #: apps/themes/osr-theme-w/pages/_index_s2.html:49
 msgid "标签云"
 msgstr ""
@@ -1700,7 +1703,7 @@ msgstr ""
 msgid "最新内容"
 msgstr ""
 
-#: apps/themes/osr-theme-w/pages/_index_s3.html:81
+#: apps/themes/osr-theme-w/pages/_index_s3.html:80
 msgid "没有更多了哦"
 msgstr ""
 

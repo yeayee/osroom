@@ -245,12 +245,14 @@
         // 提交数据
          var result = osrHttp("POST", "/api/user/post", d);
         result.then(function (r) {
-            //销毁提示事件
-            window.onbeforeunload = null;
-            if(issue_way){
-                location.href = "/user";
-            }else{
-                location.href = "/user?s=draft";
+           if (r.data.msg_type == "s"){
+                //销毁提示事件
+                window.onbeforeunload = null;
+                if(issue_way){
+                    location.href = "/user";
+                }else{
+                    location.href = "/user?s=draft";
+                }
             }
         });
 

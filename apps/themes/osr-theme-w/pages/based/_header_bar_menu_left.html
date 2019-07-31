@@ -1,14 +1,14 @@
 <div id="top_nav_pc" class="osr-navbar-left navbar-left hidden-xs">
-    <a href="/" class="osr-logo pull-left" title='{{_("首页")}}'>
+
         {% if g.site_global.site_config.PC_LOGO_DISPLAY == "logo" %}
+            <a href="/" class="osr-logo pull-left" title='{{_("首页")}}'>
             <img src="{{g.site_global.site_config.LOGO_IMG_URL}}" alt="Logo"/>
-        {% elif g.site_global.site_config.PC_LOGO_DISPLAY == "name" %}
-            <strong>{{g.site_global.site_config.APP_NAME}}</strong>
+            </a>
         {% else %}
-            <img src="{{g.site_global.site_config.LOGO_IMG_URL}}" alt="Logo"/>
+            <a href="/" class="osr-logo-text pull-left" title='{{_("首页")}}'>
             <strong>{{g.site_global.site_config.APP_NAME}}</strong>
+            </a>
         {% endif %}
-    </a>
     <ul id="navbar_left" class="nav navbar-nav">
         {% for k,v in g.site_global.theme_config.TOP_NAV.items()|sort%}
 

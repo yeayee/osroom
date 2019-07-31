@@ -48,7 +48,7 @@ class Transations:
 
         action = [
             "init, [--init --ext <path> -o <dir name> --lan en_US]",
-            "update, [--update --ext <path> -o <dir name> --cfg <cfg file path>]",
+            "update, [--update --ext <path> -o <dir name> --lan <lang> --cfg <cfg file path>]",
             "compile, [--compile -o <dir name>]"]
 
         opts, args = getopt.getopt(sys.argv[1:], s_ops, l_ops)

@@ -34,12 +34,14 @@ def get_plugin_setting():
     if configs.count(True):
         configs = list(configs)
         key_hiding = get_config("system", "KEY_HIDING")
+        password_exists = False
         for conf in configs:
             conf["_id"] = str(conf["_id"])
             if key_hiding and conf["value_type"] == "password":
                 conf["value"] = "Has been hidden"
+                password_exists = True
 
-        if key_hiding:
+        if key_hiding and password_exists:
             data["msg_type"] = "w"
             data["msg"] = gettext(
                 "The KEY_HIDING switch in the system configuration has been enabled."

@@ -288,6 +288,11 @@ body {
     padding: 0px 35px 0px 0px;
 }
 
+.osr-logo-text{
+    max-height:45px!important;
+    padding: 15px 35px 0px 0px;
+}
+
 .osr-header-avatar{
      width:35px!important;
     height:35px!important;
@@ -998,7 +1003,7 @@ li.have-img {
 }
 
 .osr-post-image .osr-img-title{
-    color: #cee1f3;
+    color: #ffffff;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -1006,6 +1011,8 @@ li.have-img {
     padding: 10px;
     font-size: 20px;
     font-weight: 300;
+    background-color: #1caaf873;
+    width: 100%;
 }
 
 .osr-image{
@@ -1486,7 +1493,7 @@ li.have-img {
 
     display: table-cell;
     word-wrap: break-word;
-    height:490px;
+    height:445px;
 }
 
 .osr-post-single .osr-post-info{

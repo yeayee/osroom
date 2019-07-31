@@ -184,6 +184,11 @@ body {
     padding: 2px 35px 0px 0px;
 }
 
+.osr-logo-text{
+    height:30px!important;
+    padding: 15px 35px 0px 0px;
+}
+
 .osr-header-avatar{
      width:35px!important;
     height:35px!important;

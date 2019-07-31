@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-07-17 17:02+0800\n"
+"POT-Creation-Date: 2019-07-31 11:19+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -146,7 +146,7 @@ msgstr "pending"
 #: apps/admin_pages/pages/_index_chd2.html:78
 #: apps/admin_pages/pages/_index_chd2.html:117
 #: apps/admin_pages/pages/_index_chd2.html:135
-#: apps/admin_pages/pages/message/email.html:174
+#: apps/admin_pages/pages/message/email.html:175
 #: apps/admin_pages/pages/message/sms.html:142
 msgid "异常"
 msgstr "Exception"
@@ -164,7 +164,7 @@ msgstr "Mail Send"
 #: apps/admin_pages/pages/_index_chd2.html:121
 #: apps/admin_pages/pages/_index_chd2.html:139
 #: apps/admin_pages/pages/_index_chd2.html:153
-#: apps/admin_pages/pages/message/email.html:175
+#: apps/admin_pages/pages/message/email.html:176
 #: apps/admin_pages/pages/message/sms.html:143
 msgid "错误"
 msgstr "Error"
@@ -184,11 +184,11 @@ msgstr "Report status"
 
 #: apps/admin_pages/pages/_index_chd3.html:13
 msgid "3小时"
-msgstr "3 hours"
+msgstr "3 hrs"
 
 #: apps/admin_pages/pages/_index_chd3.html:14
 msgid "8小时"
-msgstr "8 hours"
+msgstr "8 hrs"
 
 #: apps/admin_pages/pages/_index_chd3.html:15
 msgid "1天"
@@ -211,7 +211,7 @@ msgstr "Dashboard"
 msgid "欢迎使用OSROOM"
 msgstr "Welcome to OSROOM"
 
-#: apps/admin_pages/pages/based/footer_adm.html:9
+#: apps/admin_pages/pages/based/footer_adm.html:11
 #: apps/admin_pages/pages/index.html:13
 #: apps/admin_pages/pages/setting/config-versions.html:36
 msgid "版本"
@@ -479,7 +479,7 @@ msgstr "Rules"
 #: apps/admin_pages/pages/category/index.html:55
 #: apps/admin_pages/pages/media/_bar.html:69
 #: apps/admin_pages/pages/media/text.html:67
-#: apps/admin_pages/pages/message/email.html:91
+#: apps/admin_pages/pages/message/email.html:87
 #: apps/admin_pages/pages/message/on-site.html:109
 #: apps/admin_pages/pages/message/sms.html:80
 #: apps/admin_pages/pages/own/content/category/index.html:27
@@ -497,7 +497,7 @@ msgstr "Rules"
 #: apps/admin_pages/pages/theme-setting/display/_bar.html:69
 #: apps/admin_pages/pages/theme-setting/display/text.html:68
 #: apps/admin_pages/pages/theme-setting/file/index.html:63
-#: apps/admin_pages/pages/theme-setting/themes.html:82
+#: apps/admin_pages/pages/theme-setting/themes.html:86
 #: apps/admin_pages/pages/token/rest-token.html:45
 msgid "删除"
 msgstr "Delete"
@@ -509,7 +509,7 @@ msgstr "Delete Selection"
 #: apps/admin_pages/pages/audit/rule/index.html:149
 #: apps/admin_pages/pages/comment/index.html:184
 #: apps/admin_pages/pages/media/_paging.html:38
-#: apps/admin_pages/pages/message/email.html:133
+#: apps/admin_pages/pages/message/email.html:129
 #: apps/admin_pages/pages/message/on-site.html:150
 #: apps/admin_pages/pages/message/sms.html:121
 #: apps/admin_pages/pages/own/user/follow/index.html:63
@@ -532,7 +532,7 @@ msgstr "​​Previous"
 #: apps/admin_pages/pages/audit/rule/index.html:153
 #: apps/admin_pages/pages/comment/index.html:188
 #: apps/admin_pages/pages/media/_paging.html:42
-#: apps/admin_pages/pages/message/email.html:137
+#: apps/admin_pages/pages/message/email.html:133
 #: apps/admin_pages/pages/message/on-site.html:155
 #: apps/admin_pages/pages/message/sms.html:125
 #: apps/admin_pages/pages/own/user/follow/index.html:69
@@ -593,7 +593,7 @@ msgstr "Add"
 #: apps/admin_pages/pages/audit/rule/index.html:180
 #: apps/admin_pages/pages/comment/index.html:234
 #: apps/admin_pages/pages/media/_inform_modal.html:19
-#: apps/admin_pages/pages/message/email.html:156
+#: apps/admin_pages/pages/message/email.html:157
 #: apps/admin_pages/pages/message/on-site.html:180
 #: apps/admin_pages/pages/message/send.html:64
 #: apps/admin_pages/pages/module/_send_code.html:43
@@ -719,7 +719,7 @@ msgstr "back to top"
 msgid "欢迎使用"
 msgstr "Welcome to use"
 
-#: apps/admin_pages/pages/based/footer_adm.html:21
+#: apps/admin_pages/pages/based/footer_adm.html:24
 msgid "提供"
 msgstr "Provide"
 
@@ -749,15 +749,15 @@ msgstr "Just now "
 
 #: apps/admin_pages/pages/based/js_tr.html:4
 msgid "分钟前"
-msgstr " min ago "
+msgstr " mins ago "
 
 #: apps/admin_pages/pages/based/js_tr.html:5
 msgid "小时前"
-msgstr " hour ago "
+msgstr " hrs ago "
 
 #: apps/admin_pages/pages/based/js_tr.html:6
 msgid "昨天"
-msgstr "Yesterday "
+msgstr "Ystd "
 
 #: apps/admin_pages/pages/based/js_tr.html:7
 msgid "您取消了更新"
@@ -1125,7 +1125,7 @@ msgid "作者"
 msgstr "Author"
 
 #: apps/admin_pages/pages/comment/index.html:47
-#: apps/admin_pages/pages/message/email.html:67
+#: apps/admin_pages/pages/message/email.html:66
 #: apps/admin_pages/pages/message/on-site.html:51
 #: apps/admin_pages/pages/message/on-site.html:77
 #: apps/admin_pages/pages/message/on-site.html:88
@@ -1142,7 +1142,7 @@ msgid "赞"
 msgstr "Like"
 
 #: apps/admin_pages/pages/comment/index.html:55
-#: apps/admin_pages/pages/message/email.html:50
+#: apps/admin_pages/pages/message/email.html:49
 #: apps/admin_pages/pages/message/on-site.html:53
 #: apps/admin_pages/pages/message/sms.html:48
 #: apps/admin_pages/pages/plugin/_edit.html:137
@@ -1280,7 +1280,7 @@ msgid "最后举报"
 msgstr "Last report"
 
 #: apps/admin_pages/pages/comment/index.html:250
-#: apps/admin_pages/pages/message/email.html:173
+#: apps/admin_pages/pages/message/email.html:174
 #: apps/admin_pages/pages/message/sms.html:141
 #: apps/admin_pages/pages/post/index.html:284
 #: apps/admin_pages/pages/user/index.html:284
@@ -1685,30 +1685,30 @@ msgid "点击选择视频"
 msgstr "Click to select"
 
 #: apps/admin_pages/pages/message/email.html:46
-msgid "发件人"
-msgstr "Sender"
-
-#: apps/admin_pages/pages/message/email.html:47
 #: apps/admin_pages/pages/message/sms.html:45
 msgid "收件人"
 msgstr "Recipients"
 
-#: apps/admin_pages/pages/message/email.html:48
+#: apps/admin_pages/pages/message/email.html:47
 #: apps/admin_pages/pages/message/on-site.html:52
 #: apps/admin_pages/pages/message/sms.html:46
 #: apps/admin_pages/pages/user/index.html:250
 msgid "状态"
 msgstr "Status"
 
-#: apps/admin_pages/pages/message/email.html:49
+#: apps/admin_pages/pages/message/email.html:48
 #: apps/admin_pages/pages/message/sms.html:47
 msgid "异常|错误信息"
 msgstr "Exceptions | Error Message"
 
-#: apps/admin_pages/pages/message/email.html:75
+#: apps/admin_pages/pages/message/email.html:71
 #: apps/admin_pages/pages/message/sms.html:64
 msgid "多用户"
 msgstr "Multi-user"
+
+#: apps/admin_pages/pages/message/email.html:147
+msgid "发件人"
+msgstr "Sender"
 
 #: apps/admin_pages/pages/message/on-site.html:2
 #: apps/admin_pages/pages/message/on-site.html:15
@@ -3081,11 +3081,11 @@ msgstr ""
 
 #: apps/admin_pages/pages/theme-setting/themes.html:45
 msgid "[恢复已删默认设置] 为了防止覆盖存在的设置数据, 只恢复已删除的[默认设置],"
-msgstr ""
+msgstr "[Restore del default settings] to prevent overwriting existing setting data, restore only deleted [Default settings]"
 
 #: apps/admin_pages/pages/theme-setting/themes.html:49
 msgid "删除主题前请手动清理主题设置数据, 系统不会主动清理!"
-msgstr ""
+msgstr "Please clean up the theme settings data manually before deleting the theme, the system will not actively clean up"
 
 #: apps/admin_pages/pages/theme-setting/themes.html:63
 msgid "致命错误"
@@ -3104,15 +3104,19 @@ msgstr "Enabled"
 msgid "启用"
 msgstr "Enabled"
 
-#: apps/admin_pages/pages/theme-setting/themes.html:78
+#: apps/admin_pages/pages/theme-setting/themes.html:79
+msgid "菜单设置"
+msgstr "Menu Settings"
+
+#: apps/admin_pages/pages/theme-setting/themes.html:82
 msgid "确定? 只恢复已删除的默认设置"
 msgstr "Are you sure? Restore only deleted default settings"
 
-#: apps/admin_pages/pages/theme-setting/themes.html:79
+#: apps/admin_pages/pages/theme-setting/themes.html:83
 msgid "恢复已删默认设置"
 msgstr "Restore deleted default settings"
 
-#: apps/admin_pages/pages/theme-setting/themes.html:81
+#: apps/admin_pages/pages/theme-setting/themes.html:85
 msgid "确定? 刪除前请手动清理该主题设置数据"
 msgstr ""
 "Are you sure? Please clean up the topic setting data manually before "

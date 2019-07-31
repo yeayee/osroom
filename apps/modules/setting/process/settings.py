@@ -143,11 +143,13 @@ def get_sys_configs():
 
         # 将值是list和dict的配置放发哦数组后面
         key_hiding = get_config("system", "KEY_HIDING")
+        password_exists = False
         for conf in confs:
             conf["_id"] = str(conf["_id"])
 
             if key_hiding and conf["type"] == "password":
                 conf["value"] = "Has been hidden"
+                password_exists = True
             if conf["type"] in ["list", "dict"]:
                 temp_list_json.append(conf)
             else:
@@ -155,7 +157,7 @@ def get_sys_configs():
         temp_list_other.extend(temp_list_json)
 
         data["configs"] = temp_list_other
-        if key_hiding:
+        if key_hiding and password_exists:
             data["msg_type"] = "w"
             data["msg"] = gettext(
                 "The KEY_HIDING switch in the system configuration has been enabled."
