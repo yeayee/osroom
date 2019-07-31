@@ -176,11 +176,12 @@ body {
     position: fixed!important;
 }
 .osr-logo img {
-    height:23px!important;
+    max-height: 42px!important;
+    min-height: 30px!important;
 }
 .osr-logo{
     height:30px!important;
-    padding: 12px 35px 0px 0px;
+    padding: 2px 35px 0px 0px;
 }
 
 .osr-header-avatar{

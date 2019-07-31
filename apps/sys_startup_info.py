@@ -13,20 +13,21 @@ def start_info():
     :return:
     """
 
-    width = 77
-    height = 7
-    logo_path = "{}/admin/sys_imgs/osroom-logo.png".format(STATIC_PATH)
+    width = 30
+    height = 15
+    logo_path = "{}/sys_imgs/osroom-logo-white.png".format(STATIC_PATH)
     if os.path.exists(logo_path):
         im = Image.open(logo_path)
         im = im.resize((width, height), Image.NEAREST)
         txt = ""
         for i in range(height):
+            txt += " " * 15
             for j in range(width):
                 ch = get_char(*im.getpixel((j, i)))
                 if ch == "*":
-                    ch = "\033[1;35m{}\033[0m".format(ch)
+                    ch = "\033[1;37m{}\033[0m".format(ch)
                 else:
-                    ch = "\033[1;36m{}\033[0m".format(ch)
+                    ch = "\033[1;33m{}\033[0m".format(ch)
                 txt += ch
             txt += '\n'
         print(txt)
