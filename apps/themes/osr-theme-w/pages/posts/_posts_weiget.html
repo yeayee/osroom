@@ -66,8 +66,7 @@
         </div>
         </div>
     </div>
-
-<div class="col-xs-12" >
+    <br>
     <!-- 页面导航-->
     <div class="text-center visible-lg visible-md">
         <ul class="pagination">
@@ -109,7 +108,7 @@
                 {{_("上一页")}}
             </a>
         </li>
-         <span class="text-center osr-text">{{_('第{[posts.current_page]}页/共{[posts.page_total]}页')}}</span>
+         <span class="text-center osr-text">{{_('{[posts.current_page]}/{[posts.page_total]}')}}</span>
         <li  v-if="pages.next > pages.current_page  && pages.next<=pages.page_total" class="next">
             <a v-on:click="get_posts(pages.next, sort)" class="osr-pointer">
                 {{_("下一页")}}
@@ -117,4 +116,3 @@
         </li>
     </ul>
     <!-- //m页面导航-->
-</div>

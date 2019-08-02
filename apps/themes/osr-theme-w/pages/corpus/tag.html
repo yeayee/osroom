@@ -3,10 +3,19 @@
 {% block content %}
 <div id="app" class="row osr-page" v-cloak>
      <!--导航-->
-    <div id="tag-nav" class="osr-btn-nav nav text-center">
+    <div v-if="!single" id="tag-nav" class="osr-btn-nav nav text-center">
         <a :id="'tag_'+index" v-for="(tag,index) in tags" :style="'color:#ffffff;background-color:'+colors[index]" class="btn osr-btn btn-m"
         v-on:click="switch_tag(tag['tag'], index)">
             {[tag["tag"]]}&nbsp;‧&nbsp;{[tag["tag_cnt"]]}
+        </a>
+    </div>
+    <div v-else class="osr-btn-nav nav text-center" style="color: #ffffff">
+        <!--<h3>{[tag]}</h3>-->
+        <a :style="'color:#ffffff;background-color:'+colors[0]" class="osr-btn-active btn osr-btn btn-m">
+            {[tag]}&nbsp;‧&nbsp;{[posts.data_total]}
+        </a>
+        <a :style="'color:#ffffff;background-color:'+colors[2]" class="btn osr-btn btn-m" href="/corpus/tag">
+            <i class="fa fa-tag"></i>&nbsp;{{_("其他标签")}}
         </a>
     </div>
     {% include "osr-theme-w/pages/posts/_posts_weiget.html" %}
@@ -19,12 +28,12 @@
 
 <script>
 
-    Vue.directive('highlight',function (el) {
-      let blocks = el.querySelectorAll('pre code');
-      blocks.forEach((block)=>{
-        hljs.highlightBlock(block)
-      })
-    })
+    // Vue.directive('highlight',function (el) {
+    //   let blocks = el.querySelectorAll('pre code');
+    //   blocks.forEach((block)=>{
+    //     hljs.highlightBlock(block)
+    //   })
+    // })
 
     var vue = new Vue({
       el: '#app',
@@ -37,6 +46,7 @@
             page:1,
             img_w_h:"?w=0&h=120",
             is_myself:null,
+            single:false,
             tags:[],
             tag_index:0
       },
@@ -59,6 +69,7 @@
         vue.colors = osr_colors();
         var url_s = get_url_parameter()
         vue.category_id = get_obj_value(url_s, "id")
+        vue.single = get_obj_value(url_s, "single", vue.single)
         vue.sort = get_obj_value(url_s, "sort", vue.sort)
         vue.page = get_obj_value(url_s, "page", vue.page)
         vue.tag = get_obj_value(url_s, "tag", null)
@@ -149,6 +160,7 @@
                     +"?tag="+vue.tag
                     +"&sort="+vue.sort
                     +"&page="+page
+                    +"&single="+single
             history_state(null, url);
 
         });

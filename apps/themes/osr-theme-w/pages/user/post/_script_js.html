@@ -1,7 +1,7 @@
 
-<script src="/theme/static/js/markdown/marked.min.js?v={{g.site_global.site_config.STATIC_FILE_VERSION}}"></script>
-<link href="/theme/static/css/highlight-style-github.css?v={{g.site_global.site_config.STATIC_FILE_VERSION}}" rel="stylesheet">
-<script src="/theme/static/js/highlight.js?v={{g.site_global.site_config.STATIC_FILE_VERSION}}"></script>
+<!--<script src="/theme/static/js/markdown/marked.min.js?v={{g.site_global.site_config.STATIC_FILE_VERSION}}"></script>-->
+<!--<link href="/theme/static/css/highlight-style-github.css?v={{g.site_global.site_config.STATIC_FILE_VERSION}}" rel="stylesheet">-->
+<!--<script src="/theme/static/js/highlight.js?v={{g.site_global.site_config.STATIC_FILE_VERSION}}"></script>-->
 <script>
 
     Vue.directive('highlight',function (el) {
@@ -173,9 +173,12 @@
         result.then(function (r) {
             vue.posts = r.data.posts;
             $.each(vue.posts.datas, function(index, value) {
-                if(value.editor=="markdown"){
-                    vue.posts.datas[index]["brief_content"] = marked(value.brief_content);
+                 if(value["tags"].length>3 && value.brief_content.length>25){
+                    value.brief_content = value.brief_content.slice(0, 25)
                 }
+                // if(value.editor=="markdown"){
+                //     vue.posts.datas[index]["brief_content"] = marked(value.brief_content);
+                // }
             });
 
             vue.pages = paging(page_total=vue.posts.page_total,
