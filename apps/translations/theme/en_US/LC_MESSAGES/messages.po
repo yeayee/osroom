@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-07-31 11:17+0800\n"
+"POT-Creation-Date: 2019-08-02 12:08+0800\n"
 "PO-Revision-Date: 2018-01-04 20:50+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: apps/themes/osr-style/pages/401.html:2
 #: apps/themes/osr-theme-w/pages/401.html:2
 msgid "401无权访问"
-msgstr "401 does not have access"
+msgstr ""
 
 #: apps/themes/osr-style/pages/401.html:32
 #: apps/themes/osr-theme-w/pages/401.html:17
@@ -71,7 +71,7 @@ msgstr "Latest"
 #: apps/themes/osr-theme-w/pages/posts/index.html:14
 #: apps/themes/osr-theme-w/pages/user/index.html:63
 msgid "热门"
-msgstr "Hot"
+msgstr "Popular"
 
 #: apps/themes/osr-style/pages/_index_s2.html:58
 #: apps/themes/osr-style/pages/content/writer.html:12
@@ -150,7 +150,7 @@ msgstr "There's no more"
 #: apps/themes/osr-theme-w/pages/post/_post_tags.html:4
 #: apps/themes/osr-theme-w/pages/posts/index.html:17
 msgid "标签"
-msgstr "Tag"
+msgstr "Tags"
 
 #: apps/themes/osr-style/pages/index.html:2
 #: apps/themes/osr-theme-w/pages/index.html:2
@@ -288,7 +288,7 @@ msgstr "Username or Email Error"
 #: apps/themes/osr-theme-w/pages/sign-in.html:24
 #: apps/themes/osr-theme-w/pages/sign-in.html:25
 msgid "密码错误"
-msgstr "Bad password"
+msgstr "Incorrect password"
 
 #: apps/themes/osr-style/pages/account/settings/_send_code.html:24
 #: apps/themes/osr-style/pages/module/_send_code.html:33
@@ -297,7 +297,7 @@ msgstr "Bad password"
 #: apps/themes/osr-theme-w/pages/module/_send_code.html:33
 #: apps/themes/osr-theme-w/pages/sign-in.html:30
 msgid "图片验证码"
-msgstr "Picture verification code"
+msgstr "Picture code"
 
 #: apps/themes/osr-style/pages/account/settings/_send_code.html:25
 #: apps/themes/osr-style/pages/account/settings/email.html:35
@@ -318,7 +318,7 @@ msgstr "Picture verification code"
 #: apps/themes/osr-theme-w/pages/module/_send_code.html:34
 #: apps/themes/osr-theme-w/pages/sign-in.html:31
 msgid "验证码错误"
-msgstr "Verification code error"
+msgstr "The verification code is incorrect"
 
 #: apps/themes/osr-style/pages/sign-in.html:40
 #: apps/themes/osr-theme-w/pages/sign-in.html:42
@@ -530,17 +530,17 @@ msgstr "E-mail"
 #: apps/themes/osr-theme-w/pages/account/settings/_basis.html:63
 #: apps/themes/osr-theme-w/pages/account/settings/_basis.html:73
 msgid "修改"
-msgstr "Modifications"
+msgstr "Modifi"
 
 #: apps/themes/osr-style/pages/account/settings/_basis.html:66
 #: apps/themes/osr-theme-w/pages/account/settings/_basis.html:66
 msgid "手&nbsp;&nbsp;&nbsp;&nbsp;机"
-msgstr "Cellphone number"
+msgstr "Phone number"
 
 #: apps/themes/osr-style/pages/account/settings/_basis.html:70
 #: apps/themes/osr-theme-w/pages/account/settings/_basis.html:70
 msgid "无"
-msgstr "none"
+msgstr "None"
 
 #: apps/themes/osr-style/pages/account/settings/_basis.html:79
 #: apps/themes/osr-theme-w/pages/account/settings/_basis.html:79
@@ -568,7 +568,7 @@ msgstr "Save"
 #: apps/themes/osr-style/pages/account/settings/_profile.html:4
 #: apps/themes/osr-theme-w/pages/account/settings/_profile.html:4
 msgid "性别"
-msgstr "Sex"
+msgstr "Gender"
 
 #: apps/themes/osr-style/pages/account/settings/_profile.html:10
 #: apps/themes/osr-theme-w/pages/account/settings/_profile.html:10
@@ -675,7 +675,7 @@ msgstr "Password"
 #: apps/themes/osr-theme-w/pages/account/settings/email.html:23
 #: apps/themes/osr-theme-w/pages/account/settings/email.html:25
 msgid "新邮箱"
-msgstr "New E-mail"
+msgstr "New Email"
 
 #: apps/themes/osr-style/pages/account/settings/email.html:32
 #: apps/themes/osr-style/pages/module/_send_code.html:3
@@ -744,7 +744,7 @@ msgstr "Home"
 #: apps/themes/osr-theme-w/pages/based/_user_dropdown.html:25
 #: apps/themes/osr-theme-w/pages/user/message/index.html:2
 msgid "消息"
-msgstr "Message"
+msgstr "Msgs"
 
 #: apps/themes/osr-style/pages/based/_header_bar_menu_user.html:48
 #: apps/themes/osr-theme-w/pages/based/_header_bar_menu_user.html:48
@@ -978,7 +978,8 @@ msgstr "Re-upload"
 #: apps/themes/osr-theme-w/pages/post/_comment.html:192
 #: apps/themes/osr-theme-w/pages/user/message/_comment.html:52
 #: apps/themes/osr-theme-w/pages/user/message/_notice.html:28
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:68
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:69
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:87
 msgid "删除"
 msgstr "Delete"
 
@@ -1010,7 +1011,7 @@ msgstr "The number of selected files"
 #: apps/themes/osr-style/pages/based/js_tr.html:27
 #: apps/themes/osr-theme-w/pages/based/js_tr.html:27
 msgid "共"
-msgstr "total"
+msgstr "Total"
 
 #: apps/themes/osr-style/pages/based/js_tr.html:28
 #: apps/themes/osr-theme-w/pages/based/js_tr.html:28
@@ -1229,7 +1230,7 @@ msgstr ""
 
 #: apps/themes/osr-style/pages/photo/index.html:36
 msgid "瞄简介"
-msgstr "Introduction"
+msgstr "Info"
 
 #: apps/themes/osr-style/pages/photo/index.html:37
 #: apps/themes/osr-style/pages/photo/introduction.html:15
@@ -1248,12 +1249,12 @@ msgstr "Uploaded"
 #: apps/themes/osr-theme-w/pages/_index_s3.html:91
 #: apps/themes/osr-theme-w/pages/photo/index.html:80
 #: apps/themes/osr-theme-w/pages/post/_comment.html:306
-#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:109
+#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:108
 #: apps/themes/osr-theme-w/pages/search/index.html:85
 #: apps/themes/osr-theme-w/pages/user/follow/index.html:63
 #: apps/themes/osr-theme-w/pages/user/message/index.html:85
 #: apps/themes/osr-theme-w/pages/user/post/_comment.html:155
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:118
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:138
 msgid "上一页"
 msgstr "Prev"
 
@@ -1272,12 +1273,12 @@ msgstr "{{photos.current_page]}Page/Total {[photos.page_total]}Page"
 #: apps/themes/osr-theme-w/pages/_index_s3.html:97
 #: apps/themes/osr-theme-w/pages/photo/index.html:86
 #: apps/themes/osr-theme-w/pages/post/_comment.html:310
-#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:115
+#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:114
 #: apps/themes/osr-theme-w/pages/search/index.html:91
 #: apps/themes/osr-theme-w/pages/user/follow/index.html:69
 #: apps/themes/osr-theme-w/pages/user/message/index.html:89
 #: apps/themes/osr-theme-w/pages/user/post/_comment.html:159
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:124
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:144
 msgid "下一页"
 msgstr "Next"
 
@@ -1654,24 +1655,23 @@ msgid "更新"
 msgstr "Updated"
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:62
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:59
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:60
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:78
 msgid "编辑"
 msgstr "Edit"
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:65
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:62
 msgid "移到回收站"
 msgstr "Move to trash"
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:68
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:65
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:66
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:84
 msgid "恢复"
 msgstr "Recovery"
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:89
 #: apps/themes/osr-theme-w/pages/_index_s3.html:94
-#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:112
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:121
 msgid "第{[posts.current_page]}页/共{[posts.page_total]}页"
 msgstr "Page{[posts.current_page]}Pages/Total {[posts.page_total]}Pages"
 
@@ -1718,3 +1718,16 @@ msgstr "New contens"
 msgid "没有更多了哦"
 msgstr "It's at the bottom"
 
+#: apps/themes/osr-theme-w/pages/corpus/tag.html:18
+msgid "其他标签"
+msgstr "Other tags"
+
+#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:111
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:141
+msgid "{[posts.current_page]}/{[posts.page_total]}"
+msgstr "{[posts.current_page]}/{[posts.page_total]}"
+
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:63
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:81
+msgid "移除"
+msgstr "Remove"

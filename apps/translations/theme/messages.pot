@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-07-31 11:17+0800\n"
+"POT-Creation-Date: 2019-08-02 12:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -977,7 +977,8 @@ msgstr ""
 #: apps/themes/osr-theme-w/pages/post/_comment.html:192
 #: apps/themes/osr-theme-w/pages/user/message/_comment.html:52
 #: apps/themes/osr-theme-w/pages/user/message/_notice.html:28
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:68
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:69
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:87
 msgid "删除"
 msgstr ""
 
@@ -1242,12 +1243,12 @@ msgstr ""
 #: apps/themes/osr-theme-w/pages/_index_s3.html:91
 #: apps/themes/osr-theme-w/pages/photo/index.html:80
 #: apps/themes/osr-theme-w/pages/post/_comment.html:306
-#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:109
+#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:108
 #: apps/themes/osr-theme-w/pages/search/index.html:85
 #: apps/themes/osr-theme-w/pages/user/follow/index.html:63
 #: apps/themes/osr-theme-w/pages/user/message/index.html:85
 #: apps/themes/osr-theme-w/pages/user/post/_comment.html:155
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:118
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:138
 msgid "上一页"
 msgstr ""
 
@@ -1266,12 +1267,12 @@ msgstr ""
 #: apps/themes/osr-theme-w/pages/_index_s3.html:97
 #: apps/themes/osr-theme-w/pages/photo/index.html:86
 #: apps/themes/osr-theme-w/pages/post/_comment.html:310
-#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:115
+#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:114
 #: apps/themes/osr-theme-w/pages/search/index.html:91
 #: apps/themes/osr-theme-w/pages/user/follow/index.html:69
 #: apps/themes/osr-theme-w/pages/user/message/index.html:89
 #: apps/themes/osr-theme-w/pages/user/post/_comment.html:159
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:124
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:144
 msgid "下一页"
 msgstr ""
 
@@ -1643,24 +1644,23 @@ msgid "更新"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:62
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:59
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:60
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:78
 msgid "编辑"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:65
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:62
 msgid "移到回收站"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:68
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:65
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:66
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:84
 msgid "恢复"
 msgstr ""
 
 #: apps/themes/osr-style/pages/user/post/_user_posts.html:89
 #: apps/themes/osr-theme-w/pages/_index_s3.html:94
-#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:112
-#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:121
 msgid "第{[posts.current_page]}页/共{[posts.page_total]}页"
 msgstr ""
 
@@ -1705,5 +1705,19 @@ msgstr ""
 
 #: apps/themes/osr-theme-w/pages/_index_s3.html:80
 msgid "没有更多了哦"
+msgstr ""
+
+#: apps/themes/osr-theme-w/pages/corpus/tag.html:18
+msgid "其他标签"
+msgstr ""
+
+#: apps/themes/osr-theme-w/pages/posts/_posts_weiget.html:111
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:141
+msgid "{[posts.current_page]}/{[posts.page_total]}"
+msgstr ""
+
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:63
+#: apps/themes/osr-theme-w/pages/user/post/_user_posts.html:81
+msgid "移除"
 msgstr ""
 

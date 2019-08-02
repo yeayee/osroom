@@ -1,5 +1,5 @@
 {% extends "osr-style/pages/based/based.html" %}
-{% block title %}{{_("401无权访问")}}-{% endblock %}
+{% block title %}{{_('401无权访问')}}-{% endblock %}
 {% block content %}
 <style>
     *{
@@ -30,11 +30,6 @@
                     <td>
                     <h1 style="font-size:100px;line-height:1em;">401</h1>
                     <h3>{{_("无权访问该页面")}}<a href="/"> {{_("回到首页")}}</a></h3>
-                    <p>本站点创建 By
-                        <a href="http://www.osroom.com" target="_blank">
-                            <img src="/theme/static/sys_imgs/osroom-logo.png?h=40&v={{g.site_global.site_config.STATIC_FILE_VERSION}}" height="17px" width="auto" alt="OSROOM">
-                        </a>
-                    </p>
                     </td>
                 </tr>
             </table>

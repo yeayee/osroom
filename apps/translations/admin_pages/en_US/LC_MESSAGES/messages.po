@@ -241,7 +241,7 @@ msgstr "Retrieve password"
 #: apps/admin_pages/pages/recover-password.html:15
 #: apps/admin_pages/pages/user/edit-user.html:26
 msgid "电子邮箱"
-msgstr "E-mail"
+msgstr "Email"
 
 #: apps/admin_pages/pages/own/account/settings/email.html:26
 #: apps/admin_pages/pages/recover-password.html:13
@@ -298,7 +298,7 @@ msgstr "Login"
 
 #: apps/admin_pages/pages/sign-in.html:15
 msgid "用户名或电子邮箱"
-msgstr "Username or E-mail"
+msgstr "Username or Email"
 
 #: apps/admin_pages/pages/sign-in.html:16
 #: apps/admin_pages/pages/sign-in.html:17
@@ -318,7 +318,7 @@ msgstr "Password error"
 #: apps/admin_pages/pages/own/account/settings/_send_code.html:24
 #: apps/admin_pages/pages/sign-in.html:28
 msgid "图片验证码"
-msgstr "Picture verification code"
+msgstr "Incorrect password"
 
 #: apps/admin_pages/pages/module/_send_code.html:6
 #: apps/admin_pages/pages/module/_send_code.html:7
@@ -365,7 +365,7 @@ msgstr "Username is at least 3 characters"
 
 #: apps/admin_pages/pages/sign-up.html:46
 msgid "已有账户"
-msgstr "has an account"
+msgstr "Has an account"
 
 #: apps/admin_pages/pages/audit/rule/index.html:2
 #: apps/admin_pages/pages/audit/rule/index.html:14
@@ -397,7 +397,7 @@ msgstr "Audit Rules"
 #: apps/admin_pages/pages/theme-setting/file/index.html:15
 #: apps/admin_pages/pages/user/index.html:14
 msgid "结果"
-msgstr "Result "
+msgstr "Results "
 
 #: apps/admin_pages/pages/audit/rule/index.html:26
 #: apps/admin_pages/pages/comment/index.html:27
@@ -527,7 +527,7 @@ msgstr "Delete Selection"
 #: apps/admin_pages/pages/theme-setting/file/index.html:107
 #: apps/admin_pages/pages/user/index.html:169
 msgid "上一页"
-msgstr "​​Previous"
+msgstr "​​Pre"
 
 #: apps/admin_pages/pages/audit/rule/index.html:153
 #: apps/admin_pages/pages/comment/index.html:188
@@ -550,7 +550,7 @@ msgstr "​​Previous"
 #: apps/admin_pages/pages/theme-setting/file/index.html:111
 #: apps/admin_pages/pages/user/index.html:173
 msgid "下一页"
-msgstr "Next Page"
+msgstr "Next"
 
 #: apps/admin_pages/pages/audit/rule/index.html:171
 msgid "填入规则"
@@ -614,7 +614,7 @@ msgstr "Close"
 #: apps/admin_pages/pages/based/_user_dropdown.html:19
 #: apps/admin_pages/pages/own/user/message/index.html:2
 msgid "消息"
-msgstr "Message "
+msgstr "Msgs "
 
 #: apps/admin_pages/pages/based/_header_bar_menu.html:37
 msgid "新评论"
@@ -694,7 +694,7 @@ msgstr "Settings"
 #: apps/admin_pages/pages/own/account/settings.html:18
 #: apps/admin_pages/pages/own/account/settings.html:94
 msgid "个人资料"
-msgstr "Personal Information"
+msgstr "Personal Info"
 
 #: apps/admin_pages/pages/based/_user_dropdown.html:40
 msgid "退出"
@@ -713,7 +713,7 @@ msgstr ""
 #: apps/admin_pages/pages/based/footer.html:7
 #: apps/admin_pages/pages/based/footer_adm.html:2
 msgid "回到顶部"
-msgstr "back to top"
+msgstr "Back to top"
 
 #: apps/admin_pages/pages/based/footer_adm.html:6
 msgid "欢迎使用"
